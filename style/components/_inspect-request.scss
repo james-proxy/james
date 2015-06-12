@@ -1,0 +1,79 @@
+.inspect-request {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  max-height: 600px;
+  background: rgba($lightgray-light, 0.9);
+
+
+  .toolbar {
+    position: absolute;
+    top: -40px;
+    right: 0;
+    left: 0;
+    text-align: right;
+
+    .toolbar-action {
+      display: inline-block;
+      background: darken($darkgray-light, 10%);
+      color: $white;
+      border-radius: 8px 8px 0 0;
+      margin-left: 3px;
+      padding: 10px;
+      transition: all 250ms ease-out;
+
+      &.primary {
+        background: $darkgray-light;
+      }
+
+      &:hover {
+        background: lighten($darkgray-light, 10%);
+        cursor: pointer;
+      }
+    }
+  }
+
+  .box-header {
+    color: $white;
+    background: $darkgray-light;
+    height: 40px;
+    padding: 7px;
+
+    > div {
+      padding-top: 3px;
+      float: left;
+    }
+
+    .title {
+      padding-left: 4px;
+      font-weight: bold;
+    }
+
+    .actions {
+      text-align: right;
+      float: right;
+
+      .action {
+        &:hover {
+          cursor: pointer;
+        }
+      }
+    }
+  }
+
+  .box-body {
+    .complete-url {
+      font-size: 18px;
+      background: $darkgray-dark;
+      color: $white;
+      padding: 10px;
+      line-height: 31px;
+    }
+  }
+
+  .mapped-url {
+    display: block;
+    color: $darkgray-light;
+  }
+}

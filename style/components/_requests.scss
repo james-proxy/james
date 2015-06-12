@@ -1,0 +1,41 @@
+.requests {
+
+  position: absolute;
+  top: 50px;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  overflow-y: auto;
+
+  .request {
+    padding: 5px;
+    border-bottom: 2px solid $lightgray-light;
+    position: relative;
+    transition: all 250ms ease-out;
+
+    .complete-url {
+      width: calc(100% - 55px);
+    }
+
+    &:hover {
+      cursor: pointer;
+      background-color: $lightgray-light;
+      border-bottom: 2px solid $lightgray-dark;
+    }
+
+    .method {
+      background: $darkgray-dark;
+      color: $white;
+      display: inline-block;
+      text-align: center;
+      width: 50px;
+      margin-right: 5px;
+    }
+
+    .labels {
+      position: absolute;
+      right: 3px;
+      top: 3px;
+    }
+  }
+}

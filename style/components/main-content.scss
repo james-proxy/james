@@ -1,0 +1,45 @@
+.main-content {
+  position: absolute;
+  top: 50px;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  float: left;
+  padding: 10px;
+
+  .header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    height: 40px;
+    padding: 5px;
+  }
+
+  h1 {
+    margin-top: 0;
+  }
+
+  .setup-instruction {
+    position: absolute;
+    left: calc(50% - 200px);
+    top: calc(50% - 200px);
+    text-align: center;
+    width: 400px;
+    background: $lightgray-light;
+    color: $darkgray-light;
+    padding: 20px;
+    border-radius: 8px;
+
+    h2 {
+      font-size: 24px;
+      margin: 0;
+    }
+
+    h3 {
+      font-size: 18px;
+      margin: 0;
+    }
+  }
+}

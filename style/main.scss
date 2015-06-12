@@ -1,0 +1,86 @@
+$fa-font-path: "fonts" !default;
+
+@import 'colors';
+@import 'components/titlebar';
+@import 'components/main-content';
+@import 'components/requests';
+@import 'components/inspect-request';
+@import 'components/windows/url-mapping';
+@import '../node_modules/font-awesome/scss/font-awesome';
+
+@import url(http://fonts.googleapis.com/css?family=Lato:300,400,700);
+@import url(http://fonts.googleapis.com/css?family=Droid+Sans+Mono);
+
+body {
+  font-family: 'Lato', sans-serif;
+  overflow: hidden;
+}
+
+.fa {
+  padding-right: 5px;
+}
+
+span.label {
+  display: inline-block;
+  margin-left: 5px;
+  color: $white;
+  padding: 2px;
+  padding-left: 6px;
+  padding-right: 6px;
+  border-radius: 7px;
+  margin-left: 5px;
+
+  background: $darkgray-dark;
+
+  &.tracking {
+    background: $sunflower-light;
+  }
+
+  &.cdn {
+    background: $pinkrose-dark;
+  }
+
+  &.mapped {
+    background: $sunflower-dark;
+  }
+
+  &.default {
+    background: $grapefruit-light;
+  }
+}
+
+.complete-url {
+  display: inline-block;
+  width: 100%;
+  .hostname {
+    color: $grapefruit-dark;
+  }
+  .url {
+    word-break: break-all;
+  }
+}
+
+$windowWidth: 600;
+$windowHeight: 400;
+
+.window {
+  background: $white;
+  //color: $white;
+  position: fixed;
+  //width: #{$windowWidth}px;
+  //height: #{$windowHeight}px;
+  z-index: 1000;
+
+  //left: calc(50% - #{$windowWidth / 2}px);
+  //top: calc(50% - #{$windowHeight / 2}px);
+
+  left: 20px;
+  right: 20px;
+  top: 70px;
+  bottom: 20px;
+
+  padding: 10px;
+  border: 6px solid $lightgray-dark;
+
+  box-shadow: 0 0 30px;
+}
