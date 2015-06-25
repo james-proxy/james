@@ -38,6 +38,10 @@
       background: $darkgray-light;
     }
 
+    &.right {
+      float: right;
+    }
+
     .label {
       padding: 0;
       padding-left: 5px;

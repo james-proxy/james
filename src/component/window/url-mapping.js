@@ -9,7 +9,8 @@ export default class UrlMappingWindow extends React.Component {
 
     this.state = {
       urlInput: '',
-      newUrlInput: ''
+      newUrlInput: '',
+      localPath: false
     };
   }
 
@@ -21,16 +22,29 @@ export default class UrlMappingWindow extends React.Component {
     this.setState({newUrlInput: event.target.value});
   }
 
+  setNewLocalUrlValue() {
+    const {chooseFile} = this.props;
+
+    chooseFile((paths) => {
+      const path = paths[0];
+
+      this.setState({
+        newUrlInput: path,
+        localPath: true
+      });
+    });
+  }
+
   saveMapping() {
     const {urlMapper} = this.props;
-    const {urlInput, newUrlInput} = this.state;
+    const {urlInput, newUrlInput, localPath} = this.state;
 
     this.setState({
       urlInput: '',
       newUrlInput: ''
     });
 
-    urlMapper.set(urlInput, newUrlInput)
+    urlMapper.set(urlInput, newUrlInput, localPath)
   }
 
   render() {
@@ -63,13 +77,11 @@ export default class UrlMappingWindow extends React.Component {
     });
 
     return <div className="window url-mapping-window">
-      <a href="#!" onClick={closeWindow}>
+      <a href="#!" onClick={closeWindow} className="close-button">
         <i className="fa fa-remove"></i>
       </a>
+      <h4>URL Mappings</h4>
       <ul className="collection with-header">
-        <li className="collection-header">
-          <h4>Map Settings</h4>
-        </li>
         <li className="collection-item add-mapping">
           <div>
             <input
@@ -89,6 +101,7 @@ export default class UrlMappingWindow extends React.Component {
               placeholder="Enter the new URL"
               onChange={this.setNewUrlValue.bind(this)}
             />
+            <a onClick={this.setNewLocalUrlValue.bind(this)}>Choose file</a>
             <a href="#!" className="secondary-content" onClick={this.saveMapping.bind(this)}>
               <i className="fa fa-plus"></i>
             </a>

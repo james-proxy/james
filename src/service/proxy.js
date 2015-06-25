@@ -1,4 +1,5 @@
 import hoxy from 'hoxy';
+import uniqid from 'uniqid';
 
 export default class Proxy {
 
@@ -8,28 +9,51 @@ export default class Proxy {
     this._urlMapper = urlMapper;
 
     const proxy = this._proxy = new hoxy.Proxy().listen(1338);
+    const that = this;
 
-    proxy.intercept('request', (req, res, done) => {
+    proxy.intercept('response-sent', function(req, res) {
+      req.completed = new Date().getTime();
+      req.took = req.completed - req.started;
+      update();
+    });
+    proxy.intercept('request', function(req, res, done) {
 
       try {
 
-        this._map(req, () => {
+        that._map(req, () => {
+
+          req.started = new Date().getTime();
 
           const request = {
             request: req,
             response: res
           };
 
-          this._requests.unshift(request);
-          if(this._requests.length > config.maxLogEntries) {
-            this._requests.pop();
+          that._requests.unshift(request);
+          if (that._requests.length > config.maxLogEntries) {
+            that._requests.pop();
           }
+
+          if (req.mapped) {
+
+            if (req.isLocal) {
+              return this.serve({
+                path: req.newUrl
+              }, function(err) {
+                update();
+                done(err);
+              });
+            }
+
+            req.fullUrl(req.newUrl);
+          }
+
           update();
           done();
 
         });
 
-      } catch(e) {
+      } catch (e) {
         console.log(e);
       }
 
@@ -56,11 +80,13 @@ export default class Proxy {
   _map(request, callback) {
     const fullUrl = request.fullUrl();
     this._urlMapper.get(fullUrl, (err, mappedUrl) => {
-      if(mappedUrl) {
+      if (mappedUrl) {
 
-        request.fullUrl(mappedUrl.newUrl);
+        console.log(mappedUrl);
 
         request.mapped = true;
+        request.isLocal = mappedUrl.isLocal;
+        request.newUrl = mappedUrl.newUrl;
         request.originalUrl = fullUrl;
       }
       callback();

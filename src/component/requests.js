@@ -47,8 +47,19 @@ export default class Requests extends React.Component {
         setActiveRequest(request);
       };
 
+      let took = <i className="fa fa-gear fa-spin"></i>;
+      if(request.request.took) {
+        took = request.request.took + 'ms';
+      }
+
       return <div className="request" key={index} onClick={handleClick}>
-        <span className="method">{request.request.method}</span>
+        <span className="method property">{request.request.method}</span>
+        <span className="time property">
+          {took}
+        </span>
+        <span className="status-code property">
+          {request.response.statusCode}
+        </span>
         <FullUrl request={request.request} shorten={true}></FullUrl>
         <div className="labels">
           {this._getLabels(request.request)}

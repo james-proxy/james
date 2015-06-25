@@ -11,17 +11,20 @@ export default class UrlMapper {
     });
   }
 
-  set(url, newUrl) {
+  set(url, newUrl, isLocal) {
+
+    isLocal = !!isLocal;
 
     // fix the url, because hoxy will add a slash to urls without path..
-    if(newUrl.split('/').length === 3 && newUrl.indexOf('?') === -1) {
+    if(!isLocal && newUrl.split('/').length === 3 && newUrl.indexOf('?') === -1) {
       newUrl += '/';
     }
 
     this._db.remove({ newUrl: newUrl }, { multi: true }, () => {
       this._db.insert({
         url: url,
-        newUrl: newUrl
+        newUrl: newUrl,
+        isLocal: isLocal
       }, () => {
         this._update();
       });

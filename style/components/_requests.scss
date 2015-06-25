@@ -14,7 +14,7 @@
     transition: all 250ms ease-out;
 
     .complete-url {
-      width: calc(100% - 55px);
+      width: calc(100% - 165px);
     }
 
     &:hover {
@@ -23,13 +23,21 @@
       border-bottom: 2px solid $lightgray-dark;
     }
 
-    .method {
-      background: $darkgray-dark;
-      color: $white;
+    .property {
+
       display: inline-block;
       text-align: center;
       width: 50px;
       margin-right: 5px;
+
+      .fa {
+        padding-right: 0;
+      }
+
+      &.method {
+        background: $darkgray-dark;
+        color: $white;
+      }
     }
 
     .labels {

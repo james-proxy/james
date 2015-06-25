@@ -83,4 +83,25 @@ $windowHeight: 400;
   border: 6px solid $lightgray-dark;
 
   box-shadow: 0 0 30px;
+
+  .close-button {
+    display: block;
+    right: 0;
+    top: 0;
+    position: absolute;
+    background-color: $lightgray-dark;
+    padding: 7px;
+    z-index: 1000;
+    color: $darkgray-dark;
+    padding-left: 13px;
+    padding-top: 4px;
+
+    i {
+      padding: 0;
+    }
+  }
+}
+
+strong {
+  font-weight: bold;
 }

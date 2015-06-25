@@ -9,6 +9,11 @@ export default class TitleBar extends React.Component {
     showWindow('UrlMapping');
   }
 
+  openDevTools() {
+    const {openDevTools} = this.props;
+    openDevTools();
+  }
+
   render() {
 
     const {mapCount} = this.props;
@@ -29,6 +34,10 @@ export default class TitleBar extends React.Component {
         <i className=" fa fa-plug"></i>
         URL Mappings
         {MapCountLabel}
+      </a>
+      <a className="right" onClick={this.openDevTools.bind(this)}>
+        <i className=" fa fa-cog"></i>
+        Developer
       </a>
     </div>
   }

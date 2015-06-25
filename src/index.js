@@ -2,12 +2,15 @@ import React from 'react';
 import TitleBar from './component/titlebar';
 import MainContent from './component/main-content.js';
 import Proxy from './service/proxy.js';
+import createChooseFile from './service/choose-file.js';
 import trackingConfig from './tracking-config.js';
 import config from './config.js';
 import Datastore from 'nedb';
 import UrlMapper from './url-mapper.js';
-
 import createMenu from './menu';
+import remote from 'remote';
+
+const app = remote.require('app');
 
 createMenu();
 
@@ -16,7 +19,7 @@ import UrlMappingWindow from './component/window/url-mapping.js';
 
 let renderInProgress = false;
 
-const db = new Datastore({ autoload: true });
+const db = new Datastore({ filename: app.getPath('userData') + '/data.nedb', autoload: true });
 
 const urlMapper = new UrlMapper(db, function() {
   updateMapCount();
@@ -35,7 +38,8 @@ let data = {
 };
 
 const services = {
-  urlMapper
+  urlMapper,
+  chooseFile: createChooseFile(remote.getCurrentWindow())
 };
 
 const windowFactories = {
@@ -44,8 +48,13 @@ const windowFactories = {
       mappings={data.mappings}
       urlMapper={urlMapper}
       closeWindow={closeWindow}
+      chooseFile={services.chooseFile}
     ></UrlMappingWindow>;
   }
+};
+
+const openDevTools = () => {
+  remote.getCurrentWindow().openDevTools({detach: true});
 };
 
 const closeWindow = () => {
@@ -86,7 +95,7 @@ function render() {
 
   React.render(
     <div className="container">
-      <TitleBar mapCount={data.mapCount} showWindow={showWindow}></TitleBar>
+      <TitleBar mapCount={data.mapCount} showWindow={showWindow} openDevTools={openDevTools}></TitleBar>
       <MainContent activeWindow={activeWindow} requests={proxy.getRequests()} config={config} services={services}></MainContent>
     </div>,
     domNode

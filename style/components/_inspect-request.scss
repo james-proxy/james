@@ -62,13 +62,16 @@
     }
   }
 
-  .box-body {
-    .complete-url {
-      font-size: 18px;
-      background: $darkgray-dark;
-      color: $white;
-      padding: 10px;
-      line-height: 31px;
+  .section {
+    padding: 10px;
+  }
+
+  code {
+    font-family: Consolas, Menlo, Monaco, monospace;
+    font-size: 10px;
+
+    ul {
+      margin: 0;
     }
   }
 

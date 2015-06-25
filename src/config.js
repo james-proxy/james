@@ -1,5 +1,5 @@
 export default {
-  maxLogEntries: 1000,
+  maxLogEntries: 300,
 
   labels: [
     {
