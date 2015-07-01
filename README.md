@@ -10,7 +10,7 @@ It is an open-source alternative to the popular developer tool [Charles](http://
  3. `npm run build`
  4. `npm start`
  
-## Other usefule NPM Commands
+## Other useful NPM Commands
 
 - `npm run watch`: Watches JS and SASS files and transpiles them automatically
 
