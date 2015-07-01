@@ -5,6 +5,8 @@ It is an open-source alternative to the popular developer tool [Charles](http://
 
 James is build with [hoxy](https://github.com/greim/hoxy), [electron](https://github.com/atom/electron) and [react](https://facebook.github.io/react/index.html)
 
+![](resource/screenshot-1.png)
+
 ## Installation
 
  1. Clone the repository
