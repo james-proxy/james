@@ -83,13 +83,7 @@ const showWindow = (windowName) => {
   render();
 };
 
-function render() {
-
-  if(renderInProgress) {
-    return false;
-  }
-
-  renderInProgress = true;
+function render(force) {
 
   const activeWindow = (data.activeWindowFactory && data.activeWindowFactory() || null);
 
@@ -100,11 +94,9 @@ function render() {
     </div>,
     domNode
   );
-
-  renderInProgress = false;
 }
 
 updateMapCount();
 updateMappings();
 
-render();
+render(true);

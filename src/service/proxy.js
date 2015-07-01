@@ -14,6 +14,7 @@ export default class Proxy {
     proxy.intercept('response-sent', function(req, res) {
       req.completed = new Date().getTime();
       req.took = req.completed - req.started;
+      req.done = true;
       update();
     });
     proxy.intercept('request', function(req, res, done) {
@@ -22,6 +23,8 @@ export default class Proxy {
 
         that._map(req, () => {
 
+          req.done = false;
+          req.id = uniqid();
           req.started = new Date().getTime();
 
           const request = {
@@ -48,9 +51,10 @@ export default class Proxy {
             req.fullUrl(req.newUrl);
           }
 
-          update();
           done();
-
+          setTimeout(function() {
+            update();
+          }, 0);
         });
 
       } catch (e) {

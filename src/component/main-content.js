@@ -27,16 +27,6 @@ export default class MainContent extends React.Component {
     });
   }
 
-  _filter(arr) {
-    const filter = this.state.filter;
-    if(!filter) {
-      return arr;
-    }
-    return arr.filter((request) => {
-      return request.request.fullUrl().indexOf(filter) !== -1;
-    });
-  }
-
   _setActiveRequest(request) {
     this.setState({
       activeRequest: request
@@ -94,7 +84,8 @@ export default class MainContent extends React.Component {
       {activeWindow}
       {SetupInstructions}
       <Requests
-        requests={this._filter(requests)}
+        filter={this.state.filter}
+        requests={requests}
         config={config}
         setActiveRequest={setActiveRequest}
       ></Requests>
