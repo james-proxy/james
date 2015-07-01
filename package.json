@@ -11,7 +11,8 @@
     "watch:js": "nodemon --watch src --ext js --no-stdin --exec \"npm run build:js\"",
     "watch:style": "nodemon --watch style --ext scss --no-stdin --exec \"npm run build:style\"",
     "copy-files": "rm -rf build/fonts && mkdir -p build/fonts && cp ./node_modules/font-awesome/fonts/* build/fonts/ && cp ./resource/* ./build/",
-    "package": "electron-packager ./ James --platform=darwin --arch=x64 --icon=./resource/icon.png --version=0.28.3"
+    "package": "electron-packager ./ James --platform=darwin --arch=x64 --icon=./resource/icon.png --version=0.28.3",
+    "start": "electron ."
   },
   "author": "",
   "license": "ISC",

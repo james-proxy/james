@@ -3,7 +3,6 @@ import TitleBar from './component/titlebar';
 import MainContent from './component/main-content.js';
 import Proxy from './service/proxy.js';
 import createChooseFile from './service/choose-file.js';
-import trackingConfig from './tracking-config.js';
 import config from './config.js';
 import Datastore from 'nedb';
 import UrlMapper from './url-mapper.js';
