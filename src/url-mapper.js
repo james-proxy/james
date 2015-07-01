@@ -38,7 +38,7 @@ export default class UrlMapper {
   }
 
   getCount(callback) {
-    db.count({}, function (err, count) {
+    this._db.count({}, function (err, count) {
       callback(err, count);
     });
   }
