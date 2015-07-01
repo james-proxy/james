@@ -1,9 +1,9 @@
 # James
 
-James is a HTTP Proxy and Monitor that enables developers to view and intercept requests made from the browser.
+James is an HTTP Proxy and Monitor that enables developers to view and intercept requests made from the browser.
 It is an open-source alternative to the popular developer tool [Charles](http://www.charlesproxy.com/)
 
-James is build with [electron](https://github.com/atom/electron) and [react](https://facebook.github.io/react/index.html)
+James is build with [hoxy](https://github.com/greim/hoxy), [electron](https://github.com/atom/electron) and [react](https://facebook.github.io/react/index.html)
 
 ## Installation
 
