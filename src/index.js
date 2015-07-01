@@ -9,6 +9,7 @@ import Datastore from 'nedb';
 import UrlMapper from './url-mapper.js';
 import createMenu from './menu';
 import remote from 'remote';
+import openBrowser from './util/open-browser.js';
 
 const app = remote.require('app');
 
@@ -96,7 +97,7 @@ function render() {
   React.render(
     <div className="container">
       <TitleBar mapCount={data.mapCount} showWindow={showWindow} openDevTools={openDevTools}></TitleBar>
-      <MainContent activeWindow={activeWindow} requests={proxy.getRequests()} config={config} services={services}></MainContent>
+      <MainContent openBrowser={openBrowser} activeWindow={activeWindow} requests={proxy.getRequests()} config={config} services={services}></MainContent>
     </div>,
     domNode
   );

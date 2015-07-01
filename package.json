@@ -17,9 +17,12 @@
   "license": "ISC",
   "dependencies": {
     "hoxy": "^1.2.4",
+    "karma-chrome-launcher": "^0.2.0",
     "nedb": "^1.1.2",
     "pem": "^1.7.2",
     "react": "^0.13.3",
+    "rimraf": "^2.4.1",
+    "tmp": "0.0.26",
     "uniqid": "^1.0.0"
   },
   "devDependencies": {

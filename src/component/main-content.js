@@ -43,6 +43,16 @@ export default class MainContent extends React.Component {
     });
   }
 
+  _openChrome() {
+    const {openBrowser} = this.props;
+    openBrowser('chrome');
+  }
+
+  _openFirefox() {
+    const {openBrowser} = this.props;
+    openBrowser('firefox');
+  }
+
   render() {
 
     let {requests, config, services, activeWindow} = this.props;
@@ -72,6 +82,8 @@ export default class MainContent extends React.Component {
       SetupInstructions = <div className="setup-instruction">
         <h2>Proxy started on localhost:1338</h2>
         <h3>Setup your browser to use James as proxy</h3>
+        <button onClick={this._openChrome.bind(this)}>Open Chrome</button>
+        <button onClick={this._openFirefox.bind(this)}>Open Firefox</button>
       </div>;
     }
 
