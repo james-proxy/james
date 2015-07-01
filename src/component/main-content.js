@@ -82,8 +82,8 @@ export default class MainContent extends React.Component {
       SetupInstructions = <div className="setup-instruction">
         <h2>Proxy started on localhost:1338</h2>
         <h3>Setup your browser to use James as proxy</h3>
-        <button onClick={this._openChrome.bind(this)}>Open Chrome</button>
-        <button onClick={this._openFirefox.bind(this)}>Open Firefox</button>
+        <span className="open-browser chrome" onClick={this._openChrome.bind(this)}></span>
+        <span className="open-browser firefox" onClick={this._openFirefox.bind(this)}></span>
       </div>;
     }
 

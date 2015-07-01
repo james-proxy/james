@@ -10,7 +10,7 @@
     "watch": "parallelshell 'npm run watch:js' 'npm run watch:style'",
     "watch:js": "nodemon --watch src --ext js --no-stdin --exec \"npm run build:js\"",
     "watch:style": "nodemon --watch style --ext scss --no-stdin --exec \"npm run build:style\"",
-    "copy-files": "rm -rf build/fonts && mkdir -p build/fonts && cp ./node_modules/font-awesome/fonts/* build/fonts/ && cp ./resource/* ./build/",
+    "copy-files": "rm -rf build/fonts && mkdir -p build/fonts && cp ./node_modules/font-awesome/fonts/* build/fonts/ && cp -r ./resource/* ./build/",
     "package": "electron-packager ./ James --platform=darwin --arch=x64 --icon=./resource/icon.png --version=0.28.3"
   },
   "author": "",
