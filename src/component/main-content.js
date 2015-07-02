@@ -3,7 +3,7 @@ import Requests from './requests.js'
 import Search from './search.js'
 import InspectRequest from './inspect-request.js'
 
-const {func, object, array} = React.PropTypes;
+const {func, object, array, arrayOf, shape} = React.PropTypes;
 
 export default class MainContent extends React.Component {
 
@@ -95,7 +95,10 @@ export default class MainContent extends React.Component {
 
 MainContent.propTypes = {
   openBrowser: func.isRequired,
-  requests: array.isRequired,
+  requests: arrayOf(shape({
+    request: object,
+    response: object
+  })),
   config: object.isRequired,
   activeWindow: object
 };
