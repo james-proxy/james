@@ -33,7 +33,7 @@ const proxy = new Proxy(() => {
 
 let data = {
   urlMapCount: 0,
-  mappings: [],
+  urlMappings: [],
   activeWindowFactory: null
 };
 
@@ -42,7 +42,7 @@ const chooseFile = createChooseFile(remote.getCurrentWindow());
 const windowFactories = {
   UrlMapping: () => {
     return <UrlMappingWindow
-      mappings={data.mappings}
+      urlMappings={data.urlMappings}
       setUrlMapping={urlMapper.set.bind(urlMapper)}
       removeUrlMappingByNewUrl={urlMapper.removeByNewUrl.bind(urlMapper)}
       closeWindow={closeWindow}
@@ -69,9 +69,9 @@ const updateUrlMapCount = () => {
 };
 
 const updateMappings = () => {
-  urlMapper.getList(function(err, mappings) {
+  urlMapper.getList(function(err, urlMappings) {
     if(err) return;
-    data.mappings = mappings;
+    data.urlMappings = urlMappings;
     render();
   });
 };

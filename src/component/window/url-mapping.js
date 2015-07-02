@@ -50,9 +50,9 @@ export default class UrlMappingWindow extends React.Component {
   render() {
 
     const {urlInput, newUrlInput} = this.state;
-    let {removeUrlMappingByNewUrl, mappings, closeWindow} = this.props;
+    let {removeUrlMappingByNewUrl, urlMappings, closeWindow} = this.props;
 
-    mappings = mappings.map((map, index) => {
+    urlMappings = urlMappings.map((map, index) => {
 
       const removeMapping = () => {
         removeUrlMappingByNewUrl(map.newUrl);
@@ -107,7 +107,7 @@ export default class UrlMappingWindow extends React.Component {
             </a>
           </div>
         </li>
-        {mappings}
+        {urlMappings}
       </ul>
     </div>
   }
@@ -118,5 +118,5 @@ UrlMappingWindow.propTypes = {
   chooseFile: func.isRequired,
   removeUrlMappingByNewUrl: func.isRequired,
   closeWindow: func.isRequired,
-  mappings: array.isRequired
+  urlMappings: array.isRequired
 };
