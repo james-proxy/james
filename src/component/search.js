@@ -1,6 +1,6 @@
 import React from 'react';
 
-const {func, object} = React.PropTypes;
+const {func} = React.PropTypes;
 
 export default class Search extends React.Component {
 
@@ -16,3 +16,7 @@ export default class Search extends React.Component {
     </div>
   }
 }
+
+Search.propTypes = {
+  setFilter: func.isRequired
+};

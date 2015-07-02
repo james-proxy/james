@@ -1,6 +1,6 @@
 import React from 'react';
 
-const {func, object} = React.PropTypes;
+const {func, number} = React.PropTypes;
 
 export default class TitleBar extends React.Component {
 
@@ -42,3 +42,9 @@ export default class TitleBar extends React.Component {
     </div>
   }
 }
+
+TitleBar.propTypes = {
+  showWindow: func.isRequired,
+  openDevTools: func.isRequired,
+  mapCount: number.isRequired
+};

@@ -86,3 +86,9 @@ export default class InspectRequest extends React.Component {
     </div>
   }
 }
+
+
+InspectRequest.propTypes = {
+  request: object.isRequired,
+  setActiveRequest: func.isRequired
+};

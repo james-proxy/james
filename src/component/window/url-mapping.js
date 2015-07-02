@@ -1,6 +1,6 @@
 import React from 'react';
 
-const {func, object} = React.PropTypes;
+const {func, array} = React.PropTypes;
 
 export default class UrlMappingWindow extends React.Component {
 
@@ -112,3 +112,11 @@ export default class UrlMappingWindow extends React.Component {
     </div>
   }
 }
+
+UrlMappingWindow.propTypes = {
+  setUrlMapping: func.isRequired,
+  chooseFile: func.isRequired,
+  removeUrlMappingByNewUrl: func.isRequired,
+  closeWindow: func.isRequired,
+  mappings: array.isRequired
+};

@@ -1,6 +1,6 @@
 import React from 'react';
 
-const {func, object} = React.PropTypes;
+const {object, bool} = React.PropTypes;
 
 export default class FullUrl extends React.Component {
 
@@ -27,3 +27,8 @@ export default class FullUrl extends React.Component {
     </div>
   }
 }
+
+FullUrl.propTypes = {
+  shorten: bool,
+  request: object.isRequired
+};
