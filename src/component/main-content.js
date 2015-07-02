@@ -18,7 +18,7 @@ export default class MainContent extends React.Component {
     });
   }
 
-  _setFilter(str) {
+  _filterRequests(str) {
     if(str === '') {
       str = null;
     }
@@ -49,8 +49,8 @@ export default class MainContent extends React.Component {
     let {activeRequest} = this.state;
     let SearchBar, SetupInstructions;
 
-    const setFilter = (str) => {
-      this._setFilter(str);
+    const filterRequests = (str) => {
+      this._filterRequests(str);
       this.render();
     };
 
@@ -66,7 +66,7 @@ export default class MainContent extends React.Component {
     }
 
     if(requests.length > 0) {
-      SearchBar = <Search setFilter={setFilter}></Search>;
+      SearchBar = <Search filterRequests={filterRequests}></Search>;
     } else {
       SetupInstructions = <div className="setup-instruction">
         <h2>Proxy started on localhost:1338</h2>

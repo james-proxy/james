@@ -13,7 +13,7 @@ export default class Search extends React.Component {
   }
 
   _handleOnChange(event) {
-    const {setFilter} = this.props;
+    const {filterRequests} = this.props;
     const value = event.target.value;
 
     this.state.inputChanges++;
@@ -23,7 +23,7 @@ export default class Search extends React.Component {
       if(inputChanges !== this.state.inputChanges) {
         return;
       }
-      setFilter(value);
+      filterRequests(value);
     }, 300);
   }
 
@@ -35,5 +35,5 @@ export default class Search extends React.Component {
 }
 
 Search.propTypes = {
-  setFilter: func.isRequired
+  filterRequests: func.isRequired
 };
