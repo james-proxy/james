@@ -13,10 +13,10 @@ export default class FullUrl extends React.Component {
 
   render() {
 
-    const {request, shorten} = this.props;
+    const {request, isShortened} = this.props;
 
     let maxUrlLength = 1000;
-    if(shorten) {
+    if(isShortened) {
       maxUrlLength = 60;
     }
 
@@ -35,6 +35,6 @@ export default class FullUrl extends React.Component {
 }
 
 FullUrl.propTypes = {
-  shorten: bool,
+  isShortened: bool,
   request: object.isRequired
 };
