@@ -22,7 +22,7 @@ let renderInProgress = false;
 const db = new Datastore({ filename: app.getPath('userData') + '/data.nedb', autoload: true });
 
 const urlMapper = new UrlMapper(db, function() {
-  updateMapCount();
+  updateUrlMapCount();
   updateMappings();
 });
 
@@ -32,7 +32,7 @@ const proxy = new Proxy(() => {
 }, config, urlMapper);
 
 let data = {
-  mapCount: 0,
+  urlMapCount: 0,
   mappings: [],
   activeWindowFactory: null
 };
@@ -60,10 +60,10 @@ const closeWindow = () => {
   render();
 };
 
-const updateMapCount = () => {
+const updateUrlMapCount = () => {
   urlMapper.getCount(function(err, count) {
     if(err) return;
-    data.mapCount = count;
+    data.urlMapCount = count;
     render();
   });
 };
@@ -87,14 +87,14 @@ function render(force) {
 
   React.render(
     <div className="container">
-      <TitleBar mapCount={data.mapCount} showWindow={showWindow} openDevTools={openDevTools}></TitleBar>
+      <TitleBar urlMapCount={data.urlMapCount} showWindow={showWindow} openDevTools={openDevTools}></TitleBar>
       <MainContent openBrowser={openBrowser} activeWindow={activeWindow} requests={proxy.getRequests()} config={config}></MainContent>
     </div>,
     domNode
   );
 }
 
-updateMapCount();
+updateUrlMapCount();
 updateMappings();
 
 render(true);

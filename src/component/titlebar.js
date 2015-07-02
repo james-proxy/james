@@ -16,13 +16,13 @@ export default class TitleBar extends React.Component {
 
   render() {
 
-    const {mapCount} = this.props;
+    const {urlMapCount} = this.props;
 
-    let MapCountLabel;
+    let UrlMapCountLabel;
 
-    if(mapCount > 0) {
-      MapCountLabel = <span className="label default">
-        {mapCount}
+    if(urlMapCount > 0) {
+      UrlMapCountLabel = <span className="label default">
+        {urlMapCount}
       </span>;
     }
 
@@ -33,7 +33,7 @@ export default class TitleBar extends React.Component {
       <a onClick={this.urlMappingsClickHandler.bind(this)}>
         <i className=" fa fa-plug"></i>
         URL Mappings
-        {MapCountLabel}
+        {UrlMapCountLabel}
       </a>
       <a className="right" onClick={this.openDevTools.bind(this)}>
         <i className=" fa fa-cog"></i>
@@ -46,5 +46,5 @@ export default class TitleBar extends React.Component {
 TitleBar.propTypes = {
   showWindow: func.isRequired,
   openDevTools: func.isRequired,
-  mapCount: number.isRequired
+  urlMapCount: number.isRequired
 };
