@@ -45,7 +45,7 @@ export default class MainContent extends React.Component {
 
   render() {
 
-    let {requests, config, services, activeWindow} = this.props;
+    let {requests, config, activeWindow} = this.props;
     let {activeRequest} = this.state;
     let SearchBar, SetupInstructions;
 
@@ -61,7 +61,6 @@ export default class MainContent extends React.Component {
     if(activeRequest) {
       activeRequest = <InspectRequest
         request={activeRequest}
-        services={services}
         setActiveRequest={setActiveRequest}
       ></InspectRequest>;
     }

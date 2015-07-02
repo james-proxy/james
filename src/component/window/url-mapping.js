@@ -36,7 +36,7 @@ export default class UrlMappingWindow extends React.Component {
   }
 
   saveMapping() {
-    const {urlMapper} = this.props;
+    const {setUrlMapping} = this.props;
     const {urlInput, newUrlInput, localPath} = this.state;
 
     this.setState({
@@ -44,18 +44,18 @@ export default class UrlMappingWindow extends React.Component {
       newUrlInput: ''
     });
 
-    urlMapper.set(urlInput, newUrlInput, localPath)
+    setUrlMapping(urlInput, newUrlInput, localPath)
   }
 
   render() {
 
     const {urlInput, newUrlInput} = this.state;
-    let {urlMapper, mappings, closeWindow} = this.props;
+    let {removeUrlMappingByNewUrl, mappings, closeWindow} = this.props;
 
     mappings = mappings.map((map, index) => {
 
       const removeMapping = () => {
-        urlMapper.removeByNewUrl(map.newUrl);
+        removeUrlMappingByNewUrl(map.newUrl);
       };
 
       return <li className="collection-item" key={index}>

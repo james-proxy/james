@@ -37,18 +37,16 @@ let data = {
   activeWindowFactory: null
 };
 
-const services = {
-  urlMapper,
-  chooseFile: createChooseFile(remote.getCurrentWindow())
-};
+const chooseFile = createChooseFile(remote.getCurrentWindow());
 
 const windowFactories = {
   UrlMapping: () => {
     return <UrlMappingWindow
       mappings={data.mappings}
-      urlMapper={urlMapper}
+      setUrlMapping={urlMapper.set.bind(urlMapper)}
+      removeUrlMappingByNewUrl={urlMapper.removeByNewUrl.bind(urlMapper)}
       closeWindow={closeWindow}
-      chooseFile={services.chooseFile}
+      chooseFile={chooseFile}
     ></UrlMappingWindow>;
   }
 };
@@ -90,7 +88,7 @@ function render(force) {
   React.render(
     <div className="container">
       <TitleBar mapCount={data.mapCount} showWindow={showWindow} openDevTools={openDevTools}></TitleBar>
-      <MainContent openBrowser={openBrowser} activeWindow={activeWindow} requests={proxy.getRequests()} config={config} services={services}></MainContent>
+      <MainContent openBrowser={openBrowser} activeWindow={activeWindow} requests={proxy.getRequests()} config={config}></MainContent>
     </div>,
     domNode
   );
