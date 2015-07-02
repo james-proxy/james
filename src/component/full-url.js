@@ -22,7 +22,7 @@ export default class FullUrl extends React.Component {
 
     let port = null;
     if(request.port) {
-      port = <span className="port">{request.port}</span>
+      port = <span className="port">:{request.port}</span>
     }
 
     return <div className="complete-url">
