@@ -1,0 +1,1 @@
+- Refactor component dependencies
