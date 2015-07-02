@@ -17,6 +17,7 @@ James is build with [hoxy](https://github.com/greim/hoxy), [electron](https://gi
 ## Other useful NPM Commands
 
 - `npm run watch`: Watches JS and SASS files and transpiles them automatically
+- `npm run package`: Creates a standalone App Bundle for OSX
 
 ## Contribution
 Pull requests and ideas welcome

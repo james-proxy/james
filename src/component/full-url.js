@@ -20,9 +20,15 @@ export default class FullUrl extends React.Component {
       maxUrlLength = 60;
     }
 
+    let port = null;
+    if(request.port) {
+      port = <span className="port">{request.port}</span>
+    }
+
     return <div className="complete-url">
       <span className="protocol">{request.protocol}//</span>
       <span className="hostname">{request.hostname}</span>
+      {port}
       <span className="url">{this._shorten(request.url, maxUrlLength)}</span>
     </div>
   }
