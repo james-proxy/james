@@ -3,7 +3,7 @@ import Requests from './requests.js'
 import Search from './search.js'
 import InspectRequest from './inspect-request.js'
 
-const {func, object} = React.PropTypes;
+const {func, object, array, arrayOf, shape} = React.PropTypes;
 
 export default class MainContent extends React.Component {
 
@@ -18,7 +18,7 @@ export default class MainContent extends React.Component {
     });
   }
 
-  _setFilter(str) {
+  _filterRequests(str) {
     if(str === '') {
       str = null;
     }
@@ -45,12 +45,12 @@ export default class MainContent extends React.Component {
 
   render() {
 
-    let {requests, config, services, activeWindow} = this.props;
+    let {requests, config, activeWindow} = this.props;
     let {activeRequest} = this.state;
     let SearchBar, SetupInstructions;
 
-    const setFilter = (str) => {
-      this._setFilter(str);
+    const filterRequests = (str) => {
+      this._filterRequests(str);
       this.render();
     };
 
@@ -61,13 +61,12 @@ export default class MainContent extends React.Component {
     if(activeRequest) {
       activeRequest = <InspectRequest
         request={activeRequest}
-        services={services}
         setActiveRequest={setActiveRequest}
       ></InspectRequest>;
     }
 
     if(requests.length > 0) {
-      SearchBar = <Search setFilter={setFilter}></Search>;
+      SearchBar = <Search filterRequests={filterRequests}></Search>;
     } else {
       SetupInstructions = <div className="setup-instruction">
         <h2>Proxy started on localhost:1338</h2>
@@ -93,3 +92,13 @@ export default class MainContent extends React.Component {
     </div>
   }
 }
+
+MainContent.propTypes = {
+  openBrowser: func.isRequired,
+  requests: arrayOf(shape({
+    request: object,
+    response: object
+  })),
+  config: object.isRequired,
+  activeWindow: object
+};

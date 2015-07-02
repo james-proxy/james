@@ -22,7 +22,7 @@ let renderInProgress = false;
 const db = new Datastore({ filename: app.getPath('userData') + '/data.nedb', autoload: true });
 
 const urlMapper = new UrlMapper(db, function() {
-  updateMapCount();
+  updateUrlMapCount();
   updateMappings();
 });
 
@@ -32,23 +32,21 @@ const proxy = new Proxy(() => {
 }, config, urlMapper);
 
 let data = {
-  mapCount: 0,
-  mappings: [],
+  urlMapCount: 0,
+  urlMappings: [],
   activeWindowFactory: null
 };
 
-const services = {
-  urlMapper,
-  chooseFile: createChooseFile(remote.getCurrentWindow())
-};
+const chooseFile = createChooseFile(remote.getCurrentWindow());
 
 const windowFactories = {
   UrlMapping: () => {
     return <UrlMappingWindow
-      mappings={data.mappings}
-      urlMapper={urlMapper}
+      urlMappings={data.urlMappings}
+      setUrlMapping={urlMapper.set.bind(urlMapper)}
+      removeUrlMappingByNewUrl={urlMapper.removeByNewUrl.bind(urlMapper)}
       closeWindow={closeWindow}
-      chooseFile={services.chooseFile}
+      chooseFile={chooseFile}
     ></UrlMappingWindow>;
   }
 };
@@ -62,18 +60,18 @@ const closeWindow = () => {
   render();
 };
 
-const updateMapCount = () => {
+const updateUrlMapCount = () => {
   urlMapper.getCount(function(err, count) {
     if(err) return;
-    data.mapCount = count;
+    data.urlMapCount = count;
     render();
   });
 };
 
 const updateMappings = () => {
-  urlMapper.getList(function(err, mappings) {
+  urlMapper.getList(function(err, urlMappings) {
     if(err) return;
-    data.mappings = mappings;
+    data.urlMappings = urlMappings;
     render();
   });
 };
@@ -89,14 +87,14 @@ function render(force) {
 
   React.render(
     <div className="container">
-      <TitleBar mapCount={data.mapCount} showWindow={showWindow} openDevTools={openDevTools}></TitleBar>
-      <MainContent openBrowser={openBrowser} activeWindow={activeWindow} requests={proxy.getRequests()} config={config} services={services}></MainContent>
+      <TitleBar urlMapCount={data.urlMapCount} showWindow={showWindow} openDevTools={openDevTools}></TitleBar>
+      <MainContent openBrowser={openBrowser} activeWindow={activeWindow} requests={proxy.getRequests()} config={config}></MainContent>
     </div>,
     domNode
   );
 }
 
-updateMapCount();
+updateUrlMapCount();
 updateMappings();
 
 render(true);

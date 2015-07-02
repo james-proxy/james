@@ -1,7 +1,7 @@
 import React from 'react';
 import Request from './request.js';
 
-const {func, object} = React.PropTypes;
+const {func, string, array, object} = React.PropTypes;
 
 export default class Requests extends React.Component {
 
@@ -38,3 +38,11 @@ export default class Requests extends React.Component {
     </div>
   }
 }
+
+Requests.propTypes = {
+  requests: array.isRequired,
+  filter: string,
+  setActiveRequest: func.isRequired,
+  config: object.isRequired
+};
+

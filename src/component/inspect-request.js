@@ -13,7 +13,7 @@ export default class InspectRequest extends React.Component {
 
   render() {
 
-    const {request, setActiveRequest, services} = this.props;
+    const {request, setActiveRequest} = this.props;
     const close = () => {
       setActiveRequest(null);
     };
@@ -86,3 +86,9 @@ export default class InspectRequest extends React.Component {
     </div>
   }
 }
+
+
+InspectRequest.propTypes = {
+  request: object.isRequired,
+  setActiveRequest: func.isRequired
+};
