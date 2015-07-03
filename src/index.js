@@ -34,7 +34,8 @@ const proxy = new Proxy(() => {
 let data = {
   mapCount: 0,
   mappings: [],
-  activeWindowFactory: null
+  activeWindowFactory: null,
+  fromIndex: 0
 };
 
 const services = {
@@ -83,14 +84,19 @@ const showWindow = (windowName) => {
   render();
 };
 
-function render(force) {
+const setFromIndex = (fromIndex) => {
+  data.fromIndex = fromIndex;
+  render();
+};
+
+function render() {
 
   const activeWindow = (data.activeWindowFactory && data.activeWindowFactory() || null);
 
   React.render(
     <div className="container">
       <TitleBar mapCount={data.mapCount} showWindow={showWindow} openDevTools={openDevTools}></TitleBar>
-      <MainContent openBrowser={openBrowser} activeWindow={activeWindow} requests={proxy.getRequests()} config={config} services={services}></MainContent>
+      <MainContent openBrowser={openBrowser} activeWindow={activeWindow} requests={proxy.getRequests(50, data.fromIndex)} amountOfRequests={proxy.getRequestAmount()} setFromIndex={setFromIndex} config={config} services={services}></MainContent>
     </div>,
     domNode
   );

@@ -45,7 +45,7 @@ export default class MainContent extends React.Component {
 
   render() {
 
-    let {requests, config, services, activeWindow} = this.props;
+    let {requests, config, services, activeWindow, amountOfRequests, setFromIndex} = this.props;
     let {activeRequest} = this.state;
     let SearchBar, SetupInstructions;
 
@@ -88,6 +88,8 @@ export default class MainContent extends React.Component {
         requests={requests}
         config={config}
         setActiveRequest={setActiveRequest}
+        amountOfRequests={amountOfRequests}
+        setFromIndex={setFromIndex}
       ></Requests>
       {activeRequest}
     </div>
