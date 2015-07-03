@@ -1,7 +1,7 @@
 import React from 'react';
 import Request from './request.js';
 
-const {func, string, array, object} = React.PropTypes;
+const {func, string, object} = React.PropTypes;
 
 const requestElementHeight = 34;
 
@@ -62,7 +62,7 @@ export default class Requests extends React.Component {
 }
 
 Requests.propTypes = {
-  requests: array.isRequired,
+  requestData: object.isRequired,
   filter: string,
   setActiveRequest: func.isRequired,
   config: object.isRequired

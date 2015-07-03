@@ -103,7 +103,7 @@ function render() {
   React.render(
     <div className="container">
       <TitleBar
-        mapCount={data.mapCount}
+        urlMapCount={data.urlMapCount}
         showWindow={showWindow}
         openDevTools={openDevTools}
       ></TitleBar>

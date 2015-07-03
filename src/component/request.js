@@ -43,7 +43,7 @@ export default class Request extends React.Component {
   }
 
   render() {
-    let {request, response, handleClick, className, positionTop} = this.props;
+    let {request, response, handleClick, positionTop} = this.props;
 
     this.done = request.done;
 
@@ -78,6 +78,5 @@ Request.propTypes = {
   config: object.isRequired,
   request: object.isRequired,
   response: object.isRequired,
-  handleClick: func.isRequired,
-  className: string.isRequired
+  handleClick: func.isRequired
 };
