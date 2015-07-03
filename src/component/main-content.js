@@ -3,7 +3,7 @@ import Requests from './requests.js'
 import Search from './search.js'
 import InspectRequest from './inspect-request.js'
 
-const {func, object} = React.PropTypes;
+const {func, object, array, arrayOf, shape} = React.PropTypes;
 
 export default class MainContent extends React.Component {
 
@@ -39,7 +39,6 @@ export default class MainContent extends React.Component {
     let {
       requestData,
       config,
-      services,
       activeWindow,
       setFromIndex,
       setFilter
@@ -55,7 +54,6 @@ export default class MainContent extends React.Component {
     if(activeRequest) {
       activeRequest = <InspectRequest
         request={activeRequest}
-        services={services}
         setActiveRequest={setActiveRequest}
       ></InspectRequest>;
     }
@@ -87,3 +85,13 @@ export default class MainContent extends React.Component {
     </div>
   }
 }
+
+MainContent.propTypes = {
+  openBrowser: func.isRequired,
+  requests: arrayOf(shape({
+    request: object,
+    response: object
+  })),
+  config: object.isRequired,
+  activeWindow: object
+};

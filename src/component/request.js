@@ -1,7 +1,7 @@
 import React from 'react';
 import FullUrl from './full-url.js';
 
-let counter = 0;
+const {func, string, object} = React.PropTypes;
 
 export default class Request extends React.Component {
   shouldComponentUpdate(nextProps) {
@@ -65,7 +65,7 @@ export default class Request extends React.Component {
         <span className="status-code property">
           {response.statusCode}
         </span>
-      <FullUrl request={request} shorten={true}></FullUrl>
+      <FullUrl request={request} isShortened={true}></FullUrl>
 
       <div className="labels">
         {this._getLabels(request)}
@@ -73,3 +73,11 @@ export default class Request extends React.Component {
     </div>;
   }
 }
+
+Request.propTypes = {
+  config: object.isRequired,
+  request: object.isRequired,
+  response: object.isRequired,
+  handleClick: func.isRequired,
+  className: string.isRequired
+};

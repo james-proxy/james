@@ -1,6 +1,6 @@
 import React from 'react';
 
-const {func, object} = React.PropTypes;
+const {func, array} = React.PropTypes;
 
 export default class UrlMappingWindow extends React.Component {
 
@@ -36,7 +36,7 @@ export default class UrlMappingWindow extends React.Component {
   }
 
   saveMapping() {
-    const {urlMapper} = this.props;
+    const {setUrlMapping} = this.props;
     const {urlInput, newUrlInput, localPath} = this.state;
 
     this.setState({
@@ -44,18 +44,18 @@ export default class UrlMappingWindow extends React.Component {
       newUrlInput: ''
     });
 
-    urlMapper.set(urlInput, newUrlInput, localPath)
+    setUrlMapping(urlInput, newUrlInput, localPath)
   }
 
   render() {
 
     const {urlInput, newUrlInput} = this.state;
-    let {urlMapper, mappings, closeWindow} = this.props;
+    let {removeUrlMappingByNewUrl, urlMappings, closeWindow} = this.props;
 
-    mappings = mappings.map((map, index) => {
+    urlMappings = urlMappings.map((map, index) => {
 
       const removeMapping = () => {
-        urlMapper.removeByNewUrl(map.newUrl);
+        removeUrlMappingByNewUrl(map.newUrl);
       };
 
       return <li className="collection-item" key={index}>
@@ -107,8 +107,16 @@ export default class UrlMappingWindow extends React.Component {
             </a>
           </div>
         </li>
-        {mappings}
+        {urlMappings}
       </ul>
     </div>
   }
 }
+
+UrlMappingWindow.propTypes = {
+  setUrlMapping: func.isRequired,
+  chooseFile: func.isRequired,
+  removeUrlMappingByNewUrl: func.isRequired,
+  closeWindow: func.isRequired,
+  urlMappings: array.isRequired
+};

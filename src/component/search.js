@@ -1,6 +1,6 @@
 import React from 'react';
 
-const {func, object} = React.PropTypes;
+const {func} = React.PropTypes;
 
 export default class Search extends React.Component {
 
@@ -13,7 +13,7 @@ export default class Search extends React.Component {
   }
 
   _handleOnChange(event) {
-    const {setFilter} = this.props;
+    const {filterRequests} = this.props;
     const value = event.target.value;
 
     this.state.inputChanges++;
@@ -23,7 +23,7 @@ export default class Search extends React.Component {
       if(inputChanges !== this.state.inputChanges) {
         return;
       }
-      setFilter(value);
+      filterRequests(value);
     }, 300);
   }
 
@@ -33,3 +33,7 @@ export default class Search extends React.Component {
     </div>
   }
 }
+
+Search.propTypes = {
+  filterRequests: func.isRequired
+};

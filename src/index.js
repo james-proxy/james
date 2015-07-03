@@ -22,7 +22,7 @@ let renderInProgress = false;
 const db = new Datastore({ filename: app.getPath('userData') + '/data.nedb', autoload: true });
 
 const urlMapper = new UrlMapper(db, function() {
-  updateMapCount();
+  updateUrlMapCount();
   updateMappings();
 });
 
@@ -32,25 +32,23 @@ const proxy = new Proxy(() => {
 }, config, urlMapper);
 
 let data = {
-  mapCount: 0,
-  mappings: [],
+  urlMapCount: 0,
+  urlMappings: [],
   activeWindowFactory: null,
   fromIndex: 0,
   filter: null
 };
 
-const services = {
-  urlMapper,
-  chooseFile: createChooseFile(remote.getCurrentWindow())
-};
+const chooseFile = createChooseFile(remote.getCurrentWindow());
 
 const windowFactories = {
   UrlMapping: () => {
     return <UrlMappingWindow
-      mappings={data.mappings}
-      urlMapper={urlMapper}
+      urlMappings={data.urlMappings}
+      setUrlMapping={urlMapper.set.bind(urlMapper)}
+      removeUrlMappingByNewUrl={urlMapper.removeByNewUrl.bind(urlMapper)}
       closeWindow={closeWindow}
-      chooseFile={services.chooseFile}
+      chooseFile={chooseFile}
     ></UrlMappingWindow>;
   }
 };
@@ -64,18 +62,18 @@ const closeWindow = () => {
   render();
 };
 
-const updateMapCount = () => {
+const updateUrlMapCount = () => {
   urlMapper.getCount(function(err, count) {
     if(err) return;
-    data.mapCount = count;
+    data.urlMapCount = count;
     render();
   });
 };
 
 const updateMappings = () => {
-  urlMapper.getList(function(err, mappings) {
+  urlMapper.getList(function(err, urlMappings) {
     if(err) return;
-    data.mappings = mappings;
+    data.urlMappings = urlMappings;
     render();
   });
 };
@@ -109,13 +107,20 @@ function render() {
         showWindow={showWindow}
         openDevTools={openDevTools}
       ></TitleBar>
-      <MainContent openBrowser={openBrowser} activeWindow={activeWindow} requestData={proxy.getRequestData(50, data.fromIndex, data.filter)} setFromIndex={setFromIndex} setFilter={setFilter} config={config} services={services}></MainContent>
+      <MainContent 
+        openBrowser={openBrowser} 
+        activeWindow={activeWindow} 
+        requestData={proxy.getRequestData(50, data.fromIndex, data.filter)} 
+        setFromIndex={setFromIndex} 
+        setFilter={setFilter} 
+        config={config} 
+      ></MainContent>
     </div>,
     domNode
   );
 }
 
-updateMapCount();
+updateUrlMapCount();
 updateMappings();
 
 render(true);
