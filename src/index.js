@@ -88,7 +88,7 @@ const setFromIndex = (fromIndex) => {
   render();
 };
 
-const setFilter = (filter) => {
+const filterRequests = (filter) => {
   if(filter === '') {
     filter = null;
   }
@@ -112,7 +112,7 @@ function render() {
         activeWindow={activeWindow} 
         requestData={proxy.getRequestData(50, data.fromIndex, data.filter)} 
         setFromIndex={setFromIndex} 
-        setFilter={setFilter} 
+        filterRequests={filterRequests}
         config={config} 
       ></MainContent>
     </div>,

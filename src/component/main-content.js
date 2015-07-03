@@ -41,7 +41,7 @@ export default class MainContent extends React.Component {
       config,
       activeWindow,
       setFromIndex,
-      setFilter
+      filterRequests
     } = this.props;
 
     let {activeRequest} = this.state;
@@ -59,7 +59,7 @@ export default class MainContent extends React.Component {
     }
 
     if(requestData.totalCount > 0) {
-      SearchBar = <Search setFilter={setFilter}></Search>;
+      SearchBar = <Search filterRequests={filterRequests}></Search>;
     } else {
       SetupInstructions = <div className="setup-instruction">
         <h2>Proxy started on localhost:1338</h2>
