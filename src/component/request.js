@@ -57,7 +57,7 @@ export default class Request extends React.Component {
       position: 'absolute'
     };
 
-    return <div className={className + ' request'} onClick={handleClick} style={style}>
+    return <div className='request' onClick={handleClick} style={style}>
       <span className="method property">{request.method}</span>
         <span className="time property">
           {took}

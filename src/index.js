@@ -35,7 +35,8 @@ let data = {
   mapCount: 0,
   mappings: [],
   activeWindowFactory: null,
-  fromIndex: 0
+  fromIndex: 0,
+  filter: null
 };
 
 const services = {
@@ -89,14 +90,26 @@ const setFromIndex = (fromIndex) => {
   render();
 };
 
+const setFilter = (filter) => {
+  if(filter === '') {
+    filter = null;
+  }
+  data.filter = filter;
+  render();
+};
+
 function render() {
 
   const activeWindow = (data.activeWindowFactory && data.activeWindowFactory() || null);
 
   React.render(
     <div className="container">
-      <TitleBar mapCount={data.mapCount} showWindow={showWindow} openDevTools={openDevTools}></TitleBar>
-      <MainContent openBrowser={openBrowser} activeWindow={activeWindow} requests={proxy.getRequests(50, data.fromIndex)} amountOfRequests={proxy.getRequestAmount()} setFromIndex={setFromIndex} config={config} services={services}></MainContent>
+      <TitleBar
+        mapCount={data.mapCount}
+        showWindow={showWindow}
+        openDevTools={openDevTools}
+      ></TitleBar>
+      <MainContent openBrowser={openBrowser} activeWindow={activeWindow} requestData={proxy.getRequestData(50, data.fromIndex, data.filter)} setFromIndex={setFromIndex} setFilter={setFilter} config={config} services={services}></MainContent>
     </div>,
     domNode
   );

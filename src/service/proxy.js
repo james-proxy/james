@@ -8,7 +8,6 @@ export default class Proxy {
     this._requests = [];
     this._urlMapper = urlMapper;
     this._config = config;
-    this._requestCount = 0;
 
     const proxy = this._proxy = new hoxy.Proxy().listen(1338);
     const that = this;
@@ -31,7 +30,6 @@ export default class Proxy {
           const request = {
             request: req,
             response: res,
-            requestNumber: that._requestCount++
           };
 
           that._requests.unshift(request);
@@ -96,13 +94,25 @@ export default class Proxy {
     });
   }
 
-  getRequests(limit, fromIndex) {
+  getRequestData(limit, fromIndex, filter) {
     limit = limit || this._config.maxLogEntries;
-    return this._requests.slice(fromIndex, fromIndex + limit);
-  }
 
-  getRequestAmount() {
-    return this._requests.length;
+    let requestCount = 0;
+    let requests = this._requests;
+
+    requests = requests.filter((request) => {
+
+      if (!filter || request.request.fullUrl().indexOf(filter) !== -1) {
+        request.requestNumber = requestCount++;
+        return true;
+      }
+      return false;
+    });
+
+    return {
+      requests: requests.slice(fromIndex, fromIndex + limit),
+      totalCount: this._requests.length
+    };
   }
 
 }

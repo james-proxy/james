@@ -32,22 +32,15 @@ export default class Requests extends React.Component {
 
   render() {
 
-    let {requests, filter} = this.props;
-    const {setActiveRequest, config, amountOfRequests, fromIndex} = this.props;
-
-    requests = requests.map((request, index) => {
+    const {setActiveRequest, config, requestData} = this.props;
+    const amountOfRequests = requestData.totalCount;
+    const requests = requestData.requests.map((request, index) => {
       const handleClick = () => {
         setActiveRequest(request);
       };
 
-      let className = '';
-      if(filter && request.request.fullUrl().indexOf(filter) === -1) {
-        className = 'hidden';
-      }
-
-      const positionTop = (amountOfRequests - request.requestNumber - 1) * requestElementHeight;
+      const positionTop = request.requestNumber * requestElementHeight;
       return <Request
-        className={className}
         {...request}
         positionTop={positionTop}
         config={config}
@@ -57,7 +50,7 @@ export default class Requests extends React.Component {
     });
 
     const style = {
-      height: amountOfRequests * requestElementHeight,
+      height: amountOfRequests * requestElementHeight
     };
 
     return <div className="requests">

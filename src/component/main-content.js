@@ -18,15 +18,6 @@ export default class MainContent extends React.Component {
     });
   }
 
-  _setFilter(str) {
-    if(str === '') {
-      str = null;
-    }
-    this.setState({
-      filter: str
-    });
-  }
-
   _setActiveRequest(request) {
     this.setState({
       activeRequest: request
@@ -45,14 +36,17 @@ export default class MainContent extends React.Component {
 
   render() {
 
-    let {requests, config, services, activeWindow, amountOfRequests, setFromIndex} = this.props;
+    let {
+      requestData,
+      config,
+      services,
+      activeWindow,
+      setFromIndex,
+      setFilter
+    } = this.props;
+
     let {activeRequest} = this.state;
     let SearchBar, SetupInstructions;
-
-    const setFilter = (str) => {
-      this._setFilter(str);
-      this.render();
-    };
 
     const setActiveRequest = (request) => {
       this._setActiveRequest(request);
@@ -66,7 +60,7 @@ export default class MainContent extends React.Component {
       ></InspectRequest>;
     }
 
-    if(requests.length > 0) {
+    if(requestData.totalCount > 0) {
       SearchBar = <Search setFilter={setFilter}></Search>;
     } else {
       SetupInstructions = <div className="setup-instruction">
@@ -84,11 +78,9 @@ export default class MainContent extends React.Component {
       {activeWindow}
       {SetupInstructions}
       <Requests
-        filter={this.state.filter}
-        requests={requests}
+        requestData={requestData}
         config={config}
         setActiveRequest={setActiveRequest}
-        amountOfRequests={amountOfRequests}
         setFromIndex={setFromIndex}
       ></Requests>
       {activeRequest}
