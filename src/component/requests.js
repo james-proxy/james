@@ -21,18 +21,13 @@ export default class Requests extends React.Component {
     const requests = document.querySelector('.requests');
     const requestsInner = document.querySelector('.requests-inner');
     requests.addEventListener('scroll', () => {
-      const fromIndex = Math.ceil(requests.scrollTop / requestElementHeight) - 5;
+      const fromIndex = Math.ceil(requests.scrollTop / requestElementHeight) - 15;
       this._setFromIndex(fromIndex < 0 ? 0 : fromIndex);
     });
   }
 
-  componentDidUpdate() {
-
-  }
-
   _setFromIndex(fromindex) {
-    const {setFromIndex} = this.props;
-    setFromIndex(fromindex);
+    this.props.setFromIndex(fromindex);
   }
 
   render() {
@@ -50,20 +45,19 @@ export default class Requests extends React.Component {
         className = 'hidden';
       }
 
-
-
-      const positionTop = (amountOfRequests - request.requestNumber) * requestElementHeight;
-
-      console.log(amountOfRequests, request.requestNumber, requestElementHeight);
-
-      return <Request className={className} {...request} positionTop={positionTop} config={config} handleClick={handleClick} key={request.request.id}></Request>
+      const positionTop = (amountOfRequests - request.requestNumber - 1) * requestElementHeight;
+      return <Request
+        className={className}
+        {...request}
+        positionTop={positionTop}
+        config={config}
+        handleClick={handleClick}
+        key={request.request.id}
+      ></Request>
     });
 
     const style = {
       height: amountOfRequests * requestElementHeight,
-      position: 'absolute',
-      left: 0,
-      right: 0
     };
 
     return <div className="requests">

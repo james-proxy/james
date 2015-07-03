@@ -7,10 +7,15 @@
   right: 0;
   overflow-y: auto;
 
+  .request-inner {
+    position: absolute;
+    left: 0;
+    right: 0;
+  }
+
   .request {
     padding: 5px;
     border-bottom: 2px solid $lightgray-light;
-    position: relative;
 
     .complete-url {
       width: calc(100% - 165px);

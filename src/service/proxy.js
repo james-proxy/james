@@ -35,7 +35,7 @@ export default class Proxy {
           };
 
           that._requests.unshift(request);
-          if (that._requests.length > config.maxLogEntries * 10) {
+          if (that._requests.length > config.maxLogEntries) {
             that._requests.pop();
           }
 
@@ -97,7 +97,6 @@ export default class Proxy {
   }
 
   getRequests(limit, fromIndex) {
-    console.log(arguments);
     limit = limit || this._config.maxLogEntries;
     return this._requests.slice(fromIndex, fromIndex + limit);
   }
