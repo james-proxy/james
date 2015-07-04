@@ -26,10 +26,14 @@ const urlMapper = new UrlMapper(db, function() {
   updateMappings();
 });
 
+const createHoxy = () => {
+  return new hoxy.Proxy().listen(config.proxyPort);
+};
+
 const domNode = document.getElementById('app');
 const proxy = new Proxy(() => {
   render();
-}, config, urlMapper);
+}, config, urlMapper, createHoxy);
 
 let data = {
   urlMapCount: 0,

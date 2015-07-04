@@ -3,82 +3,66 @@ import uniqid from 'uniqid';
 
 export default class Proxy {
 
-  constructor(update, config, urlMapper) {
+  constructor(update, config, urlMapper, createHoxy) {
 
     this._requests = [];
     this._urlMapper = urlMapper;
     this._config = config;
+    this._update = update;
 
-    const proxy = this._proxy = new hoxy.Proxy().listen(1338);
-    const that = this;
+    const proxy = this._proxy = createHoxy();
 
-    proxy.intercept('response-sent', function(req, res) {
-      req.completed = new Date().getTime();
-      req.took = req.completed - req.started;
-      req.done = true;
-      update();
-    });
-    proxy.intercept('request', function(req, res, done) {
-
-      try {
-        that._map(req, () => {
-
-          req.done = false;
-          req.id = uniqid();
-          req.started = new Date().getTime();
-
-          const request = {
-            request: req,
-            response: res,
-          };
-
-          that._requests.unshift(request);
-          if (that._requests.length > config.maxLogEntries) {
-            that._requests.pop();
-          }
-
-          if (req.mapped) {
-
-            if (req.isLocal) {
-              return this.serve({
-                path: req.newUrl
-              }, function(err) {
-                done(err);
-                update();
-              });
-            }
-
-            req.fullUrl(req.newUrl);
-          }
-
-          done();
-          setTimeout(function() {
-            update();
-          }, 0);
-        });
-
-      } catch (e) {
-        console.log(e);
-      }
-
-    });
-
+    proxy.intercept('response-sent', this._onResponseSent.bind(this));
+    proxy.intercept('request', this._onInterceptRequest.bind(this));
   }
 
-  _splitFullurl(fullUrl) {
-    let splitUrl = fullUrl.split('://');
-    let protocol = splitUrl.shift() + ':';
+  _onResponseSent(req, res) {
+    req.completed = new Date().getTime();
+    req.took = req.completed - req.started;
+    req.done = true;
+    this._update();
+  }
 
-    let hostAndUrl = splitUrl.join('://');
-    let splitHostAndUrl = hostAndUrl.split('/');
-    let hostname = splitHostAndUrl.shift();
-    let url = '/' + splitHostAndUrl.join('/');
+  _onInterceptRequest(req, res, done) {
+    var that = this;
+    try {
+      that._map(req, () => {
 
-    return {
-      protocol,
-      hostname,
-      url
-    };
+        req.done = false;
+        req.id = uniqid();
+        req.started = new Date().getTime();
+
+        const request = {
+          request: req,
+          response: res,
+        };
+
+        that._requests.unshift(request);
+        if (that._requests.length > that._config.maxLogEntries) {
+          that._requests.pop();
+        }
+
+        if (req.mapped) {
+
+          if (req.isLocal) {
+            return this.serve({
+              path: req.newUrl
+            }, function(err) {
+              done(err);
+              that._update();
+            });
+          }
+
+          req.fullUrl(req.newUrl);
+        }
+
+        done();
+        that._update();
+      });
+
+    } catch (e) {
+      console.log(e);
+    }
   }
 
   _map(request, callback) {

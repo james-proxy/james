@@ -14,7 +14,8 @@
     "package": "npm run build && rm -rf ./package &&  mkdir -p ./package && mkdir -p ./binaries && browserify --node -e build/index.js -o ./package/index.js --exclude remote && npm run -s copy-files-package && npm run -s create-binaries",
     "create-binaries": "electron-packager ./package James --all --icon=./resource/icon.icns --version=0.28.3 --out binaries",
     "copy-files-package": "rm -rf package/fonts && mkdir -p package/fonts && cp ./node_modules/font-awesome/fonts/* package/fonts/ && cp -r ./resource/* ./package/ && cp ./build/james.css ./package",
-    "start": "electron ."
+    "start": "electron .",
+    "test": "mocha --reporter dot --recursive -r setup-referee-sinon/globals test/unit --compilers js:babel/register"
   },
   "author": "Julian Hollmann <hollmann@uxebu.com>",
   "license": "MIT",
@@ -34,15 +35,21 @@
   },
   "devDependencies": {
     "autoprefixer": "^5.2.0",
-    "babel": "^5.5.5",
+    "babel": "^5.6.14",
     "babelify": "^6.1.2",
     "browserify": "^10.2.4",
     "electron-packager": "^5.0.0",
     "electron-prebuilt": "^0.28.3",
     "font-awesome": "^4.3.0",
+    "mocha": "^2.2.5",
     "node-sass": "^3.1.2",
     "nodemon": "^1.3.7",
     "parallelshell": "^1.1.1",
+    "referee": "^1.1.1",
+    "referee-sinon": "^1.0.2",
+    "setup-referee-sinon": "^0.3.0",
+    "sinon": "^1.15.4",
+    "sinon-as-promised": "^4.0.0",
     "watchify": "^3.2.2"
   }
 }
