@@ -72,6 +72,9 @@ export default class MainContent extends React.Component {
     return <div className="main-content">
       <div className="header">
         {SearchBar}
+        <div className="request-count">
+          Requests: {requestData.totalCount}
+        </div>
       </div>
       {activeWindow}
       {SetupInstructions}

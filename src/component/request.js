@@ -53,8 +53,7 @@ export default class Request extends React.Component {
     }
 
     const style = {
-      top: positionTop,
-      position: 'absolute'
+      top: positionTop
     };
 
     return <div className='request' onClick={handleClick} style={style}>
