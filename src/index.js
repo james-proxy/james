@@ -83,6 +83,12 @@ const showWindow = (windowName) => {
   render();
 };
 
+/**
+ * Set the index of the first request from where we start rendering.
+ * This is done because we only want to render elements the user actually sees.
+ *
+ * @param fromIndex
+ */
 const setFromIndex = (fromIndex) => {
   data.fromIndex = fromIndex;
   render();
