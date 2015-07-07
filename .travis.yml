@@ -1,0 +1,4 @@
+language: node
+node_js:
+  - "0.12"
+  - "iojs"
