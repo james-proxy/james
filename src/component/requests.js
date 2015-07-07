@@ -43,7 +43,15 @@ export default class Requests extends React.Component {
   render() {
 
     const {setActiveRequest, config, requestData} = this.props;
-    const amountOfRequests = requestData.totalCount;
+    let amountOfRequests;
+
+    if(requestData.filter) {
+      amountOfRequests = requestData.requests.length;
+    } else {
+      amountOfRequests = requestData.totalCount;
+    }
+
+
     const requests = requestData.requests.map((request, index) => {
       const handleClick = () => {
         setActiveRequest(request);
