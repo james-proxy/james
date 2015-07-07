@@ -18,21 +18,6 @@ export default class MainContent extends React.Component {
     });
   }
 
-  _filterRequests(str) {
-    if(str === '') {
-      str = null;
-    }
-    this.setState({
-      filter: str
-    });
-  }
-
-  _setActiveRequest(request) {
-    this.setState({
-      activeRequest: request
-    });
-  }
-
   _openChrome() {
     const {openBrowser} = this.props;
     openBrowser('chrome');
@@ -45,27 +30,32 @@ export default class MainContent extends React.Component {
 
   render() {
 
-    let {requests, config, activeWindow} = this.props;
+    let {
+      requestData,
+      config,
+      activeWindow,
+      setFromIndex,
+      filterRequests
+    } = this.props;
+
     let {activeRequest} = this.state;
     let SearchBar, SetupInstructions;
 
-    const filterRequests = (str) => {
-      this._filterRequests(str);
-      this.render();
-    };
-
     const setActiveRequest = (request) => {
-      this._setActiveRequest(request);
+      this.setState({
+        activeRequest: request
+      });
     };
 
+    let activeRequestNode = null;
     if(activeRequest) {
-      activeRequest = <InspectRequest
+      activeRequestNode = <InspectRequest
         request={activeRequest}
         setActiveRequest={setActiveRequest}
       ></InspectRequest>;
     }
 
-    if(requests.length > 0) {
+    if(requestData.totalCount > 0) {
       SearchBar = <Search filterRequests={filterRequests}></Search>;
     } else {
       SetupInstructions = <div className="setup-instruction">
@@ -83,12 +73,12 @@ export default class MainContent extends React.Component {
       {activeWindow}
       {SetupInstructions}
       <Requests
-        filter={this.state.filter}
-        requests={requests}
+        requestData={requestData}
         config={config}
         setActiveRequest={setActiveRequest}
+        setFromIndex={setFromIndex}
       ></Requests>
-      {activeRequest}
+      {activeRequestNode}
     </div>
   }
 }

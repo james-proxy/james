@@ -7,6 +7,7 @@ export default class Proxy {
 
     this._requests = [];
     this._urlMapper = urlMapper;
+    this._config = config;
 
     const proxy = this._proxy = new hoxy.Proxy().listen(1338);
     const that = this;
@@ -20,7 +21,6 @@ export default class Proxy {
     proxy.intercept('request', function(req, res, done) {
 
       try {
-
         that._map(req, () => {
 
           req.done = false;
@@ -29,7 +29,7 @@ export default class Proxy {
 
           const request = {
             request: req,
-            response: res
+            response: res,
           };
 
           that._requests.unshift(request);
@@ -43,8 +43,8 @@ export default class Proxy {
               return this.serve({
                 path: req.newUrl
               }, function(err) {
-                update();
                 done(err);
+                update();
               });
             }
 
@@ -85,9 +85,6 @@ export default class Proxy {
     const fullUrl = request.fullUrl();
     this._urlMapper.get(fullUrl, (err, mappedUrl) => {
       if (mappedUrl) {
-
-        console.log(mappedUrl);
-
         request.mapped = true;
         request.isLocal = mappedUrl.isLocal;
         request.newUrl = mappedUrl.newUrl;
@@ -97,8 +94,26 @@ export default class Proxy {
     });
   }
 
-  getRequests() {
-    return this._requests;
+  getRequestData(limit, fromIndex, filter) {
+    limit = limit || this._config.maxLogEntries;
+
+    let requestCount = 0;
+    let requests = this._requests;
+
+    requests = requests.filter((request) => {
+
+      if (!filter || request.request.fullUrl().indexOf(filter) !== -1) {
+        request.requestNumber = requestCount++;
+        return true;
+      }
+      return false;
+    });
+
+    return {
+      requests: requests.slice(fromIndex, fromIndex + limit),
+      totalCount: this._requests.length,
+      filter: filter
+    };
   }
 
 }

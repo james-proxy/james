@@ -6,6 +6,7 @@ const {func, string, object} = React.PropTypes;
 export default class Request extends React.Component {
   shouldComponentUpdate(nextProps) {
     return this.props.request.id !== nextProps.request.id ||
+      this.props.positionTop !== nextProps.positionTop ||
       this.done !== nextProps.request.done ||
       this.props.className !== nextProps.className;
   }
@@ -42,7 +43,7 @@ export default class Request extends React.Component {
   }
 
   render() {
-    let {request, response, handleClick, className} = this.props;
+    let {request, response, handleClick, positionTop} = this.props;
 
     this.done = request.done;
 
@@ -51,7 +52,12 @@ export default class Request extends React.Component {
       took = request.took + 'ms';
     }
 
-    return <div className={className + ' request'} onClick={handleClick}>
+    const style = {
+      top: positionTop,
+      position: 'absolute'
+    };
+
+    return <div className='request' onClick={handleClick} style={style}>
       <span className="method property">{request.method}</span>
         <span className="time property">
           {took}
@@ -72,6 +78,5 @@ Request.propTypes = {
   config: object.isRequired,
   request: object.isRequired,
   response: object.isRequired,
-  handleClick: func.isRequired,
-  className: string.isRequired
+  handleClick: func.isRequired
 };

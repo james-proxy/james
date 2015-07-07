@@ -34,7 +34,9 @@ const proxy = new Proxy(() => {
 let data = {
   urlMapCount: 0,
   urlMappings: [],
-  activeWindowFactory: null
+  activeWindowFactory: null,
+  fromIndex: 0,
+  filter: null
 };
 
 const chooseFile = createChooseFile(remote.getCurrentWindow());
@@ -81,14 +83,44 @@ const showWindow = (windowName) => {
   render();
 };
 
-function render(force) {
+/**
+ * Set the index of the first request from where we start rendering.
+ * This is done because we only want to render elements the user actually sees.
+ *
+ * @param fromIndex
+ */
+const setFromIndex = (fromIndex) => {
+  data.fromIndex = fromIndex;
+  render();
+};
+
+const filterRequests = (filter) => {
+  if(filter === '') {
+    filter = null;
+  }
+  data.filter = filter;
+  render();
+};
+
+function render() {
 
   const activeWindow = (data.activeWindowFactory && data.activeWindowFactory() || null);
 
   React.render(
     <div className="container">
-      <TitleBar urlMapCount={data.urlMapCount} showWindow={showWindow} openDevTools={openDevTools}></TitleBar>
-      <MainContent openBrowser={openBrowser} activeWindow={activeWindow} requests={proxy.getRequests()} config={config}></MainContent>
+      <TitleBar
+        urlMapCount={data.urlMapCount}
+        showWindow={showWindow}
+        openDevTools={openDevTools}
+      ></TitleBar>
+      <MainContent 
+        openBrowser={openBrowser} 
+        activeWindow={activeWindow} 
+        requestData={proxy.getRequestData(50, data.fromIndex, data.filter)} 
+        setFromIndex={setFromIndex} 
+        filterRequests={filterRequests}
+        config={config} 
+      ></MainContent>
     </div>,
     domNode
   );

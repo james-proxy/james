@@ -1,7 +1,9 @@
 import React from 'react';
 import Request from './request.js';
 
-const {func, string, array, object} = React.PropTypes;
+const {func, string, object} = React.PropTypes;
+
+const requestElementHeight = 34;
 
 export default class Requests extends React.Component {
 
@@ -15,32 +17,73 @@ export default class Requests extends React.Component {
     });
   }
 
+  _onScroll() {
+    const scrollableDomNode = React.findDOMNode(this);
+    const fromIndex = Math.ceil(scrollableDomNode.scrollTop / requestElementHeight) - 15;
+    this.props.setFromIndex((fromIndex < 0) ? 0 : fromIndex);
+  }
+
+  componentDidMount() {
+    const scrollableDomNode = React.findDOMNode(this);
+    scrollableDomNode.addEventListener('scroll', this._onScroll.bind(this));
+  }
+
+  componentWillUnmount() {
+    const scrollableDomNode = React.findDOMNode(this);
+    scrollableDomNode.removeEventListener('scroll', this._onScroll);
+  }
+
+  componentDidUpdate() {
+    const previousFilter = this.filter;
+    this.filter = this.props.requestData.filter;
+    const requests = React.findDOMNode(this);
+
+    if(previousFilter !== this.filter) {
+      requests.scrollTop = 0;
+    }
+  }
+
   render() {
 
-    let {requests, filter} = this.props;
-    const {setActiveRequest, config} = this.props;
+    const {setActiveRequest, config, requestData} = this.props;
+    let amountOfRequests;
 
-    requests = requests.map((request) => {
+    if(requestData.filter) {
+      amountOfRequests = requestData.requests.length;
+    } else {
+      amountOfRequests = requestData.totalCount;
+    }
+
+
+    const requestNodes = requestData.requests.map((request, index) => {
       const handleClick = () => {
         setActiveRequest(request);
       };
 
-      let className = '';
-      if(filter && request.request.fullUrl().indexOf(filter) === -1) {
-        className = 'hidden';
-      }
-
-      return <Request className={className} {...request} config={config} handleClick={handleClick} key={request.request.id}></Request>
+      const positionTop = request.requestNumber * requestElementHeight;
+      return <Request
+        {...request}
+        positionTop={positionTop}
+        config={config}
+        handleClick={handleClick}
+        key={request.request.id}
+      ></Request>
     });
 
+    const style = {
+      height: amountOfRequests * requestElementHeight
+    };
+
     return <div className="requests">
-      {requests}
+      <div className="requests-inner" style={style}>
+        {requestNodes}
+      </div>
     </div>
   }
 }
 
 Requests.propTypes = {
-  requests: array.isRequired,
+  requestData: object.isRequired,
   filter: string,
   setActiveRequest: func.isRequired,
   config: object.isRequired
