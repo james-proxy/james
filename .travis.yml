@@ -3,7 +3,6 @@ node_js:
   - '0.12'
 
 before_deploy:
-  - git fetch --tags
   - npm run package
   - npm run zip-binaries
 
@@ -19,5 +18,6 @@ deploy:
     - binaries/James-win32-x64.zip
   skip_cleanup: true
   on:
+    repo: uxebu/james
     tags: true
     all_branches: true
