@@ -1,3 +1,4 @@
+/*eslint-disable */
 const chromeLauncher = require('karma-chrome-launcher');
 const firefoxLauncher = require('karma-firefox-launcher');
 const spawn = require('child_process').spawn;

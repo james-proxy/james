@@ -4,7 +4,6 @@ import uniqid from 'uniqid';
 export default class Proxy {
 
   constructor(update, config, urlMapper) {
-
     this._requests = [];
     this._urlMapper = urlMapper;
     this._config = config;
@@ -12,24 +11,22 @@ export default class Proxy {
     const proxy = this._proxy = new hoxy.Proxy().listen(1338);
     const that = this;
 
-    proxy.intercept('response-sent', function(req, res) {
+    proxy.intercept('response-sent', function(req) {
       req.completed = new Date().getTime();
       req.took = req.completed - req.started;
       req.done = true;
       update();
     });
     proxy.intercept('request', function(req, res, done) {
-
       try {
         that._map(req, () => {
-
           req.done = false;
           req.id = uniqid();
           req.started = new Date().getTime();
 
           const request = {
             request: req,
-            response: res,
+            response: res
           };
 
           that._requests.unshift(request);
@@ -38,7 +35,6 @@ export default class Proxy {
           }
 
           if (req.mapped) {
-
             if (req.isLocal) {
               return this.serve({
                 path: req.newUrl
@@ -56,23 +52,20 @@ export default class Proxy {
             update();
           }, 0);
         });
-
       } catch (e) {
-        console.log(e);
+        console.log(e); // eslint-disable-line
       }
-
     });
-
   }
 
   _splitFullurl(fullUrl) {
-    let splitUrl = fullUrl.split('://');
-    let protocol = splitUrl.shift() + ':';
+    const splitUrl = fullUrl.split('://');
+    const protocol = splitUrl.shift() + ':';
 
-    let hostAndUrl = splitUrl.join('://');
-    let splitHostAndUrl = hostAndUrl.split('/');
-    let hostname = splitHostAndUrl.shift();
-    let url = '/' + splitHostAndUrl.join('/');
+    const hostAndUrl = splitUrl.join('://');
+    const splitHostAndUrl = hostAndUrl.split('/');
+    const hostname = splitHostAndUrl.shift();
+    const url = '/' + splitHostAndUrl.join('/');
 
     return {
       protocol,
@@ -101,7 +94,6 @@ export default class Proxy {
     let requests = this._requests;
 
     requests = requests.filter((request) => {
-
       if (!filter || request.request.fullUrl().indexOf(filter) !== -1) {
         request.requestNumber = requestCount++;
         return true;

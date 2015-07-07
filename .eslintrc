@@ -47,12 +47,12 @@
       "vars": "local",
       "args": "after-used"
     }],
-    "no-use-before-define": 2,       // http://eslint.org/docs/rules/no-use-before-define
+    "no-use-before-define": 0,       // http://eslint.org/docs/rules/no-use-before-define
 
     /**
      * Possible errors
      */
-    "comma-dangle": [2, "always-multiline"],    // http://eslint.org/docs/rules/comma-dangle
+    "comma-dangle": [2, "never"],    // http://eslint.org/docs/rules/comma-dangle
     "no-cond-assign": [2, "always"], // http://eslint.org/docs/rules/no-cond-assign
     "no-console": 1,                 // http://eslint.org/docs/rules/no-console
     "no-debugger": 1,                // http://eslint.org/docs/rules/no-debugger
@@ -73,7 +73,8 @@
     "no-sparse-arrays": 2,           // http://eslint.org/docs/rules/no-sparse-arrays
     "no-unreachable": 2,             // http://eslint.org/docs/rules/no-unreachable
     "use-isnan": 2,                  // http://eslint.org/docs/rules/use-isnan
-    "block-scoped-var": 2,           // http://eslint.org/docs/rules/block-scoped-var
+    "block-scoped-var": 0,           // http://eslint.org/docs/rules/block-scoped-var
+    "handle-callback-err": 0,
 
     /**
      * Best practices
@@ -104,7 +105,7 @@
     "no-new-wrappers": 2,            // http://eslint.org/docs/rules/no-new-wrappers
     "no-octal": 2,                   // http://eslint.org/docs/rules/no-octal
     "no-octal-escape": 2,            // http://eslint.org/docs/rules/no-octal-escape
-    "no-param-reassign": 2,          // http://eslint.org/docs/rules/no-param-reassign
+//    "no-param-reassign": 2,          // http://eslint.org/docs/rules/no-param-reassign
     "no-proto": 2,                   // http://eslint.org/docs/rules/no-proto
     "no-redeclare": 2,               // http://eslint.org/docs/rules/no-redeclare
     "no-return-assign": 2,           // http://eslint.org/docs/rules/no-return-assign
@@ -138,7 +139,7 @@
     }],
     "comma-style": [2, "last"],      // http://eslint.org/docs/rules/comma-style
     "eol-last": 2,                   // http://eslint.org/docs/rules/eol-last
-    "func-names": 1,                 // http://eslint.org/docs/rules/func-names
+    "func-names": 0,                 // http://eslint.org/docs/rules/func-names
     "key-spacing": [2, {             // http://eslint.org/docs/rules/key-spacing
       "beforeColon": false,
       "afterColon": true
@@ -187,31 +188,32 @@
     "react/prop-types": 2,           // https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/prop-types.md
     "react/react-in-jsx-scope": 2,   // https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/react-in-jsx-scope.md
     "react/self-closing-comp": 2,    // https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/self-closing-comp.md
-    "react/wrap-multilines": 2,      // https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/wrap-multilines.md
-    "react/sort-comp": [2, {         // https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/sort-comp.md
-      "order": [
-        "displayName",
-        "propTypes",
-        "contextTypes",
-        "childContextTypes",
-        "mixins",
-        "statics",
-        "defaultProps",
-        "getDefaultProps",
-        "getInitialState",
-        "getChildContext",
-        "componentWillMount",
-        "componentDidMount",
-        "componentWillReceiveProps",
-        "shouldComponentUpdate",
-        "componentWillUpdate",
-        "componentDidUpdate",
-        "componentWillUnmount",
-        "/^on.+$/",
-        "/^get.+$/",
-        "/^render.+$/",
-        "render"
-      ]
-    }]
+    "react/wrap-multilines": 0      // https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/wrap-multilines.md
+//    "react/sort-comp": [2, {         // https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/sort-comp.md
+//      "order": [
+//        "constructor",
+//        "displayName",
+//        "propTypes",
+//        "contextTypes",
+//        "childContextTypes",
+//        "mixins",
+//        "statics",
+//        "defaultProps",
+//        "getDefaultProps",
+//        "getInitialState",
+//        "getChildContext",
+//        "componentWillMount",
+//        "componentDidMount",
+//        "componentWillReceiveProps",
+//        "shouldComponentUpdate",
+//        "componentWillUpdate",
+//        "componentDidUpdate",
+//        "componentWillUnmount",
+//        "/^on.+$/",
+//        "/^get.+$/",
+//        "/^render.+$/",
+//        "render"
+//      ]
+//    }]
   }
 }

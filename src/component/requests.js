@@ -9,7 +9,7 @@ export default class Requests extends React.Component {
 
   _filter(arr) {
     const filter = this.state.filter;
-    if(!filter) {
+    if (!filter) {
       return arr;
     }
     return arr.filter((request) => {
@@ -38,24 +38,23 @@ export default class Requests extends React.Component {
     this.filter = this.props.requestData.filter;
     const requests = React.findDOMNode(this);
 
-    if(previousFilter !== this.filter) {
+    if (previousFilter !== this.filter) {
       requests.scrollTop = 0;
     }
   }
 
   render() {
-
     const {setActiveRequest, config, requestData} = this.props;
     let amountOfRequests;
 
-    if(requestData.filter) {
+    if (requestData.filter) {
       amountOfRequests = requestData.requests.length;
     } else {
       amountOfRequests = requestData.totalCount;
     }
 
 
-    const requestNodes = requestData.requests.map((request, index) => {
+    const requestNodes = requestData.requests.map((request) => {
       const handleClick = () => {
         setActiveRequest(request);
       };
@@ -66,8 +65,7 @@ export default class Requests extends React.Component {
         positionTop={positionTop}
         config={config}
         handleClick={handleClick}
-        key={request.request.id}
-      ></Request>
+        key={request.request.id} />;
     });
 
     const style = {
@@ -78,7 +76,7 @@ export default class Requests extends React.Component {
       <div className="requests-inner" style={style}>
         {requestNodes}
       </div>
-    </div>
+    </div>;
   }
 }
 
@@ -86,6 +84,7 @@ Requests.propTypes = {
   requestData: object.isRequired,
   filter: string,
   setActiveRequest: func.isRequired,
+  setFromIndex: func.isRequired,
   config: object.isRequired
 };
 

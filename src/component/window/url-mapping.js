@@ -44,16 +44,15 @@ export default class UrlMappingWindow extends React.Component {
       newUrlInput: ''
     });
 
-    setUrlMapping(urlInput, newUrlInput, localPath)
+    setUrlMapping(urlInput, newUrlInput, localPath);
   }
 
   render() {
-
     const {urlInput, newUrlInput} = this.state;
-    let {removeUrlMappingByNewUrl, urlMappings, closeWindow} = this.props;
+    let {urlMappings} = this.props;
+    const {removeUrlMappingByNewUrl, closeWindow} = this.props;
 
     urlMappings = urlMappings.map((map, index) => {
-
       const removeMapping = () => {
         removeUrlMappingByNewUrl(map.newUrl);
       };
@@ -73,7 +72,7 @@ export default class UrlMappingWindow extends React.Component {
             <i className="fa fa-remove"></i>
           </a>
         </div>
-      </li>
+      </li>;
     });
 
     return <div className="window url-mapping-window">
@@ -109,7 +108,7 @@ export default class UrlMappingWindow extends React.Component {
         </li>
         {urlMappings}
       </ul>
-    </div>
+    </div>;
   }
 }
 
