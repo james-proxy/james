@@ -1,3 +1,4 @@
+- `npm run package` will now overwrite existing packages
 - Add .eslintrc and apply rules to the codebase
 - Show total amount of requests
 - Improve scrolling performance

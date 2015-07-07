@@ -12,7 +12,7 @@
     "watch:style": "nodemon --watch style --ext scss --no-stdin --exec \"npm run build:style\"",
     "copy-files": "rm -rf build/fonts && mkdir -p build/fonts && cp ./node_modules/font-awesome/fonts/* build/fonts/ && cp -r ./resource/* ./build/",
     "package": "npm run build && rm -rf ./package &&  mkdir -p ./package && mkdir -p ./binaries && browserify --node -e build/index.js -o ./package/index.js --exclude remote && npm run -s copy-files-package && npm run -s create-binaries",
-    "create-binaries": "electron-packager ./package James --all --icon=./resource/icon.icns --version=0.28.3 --out binaries",
+    "create-binaries": "electron-packager ./package James --all --overwrite --icon=./resource/icon.icns --version=0.28.3 --out binaries",
     "copy-files-package": "rm -rf package/fonts && mkdir -p package/fonts && cp ./node_modules/font-awesome/fonts/* package/fonts/ && cp -r ./resource/* ./package/ && cp ./build/james.css ./package",
     "start": "electron .",
     "lint": "eslint ./src"
