@@ -9,7 +9,7 @@ export default class Search extends React.Component {
 
     this.state = {
       inputChanges: 0
-    }
+    };
   }
 
   _handleOnChange(event) {
@@ -20,7 +20,7 @@ export default class Search extends React.Component {
     const inputChanges = this.state.inputChanges;
 
     setTimeout(() => {
-      if(inputChanges !== this.state.inputChanges) {
+      if (inputChanges !== this.state.inputChanges) {
         return;
       }
       filterRequests(value);
@@ -29,8 +29,9 @@ export default class Search extends React.Component {
 
   render() {
     return <div className="search">
-      <input type="text" placeholder="Search" onChange={this._handleOnChange.bind(this)} />
-    </div>
+      <input type="text" placeholder="Search"
+             onChange={this._handleOnChange.bind(this)}/>
+    </div>;
   }
 }
 

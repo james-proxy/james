@@ -17,9 +17,10 @@ createMenu();
 // windows
 import UrlMappingWindow from './component/window/url-mapping.js';
 
-let renderInProgress = false;
-
-const db = new Datastore({ filename: app.getPath('userData') + '/data.nedb', autoload: true });
+const db = new Datastore({
+  filename: app.getPath('userData') + '/data.nedb',
+  autoload: true
+});
 
 const urlMapper = new UrlMapper(db, function() {
   updateUrlMapCount();
@@ -31,7 +32,7 @@ const proxy = new Proxy(() => {
   render();
 }, config, urlMapper);
 
-let data = {
+const data = {
   urlMapCount: 0,
   urlMappings: [],
   activeWindowFactory: null,
@@ -48,8 +49,7 @@ const windowFactories = {
       setUrlMapping={urlMapper.set.bind(urlMapper)}
       removeUrlMappingByNewUrl={urlMapper.removeByNewUrl.bind(urlMapper)}
       closeWindow={closeWindow}
-      chooseFile={chooseFile}
-    ></UrlMappingWindow>;
+      chooseFile={chooseFile} />;
   }
 };
 
@@ -64,7 +64,7 @@ const closeWindow = () => {
 
 const updateUrlMapCount = () => {
   urlMapper.getCount(function(err, count) {
-    if(err) return;
+    if (err) return;
     data.urlMapCount = count;
     render();
   });
@@ -72,7 +72,7 @@ const updateUrlMapCount = () => {
 
 const updateMappings = () => {
   urlMapper.getList(function(err, urlMappings) {
-    if(err) return;
+    if (err) return;
     data.urlMappings = urlMappings;
     render();
   });
@@ -95,7 +95,7 @@ const setFromIndex = (fromIndex) => {
 };
 
 const filterRequests = (filter) => {
-  if(filter === '') {
+  if (filter === '') {
     filter = null;
   }
   data.filter = filter;
@@ -103,7 +103,6 @@ const filterRequests = (filter) => {
 };
 
 function render() {
-
   const activeWindow = (data.activeWindowFactory && data.activeWindowFactory() || null);
 
   React.render(
@@ -111,16 +110,14 @@ function render() {
       <TitleBar
         urlMapCount={data.urlMapCount}
         showWindow={showWindow}
-        openDevTools={openDevTools}
-      ></TitleBar>
-      <MainContent 
-        openBrowser={openBrowser} 
-        activeWindow={activeWindow} 
-        requestData={proxy.getRequestData(50, data.fromIndex, data.filter)} 
-        setFromIndex={setFromIndex} 
+        openDevTools={openDevTools} />
+      <MainContent
+        openBrowser={openBrowser}
+        activeWindow={activeWindow}
+        requestData={proxy.getRequestData(50, data.fromIndex, data.filter)}
+        setFromIndex={setFromIndex}
         filterRequests={filterRequests}
-        config={config} 
-      ></MainContent>
+        config={config} />
     </div>,
     domNode
   );

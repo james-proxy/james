@@ -1,22 +1,19 @@
 import React from 'react';
 import FullUrl from './full-url.js';
 
-const {func, string, object} = React.PropTypes;
+const {func, object, number} = React.PropTypes;
 
 export default class Request extends React.Component {
   shouldComponentUpdate(nextProps) {
     return this.props.request.id !== nextProps.request.id ||
       this.props.positionTop !== nextProps.positionTop ||
-      this.done !== nextProps.request.done ||
-      this.props.className !== nextProps.className;
+      this.done !== nextProps.request.done;
   }
 
   _getLabels(request) {
-
     const {labels} = this.props.config;
     const url = request.fullUrl();
-
-    let labelElements = [];
+    const labelElements = [];
 
     if (request.mapped) {
       labelElements.push(
@@ -29,7 +26,7 @@ export default class Request extends React.Component {
 
     labels.forEach(function(label, index) {
       if (label.regex.test(url)) {
-        let classes = ['label'];
+        const classes = ['label'];
         classes.push(label.className);
         labelElements.push(
           <span className={classes.join(' ')} key={index}>
@@ -43,7 +40,7 @@ export default class Request extends React.Component {
   }
 
   render() {
-    let {request, response, handleClick, positionTop} = this.props;
+    const {request, response, handleClick, positionTop} = this.props;
 
     this.done = request.done;
 
@@ -56,7 +53,7 @@ export default class Request extends React.Component {
       top: positionTop
     };
 
-    return <div className='request' onClick={handleClick} style={style}>
+    return <div className="request" onClick={handleClick} style={style}>
       <span className="method property">{request.method}</span>
         <span className="time property">
           {took}
@@ -64,7 +61,7 @@ export default class Request extends React.Component {
         <span className="status-code property">
           {response.statusCode}
         </span>
-      <FullUrl request={request} isShortened={true}></FullUrl>
+      <FullUrl request={request} isShortened={true} />
 
       <div className="labels">
         {this._getLabels(request)}
@@ -77,5 +74,6 @@ Request.propTypes = {
   config: object.isRequired,
   request: object.isRequired,
   response: object.isRequired,
-  handleClick: func.isRequired
+  handleClick: func.isRequired,
+  positionTop: number.isRequired
 };
