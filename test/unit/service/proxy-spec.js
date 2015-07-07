@@ -13,7 +13,7 @@ describe('Proxy', function() {
     }
   };
 
-  let proxy, hoxyInstanceMock, callbacksRequest, callbacksResponseSent;
+  let proxy, hoxyInstanceMock, callbacksRequest, callbacksResponseSent, generateRequest;
   beforeEach(function() {
 
     callbacksRequest = [];
@@ -35,6 +35,21 @@ describe('Proxy', function() {
       return hoxyInstanceMock
     };
 
+    let requestCount = 0;
+
+    generateRequest = (callback) => {
+      callback = callback || function() {};
+      const request = {
+        fullUrl: function() {
+          return 'url' + requestCount;
+        }
+      };
+      const response = request;
+      callbacksRequest.forEach((cb) => {
+        cb(request, response, callback);
+      });
+    };
+
     proxy = new Proxy(update, config, urlMapper, createHoxy);
   });
 
@@ -47,6 +62,27 @@ describe('Proxy', function() {
         totalCount: 0
       })
     });
+
+    describe('after intercepted requests', function() {
+      beforeEach(function() {
+        generateRequest();
+      });
+
+      it('returns a totalCount value of 1', function() {
+        let requestData = proxy.getRequestData();
+        expect(requestData.totalCount).toEqual(1);
+      });
+
+      it('returns a totalCount value of 20 after intercepting 20 requests', function() {
+
+        for(let i = 0; i < 19; i++) {
+          generateRequest();
+        }
+
+        let requestData = proxy.getRequestData();
+        expect(requestData.totalCount).toEqual(20);
+      });
+    });
   });
 
   describe('hoxy integration', function() {
@@ -58,15 +94,11 @@ describe('Proxy', function() {
     });
 
     describe('intercept request', function() {
-      it('calls done', function() {
-        const done = sinon.spy();
-        const req = {
-          fullUrl: function() {}
-        };
-        const res = req;
-        callbacksRequest[0](req, res, done);
+      it('calls the callback', function() {
+        const callback = sinon.spy();
+        generateRequest(callback);
 
-        expect(done).toHaveBeenCalled();
+        expect(callback).toHaveBeenCalled();
       });
     });
   });

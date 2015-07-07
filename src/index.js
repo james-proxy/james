@@ -1,4 +1,5 @@
 import React from 'react';
+import hoxy from 'hoxy';
 import TitleBar from './component/titlebar';
 import MainContent from './component/main-content.js';
 import Proxy from './service/proxy.js';

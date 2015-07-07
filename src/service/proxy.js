@@ -1,4 +1,3 @@
-import hoxy from 'hoxy';
 import uniqid from 'uniqid';
 
 export default class Proxy {
