@@ -12,17 +12,16 @@ export default class FullUrl extends React.Component {
   }
 
   render() {
-
     const {request, isShortened} = this.props;
 
     let maxUrlLength = 1000;
-    if(isShortened) {
+    if (isShortened) {
       maxUrlLength = 60;
     }
 
     let port = null;
-    if(request.port) {
-      port = <span className="port">:{request.port}</span>
+    if (request.port) {
+      port = <span className="port">:{request.port}</span>;
     }
 
     return <div className="complete-url">
@@ -30,7 +29,7 @@ export default class FullUrl extends React.Component {
       <span className="hostname">{request.hostname}</span>
       {port}
       <span className="url">{this._shorten(request.url, maxUrlLength)}</span>
-    </div>
+    </div>;
   }
 }
 

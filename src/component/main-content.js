@@ -1,26 +1,20 @@
 import React from 'react';
-import Requests from './requests.js'
-import Search from './search.js'
-import InspectRequest from './inspect-request.js'
+import Requests from './requests.js';
+import Search from './search.js';
+import InspectRequest from './inspect-request.js';
 
-const {func, object, array, arrayOf, shape} = React.PropTypes;
+const {func, object, arrayOf, shape} = React.PropTypes;
 
 export default class MainContent extends React.Component {
 
   constructor() {
     super();
-  };
+  }
 
   componentWillMount() {
     this.setState({
       filter: null,
       activeRequest: null
-    });
-  }
-
-  _setActiveRequest(request) {
-    this.setState({
-      activeRequest: request
     });
   }
 
@@ -35,8 +29,7 @@ export default class MainContent extends React.Component {
   }
 
   render() {
-
-    let {
+    const {
       requestData,
       config,
       activeWindow,
@@ -44,34 +37,43 @@ export default class MainContent extends React.Component {
       filterRequests
     } = this.props;
 
-    let {activeRequest} = this.state;
-    let SearchBar, SetupInstructions;
+    const {activeRequest} = this.state;
+    let SearchBar;
+    let SetupInstructions;
 
     const setActiveRequest = (request) => {
-      this._setActiveRequest(request);
+      this.setState({
+        activeRequest: request
+      });
     };
 
-    if(activeRequest) {
-      activeRequest = <InspectRequest
+    let activeRequestNode = null;
+    if (activeRequest) {
+      activeRequestNode = <InspectRequest
         request={activeRequest}
-        setActiveRequest={setActiveRequest}
-      ></InspectRequest>;
+        setActiveRequest={setActiveRequest} />;
     }
 
-    if(requestData.totalCount > 0) {
-      SearchBar = <Search filterRequests={filterRequests}></Search>;
+    if (requestData.totalCount > 0) {
+      SearchBar = <Search filterRequests={filterRequests} />;
     } else {
       SetupInstructions = <div className="setup-instruction">
         <h2>Proxy started on localhost:1338</h2>
+
         <h3>Setup your browser to use James as proxy</h3>
-        <span className="open-browser chrome" onClick={this._openChrome.bind(this)}></span>
-        <span className="open-browser firefox" onClick={this._openFirefox.bind(this)}></span>
+        <span className="open-browser chrome"
+              onClick={this._openChrome.bind(this)}></span>
+        <span className="open-browser firefox"
+              onClick={this._openFirefox.bind(this)}></span>
       </div>;
     }
 
     return <div className="main-content">
       <div className="header">
         {SearchBar}
+        <div className="request-count">
+          Requests: {requestData.totalCount}
+        </div>
       </div>
       {activeWindow}
       {SetupInstructions}
@@ -79,19 +81,21 @@ export default class MainContent extends React.Component {
         requestData={requestData}
         config={config}
         setActiveRequest={setActiveRequest}
-        setFromIndex={setFromIndex}
-      ></Requests>
-      {activeRequest}
-    </div>
+        setFromIndex={setFromIndex} />
+      {activeRequestNode}
+    </div>;
   }
 }
 
 MainContent.propTypes = {
   openBrowser: func.isRequired,
+  setFromIndex: func.isRequired,
+  filterRequests: func.isRequired,
   requests: arrayOf(shape({
     request: object,
     response: object
   })),
   config: object.isRequired,
+  requestData: object.isRequired,
   activeWindow: object
 };

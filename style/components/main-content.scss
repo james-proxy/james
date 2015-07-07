@@ -15,6 +15,13 @@
     right: 0;
     height: 40px;
     padding: 5px;
+
+    .request-count {
+      display: block;
+      position: absolute;
+      right: 18px;
+      top: 13px;
+    }
   }
 
   h1 {
