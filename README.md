@@ -18,9 +18,15 @@ James is build with [hoxy](https://github.com/greim/hoxy), [electron](https://gi
 
 - `npm run watch`: Watches JS and SASS files and transpiles them automatically
 - `npm run package`: Creates a standalone App Bundle for OSX
+- `npm run lint`: Checks the `src` folder against all defined codestyle rules
 
-## Contribution
-Pull requests and ideas welcome
+## Contributing
+
+Feel free to open pull requests and issues!
+If you need inspiration, take a look in the issue section.
+
+### Guidelines
+- Make sure that there are no linting errors in your code (use `npm run lint`)
 
 ## License
 The MIT License (MIT)
