@@ -111,7 +111,8 @@ export default class Proxy {
 
     return {
       requests: requests.slice(fromIndex, fromIndex + limit),
-      totalCount: this._requests.length
+      totalCount: this._requests.length,
+      filter: filter
     };
   }
 

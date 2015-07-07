@@ -18,12 +18,22 @@ export default class Requests extends React.Component {
   }
 
   componentDidMount() {
-    const requests = document.querySelector('.requests');
+    const requests = React.findDOMNode(this);
     const requestsInner = document.querySelector('.requests-inner');
     requests.addEventListener('scroll', () => {
       const fromIndex = Math.ceil(requests.scrollTop / requestElementHeight) - 15;
       this._setFromIndex(fromIndex < 0 ? 0 : fromIndex);
     });
+  }
+
+  componentDidUpdate() {
+    const previousFilter = this.filter;
+    this.filter = this.props.requestData.filter;
+    const requests = React.findDOMNode(this);
+
+    if(previousFilter !== this.filter) {
+      requests.scrollTop = 0;
+    }
   }
 
   _setFromIndex(fromindex) {
