@@ -19,7 +19,6 @@ export default class Requests extends React.Component {
 
   componentDidMount() {
     const requests = React.findDOMNode(this);
-    const requestsInner = requests.firstChild;
     requests.addEventListener('scroll', () => {
       const fromIndex = Math.ceil(requests.scrollTop / requestElementHeight) - 15;
       this._setFromIndex(fromIndex < 0 ? 0 : fromIndex);
