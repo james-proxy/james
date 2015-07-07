@@ -12,35 +12,20 @@ export default class InspectRequest extends React.Component {
   }
 
   render() {
-
     const {request, setActiveRequest} = this.props;
     const close = () => {
       setActiveRequest(null);
     };
 
-    const doShowUrlMapperWindow = () => {
-      this.setState({
-        showUrlMapperWindow: true
-      });
-    };
-
-    const doHideUrlMapperWindow = () => {
-      this.setState({
-        showUrlMapperWindow: false
-      });
-    };
-
-    let responseBody = request.response.body;
-
     const requestHeaders = Object.keys(request.request.headers).map(function(key) {
-      const headerValue =  request.request.headers[key];
+      const headerValue = request.request.headers[key];
       return <li key={key}>
         <strong>{key}:&nbsp;</strong>
         {headerValue}
       </li>;
     });
     const responseHeaders = Object.keys(request.response.headers).map(function(key) {
-      const headerValue =  request.response.headers[key];
+      const headerValue = request.response.headers[key];
       return <li key={key}>
         <strong>{key}:&nbsp;</strong>
         {headerValue}
@@ -63,7 +48,7 @@ export default class InspectRequest extends React.Component {
         <div className="section">
           Request URL:
           <code>
-            <FullUrl request={request.request}></FullUrl>
+            <FullUrl request={request.request} />
           </code>
         </div>
         <div className="section">
@@ -83,7 +68,7 @@ export default class InspectRequest extends React.Component {
           </code>
         </div>
       </div>
-    </div>
+    </div>;
   }
 }
 

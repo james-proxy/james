@@ -2,11 +2,6 @@ const remote = require('remote');
 
 const Menu = remote.require('menu');
 
-export default function createMenu() {
-  const menu = Menu.buildFromTemplate(menuTempl());
-  Menu.setApplicationMenu(menu)
-}
-
 function menuTempl() {
   const menu = [];
   menu.push({
@@ -56,25 +51,6 @@ function menuTempl() {
       }
     ]
   });
-  //menu.push({
-  //  label: 'View',
-  //  submenu: [
-  //    {
-  //      label: 'Reload',
-  //      accelerator: 'Command+R',
-  //      click: function() {
-  //        BrowserWindow.getFocusedWindow().reloadIgnoringCache();
-  //      }
-  //    },
-  //    {
-  //      label: 'Toggle DevTools',
-  //      accelerator: 'Alt+Command+I',
-  //      click: function() {
-  //        BrowserWindow.getFocusedWindow().toggleDevTools();
-  //      }
-  //    }
-  //  ]
-  //});
   menu.push({
     label: 'Window',
     submenu: [
@@ -97,5 +73,10 @@ function menuTempl() {
       }
     ]
   });
-  return menu
+  return menu;
+}
+
+export default function createMenu() {
+  const menu = Menu.buildFromTemplate(menuTempl());
+  Menu.setApplicationMenu(menu);
 }

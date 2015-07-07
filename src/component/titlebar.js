@@ -15,12 +15,11 @@ export default class TitleBar extends React.Component {
   }
 
   render() {
-
     const {urlMapCount} = this.props;
 
     let UrlMapCountLabel;
 
-    if(urlMapCount > 0) {
+    if (urlMapCount > 0) {
       UrlMapCountLabel = <span className="label default">
         {urlMapCount}
       </span>;
@@ -39,7 +38,7 @@ export default class TitleBar extends React.Component {
         <i className=" fa fa-cog"></i>
         Developer
       </a>
-    </div>
+    </div>;
   }
 }
 
