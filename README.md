@@ -1,5 +1,7 @@
 # James
 
+https://codeship.com/projects/25856c40-2f43-0131-b419-22135f4e7ccd/status?branch=master
+
 James is an HTTP Proxy and Monitor that enables developers to view and intercept requests made from the browser.
 It is an open-source alternative to the popular developer tool [Charles](http://www.charlesproxy.com/)
 
