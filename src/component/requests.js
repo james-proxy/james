@@ -55,7 +55,7 @@ export default class Requests extends React.Component {
     }
 
 
-    const requests = requestData.requests.map((request, index) => {
+    const requestNodes = requestData.requests.map((request, index) => {
       const handleClick = () => {
         setActiveRequest(request);
       };
@@ -76,7 +76,7 @@ export default class Requests extends React.Component {
 
     return <div className="requests">
       <div className="requests-inner" style={style}>
-        {requests}
+        {requestNodes}
       </div>
     </div>
   }

@@ -47,8 +47,9 @@ export default class MainContent extends React.Component {
       });
     };
 
+    let activeRequestNode = null;
     if(activeRequest) {
-      activeRequest = <InspectRequest
+      activeRequestNode = <InspectRequest
         request={activeRequest}
         setActiveRequest={setActiveRequest}
       ></InspectRequest>;
@@ -77,7 +78,7 @@ export default class MainContent extends React.Component {
         setActiveRequest={setActiveRequest}
         setFromIndex={setFromIndex}
       ></Requests>
-      {activeRequest}
+      {activeRequestNode}
     </div>
   }
 }
