@@ -18,12 +18,6 @@ export default class MainContent extends React.Component {
     });
   }
 
-  _setActiveRequest(request) {
-    this.setState({
-      activeRequest: request
-    });
-  }
-
   _openChrome() {
     const {openBrowser} = this.props;
     openBrowser('chrome');
@@ -48,7 +42,9 @@ export default class MainContent extends React.Component {
     let SearchBar, SetupInstructions;
 
     const setActiveRequest = (request) => {
-      this._setActiveRequest(request);
+      this.setState({
+        activeRequest: request
+      });
     };
 
     if(activeRequest) {
