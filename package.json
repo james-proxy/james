@@ -16,7 +16,7 @@
     "zip-binaries": "cd binaries; for i in *; do zip -r \"${i%/}.zip\" \"$i\"; done",
     "copy-files-package": "rm -rf package/fonts && mkdir -p package/fonts && cp ./node_modules/font-awesome/fonts/* package/fonts/ && cp -r ./resource/* ./package/ && cp ./build/james.css ./package",
     "start": "electron .",
-    "lint": "eslint ./src",
+    "lint": "eslint ./src ./test",
     "test": "mocha --reporter dot --recursive -r setup-referee-sinon/globals test/unit --compilers js:babel/register"
   },
   "author": "Julian Hollmann <hollmann@uxebu.com>",
