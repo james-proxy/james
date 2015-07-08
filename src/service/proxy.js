@@ -21,74 +21,63 @@ export default class Proxy {
     this._update();
   }
 
-  _onInterceptRequest(req, res, done) {
-    const that = this;
-    try {
-      that._map(req, () => {
-        req.done = false;
-        req.id = uniqid();
-        req.started = new Date().getTime();
-
-        const request = {
-          request: req,
-          response: res
-        };
-
-        that._requests.unshift(request);
-        if (that._requests.length > that._config.maxLogEntries) {
-          that._requests.pop();
-        }
-
-        if (req.mapped) {
-          if (req.isLocal) {
-            return this.serve({
-              path: req.newUrl
-            }, function(err) {
-              done(err);
-              that._update();
-            });
-          }
-
-          req.fullUrl(req.newUrl);
-        }
-
-        done();
-        that._update();
-      });
-    } catch (e) {
-      console.log(e); // eslint-disable-line
-    }
-  }
-
-  _map(request, callback) {
+  _onInterceptRequest(request, response, done) {
     const fullUrl = request.fullUrl();
-    this._urlMapper.get(fullUrl, (err, mappedUrl) => {
-      if (mappedUrl) {
-        request.mapped = true;
-        request.isLocal = mappedUrl.isLocal;
-        request.newUrl = mappedUrl.newUrl;
-        request.originalUrl = fullUrl;
+
+    request.done = false;
+    request.id = uniqid();
+    request.started = new Date().getTime();
+
+    const requestContainer = {
+      request: request,
+      response: response
+    };
+
+    this._requests.unshift(requestContainer);
+    if (this._requests.length > this._config.maxLogEntries) {
+      this._requests.pop();
+    }
+
+    if (this._urlMapper.isMappedUrl(fullUrl)) {
+      const mappedUrl = this._urlMapper.get(fullUrl);
+      request.mapped = true;
+      request.isLocal = mappedUrl.isLocal;
+      request.newUrl = mappedUrl.newUrl;
+      request.originalUrl = fullUrl;
+
+      if (request.isLocal) {
+        return this._proxy.serve({
+          path: request.newUrl
+        }, (err) => {
+          done(err);
+          this._update();
+        });
       }
-      callback();
-    });
+
+      request.fullUrl(request.newUrl);
+    }
+
+    done();
+    this._update();
   }
 
   getRequestData(limit, fromIndex, filter) {
+    fromIndex = fromIndex || 0;
     limit = limit || this._config.maxLogEntries;
 
     let requestCount = 0;
-    let requests = this._requests;
-
-    requests = requests.filter((request) => {
-      if (!filter || request.request.fullUrl().indexOf(filter) !== -1) {
-        request.requestNumber = requestCount++;
-        return true;
-      }
-      return false;
-    });
+    const filteredRequests = this._requests
+      .filter((request) => {
+        if (!filter || request.request.fullUrl().indexOf(filter) !== -1) {
+          request.requestNumber = requestCount++;
+          return true;
+        }
+        return false;
+      })
+      .slice(fromIndex, fromIndex + limit);
 
     return {
-      requests: requests.slice(fromIndex, fromIndex + limit),
+      requests: filteredRequests,
       totalCount: this._requests.length
     };
   }
