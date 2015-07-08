@@ -55,7 +55,6 @@ export default class Proxy {
         done();
         that._update();
       });
-
     } catch (e) {
       console.log(e); // eslint-disable-line
     }

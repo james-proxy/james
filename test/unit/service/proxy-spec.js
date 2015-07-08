@@ -1,7 +1,6 @@
 import Proxy from '../../../src/service/proxy.js';
 
 describe('Proxy', function() {
-
   const update = () => {
 
   };
@@ -13,17 +12,21 @@ describe('Proxy', function() {
     }
   };
 
-  let proxy, hoxyInstanceMock, callbacksRequest, callbacksResponseSent, generateRequest;
-  beforeEach(function() {
+  let proxy;
+  let hoxyInstanceMock;
+  let callbacksRequest;
+  let callbacksResponseSent;
+  let generateRequest;
 
+  beforeEach(function() {
     callbacksRequest = [];
     callbacksResponseSent = [];
 
     const intercept = function(name, callback) {
-      if(name === 'request') {
+      if (name === 'request') {
         return callbacksRequest.push(callback);
       }
-      if(name === 'response-sent') {
+      if (name === 'response-sent') {
         return callbacksResponseSent.push(callback);
       }
     };
@@ -32,16 +35,17 @@ describe('Proxy', function() {
     };
 
     const createHoxy = () => {
-      return hoxyInstanceMock
+      return hoxyInstanceMock;
     };
 
     let requestCount = 0;
 
     generateRequest = (callback) => {
-      callback = callback || function() {};
+      callback = callback || function() {
+      };
       const request = {
         fullUrl: function() {
-          return 'url' + requestCount;
+          return 'url' + requestCount++;
         }
       };
       const response = request;
@@ -55,12 +59,12 @@ describe('Proxy', function() {
 
   describe('getRequestData', function() {
     it('has no requests on startup', function() {
-      let requestData = proxy.getRequestData();
+      const requestData = proxy.getRequestData();
 
       expect(requestData).toEqual({
         requests: [],
         totalCount: 0
-      })
+      });
     });
 
     describe('after intercepted requests', function() {
@@ -69,17 +73,16 @@ describe('Proxy', function() {
       });
 
       it('returns a totalCount value of 1', function() {
-        let requestData = proxy.getRequestData();
+        const requestData = proxy.getRequestData();
         expect(requestData.totalCount).toEqual(1);
       });
 
       it('returns a totalCount value of 20 after intercepting 20 requests', function() {
-
-        for(let i = 0; i < 19; i++) {
+        for (let i = 0; i < 19; i++) {
           generateRequest();
         }
 
-        let requestData = proxy.getRequestData();
+        const requestData = proxy.getRequestData();
         expect(requestData.totalCount).toEqual(20);
       });
     });
@@ -102,5 +105,4 @@ describe('Proxy', function() {
       });
     });
   });
-
 });
