@@ -1,4 +1,5 @@
 import React from 'react';
+import hoxy from 'hoxy';
 import TitleBar from './component/titlebar';
 import MainContent from './component/main-content.js';
 import Proxy from './service/proxy.js';
@@ -23,14 +24,17 @@ const db = new Datastore({
 });
 
 const urlMapper = new UrlMapper(db, function() {
-  updateUrlMapCount();
   updateMappings();
 });
+
+const createHoxy = () => {
+  return new hoxy.Proxy().listen(config.proxyPort);
+};
 
 const domNode = document.getElementById('app');
 const proxy = new Proxy(() => {
   render();
-}, config, urlMapper);
+}, config, urlMapper, createHoxy);
 
 const data = {
   urlMapCount: 0,
@@ -47,7 +51,7 @@ const windowFactories = {
     return <UrlMappingWindow
       urlMappings={data.urlMappings}
       setUrlMapping={urlMapper.set.bind(urlMapper)}
-      removeUrlMappingByNewUrl={urlMapper.removeByNewUrl.bind(urlMapper)}
+      removeUrlMapping={urlMapper.remove.bind(urlMapper)}
       closeWindow={closeWindow}
       chooseFile={chooseFile} />;
   }
@@ -60,14 +64,6 @@ const openDevTools = () => {
 const closeWindow = () => {
   data.activeWindowFactory = null;
   render();
-};
-
-const updateUrlMapCount = () => {
-  urlMapper.getCount(function(err, count) {
-    if (err) return;
-    data.urlMapCount = count;
-    render();
-  });
 };
 
 const updateMappings = () => {
@@ -103,6 +99,7 @@ const filterRequests = (filter) => {
 };
 
 function render() {
+  data.urlMapCount = urlMapper.getCount();
   const activeWindow = (data.activeWindowFactory && data.activeWindowFactory() || null);
 
   React.render(
@@ -123,7 +120,6 @@ function render() {
   );
 }
 
-updateUrlMapCount();
 updateMappings();
 
 render(true);

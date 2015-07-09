@@ -1,110 +1,91 @@
-import hoxy from 'hoxy';
 import uniqid from 'uniqid';
 
 export default class Proxy {
 
-  constructor(update, config, urlMapper) {
+  constructor(update, config, urlMapper, createHoxy) {
     this._requests = [];
     this._urlMapper = urlMapper;
     this._config = config;
+    this._update = update;
 
-    const proxy = this._proxy = new hoxy.Proxy().listen(1338);
+    const proxy = this._proxy = createHoxy();
     const that = this;
 
-    proxy.intercept('response-sent', function(req) {
-      req.completed = new Date().getTime();
-      req.took = req.completed - req.started;
-      req.done = true;
-      update();
-    });
+    proxy.intercept('response-sent', this._onResponseSent.bind(this));
     proxy.intercept('request', function(req, res, done) {
-      try {
-        that._map(req, () => {
-          req.done = false;
-          req.id = uniqid();
-          req.started = new Date().getTime();
-
-          const request = {
-            request: req,
-            response: res
-          };
-
-          that._requests.unshift(request);
-          if (that._requests.length > config.maxLogEntries) {
-            that._requests.pop();
-          }
-
-          if (req.mapped) {
-            if (req.isLocal) {
-              return this.serve({
-                path: req.newUrl
-              }, function(err) {
-                done(err);
-                update();
-              });
-            }
-
-            req.fullUrl(req.newUrl);
-          }
-
-          done();
-          setTimeout(function() {
-            update();
-          }, 0);
-        });
-      } catch (e) {
-        console.log(e); // eslint-disable-line
-      }
+      that._onInterceptRequest(req, res, this, done);
     });
   }
 
-  _splitFullurl(fullUrl) {
-    const splitUrl = fullUrl.split('://');
-    const protocol = splitUrl.shift() + ':';
-
-    const hostAndUrl = splitUrl.join('://');
-    const splitHostAndUrl = hostAndUrl.split('/');
-    const hostname = splitHostAndUrl.shift();
-    const url = '/' + splitHostAndUrl.join('/');
-
-    return {
-      protocol,
-      hostname,
-      url
-    };
+  _onResponseSent(req) {
+    req.completed = new Date().getTime();
+    req.took = req.completed - req.started;
+    req.done = true;
+    this._update();
   }
 
-  _map(request, callback) {
+  _onInterceptRequest(request, response, cycle, done) {
     const fullUrl = request.fullUrl();
-    this._urlMapper.get(fullUrl, (err, mappedUrl) => {
-      if (mappedUrl) {
+
+    request.done = false;
+    request.id = uniqid();
+    request.started = new Date().getTime();
+
+    const requestContainer = {
+      request: request,
+      response: response
+    };
+
+    try {
+      this._requests.unshift(requestContainer);
+      if (this._requests.length > this._config.maxLogEntries) {
+        this._requests.pop();
+      }
+
+      if (this._urlMapper.isMappedUrl(fullUrl)) {
+        const mappedUrl = this._urlMapper.get(fullUrl);
         request.mapped = true;
         request.isLocal = mappedUrl.isLocal;
         request.newUrl = mappedUrl.newUrl;
         request.originalUrl = fullUrl;
+
+        if (request.isLocal) {
+          return cycle.serve({
+            path: request.newUrl
+          }, (err) => {
+            done(err);
+            this._update();
+          });
+        }
+
+        request.fullUrl(request.newUrl);
       }
-      callback();
-    });
+
+      done();
+      this._update();
+    } catch(e) {
+      console.log(e); // eslint-disable-line
+    }
   }
 
   getRequestData(limit, fromIndex, filter) {
+    fromIndex = fromIndex || 0;
     limit = limit || this._config.maxLogEntries;
 
     let requestCount = 0;
-    let requests = this._requests;
-
-    requests = requests.filter((request) => {
-      if (!filter || request.request.fullUrl().indexOf(filter) !== -1) {
-        request.requestNumber = requestCount++;
-        return true;
-      }
-      return false;
-    });
+    const filteredRequests = this._requests
+      .filter((request) => {
+        if (!filter || request.request.fullUrl().indexOf(filter) !== -1) {
+          request.requestNumber = requestCount++;
+          return true;
+        }
+        return false;
+      })
+      .slice(fromIndex, fromIndex + limit);
 
     return {
-      requests: requests.slice(fromIndex, fromIndex + limit),
-      totalCount: this._requests.length,
-      filter: filter
+      requests: filteredRequests,
+      totalCount: this._requests.length
     };
   }
 
