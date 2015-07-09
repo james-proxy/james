@@ -26,6 +26,7 @@ export default class UrlMappingWindow extends React.Component {
     const {chooseFile} = this.props;
 
     chooseFile((paths) => {
+      if (!paths) return;
       const path = paths[0];
 
       this.setState({
@@ -50,11 +51,11 @@ export default class UrlMappingWindow extends React.Component {
   render() {
     const {urlInput, newUrlInput} = this.state;
     let {urlMappings} = this.props;
-    const {removeUrlMappingByNewUrl, closeWindow} = this.props;
+    const {removeUrlMapping, closeWindow} = this.props;
 
     urlMappings = urlMappings.map((map, index) => {
       const removeMapping = () => {
-        removeUrlMappingByNewUrl(map.newUrl);
+        removeUrlMapping(map.url);
       };
 
       return <li className="collection-item" key={index}>
@@ -89,7 +90,7 @@ export default class UrlMappingWindow extends React.Component {
               type="text"
               placeholder="Enter the URL to map"
               onChange={this.setUrlValue.bind(this)}
-            />
+              />
             <span className="seperator">
               <i className="fa fa-chevron-right"></i>
             </span>
@@ -99,9 +100,10 @@ export default class UrlMappingWindow extends React.Component {
               type="text"
               placeholder="Enter the new URL"
               onChange={this.setNewUrlValue.bind(this)}
-            />
+              />
             <a onClick={this.setNewLocalUrlValue.bind(this)}>Choose file</a>
-            <a href="#!" className="secondary-content" onClick={this.saveMapping.bind(this)}>
+            <a href="#!" className="secondary-content"
+               onClick={this.saveMapping.bind(this)}>
               <i className="fa fa-plus"></i>
             </a>
           </div>
@@ -115,7 +117,7 @@ export default class UrlMappingWindow extends React.Component {
 UrlMappingWindow.propTypes = {
   setUrlMapping: func.isRequired,
   chooseFile: func.isRequired,
-  removeUrlMappingByNewUrl: func.isRequired,
+  removeUrlMapping: func.isRequired,
   closeWindow: func.isRequired,
   urlMappings: array.isRequired
 };

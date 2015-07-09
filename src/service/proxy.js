@@ -9,9 +9,12 @@ export default class Proxy {
     this._update = update;
 
     const proxy = this._proxy = createHoxy();
+    const that = this;
 
     proxy.intercept('response-sent', this._onResponseSent.bind(this));
-    proxy.intercept('request', this._onInterceptRequest.bind(this));
+    proxy.intercept('request', function(req, res, done) {
+      that._onInterceptRequest(req, res, this, done);
+    });
   }
 
   _onResponseSent(req) {
@@ -21,7 +24,7 @@ export default class Proxy {
     this._update();
   }
 
-  _onInterceptRequest(request, response, done) {
+  _onInterceptRequest(request, response, cycle, done) {
     const fullUrl = request.fullUrl();
 
     request.done = false;
@@ -33,32 +36,36 @@ export default class Proxy {
       response: response
     };
 
-    this._requests.unshift(requestContainer);
-    if (this._requests.length > this._config.maxLogEntries) {
-      this._requests.pop();
-    }
-
-    if (this._urlMapper.isMappedUrl(fullUrl)) {
-      const mappedUrl = this._urlMapper.get(fullUrl);
-      request.mapped = true;
-      request.isLocal = mappedUrl.isLocal;
-      request.newUrl = mappedUrl.newUrl;
-      request.originalUrl = fullUrl;
-
-      if (request.isLocal) {
-        return this._proxy.serve({
-          path: request.newUrl
-        }, (err) => {
-          done(err);
-          this._update();
-        });
+    try {
+      this._requests.unshift(requestContainer);
+      if (this._requests.length > this._config.maxLogEntries) {
+        this._requests.pop();
       }
 
-      request.fullUrl(request.newUrl);
-    }
+      if (this._urlMapper.isMappedUrl(fullUrl)) {
+        const mappedUrl = this._urlMapper.get(fullUrl);
+        request.mapped = true;
+        request.isLocal = mappedUrl.isLocal;
+        request.newUrl = mappedUrl.newUrl;
+        request.originalUrl = fullUrl;
 
-    done();
-    this._update();
+        if (request.isLocal) {
+          return cycle.serve({
+            path: request.newUrl
+          }, (err) => {
+            done(err);
+            this._update();
+          });
+        }
+
+        request.fullUrl(request.newUrl);
+      }
+
+      done();
+      this._update();
+    } catch(e) {
+      console.log(e); // eslint-disable-line
+    }
   }
 
   getRequestData(limit, fromIndex, filter) {

@@ -24,7 +24,6 @@ const db = new Datastore({
 });
 
 const urlMapper = new UrlMapper(db, function() {
-  updateUrlMapCount();
   updateMappings();
 });
 
@@ -52,7 +51,7 @@ const windowFactories = {
     return <UrlMappingWindow
       urlMappings={data.urlMappings}
       setUrlMapping={urlMapper.set.bind(urlMapper)}
-      removeUrlMappingByNewUrl={urlMapper.removeByNewUrl.bind(urlMapper)}
+      removeUrlMapping={urlMapper.remove.bind(urlMapper)}
       closeWindow={closeWindow}
       chooseFile={chooseFile} />;
   }
@@ -65,14 +64,6 @@ const openDevTools = () => {
 const closeWindow = () => {
   data.activeWindowFactory = null;
   render();
-};
-
-const updateUrlMapCount = () => {
-  urlMapper.getCount(function(err, count) {
-    if (err) return;
-    data.urlMapCount = count;
-    render();
-  });
 };
 
 const updateMappings = () => {
@@ -108,6 +99,7 @@ const filterRequests = (filter) => {
 };
 
 function render() {
+  data.urlMapCount = urlMapper.getCount();
   const activeWindow = (data.activeWindowFactory && data.activeWindowFactory() || null);
 
   React.render(
@@ -128,7 +120,6 @@ function render() {
   );
 }
 
-updateUrlMapCount();
 updateMappings();
 
 render(true);

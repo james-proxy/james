@@ -18,6 +18,7 @@ describe('Proxy', function() {
   let callbacksRequest;
   let callbacksResponseSent;
   let generateRequest;
+  let cycle;
 
   beforeEach(function() {
     callbacksRequest = [];
@@ -32,7 +33,10 @@ describe('Proxy', function() {
       }
     };
     hoxyInstanceMock = {
-      intercept: sinon.spy(intercept),
+      intercept: sinon.spy(intercept)
+    };
+
+    cycle = {
       serve: sinon.spy()
     };
 
@@ -57,7 +61,7 @@ describe('Proxy', function() {
 
       const response = request;
       callbacksRequest.forEach((cb) => {
-        cb(request, response, callback);
+        cb.call(cycle, request, response, callback);
       });
 
       return request;
@@ -181,7 +185,7 @@ describe('Proxy', function() {
 
       generateRequest();
 
-      expect(hoxyInstanceMock.serve).toHaveBeenCalledWith({
+      expect(cycle.serve).toHaveBeenCalledWith({
         path: '/local/path'
       });
     });
