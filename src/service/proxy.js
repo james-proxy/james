@@ -108,7 +108,8 @@ export default class Proxy {
 
     return {
       requests: filteredRequests,
-      totalCount: this._requests.length
+      totalCount: this._requests.length,
+      filteredCount: requestCount
     };
   }
 

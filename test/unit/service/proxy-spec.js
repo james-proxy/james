@@ -98,7 +98,8 @@ describe('Proxy', function() {
 
       expect(requestData).toEqual({
         requests: [],
-        totalCount: 0
+        totalCount: 0,
+        filteredCount: 0
       });
     });
 
@@ -108,6 +109,11 @@ describe('Proxy', function() {
       });
 
       it('returns a totalCount value of 1', function() {
+        const requestData = proxy.getRequestData();
+        expect(requestData.totalCount).toEqual(1);
+      });
+
+      it('returns a filteredCount value of 1', function() {
         const requestData = proxy.getRequestData();
         expect(requestData.totalCount).toEqual(1);
       });
@@ -133,6 +139,13 @@ describe('Proxy', function() {
         const filter = 'url1';
         const requestData = proxy.getRequestData(null, null, filter);
         expect(requestData.totalCount).toEqual(2);
+      });
+
+      it('shows the correct filteredCount when requests are filtered', function() {
+        generateRequest();
+        const filter = 'url1';
+        const requestData = proxy.getRequestData(null, null, filter);
+        expect(requestData.filteredCount).toEqual(1);
       });
 
       it('limits the result when the limit argument is passed', function() {
