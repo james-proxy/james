@@ -7,7 +7,6 @@ export default class Proxy {
     this._urlMapper = urlMapper;
     this._config = config;
     this._update = update;
-    this._cachingEnabled = config.cachingEnabled;
     this._isCachingEnabled = isCachingEnabled;
 
     const proxy = this._proxy = createHoxy();
@@ -30,7 +29,6 @@ export default class Proxy {
   }
 
   _onInterceptResponse(request, response, cycle, done) {
-
     if (!this._isCachingEnabled()) {
       this._modifyCacheHeaders(response);
     }

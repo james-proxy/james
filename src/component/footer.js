@@ -16,7 +16,7 @@ export default class Footer extends React.Component {
       cachingButton = <span>
         <i className="fa fa-circle"/>
         Caching enabled
-      </span>
+      </span>;
     }
 
     return <div className="footer">

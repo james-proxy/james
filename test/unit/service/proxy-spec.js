@@ -261,7 +261,7 @@ describe('Proxy', function() {
     });
     it('changes the header `expires` to `0`', function() {
       const response = generateRequest();
-      expect(response.headers['expires']).toBe('0');
+      expect(response.headers.expires).toBe('0');
     });
   });
 });
