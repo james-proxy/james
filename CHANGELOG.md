@@ -1,3 +1,4 @@
+- Enable/Disable caching by overwrite/removing reponse cache header properties
 - Add tests for proxy and url-mapper
 - `npm run package` will now overwrite existing packages
 - Add .eslintrc and apply rules to the codebase
