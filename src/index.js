@@ -50,6 +50,11 @@ const toggleCaching = () => {
   render();
 };
 
+const clearRequests = () => {
+  proxy.clear();
+  render();
+};
+
 const domNode = document.getElementById('app');
 const proxy = new Proxy(() => {
   render();
@@ -130,6 +135,7 @@ function render() {
       <Footer
         isCachingEnabled={isCachingEnabled}
         requestData={requestData}
+        clearRequests={clearRequests}
         toggleCaching={toggleCaching} />
     </div>,
     domNode

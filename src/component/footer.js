@@ -8,7 +8,8 @@ export default class Footer extends React.Component {
     const {
       isCachingEnabled,
       toggleCaching,
-      requestData
+      requestData,
+      clearRequests
       } = this.props;
 
     let cachingButton = <span>
@@ -27,6 +28,9 @@ export default class Footer extends React.Component {
       <button onClick={toggleCaching}>{cachingButton}</button>
       <div className="request-count">
         Requests: {requestData.filteredCount}/{requestData.totalCount}
+        <button onClick={clearRequests}>
+          <i className="fa fa-ban"></i>
+        </button>
       </div>
     </div>;
   }
@@ -35,5 +39,6 @@ export default class Footer extends React.Component {
 Footer.propTypes = {
   toggleCaching: func.isRequired,
   isCachingEnabled: func.isRequired,
+  clearRequests: func.isRequired,
   requestData: object.isRequired
 };

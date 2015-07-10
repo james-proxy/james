@@ -277,4 +277,17 @@ describe('Proxy', function() {
       expect(response.headers.expires).toBe('0');
     });
   });
+
+  describe('clear', function() {
+    it('removes all requests', function() {
+      generateRequest();
+      proxy.clear();
+      expect(proxy.getRequestData().requests.length).toBe(0);
+    });
+    it('returns the correct totalCount after clearing', function() {
+      generateRequest();
+      proxy.clear();
+      expect(proxy.getRequestData().totalCount).toBe(0);
+    });
+  });
 });

@@ -113,4 +113,8 @@ export default class Proxy {
     };
   }
 
+  clear() {
+    this._requests = [];
+  }
+
 }
