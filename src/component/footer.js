@@ -1,11 +1,15 @@
 import React from 'react';
 
-const {func} = React.PropTypes;
+const {func, object} = React.PropTypes;
 
 export default class Footer extends React.Component {
 
   render() {
-    const {isCachingEnabled, toggleCaching} = this.props;
+    const {
+      isCachingEnabled,
+      toggleCaching,
+      requestData
+      } = this.props;
 
     let cachingButton = <span>
       <i className="fa fa-circle-o"/>
@@ -21,11 +25,15 @@ export default class Footer extends React.Component {
 
     return <div className="footer">
       <button onClick={toggleCaching}>{cachingButton}</button>
+      <div className="request-count">
+        Requests: {requestData.filteredCount}/{requestData.totalCount}
+      </div>
     </div>;
   }
 }
 
 Footer.propTypes = {
   toggleCaching: func.isRequired,
-  isCachingEnabled: func.isRequired
+  isCachingEnabled: func.isRequired,
+  requestData: object.isRequired
 };

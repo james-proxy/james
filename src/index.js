@@ -112,6 +112,7 @@ const filterRequests = (filter) => {
 function render() {
   data.urlMapCount = urlMapper.getCount();
   const activeWindow = (data.activeWindowFactory && data.activeWindowFactory() || null);
+  const requestData = proxy.getRequestData(50, data.fromIndex, data.filter);
 
   React.render(
     <div className="container">
@@ -122,12 +123,13 @@ function render() {
       <MainContent
         openBrowser={openBrowser}
         activeWindow={activeWindow}
-        requestData={proxy.getRequestData(50, data.fromIndex, data.filter)}
+        requestData={requestData}
         setFromIndex={setFromIndex}
         filterRequests={filterRequests}
         config={config} />
       <Footer
         isCachingEnabled={isCachingEnabled}
+        requestData={requestData}
         toggleCaching={toggleCaching} />
     </div>,
     domNode
