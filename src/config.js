@@ -3,5 +3,6 @@ export default {
   proxyPort: 1338,
   labels: [
 
-  ]
+  ],
+  cachingEnabled: false
 };
