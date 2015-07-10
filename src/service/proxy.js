@@ -2,11 +2,12 @@ import uniqid from 'uniqid';
 
 export default class Proxy {
 
-  constructor(update, config, urlMapper, createHoxy) {
+  constructor(update, config, urlMapper, createHoxy, isCachingEnabled) {
     this._requests = [];
     this._urlMapper = urlMapper;
     this._config = config;
     this._update = update;
+    this._isCachingEnabled = isCachingEnabled;
 
     const proxy = this._proxy = createHoxy();
     const that = this;
@@ -15,6 +16,9 @@ export default class Proxy {
     proxy.intercept('request', function(req, res, done) {
       that._onInterceptRequest(req, res, this, done);
     });
+    proxy.intercept('response', function(req, res, done) {
+      that._onInterceptResponse(req, res, this, done);
+    });
   }
 
   _onResponseSent(req) {
@@ -22,6 +26,25 @@ export default class Proxy {
     req.took = req.completed - req.started;
     req.done = true;
     this._update();
+  }
+
+  _onInterceptResponse(request, response, cycle, done) {
+    if (!this._isCachingEnabled()) {
+      this._modifyCacheHeaders(response);
+    }
+
+    done();
+  }
+
+  _modifyCacheHeaders(response) {
+    delete response.headers['if-modified-since'];
+    delete response.headers['if-none-match'];
+    delete response.headers['last-modified'];
+    delete response.headers.etag;
+
+    response.headers.expires = '0';
+    response.headers.pragma = 'no-cache';
+    response.headers['cache-control'] = 'no-cache';
   }
 
   _onInterceptRequest(request, response, cycle, done) {
@@ -63,7 +86,7 @@ export default class Proxy {
 
       done();
       this._update();
-    } catch(e) {
+    } catch (e) {
       console.log(e); // eslint-disable-line
     }
   }

@@ -13,16 +13,20 @@ describe('Proxy', function() {
     isMappedUrl: sinon.stub()
   };
 
+  const isCachingEnabled = sinon.stub().returns(false);
+
   let proxy;
   let hoxyInstanceMock;
   let callbacksRequest;
   let callbacksResponseSent;
+  let callbacksResponse;
   let generateRequest;
   let cycle;
 
   beforeEach(function() {
     callbacksRequest = [];
     callbacksResponseSent = [];
+    callbacksResponse = [];
 
     const intercept = function(name, callback) {
       if (name === 'request') {
@@ -30,6 +34,9 @@ describe('Proxy', function() {
       }
       if (name === 'response-sent') {
         return callbacksResponseSent.push(callback);
+      }
+      if (name === 'response') {
+        return callbacksResponse.push(callback);
       }
     };
     hoxyInstanceMock = {
@@ -54,6 +61,15 @@ describe('Proxy', function() {
       const id = 'url' + requestCount++;
       const request = {
         fullUrl: function() {
+        },
+        headers: {
+          'if-modified-since': 'foo',
+          'if-none-match': 'foo',
+          'pragma': 'foo',
+          'cache-control': 'foo',
+          'last-modified': 'foo',
+          'expires': 'foo',
+          'etag': 'foo'
         }
       };
 
@@ -63,11 +79,17 @@ describe('Proxy', function() {
       callbacksRequest.forEach((cb) => {
         cb.call(cycle, request, response, callback);
       });
+      callbacksResponse.forEach((cb) => {
+        cb.call(cycle, request, response, callback);
+      });
+      callbacksResponseSent.forEach((cb) => {
+        cb.call(cycle, request, response, callback);
+      });
 
       return request;
     };
 
-    proxy = new Proxy(update, config, urlMapper, createHoxy);
+    proxy = new Proxy(update, config, urlMapper, createHoxy, isCachingEnabled);
   });
 
   describe('getRequestData', function() {
@@ -198,6 +220,9 @@ describe('Proxy', function() {
     it('registers a callback to intercept responses', function() {
       expect(hoxyInstanceMock.intercept).toHaveBeenCalledWith('response-sent');
     });
+    it('registers a callback to intercept responses', function() {
+      expect(hoxyInstanceMock.intercept).toHaveBeenCalledWith('response');
+    });
 
     describe('intercept request', function() {
       it('calls the callback', function() {
@@ -206,6 +231,37 @@ describe('Proxy', function() {
 
         expect(callback).toHaveBeenCalled();
       });
+    });
+  });
+
+  describe('caching', function() {
+    it('removes the header `if-modified-since`', function() {
+      const response = generateRequest();
+      expect(response.headers['if-modified-since']).toBe(undefined);
+    });
+    it('removes the header `if-none-match`', function() {
+      const response = generateRequest();
+      expect(response.headers['if-none-match']).toBe(undefined);
+    });
+    it('removes the header `etag`', function() {
+      const response = generateRequest();
+      expect(response.headers.etag).toBe(undefined);
+    });
+    it('removes the header `last-modified`', function() {
+      const response = generateRequest();
+      expect(response.headers['last-modified']).toBe(undefined);
+    });
+    it('changes the header `pragma` to `no-cache`', function() {
+      const response = generateRequest();
+      expect(response.headers.pragma).toBe('no-cache');
+    });
+    it('changes the header `cache-control` to `no-cache`', function() {
+      const response = generateRequest();
+      expect(response.headers['cache-control']).toBe('no-cache');
+    });
+    it('changes the header `expires` to `0`', function() {
+      const response = generateRequest();
+      expect(response.headers.expires).toBe('0');
     });
   });
 });

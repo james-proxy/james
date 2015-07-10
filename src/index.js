@@ -1,6 +1,7 @@
 import React from 'react';
 import hoxy from 'hoxy';
 import TitleBar from './component/titlebar';
+import Footer from './component/footer';
 import MainContent from './component/main-content.js';
 import Proxy from './service/proxy.js';
 import createChooseFile from './service/choose-file.js';
@@ -23,6 +24,15 @@ const db = new Datastore({
   autoload: true
 });
 
+const data = {
+  urlMapCount: 0,
+  urlMappings: [],
+  activeWindowFactory: null,
+  fromIndex: 0,
+  filter: null,
+  cachingEnabled: false
+};
+
 const urlMapper = new UrlMapper(db, function() {
   updateMappings();
 });
@@ -31,18 +41,19 @@ const createHoxy = () => {
   return new hoxy.Proxy().listen(config.proxyPort);
 };
 
+const isCachingEnabled = () => {
+  return data.cachingEnabled;
+};
+
+const toggleCaching = () => {
+  data.cachingEnabled = !data.cachingEnabled;
+  render();
+};
+
 const domNode = document.getElementById('app');
 const proxy = new Proxy(() => {
   render();
-}, config, urlMapper, createHoxy);
-
-const data = {
-  urlMapCount: 0,
-  urlMappings: [],
-  activeWindowFactory: null,
-  fromIndex: 0,
-  filter: null
-};
+}, config, urlMapper, createHoxy, isCachingEnabled);
 
 const chooseFile = createChooseFile(remote.getCurrentWindow());
 
@@ -115,6 +126,9 @@ function render() {
         setFromIndex={setFromIndex}
         filterRequests={filterRequests}
         config={config} />
+      <Footer
+        isCachingEnabled={isCachingEnabled}
+        toggleCaching={toggleCaching} />
     </div>,
     domNode
   );
