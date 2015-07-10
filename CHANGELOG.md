@@ -1,3 +1,6 @@
+- Add a button that allows the user to clear all requests
+- Show amount of requests and amount of filtered requests in the footer
+- Show correct scrollbar position and size when result is filtered
 - Enable/Disable caching by overwrite/removing reponse cache header properties
 - Add tests for proxy and url-mapper
 - `npm run package` will now overwrite existing packages
