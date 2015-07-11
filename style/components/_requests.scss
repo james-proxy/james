@@ -22,6 +22,19 @@
 
     .complete-url {
       width: calc(100% - 165px);
+
+      .url {
+        white-space: nowrap;
+      }
+      .fade-out {
+        position: absolute;
+        right: 0;
+        display: block;
+        width: 400px;
+        top: 0;
+        height: 30px;
+        background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 1) 70%, rgba(255, 255, 255, 1) 75%, rgba(255, 255, 255, 1) 100%);
+      }
     }
 
     &:hover {

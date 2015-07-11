@@ -29,6 +29,7 @@ export default class FullUrl extends React.Component {
       <span className="hostname">{request.hostname}</span>
       {port}
       <span className="url">{this._shorten(request.url, maxUrlLength)}</span>
+      <span className="fade-out"></span>
     </div>;
   }
 }

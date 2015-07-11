@@ -61,7 +61,7 @@ export default class Request extends React.Component {
         <span className="status-code property">
           {response.statusCode}
         </span>
-      <FullUrl request={request} isShortened={true} />
+      <FullUrl request={request} />
 
       <div className="labels">
         {this._getLabels(request)}
