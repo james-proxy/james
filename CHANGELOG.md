@@ -1,3 +1,4 @@
+- Shorten URL based on available space (fixes #4)
 - Add a button that allows the user to clear all requests
 - Show amount of requests and amount of filtered requests in the footer
 - Show correct scrollbar position and size when result is filtered
