@@ -22,10 +22,8 @@
 
     .complete-url {
       width: calc(100% - 165px);
+      white-space: nowrap;
 
-      .url {
-        white-space: nowrap;
-      }
       .fade-out {
         position: absolute;
         right: 0;
