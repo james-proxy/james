@@ -82,7 +82,7 @@ export default class Request extends React.Component {
       onClick: (event) => {
         event.preventDefault();
         showWindow('UrlMapping', {urlInput: request.fullUrl()});
-        this._toggleIsContextMenuActive();
+        this._toggleContextMenu();
       }
     }];
 
