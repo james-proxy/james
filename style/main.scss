@@ -5,6 +5,7 @@ $fa-font-path: "fonts" !default;
 @import 'components/footer';
 @import 'components/main-content';
 @import 'components/requests';
+@import 'components/context-menu';
 @import 'components/inspect-request';
 @import 'components/windows/url-mapping';
 @import '../node_modules/font-awesome/scss/font-awesome';
@@ -23,7 +24,6 @@ body {
 
 span.label {
   display: inline-block;
-  margin-left: 5px;
   color: $white;
   padding: 2px;
   padding-left: 6px;

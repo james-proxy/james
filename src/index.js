@@ -66,6 +66,7 @@ const windowFactories = {
   UrlMapping: () => {
     return <UrlMappingWindow
       urlMappings={data.urlMappings}
+      options={data.activeWindow.options}
       setUrlMapping={urlMapper.set.bind(urlMapper)}
       removeUrlMapping={urlMapper.remove.bind(urlMapper)}
       closeWindow={closeWindow}
@@ -78,7 +79,7 @@ const openDevTools = () => {
 };
 
 const closeWindow = () => {
-  data.activeWindowFactory = null;
+  data.activeWindow = null;
   render();
 };
 
@@ -90,8 +91,11 @@ const updateMappings = () => {
   });
 };
 
-const showWindow = (windowName) => {
-  data.activeWindowFactory = windowFactories[windowName];
+const showWindow = (windowName, options = {}) => {
+  data.activeWindow = {
+    factory: windowFactories[windowName],
+    options: options
+  };
   render();
 };
 
@@ -116,7 +120,7 @@ const filterRequests = (filter) => {
 
 function render() {
   data.urlMapCount = urlMapper.getCount();
-  const activeWindow = (data.activeWindowFactory && data.activeWindowFactory() || null);
+  const activeWindow = data.activeWindow && data.activeWindow.factory() || null;
   const requestData = proxy.getRequestData(50, data.fromIndex, data.filter);
 
   React.render(
@@ -127,6 +131,7 @@ function render() {
         openDevTools={openDevTools} />
       <MainContent
         openBrowser={openBrowser}
+        showWindow={showWindow}
         activeWindow={activeWindow}
         requestData={requestData}
         setFromIndex={setFromIndex}
