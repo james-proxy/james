@@ -76,7 +76,7 @@ export default class Request extends React.Component {
       top: positionTop
     };
 
-    let contextMenuItems = [{
+    const contextMenuItems = [{
       title: 'Add mapping',
       icon: 'fa-plus',
       onClick: (event) => {
@@ -86,13 +86,10 @@ export default class Request extends React.Component {
       }
     }];
 
-    var contextMenu;
-    if(this.state.isContextMenuActive) {
-      contextMenu = <ContextMenu items={contextMenuItems}/>;
-    }
-
     return <div className="request" style={style}>
-      {contextMenu}
+      { this.state.isContextMenuActive &&
+        <ContextMenu items={contextMenuItems}/>
+      }
       <div className="request-inner" onClick={this._onClick.bind(this)} onContextMenu={this._toggleContextMenu.bind(this)}>
         <span className="method property">{request.method}</span>
           <span className="time property">
