@@ -1,0 +1,29 @@
+.context-menu {
+  position: absolute;
+  right: 20px;
+  top: 20px;
+  margin: 0;
+  z-index: 1;
+  border: 2px solid $darkgray-dark;
+  color: $white;
+
+  .context-menu-item {
+    background: $darkgray-dark;
+    padding: 5px 10px;
+
+    &:hover {
+      background: rgba($darkgray-dark, 0.8);
+    }
+  }
+
+  &:before {
+    content: '';
+    width: 0;
+    height: 0;
+    border: 6px solid transparent;
+    border-bottom-color: $darkgray-dark;
+    position: absolute;
+    top: -12px;
+    right: 10px;
+  }
+}

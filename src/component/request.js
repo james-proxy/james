@@ -1,9 +1,18 @@
 import React from 'react';
 import FullUrl from './full-url.js';
+import ContextMenu from './context-menu.js';
 
 const {func, object, number} = React.PropTypes;
 
 export default class Request extends React.Component {
+  constructor() {
+    super();
+
+    this.state = {
+      isContextMenuActive: false
+    };
+  }
+
   shouldComponentUpdate(nextProps) {
     return this.props.request.id !== nextProps.request.id ||
       this.props.positionTop !== nextProps.positionTop ||
@@ -39,8 +48,22 @@ export default class Request extends React.Component {
     return labelElements;
   }
 
+  _setContextMenuState(newState) {
+    this.setState({isContextMenuActive: newState});
+    this.forceUpdate();
+  }
+
+  _toggleContextMenu() {
+    this._setContextMenuState(!this.state.isContextMenuActive);
+  }
+
+  _onClick() {
+    this._setContextMenuState(false);
+    this.props.handleClick();
+  }
+
   render() {
-    const {request, response, handleClick, positionTop} = this.props;
+    const {request, response, showWindow, positionTop} = this.props;
 
     this.done = request.done;
 
@@ -53,18 +76,33 @@ export default class Request extends React.Component {
       top: positionTop
     };
 
-    return <div className="request" onClick={handleClick} style={style}>
-      <span className="method property">{request.method}</span>
-        <span className="time property">
-          {took}
-        </span>
-        <span className="status-code property">
-          {response.statusCode}
-        </span>
-      <FullUrl request={request} />
+    const contextMenuItems = [{
+      title: 'Add mapping',
+      icon: 'fa-plus',
+      onClick: (event) => {
+        event.preventDefault();
+        showWindow('UrlMapping', {urlInput: request.fullUrl()});
+        this._toggleContextMenu();
+      }
+    }];
 
-      <div className="labels">
-        {this._getLabels(request)}
+    return <div className="request" style={style}>
+      { this.state.isContextMenuActive &&
+        <ContextMenu items={contextMenuItems}/>
+      }
+      <div className="request-inner" onClick={this._onClick.bind(this)} onContextMenu={this._toggleContextMenu.bind(this)}>
+        <span className="method property">{request.method}</span>
+          <span className="time property">
+            {took}
+          </span>
+          <span className="status-code property">
+            {response.statusCode}
+          </span>
+        <FullUrl request={request} />
+
+        <div className="labels">
+          {this._getLabels(request)}
+        </div>
       </div>
     </div>;
   }
@@ -75,5 +113,6 @@ Request.propTypes = {
   request: object.isRequired,
   response: object.isRequired,
   handleClick: func.isRequired,
+  showWindow: func.isRequired,
   positionTop: number.isRequired
 };

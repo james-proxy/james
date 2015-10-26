@@ -31,6 +31,7 @@ export default class MainContent extends React.Component {
   render() {
     const {
       requestData,
+      showWindow,
       config,
       activeWindow,
       setFromIndex,
@@ -76,6 +77,7 @@ export default class MainContent extends React.Component {
       {SetupInstructions}
       <Requests
         requestData={requestData}
+        showWindow={showWindow}
         config={config}
         setActiveRequest={setActiveRequest}
         setFromIndex={setFromIndex} />
@@ -86,6 +88,7 @@ export default class MainContent extends React.Component {
 
 MainContent.propTypes = {
   openBrowser: func.isRequired,
+  showWindow: func.isRequired,
   setFromIndex: func.isRequired,
   filterRequests: func.isRequired,
   requests: arrayOf(shape({

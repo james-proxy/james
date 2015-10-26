@@ -44,7 +44,7 @@ export default class Requests extends React.Component {
   }
 
   render() {
-    const {setActiveRequest, config, requestData} = this.props;
+    const {setActiveRequest, showWindow, config, requestData} = this.props;
     const amountOfRequests = requestData.filteredCount;
 
     const requestNodes = requestData.requests.map((request) => {
@@ -57,6 +57,7 @@ export default class Requests extends React.Component {
         {...request}
         positionTop={positionTop}
         config={config}
+        showWindow={showWindow}
         handleClick={handleClick}
         key={request.request.id} />;
     });
@@ -75,6 +76,7 @@ export default class Requests extends React.Component {
 
 Requests.propTypes = {
   requestData: object.isRequired,
+  showWindow: func.isRequired,
   filter: string,
   setActiveRequest: func.isRequired,
   setFromIndex: func.isRequired,

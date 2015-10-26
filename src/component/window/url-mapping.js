@@ -1,14 +1,14 @@
 import React from 'react';
 
-const {func, array} = React.PropTypes;
+const {func, array, object} = React.PropTypes;
 
 export default class UrlMappingWindow extends React.Component {
 
-  constructor() {
+  constructor(props) {
     super();
 
     this.state = {
-      urlInput: '',
+      urlInput: props.options.urlInput ? props.options.urlInput : '',
       newUrlInput: '',
       localPath: false
     };
@@ -117,6 +117,7 @@ export default class UrlMappingWindow extends React.Component {
 UrlMappingWindow.propTypes = {
   setUrlMapping: func.isRequired,
   chooseFile: func.isRequired,
+  options: object.isRequired,
   removeUrlMapping: func.isRequired,
   closeWindow: func.isRequired,
   urlMappings: array.isRequired
