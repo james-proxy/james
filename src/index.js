@@ -136,7 +136,8 @@ function render() {
         requestData={requestData}
         setFromIndex={setFromIndex}
         filterRequests={filterRequests}
-        config={config} />
+        config={config}
+        urlMapper={urlMapper} />
       <Footer
         isCachingEnabled={isCachingEnabled}
         requestData={requestData}

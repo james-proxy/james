@@ -44,7 +44,7 @@ export default class Requests extends React.Component {
   }
 
   render() {
-    const {setActiveRequest, showWindow, config, requestData} = this.props;
+    const {setActiveRequest, showWindow, config, requestData, urlMapper} = this.props;
     const amountOfRequests = requestData.filteredCount;
 
     const requestNodes = requestData.requests.map((request) => {
@@ -59,7 +59,8 @@ export default class Requests extends React.Component {
         config={config}
         showWindow={showWindow}
         handleClick={handleClick}
-        key={request.request.id} />;
+        key={request.request.id}
+        urlMapper={urlMapper} />;
     });
 
     const style = {
@@ -80,6 +81,7 @@ Requests.propTypes = {
   filter: string,
   setActiveRequest: func.isRequired,
   setFromIndex: func.isRequired,
-  config: object.isRequired
+  config: object.isRequired,
+  urlMapper: object.isRequired
 };
 
