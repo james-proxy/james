@@ -24,9 +24,11 @@ export default class Request extends React.Component {
     const url = request.fullUrl();
     const labelElements = [];
 
-    if (request.mapped) {
+    if (request.isMappedUrl) {
+      const activeClass = request.isMappingActive ? 'mapped' : 'mapped-inactive';
+
       labelElements.push(
-        <span className="label mapped" key="mapped">
+        <span className={'label ' + activeClass} key="mapped">
           <i className="fa fa-warning"></i>
           mapped
         </span>

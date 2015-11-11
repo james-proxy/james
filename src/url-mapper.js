@@ -18,7 +18,7 @@ export default class UrlMapper {
     return this._map[url];
   }
 
-  set(url, newUrl, isLocal) {
+  set(url, newUrl, isLocal, isActive = true) {
     isLocal = !!isLocal;
 
     // fix the url, because hoxy will add a slash to urls without path..
@@ -29,7 +29,8 @@ export default class UrlMapper {
     const mappedUrl = {
       url,
       newUrl,
-      isLocal
+      isLocal,
+      isActive
     };
 
     this._addMemoryCopy(mappedUrl);
@@ -39,6 +40,10 @@ export default class UrlMapper {
         this._update();
       });
     });
+  }
+
+  isActiveMappedUrl(url) {
+    return this.isMappedUrl(url) && this._map[url].isActive;
   }
 
   isMappedUrl(url) {
@@ -71,6 +76,12 @@ export default class UrlMapper {
 
     delete this._map[url];
     delete this._mapByNewUrl[newUrl];
+  }
+
+  toggleActiveState(url) {
+    if (!this.isMappedUrl(url)) return;
+    this._map[url].isActive = !this._map[url].isActive;
+    this._update();
   }
 
   removeByNewUrl(newUrl) {

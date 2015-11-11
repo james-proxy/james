@@ -51,11 +51,16 @@ export default class UrlMappingWindow extends React.Component {
   render() {
     const {urlInput, newUrlInput} = this.state;
     let {urlMappings} = this.props;
-    const {removeUrlMapping, closeWindow} = this.props;
+    const {removeUrlMapping, toggleUrlMappingIsActive, closeWindow} = this.props;
 
     urlMappings = urlMappings.map((map, index) => {
       const removeMapping = () => {
         removeUrlMapping(map.url);
+      };
+
+      const toggleIsActive = () => {
+        toggleUrlMappingIsActive(map.url);
+        this.render();
       };
 
       return <li className="collection-item" key={index}>
@@ -69,6 +74,12 @@ export default class UrlMappingWindow extends React.Component {
           <span className="col">
             {map.newUrl}
           </span>
+          <span className="col">
+            isActive: {map.isActive ? 'yes' : 'no'}
+          </span>
+          <a href="#!" className="secondary-content" onClick={toggleIsActive}>
+            <i className="fa fa-toggle-on"></i>
+          </a>
           <a href="#!" className="secondary-content" onClick={removeMapping}>
             <i className="fa fa-remove"></i>
           </a>
@@ -120,5 +131,6 @@ UrlMappingWindow.propTypes = {
   options: object.isRequired,
   removeUrlMapping: func.isRequired,
   closeWindow: func.isRequired,
-  urlMappings: array.isRequired
+  urlMappings: array.isRequired,
+  toggleUrlMappingIsActive: func.isRequired
 };

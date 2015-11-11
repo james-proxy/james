@@ -70,7 +70,8 @@ const windowFactories = {
       setUrlMapping={urlMapper.set.bind(urlMapper)}
       removeUrlMapping={urlMapper.remove.bind(urlMapper)}
       closeWindow={closeWindow}
-      chooseFile={chooseFile} />;
+      chooseFile={chooseFile}
+      toggleUrlMappingIsActive={urlMapper.toggleActiveState.bind(urlMapper)} />;
   }
 };
 
