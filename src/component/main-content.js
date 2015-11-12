@@ -36,7 +36,7 @@ export default class MainContent extends React.Component {
       activeWindow,
       setFromIndex,
       filterRequests,
-      urlMapper
+      removeUrlMapping
     } = this.props;
 
     const {activeRequest} = this.state;
@@ -82,7 +82,7 @@ export default class MainContent extends React.Component {
         config={config}
         setActiveRequest={setActiveRequest}
         setFromIndex={setFromIndex}
-        urlMapper={urlMapper} />
+        removeUrlMapping={removeUrlMapping} />
       {activeRequestNode}
     </div>;
   }
@@ -100,5 +100,5 @@ MainContent.propTypes = {
   config: object.isRequired,
   requestData: object.isRequired,
   activeWindow: object,
-  urlMapper: object.isRequired
+  removeUrlMapping: func.isRequired
 };
