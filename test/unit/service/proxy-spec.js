@@ -10,7 +10,8 @@ describe('Proxy', function() {
   };
   const urlMapper = {
     get: sinon.stub(),
-    isMappedUrl: sinon.stub()
+    isMappedUrl: sinon.stub(),
+    isActiveMappedUrl: sinon.stub()
   };
 
   const isCachingEnabled = sinon.stub().returns(false);
@@ -199,6 +200,7 @@ describe('Proxy', function() {
   describe('request mapping', function() {
     it('maps requests', function() {
       urlMapper.isMappedUrl.returns(true);
+      urlMapper.isActiveMappedUrl.returns(true);
       urlMapper.get.returns({
         url: 'url0',
         newUrl: 'mappedUrl',
@@ -212,6 +214,7 @@ describe('Proxy', function() {
 
     it('maps requests to local files', function() {
       urlMapper.isMappedUrl.returns(true);
+      urlMapper.isActiveMappedUrl.returns(true);
       urlMapper.get.returns({
         url: 'url0',
         newUrl: '/local/path',
