@@ -22,6 +22,12 @@ body {
   padding-right: 5px;
 }
 
+.text-ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 span.label {
   display: inline-block;
   color: $white;

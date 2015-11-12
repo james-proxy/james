@@ -60,25 +60,23 @@ export default class UrlMappingWindow extends React.Component {
 
       const toggleIsActive = () => {
         toggleUrlMappingIsActive(map.url);
-        this.render();
       };
+
+      const isActiveClass = map.isActive ? 'on' : 'off';
 
       return <li className="collection-item" key={index}>
         <div>
-          <span className="col">
+          <span className="col text-ellipsis">
             {map.url}
           </span>
           <span className="seperator">
             <i className="fa fa-chevron-right"></i>
           </span>
-          <span className="col">
+          <span className="col text-ellipsis">
             {map.newUrl}
           </span>
-          <span className="col">
-            isActive: {map.isActive ? 'yes' : 'no'}
-          </span>
           <a href="#!" className="secondary-content" onClick={toggleIsActive}>
-            <i className="fa fa-toggle-on"></i>
+            <i className={'fa fa-toggle-' + isActiveClass}></i>
           </a>
           <a href="#!" className="secondary-content" onClick={removeMapping}>
             <i className="fa fa-remove"></i>
