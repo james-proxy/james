@@ -188,7 +188,7 @@ describe('url mapper', function() {
     });
   });
 
-  describe.only('isActiveMappedUrl', function() {
+  describe('isActiveMappedUrl', function() {
     let url;
     let newUrl;
     let isLocal;
