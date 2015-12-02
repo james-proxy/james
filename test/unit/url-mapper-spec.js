@@ -159,6 +159,75 @@ describe('url mapper', function() {
     });
   });
 
+  describe('isMappedUrl', function() {
+    let url;
+    let newUrl;
+    let isLocal;
+    let isActive;
+
+    beforeEach(function() {
+      url = 'http://foo.com/bar/baz';
+      newUrl = 'foo/bar';
+      isLocal = true;
+      isActive = true;
+    });
+
+    it('returns false if the given `url` is not mapped', function() {
+      url = 'http://not.mapped.com/';
+      expect(urlMapper.isMappedUrl(url)).toBe(false);
+    });
+
+    it('returns true if the given `url` is mapped', function() {
+      urlMapper.set(
+        url,
+        newUrl,
+        isLocal,
+        isActive
+      );
+      expect(urlMapper.isMappedUrl(url)).toBe(true);
+    });
+  });
+
+  describe.only('isActiveMappedUrl', function() {
+    let url;
+    let newUrl;
+    let isLocal;
+    let isActive;
+
+    beforeEach(function() {
+      url = 'http://foo.com/bar/baz';
+      newUrl = 'foo/bar';
+      isLocal = true;
+      isActive = true;
+    });
+
+    it('returns false if the given `url` is not mapped', function() {
+      url = 'http://not.mapped.com/';
+      expect(urlMapper.isActiveMappedUrl(url)).toBe(false);
+    });
+
+    it('returns false if the given `url` is mapped but inactive', function() {
+      isActive = false;
+      urlMapper.set(
+        url,
+        newUrl,
+        isLocal,
+        isActive
+      );
+      expect(urlMapper.isActiveMappedUrl(url)).toBe(false);
+    });
+
+    it('returns true if the given `url` is mapped and active', function() {
+      urlMapper.set(
+        url,
+        newUrl,
+        isLocal,
+        isActive
+      );
+      expect(urlMapper.isActiveMappedUrl(url)).toBe(true);
+    });
+  });
+
   describe('count', function() {
     let url;
     let newUrl;

@@ -100,5 +100,6 @@ MainContent.propTypes = {
   config: object.isRequired,
   requestData: object.isRequired,
   activeWindow: object,
-  removeUrlMapping: func.isRequired
+  removeUrlMapping: func.isRequired,
+  toggleUrlMappingActiveState: func.isRequired
 };

@@ -65,7 +65,7 @@ export default class Request extends React.Component {
   }
 
   render() {
-    const {request, response, showWindow, positionTop, removeUrlMapping} = this.props;
+    const {request, response, showWindow, positionTop, removeUrlMapping, toggleUrlMappingActiveState} = this.props;
 
     this.done = request.done;
 
@@ -92,6 +92,14 @@ export default class Request extends React.Component {
       onClick: (event) => {
         event.preventDefault();
         removeUrlMapping(request.fullUrl());
+        this._toggleContextMenu();
+      }
+    }, {
+      title: 'Activate/Deactivate',
+      icon: 'fa-trash-o',
+      onClick: (event) => {
+        event.preventDefault();
+        toggleUrlMappingActiveState(request.fullUrl());
         this._toggleContextMenu();
       }
     }];
@@ -125,5 +133,6 @@ Request.propTypes = {
   handleClick: func.isRequired,
   showWindow: func.isRequired,
   positionTop: number.isRequired,
-  removeUrlMapping: func.isRequired
+  removeUrlMapping: func.isRequired,
+  toggleUrlMappingActiveState: func.isRequired
 };

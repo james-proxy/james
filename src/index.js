@@ -138,7 +138,8 @@ function render() {
         setFromIndex={setFromIndex}
         filterRequests={filterRequests}
         config={config}
-        removeUrlMapping={urlMapper.remove.bind(urlMapper)} />
+        removeUrlMapping={urlMapper.remove.bind(urlMapper)}
+        toggleUrlMappingActiveState={urlMapper.toggleActiveState.bind(urlMapper)} />
       <Footer
         isCachingEnabled={isCachingEnabled}
         requestData={requestData}
