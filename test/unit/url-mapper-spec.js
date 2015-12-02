@@ -29,16 +29,19 @@ describe('url mapper', function() {
       const url = 'http://foo.com/bar/baz';
       const newUrl = 'http://foo.com/bar/mapped';
       const isLocal = false;
+      const isActive = true;
       urlMapper.set(
         url,
         newUrl,
-        isLocal
+        isLocal,
+        isActive
       );
 
       expect(dbMock.insert).toHaveBeenCalledWith({
         url,
         newUrl,
-        isLocal
+        isLocal,
+        isActive
       });
     });
 
@@ -46,10 +49,12 @@ describe('url mapper', function() {
       const url = 'http://foo.com/bar/baz';
       const newUrl = 'http://foo.com/bar/mapped';
       const isLocal = false;
+      const isActive = true;
       urlMapper.set(
         url,
         newUrl,
-        isLocal
+        isLocal,
+        isActive
       );
 
       expect(dbMock.remove).toHaveBeenCalledWith({url});
@@ -59,16 +64,19 @@ describe('url mapper', function() {
       const url = 'http://foo.com/bar/baz';
       const newUrl = 'http://foo.com';
       const isLocal = false;
+      const isActive = true;
       urlMapper.set(
         url,
         newUrl,
-        isLocal
+        isLocal,
+        isActive
       );
 
       expect(dbMock.insert).toHaveBeenCalledWith({
         url,
         newUrl: 'http://foo.com/',
-        isLocal
+        isLocal,
+        isActive
       });
     });
 
@@ -76,16 +84,19 @@ describe('url mapper', function() {
       const url = 'http://foo.com/bar/baz';
       const newUrl = 'foo/bar';
       const isLocal = true;
+      const isActive = true;
       urlMapper.set(
         url,
         newUrl,
-        isLocal
+        isLocal,
+        isActive
       );
 
       expect(dbMock.insert).toHaveBeenCalledWith({
         url,
         newUrl: 'foo/bar',
-        isLocal
+        isLocal,
+        isActive
       });
     });
   });
@@ -94,6 +105,7 @@ describe('url mapper', function() {
     let url;
     let newUrl;
     let isLocal;
+    const isActive = true;
     beforeEach(function() {
       url = 'http://foo.com/bar/baz';
       newUrl = 'foo/bar';
@@ -101,7 +113,8 @@ describe('url mapper', function() {
       urlMapper.set(
         url,
         newUrl,
-        isLocal
+        isLocal,
+        isActive
       );
     });
 
@@ -110,7 +123,8 @@ describe('url mapper', function() {
       expect(mappedUrl).toEqual({
         url,
         newUrl,
-        isLocal
+        isLocal,
+        isActive
       });
     });
   });
@@ -119,6 +133,7 @@ describe('url mapper', function() {
     let url;
     let newUrl;
     let isLocal;
+    const isActive = true;
     beforeEach(function() {
       url = 'http://foo.com/bar/baz';
       newUrl = 'foo/bar';
@@ -126,7 +141,8 @@ describe('url mapper', function() {
       urlMapper.set(
         url,
         newUrl,
-        isLocal
+        isLocal,
+        isActive
       );
     });
 
@@ -143,10 +159,80 @@ describe('url mapper', function() {
     });
   });
 
+  describe('isMappedUrl', function() {
+    let url;
+    let newUrl;
+    let isLocal;
+    let isActive;
+
+    beforeEach(function() {
+      url = 'http://foo.com/bar/baz';
+      newUrl = 'foo/bar';
+      isLocal = true;
+      isActive = true;
+    });
+
+    it('returns false if the given `url` is not mapped', function() {
+      url = 'http://not.mapped.com/';
+      expect(urlMapper.isMappedUrl(url)).toBe(false);
+    });
+
+    it('returns true if the given `url` is mapped', function() {
+      urlMapper.set(
+        url,
+        newUrl,
+        isLocal,
+        isActive
+      );
+      expect(urlMapper.isMappedUrl(url)).toBe(true);
+    });
+  });
+
+  describe('isActiveMappedUrl', function() {
+    let url;
+    let newUrl;
+    let isLocal;
+    let isActive;
+
+    beforeEach(function() {
+      url = 'http://foo.com/bar/baz';
+      newUrl = 'foo/bar';
+      isLocal = true;
+      isActive = true;
+    });
+
+    it('returns false if the given `url` is not mapped', function() {
+      url = 'http://not.mapped.com/';
+      expect(urlMapper.isActiveMappedUrl(url)).toBe(false);
+    });
+
+    it('returns false if the given `url` is mapped but inactive', function() {
+      isActive = false;
+      urlMapper.set(
+        url,
+        newUrl,
+        isLocal,
+        isActive
+      );
+      expect(urlMapper.isActiveMappedUrl(url)).toBe(false);
+    });
+
+    it('returns true if the given `url` is mapped and active', function() {
+      urlMapper.set(
+        url,
+        newUrl,
+        isLocal,
+        isActive
+      );
+      expect(urlMapper.isActiveMappedUrl(url)).toBe(true);
+    });
+  });
+
   describe('count', function() {
     let url;
     let newUrl;
     let isLocal;
+    const isActive = true;
     beforeEach(function() {
       url = 'http://foo.com/bar/baz';
       newUrl = 'foo/bar';
@@ -154,7 +240,8 @@ describe('url mapper', function() {
       urlMapper.set(
         url,
         newUrl,
-        isLocal
+        isLocal,
+        isActive
       );
     });
 
@@ -167,7 +254,8 @@ describe('url mapper', function() {
       urlMapper.set(
         url,
         newUrl,
-        isLocal
+        isLocal,
+        isActive
       );
       const count = urlMapper.getCount();
       expect(count).toEqual(1);
@@ -177,7 +265,8 @@ describe('url mapper', function() {
       urlMapper.set(
         url,
         newUrl,
-        isLocal
+        isLocal,
+        isActive
       );
       urlMapper.remove(url);
       const count = urlMapper.getCount();
@@ -188,7 +277,8 @@ describe('url mapper', function() {
       urlMapper.set(
         url,
         newUrl,
-        isLocal
+        isLocal,
+        isActive
       );
       urlMapper.removeByNewUrl(newUrl);
       const count = urlMapper.getCount();

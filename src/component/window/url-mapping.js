@@ -51,24 +51,33 @@ export default class UrlMappingWindow extends React.Component {
   render() {
     const {urlInput, newUrlInput} = this.state;
     let {urlMappings} = this.props;
-    const {removeUrlMapping, closeWindow} = this.props;
+    const {removeUrlMapping, toggleUrlMappingIsActive, closeWindow} = this.props;
 
     urlMappings = urlMappings.map((map, index) => {
       const removeMapping = () => {
         removeUrlMapping(map.url);
       };
 
+      const toggleIsActive = () => {
+        toggleUrlMappingIsActive(map.url);
+      };
+
+      const isActiveClass = map.isActive ? 'on' : 'off';
+
       return <li className="collection-item" key={index}>
         <div>
-          <span className="col">
+          <span className="col text-ellipsis">
             {map.url}
           </span>
           <span className="seperator">
             <i className="fa fa-chevron-right"></i>
           </span>
-          <span className="col">
+          <span className="col text-ellipsis">
             {map.newUrl}
           </span>
+          <a href="#!" className="secondary-content" onClick={toggleIsActive}>
+            <i className={'fa fa-toggle-' + isActiveClass}></i>
+          </a>
           <a href="#!" className="secondary-content" onClick={removeMapping}>
             <i className="fa fa-remove"></i>
           </a>
@@ -120,5 +129,6 @@ UrlMappingWindow.propTypes = {
   options: object.isRequired,
   removeUrlMapping: func.isRequired,
   closeWindow: func.isRequired,
-  urlMappings: array.isRequired
+  urlMappings: array.isRequired,
+  toggleUrlMappingIsActive: func.isRequired
 };
