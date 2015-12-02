@@ -53,6 +53,7 @@ export default class Proxy {
     request.done = false;
     request.id = uniqid();
     request.started = new Date().getTime();
+    request.originalUrl = fullUrl;
 
     const requestContainer = {
       request: request,
@@ -72,7 +73,6 @@ export default class Proxy {
         const mappedUrl = this._urlMapper.get(fullUrl);
         request.isLocal = mappedUrl.isLocal;
         request.newUrl = mappedUrl.newUrl;
-        request.originalUrl = fullUrl;
 
         if (request.isLocal) {
           return cycle.serve({

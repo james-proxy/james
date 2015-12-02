@@ -83,26 +83,30 @@ export default class Request extends React.Component {
       icon: 'fa-plus',
       onClick: (event) => {
         event.preventDefault();
-        showWindow('UrlMapping', {urlInput: request.fullUrl()});
-        this._toggleContextMenu();
-      }
-    }, {
-      title: 'Remove mapping',
-      icon: 'fa-trash-o',
-      onClick: (event) => {
-        event.preventDefault();
-        removeUrlMapping(request.fullUrl());
-        this._toggleContextMenu();
-      }
-    }, {
-      title: 'Activate/Deactivate',
-      icon: 'fa-trash-o',
-      onClick: (event) => {
-        event.preventDefault();
-        toggleUrlMappingActiveState(request.fullUrl());
+        showWindow('UrlMapping', {urlInput: request.originalUrl});
         this._toggleContextMenu();
       }
     }];
+
+    if (request.isMappedUrl) {
+      contextMenuItems.push({
+        title: 'Remove mapping',
+        icon: 'fa-trash-o',
+        onClick: (event) => {
+          event.preventDefault();
+          removeUrlMapping(request.originalUrl);
+          this._toggleContextMenu();
+        }
+      }, {
+        title: 'Activate/Deactivate',
+        icon: 'fa-toggle-on',
+        onClick: (event) => {
+          event.preventDefault();
+          toggleUrlMappingActiveState(request.originalUrl);
+          this._toggleContextMenu();
+        }
+      });
+    }
 
     return <div className="request" style={style}>
       { this.state.isContextMenuActive &&
