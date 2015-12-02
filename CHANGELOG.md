@@ -1,3 +1,4 @@
+- Add remove mapping to context menu (i: @davidneat, r: @nerdbeere)
 - Shorten URL based on available space (fixes #4)
 - Add a button that allows the user to clear all requests
 - Show amount of requests and amount of filtered requests in the footer
