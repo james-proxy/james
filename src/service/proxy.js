@@ -10,15 +10,10 @@ export default class Proxy {
     this._isCachingEnabled = isCachingEnabled;
 
     const proxy = this._proxy = createHoxy();
-    const that = this;
 
     proxy.intercept('response-sent', this._onResponseSent.bind(this));
-    proxy.intercept('request', function(req, res, done) {
-      that._onInterceptRequest(req, res, this, done);
-    });
-    proxy.intercept('response', function(req, res, done) {
-      that._onInterceptResponse(req, res, this, done);
-    });
+    proxy.intercept('request', this._onInterceptRequest.bind(this));
+    proxy.intercept('response', this._onInterceptResponse.bind(this));
   }
 
   _onResponseSent(req) {
@@ -28,12 +23,10 @@ export default class Proxy {
     this._update();
   }
 
-  _onInterceptResponse(request, response, cycle, done) {
+  _onInterceptResponse(request, response) {
     if (!this._isCachingEnabled()) {
       this._modifyCacheHeaders(response);
     }
-
-    done();
   }
 
   _modifyCacheHeaders(response) {
@@ -47,7 +40,7 @@ export default class Proxy {
     response.headers['cache-control'] = 'no-cache';
   }
 
-  _onInterceptRequest(request, response, cycle, done) {
+  _onInterceptRequest(request, response, cycle) {
     const fullUrl = request.fullUrl();
 
     request.done = false;
@@ -77,8 +70,7 @@ export default class Proxy {
         if (request.isLocal) {
           return cycle.serve({
             path: request.newUrl
-          }, (err) => {
-            done(err);
+          }, () => {
             this._update();
           });
         }
@@ -86,7 +78,6 @@ export default class Proxy {
         request.fullUrl(request.newUrl);
       }
 
-      done();
       this._update();
     } catch (e) {
       console.log(e); // eslint-disable-line

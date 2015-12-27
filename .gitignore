@@ -2,3 +2,5 @@ build
 package
 node_modules
 binaries
+.idea/
+*.iml
