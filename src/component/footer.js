@@ -1,4 +1,5 @@
 import React from 'react';
+import Throttle from './footer-throttle';
 
 const {func, object} = React.PropTypes;
 
@@ -8,6 +9,7 @@ export default class Footer extends React.Component {
     const {
       isCachingEnabled,
       toggleCaching,
+      throttle,
       requestData,
       clearRequests
       } = this.props;
@@ -26,10 +28,11 @@ export default class Footer extends React.Component {
 
     return <div className="footer">
       <button onClick={toggleCaching}>{cachingButton}</button>
+      <Throttle throttle={throttle} />
       <div className="request-count">
         Requests: {requestData.filteredCount}/{requestData.totalCount}
         <button onClick={clearRequests}>
-          <i className="fa fa-ban"></i>
+          <i className="fa fa-ban" />
         </button>
       </div>
     </div>;
@@ -38,6 +41,7 @@ export default class Footer extends React.Component {
 
 Footer.propTypes = {
   toggleCaching: func.isRequired,
+  throttle: object.isRequired,
   isCachingEnabled: func.isRequired,
   clearRequests: func.isRequired,
   requestData: object.isRequired

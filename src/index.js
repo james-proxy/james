@@ -30,7 +30,8 @@ const data = {
   activeWindowFactory: null,
   fromIndex: 0,
   filter: null,
-  cachingEnabled: false
+  cachingEnabled: false,
+  throttle: {enabled: false, kBps: 0}
 };
 
 const urlMapper = new UrlMapper(db, function() {
@@ -141,6 +142,7 @@ function render() {
         removeUrlMapping={urlMapper.remove.bind(urlMapper)}
         toggleUrlMappingActiveState={urlMapper.toggleActiveState.bind(urlMapper)} />
       <Footer
+        throttle={data.throttle}
         isCachingEnabled={isCachingEnabled}
         requestData={requestData}
         clearRequests={clearRequests}
