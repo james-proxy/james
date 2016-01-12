@@ -26,7 +26,7 @@
     "url": "https://github.com/uxebu/james.git"
   },
   "dependencies": {
-    "hoxy": "^1.2.4",
+    "hoxy": "^3.1.3",
     "karma-chrome-launcher": "^0.2.0",
     "nedb": "^1.1.2",
     "pem": "^1.7.2",
