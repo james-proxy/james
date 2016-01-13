@@ -9,7 +9,7 @@ function menuTempl() {
     submenu: [
       {
         label: 'About James',
-        selector: 'hide:'
+        role: 'hide'
       }
     ]
   });
@@ -18,36 +18,36 @@ function menuTempl() {
     submenu: [
       {
         label: 'Undo',
-        accelerator: 'Command+Z',
-        selector: 'undo:'
+        accelerator: 'CommandOrControl+Z',
+        role: 'undo'
       },
       {
         label: 'Redo',
-        accelerator: 'Shift+Command+Z',
-        selector: 'redo:'
+        accelerator: 'Shift+CommandOrControl+Z',
+        role: 'redo'
       },
       {
         type: 'separator'
       },
       {
         label: 'Cut',
-        accelerator: 'Command+X',
-        selector: 'cut:'
+        accelerator: 'CommandOrControl+X',
+        role: 'cut'
       },
       {
         label: 'Copy',
-        accelerator: 'Command+C',
-        selector: 'copy:'
+        accelerator: 'CommandOrControl+C',
+        role: 'copy'
       },
       {
         label: 'Paste',
-        accelerator: 'Command+V',
-        selector: 'paste:'
+        accelerator: 'CommandOrControl+V',
+        role: 'paste'
       },
       {
         label: 'Select All',
-        accelerator: 'Command+A',
-        selector: 'selectAll:'
+        accelerator: 'CommandOrControl+A',
+        role: 'selectAll'
       }
     ]
   });
@@ -56,20 +56,20 @@ function menuTempl() {
     submenu: [
       {
         label: 'Minimize',
-        accelerator: 'Command+M',
-        selector: 'performMiniaturize:'
+        accelerator: 'CommandOrControl+M',
+        role: 'minimize'
       },
       {
         label: 'Close',
-        accelerator: 'Command+W',
-        selector: 'performClose:'
+        accelerator: 'CommandOrControl+W',
+        role: 'close'
       },
       {
         type: 'separator'
       },
       {
         label: 'Bring All to Front',
-        selector: 'arrangeInFront:'
+        role: 'front'
       }
     ]
   });
