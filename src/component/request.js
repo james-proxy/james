@@ -24,9 +24,11 @@ export default class Request extends React.Component {
     const url = request.fullUrl();
     const labelElements = [];
 
-    if (request.mapped) {
+    if (request.isMappedUrl) {
+      const activeClass = request.isMappingActive ? 'mapped' : 'mapped-inactive';
+
       labelElements.push(
-        <span className="label mapped" key="mapped">
+        <span className={'label ' + activeClass} key="mapped">
           <i className="fa fa-warning"></i>
           mapped
         </span>
@@ -63,7 +65,7 @@ export default class Request extends React.Component {
   }
 
   render() {
-    const {request, response, showWindow, positionTop} = this.props;
+    const {request, response, showWindow, positionTop, removeUrlMapping, toggleUrlMappingActiveState} = this.props;
 
     this.done = request.done;
 
@@ -81,10 +83,30 @@ export default class Request extends React.Component {
       icon: 'fa-plus',
       onClick: (event) => {
         event.preventDefault();
-        showWindow('UrlMapping', {urlInput: request.fullUrl()});
+        showWindow('UrlMapping', {urlInput: request.originalUrl});
         this._toggleContextMenu();
       }
     }];
+
+    if (request.isMappedUrl) {
+      contextMenuItems.push({
+        title: 'Remove mapping',
+        icon: 'fa-trash-o',
+        onClick: (event) => {
+          event.preventDefault();
+          removeUrlMapping(request.originalUrl);
+          this._toggleContextMenu();
+        }
+      }, {
+        title: 'Activate/Deactivate',
+        icon: 'fa-toggle-on',
+        onClick: (event) => {
+          event.preventDefault();
+          toggleUrlMappingActiveState(request.originalUrl);
+          this._toggleContextMenu();
+        }
+      });
+    }
 
     return <div className="request" style={style}>
       { this.state.isContextMenuActive &&
@@ -114,5 +136,7 @@ Request.propTypes = {
   response: object.isRequired,
   handleClick: func.isRequired,
   showWindow: func.isRequired,
-  positionTop: number.isRequired
+  positionTop: number.isRequired,
+  removeUrlMapping: func.isRequired,
+  toggleUrlMappingActiveState: func.isRequired
 };

@@ -70,7 +70,8 @@ const windowFactories = {
       setUrlMapping={urlMapper.set.bind(urlMapper)}
       removeUrlMapping={urlMapper.remove.bind(urlMapper)}
       closeWindow={closeWindow}
-      chooseFile={chooseFile} />;
+      chooseFile={chooseFile}
+      toggleUrlMappingIsActive={urlMapper.toggleActiveState.bind(urlMapper)} />;
   }
 };
 
@@ -136,7 +137,9 @@ function render() {
         requestData={requestData}
         setFromIndex={setFromIndex}
         filterRequests={filterRequests}
-        config={config} />
+        config={config}
+        removeUrlMapping={urlMapper.remove.bind(urlMapper)}
+        toggleUrlMappingActiveState={urlMapper.toggleActiveState.bind(urlMapper)} />
       <Footer
         isCachingEnabled={isCachingEnabled}
         requestData={requestData}
