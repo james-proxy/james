@@ -4,10 +4,10 @@
   "description": "",
   "main": "./build/app.js",
   "scripts": {
-    "build": "rimraf build && parallelshell 'npm run build:js' 'npm run build:style'",
+    "build": "rimraf build && parallelshell \"npm run build:js\" \"npm run build:style\"",
     "build:js": "babel src --out-dir build",
     "build:style": "node-sass --output-style compressed --source-map build/james.css.map style/main.scss build/james.css && autoprefixer build/james.css && npm run copy-files",
-    "watch": "parallelshell 'npm run watch:js' 'npm run watch:style'",
+    "watch": "parallelshell \"npm run watch:js\" \"npm run watch:style\"",
     "watch:js": "nodemon --watch src --ext js --no-stdin --exec \"npm run build:js\"",
     "watch:style": "nodemon --watch style --ext scss --no-stdin --exec \"npm run build:style\"",
     "copy-files": "rimraf build/fonts && mkdirp build/fonts && cp ./node_modules/font-awesome/fonts/* build/fonts/ && cp -r ./resource/* ./build/",
