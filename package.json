@@ -37,7 +37,7 @@
   "devDependencies": {
     "autoprefixer": "^5.2.0",
     "babel": "^5.5.14",
-    "babel-eslint": "^3.1.23",
+    "babel-eslint": "^5.0.0-beta6",
     "babelify": "^6.1.2",
     "browserify": "^10.2.4",
     "electron-packager": "^5.0.0",

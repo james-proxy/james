@@ -20,7 +20,7 @@ export default class Requests extends React.Component {
   _onScroll() {
     const scrollableDomNode = React.findDOMNode(this);
     const fromIndex = Math.ceil(scrollableDomNode.scrollTop / requestElementHeight) - 15;
-    this.props.setFromIndex((fromIndex < 0) ? 0 : fromIndex);
+    this.props.setFromIndex(fromIndex < 0 ? 0 : fromIndex);
   }
 
   componentDidMount() {
