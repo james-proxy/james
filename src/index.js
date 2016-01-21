@@ -13,6 +13,7 @@ import remote from 'remote';
 import openBrowser from './util/open-browser.js';
 
 const app = remote.require('app');
+const fs = remote.require('fs');
 
 createMenu();
 
@@ -39,7 +40,16 @@ const urlMapper = new UrlMapper(db, function() {
 });
 
 const createHoxy = () => {
-  return new hoxy.Proxy().listen(config.proxyPort);
+  const opts = {};
+  try {
+    const key = fs.readFileSync('./root-ca.key.pem');
+    const cert = fs.readFileSync('./root-ca.crt.pem');
+    opts.certAuthority = {key, cert};
+  } catch (e) {
+    console.log('Not proxying HTTPS, missing key or certificate: ' + e); // eslint-disable-line
+  }
+
+  return hoxy.createServer(opts).listen(config.proxyPort);
 };
 
 const isCachingEnabled = () => {

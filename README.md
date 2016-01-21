@@ -17,6 +17,10 @@ James is build with [hoxy](https://github.com/greim/hoxy), [electron](https://gi
  3. `npm run build`
  4. `npm start`
  
+## HTTPs Support
+
+To enable HTTPs support follow the [instructions in our wiki](https://github.com/uxebu/james/wiki/Configuring-James-for-HTTPS)
+
 ## Other useful NPM Commands
 
 - `npm run watch`: Watches JS and SASS files and transpiles them automatically

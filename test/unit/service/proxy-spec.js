@@ -56,9 +56,7 @@ describe('Proxy', function() {
 
     let requestCount = 0;
 
-    generateRequest = (callback) => {
-      callback = callback || function() {
-      };
+    generateRequest = () => {
       const id = 'url' + requestCount++;
       const request = {
         fullUrl: function() {
@@ -78,13 +76,13 @@ describe('Proxy', function() {
 
       const response = request;
       callbacksRequest.forEach((cb) => {
-        cb.call(cycle, request, response, callback);
+        cb(request, response, cycle);
       });
       callbacksResponse.forEach((cb) => {
-        cb.call(cycle, request, response, callback);
+        cb(request, response, cycle);
       });
       callbacksResponseSent.forEach((cb) => {
-        cb.call(cycle, request, response, callback);
+        cb(request, response, cycle);
       });
 
       return request;
@@ -238,15 +236,6 @@ describe('Proxy', function() {
     });
     it('registers a callback to intercept responses', function() {
       expect(hoxyInstanceMock.intercept).toHaveBeenCalledWith('response');
-    });
-
-    describe('intercept request', function() {
-      it('calls the callback', function() {
-        const callback = sinon.spy();
-        generateRequest(callback);
-
-        expect(callback).toHaveBeenCalled();
-      });
     });
   });
 
