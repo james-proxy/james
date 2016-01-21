@@ -1,6 +1,6 @@
 # James
 
-![](https://travis-ci.org/uxebu/james.svg?branch=master)
+[![Build Status](https://travis-ci.org/uxebu/james.svg?branch=master)](https://travis-ci.org/uxebu/james)
 [![Code Climate](https://codeclimate.com/github/uxebu/james/badges/gpa.svg)](https://codeclimate.com/github/uxebu/james)
 
 James is an HTTP Proxy and Monitor that enables developers to view and intercept requests made from the browser.
