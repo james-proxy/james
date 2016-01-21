@@ -14,11 +14,11 @@ export default class UrlMappingWindow extends React.Component {
     };
   }
 
-  setUrlValue() {
+  setUrlValue(event) {
     this.setState({urlInput: event.target.value});
   }
 
-  setNewUrlValue() {
+  setNewUrlValue(event) {
     this.setState({newUrlInput: event.target.value});
   }
 
