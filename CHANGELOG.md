@@ -1,3 +1,4 @@
+- Fix a bug that prevented the user from adding mappings (i: @nerdbeere, r: @davidneat)
 - Add mapping active (i: @davidneat, r: @nerdbeere)
 - Add remove mapping to context menu (i: @davidneat, r: @nerdbeere)
 - Shorten URL based on available space (fixes #4)
