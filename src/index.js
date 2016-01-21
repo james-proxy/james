@@ -153,6 +153,7 @@ function render() {
         toggleUrlMappingActiveState={urlMapper.toggleActiveState.bind(urlMapper)} />
       <Footer
         throttle={data.throttle}
+        proxy={proxy}
         isCachingEnabled={isCachingEnabled}
         requestData={requestData}
         clearRequests={clearRequests}

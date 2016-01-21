@@ -10,6 +10,7 @@ export default class Footer extends React.Component {
       isCachingEnabled,
       toggleCaching,
       throttle,
+      proxy,
       requestData,
       clearRequests
       } = this.props;
@@ -28,7 +29,7 @@ export default class Footer extends React.Component {
 
     return <div className="footer">
       <button onClick={toggleCaching}>{cachingButton}</button>
-      <Throttle throttle={throttle} />
+      <Throttle throttle={throttle} proxy={proxy} />
       <div className="request-count">
         Requests: {requestData.filteredCount}/{requestData.totalCount}
         <button onClick={clearRequests}>
@@ -42,6 +43,7 @@ export default class Footer extends React.Component {
 Footer.propTypes = {
   toggleCaching: func.isRequired,
   throttle: object.isRequired,
+  proxy: object.isRequired,
   isCachingEnabled: func.isRequired,
   clearRequests: func.isRequired,
   requestData: object.isRequired

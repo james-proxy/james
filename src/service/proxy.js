@@ -110,4 +110,21 @@ export default class Proxy {
     this._requests = [];
   }
 
+  /**
+   * Adjusts the proxy to throttle the overall connection speed to the provided kilobytes/second.
+   * @param rate maximum overall speed in kilobytes/second
+   */
+  slow(rate) {
+    //this._proxy.slow({rate: rate} * 1024);
+    console.log(this._proxy.slow());
+  }
+
+  /**
+   * Disables throttling, allowing the proxy to run at maximum speed
+   */
+  open() {
+    //?
+  }
 }
+
+
