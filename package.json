@@ -12,7 +12,7 @@
     "watch:style": "nodemon --watch style --ext scss --no-stdin --exec \"npm run build:style\"",
     "copy-files": "rimraf build/fonts && mkdirp build/fonts && ncp ./node_modules/font-awesome/fonts/ build/fonts/ && ncp ./resource/ ./build/",
     "package": "npm run build && rimraf ./package &&  mkdirp ./package && mkdirp ./binaries && browserify --node -e build/index.js -o ./package/index.js --exclude remote && npm run -s copy-files-package && npm run -s create-binaries",
-    "create-binaries": "electron-packager ./package James --all --overwrite --icon=./resource/icon.icns --version=0.28.3 --out binaries",
+    "create-binaries": "electron-packager ./package James --all --overwrite --icon=./resource/icon.icns --version=0.36.4 --out binaries",
     "zip-binaries": "cd binaries; rm *.zip; for i in *; do zip --symlinks -r \"${i%/}.zip\" \"$i\"; done",
     "copy-files-package": "rimraf package/fonts && mkdirp package/fonts && ncp ./node_modules/font-awesome/fonts/ package/fonts/ && ncp ./resource/ ./package/ && ncp ./build/james.css ./package/james.css",
     "start": "electron .",
