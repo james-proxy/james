@@ -17,7 +17,8 @@
     "copy-files-package": "rimraf package/fonts && mkdirp package/fonts && ncp ./node_modules/font-awesome/fonts/ package/fonts/ && ncp ./resource/ ./package/ && ncp ./build/james.css ./package/james.css",
     "start": "electron .",
     "lint": "eslint ./src ./test",
-    "test": "mocha --reporter dot --recursive -r setup-referee-sinon/globals test/unit --compilers js:babel-core/register"
+    "test": "mocha --reporter dot --recursive -r setup-referee-sinon/globals test/unit --compilers js:babel-core/register",
+    "test-ci": "npm run lint && npm run test && npm run build"
   },
   "author": "Julian Hollmann <hollmann@uxebu.com>",
   "license": "MIT",

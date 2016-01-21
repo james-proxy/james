@@ -1,6 +1,8 @@
 language: node_js
 node_js:
   - '0.12'
+script:
+  - npm run test-ci
 before_deploy:
   - npm run package
   - npm run zip-binaries
