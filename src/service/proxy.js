@@ -115,14 +115,15 @@ export default class Proxy {
    * @param rate maximum overall speed in kilobytes/second
    */
   slow(rate) {
-    //this._proxy.slow({rate: rate} * 1024);
+    rate *= 1024;
+    this._proxy.slow({rate});
     console.log(this._proxy.slow());
   }
 
   /**
    * Disables throttling, allowing the proxy to run at maximum speed
    */
-  open() {
+  relax() {
     //?
   }
 }

@@ -13,14 +13,14 @@ export default class Throttle extends React.Component {
     };
     const toggleThrottle = function() {
       throttle.enabled = !throttle.enabled;
-      render()
+      render();
 
       if (throttle.enabled) {
-        proxy.slow(throttle.kBps)
+        proxy.slow(throttle.kBps);
         return
       }
 
-      proxy.open
+      proxy.relax();
     };
 
     return <div className="throttle">
