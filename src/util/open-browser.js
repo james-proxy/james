@@ -11,7 +11,7 @@ export default function openBrowser(browser = 'firefox') {
       return console.error(err);
     }
 
-    launch('https://github.com/uxebu/james', opts, function(err) {
+    launch('http://www.uxebu.com/', opts, function(err) {
       if (err) {
         console.error(err);
       }
