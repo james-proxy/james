@@ -1,6 +1,10 @@
 language: node_js
 node_js:
   - '4.1'
+addons:
+  apt:
+    packages:
+      - wine
 script:
   - npm run test-ci
 before_deploy:
