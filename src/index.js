@@ -68,17 +68,17 @@ const clearRequests = () => {
 
 const throttleDisable = () => {
   data.throttle.enabled = false;
-  console.log("disabled");
+  proxy.relax();
 };
 
 const throttleEnable = () => {
   data.throttle.enabled = true;
-  console.log("enabled");
+  proxy.slow(data.throttle.rate);
 };
 
 const throttleRateChange = (kBps) => {
   data.throttle.rate = kBps;
-  console.log("changed to " + kBps);
+  proxy.slow(kBps);
 };
 
 const domNode = document.getElementById('app');
