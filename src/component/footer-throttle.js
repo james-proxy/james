@@ -1,42 +1,55 @@
 import React from 'react';
 
-const {object} = React.PropTypes;
+const {func, bool, number} = React.PropTypes;
 
 export default class Throttle extends React.Component {
+
+  constructor(props) {
+    super();
+    this.state = {
+      enabled: props.enabled || false,
+      rate: props.rate || 0
+    }
+  }
+
+  toggleThrottle() {
+    const enabled = !this.state.enabled;
+    this.setState({enabled});
+
+    if (enabled) {
+      this.props.onEnable();
+      return;
+    }
+
+    this.props.onDisable();
+  }
+
+  updateThrottle (event) {
+    const rate = event.target.value;
+    this.setState({rate});
+    this.props.onRateChange(rate);
+  }
+
   render() {
-    const {throttle, proxy} = this.props;
-    const icon = throttle.enabled ? 'fa fa-circle' : 'fa fa-circle-o';
-
-    const updateThrottle = (event) => {
-      throttle.kBps = event.target.value;
-      proxy.slow({rate: throttle.kBps})
-    };
-    const toggleThrottle = function() {
-      throttle.enabled = !throttle.enabled;
-      render();
-
-      if (throttle.enabled) {
-        proxy.slow(throttle.kBps);
-        return
-      }
-
-      proxy.relax();
-    };
+    const icon = this.state.enabled ? 'fa fa-circle' : 'fa fa-circle-o';
 
     return <div className="throttle">
-      <button onClick={toggleThrottle}>
+      <button onClick={this.toggleThrottle.bind(this)}>
         <i className={icon}/>
         Throttle to (kBps):
       </button>
       <input
-        onChange={updateThrottle}
+        onChange={this.updateThrottle.bind(this)}
         type='text'
-        defaultValue={throttle.kBps}/>
+        defaultValue={this.state.rate}/>
     </div>
   }
 }
 
 Throttle.propTypes = {
-  throttle: object.isRequired,
-  proxy: object.isRequired
+  onDisable: func.isRequired,
+  onEnable: func.isRequired,
+  onRateChange: func.isRequired,
+  enabled: bool,
+  rate: number
 };

@@ -32,7 +32,7 @@ const data = {
   fromIndex: 0,
   filter: null,
   cachingEnabled: false,
-  throttle: {enabled: false, kBps: 0}
+  throttle: {enabled: false, rate: 0} // rate is in kBps
 };
 
 const urlMapper = new UrlMapper(db, function() {
@@ -64,6 +64,21 @@ const toggleCaching = () => {
 const clearRequests = () => {
   proxy.clear();
   render();
+};
+
+const throttleDisable = () => {
+  data.throttle.enabled = false;
+  console.log("disabled");
+};
+
+const throttleEnable = () => {
+  data.throttle.enabled = true;
+  console.log("enabled");
+};
+
+const throttleRateChange = (kBps) => {
+  data.throttle.rate = kBps;
+  console.log("changed to " + kBps);
 };
 
 const domNode = document.getElementById('app');
@@ -134,6 +149,7 @@ function render() {
   data.urlMapCount = urlMapper.getCount();
   const activeWindow = data.activeWindow && data.activeWindow.factory() || null;
   const requestData = proxy.getRequestData(50, data.fromIndex, data.filter);
+  const {enabled, rate} = data.throttle;
 
   React.render(
     <div className="container">
@@ -152,12 +168,15 @@ function render() {
         removeUrlMapping={urlMapper.remove.bind(urlMapper)}
         toggleUrlMappingActiveState={urlMapper.toggleActiveState.bind(urlMapper)} />
       <Footer
-        throttle={data.throttle}
-        proxy={proxy}
         isCachingEnabled={isCachingEnabled}
         requestData={requestData}
         clearRequests={clearRequests}
-        toggleCaching={toggleCaching} />
+        toggleCaching={toggleCaching}
+        onDisable={throttleDisable}
+        onEnable={throttleEnable}
+        onRateChange={throttleRateChange}
+        enabled={enabled}
+        rate={rate} />
     </div>,
     domNode
   );
