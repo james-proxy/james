@@ -9,7 +9,7 @@ export default class Throttle extends React.Component {
     this.state = {
       enabled: props.enabled || false,
       rate: props.rate || 0
-    }
+    };
   }
 
   toggleThrottle() {
@@ -24,7 +24,7 @@ export default class Throttle extends React.Component {
     this.props.onDisable();
   }
 
-  updateThrottle (event) {
+  updateThrottle(event) {
     const rate = event.target.value;
     this.setState({rate});
     this.props.onRateChange(rate);
@@ -40,9 +40,9 @@ export default class Throttle extends React.Component {
       </button>
       <input
         onChange={this.updateThrottle.bind(this)}
-        type='text'
+        type="text"
         defaultValue={this.state.rate}/>
-    </div>
+    </div>;
   }
 }
 
