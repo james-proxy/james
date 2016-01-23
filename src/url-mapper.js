@@ -85,15 +85,7 @@ export default class UrlMapper {
       }
       list.push(this._map[key]);
     }
-    return list.map(function(mapping) {
-
-      //Remove db-specific and internal properties that exist on each mapping
-      return {
-        url: mapping.url,
-        newUrl: mapping.newUrl,
-        active: mapping.isActive
-      }
-    });
+    return JSON.parse(JSON.stringify(list)); // Clone to ensure that consumers can not change internal data
   }
 
   _addMemoryCopy(mappedUrl) {

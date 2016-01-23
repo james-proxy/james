@@ -290,26 +290,28 @@ describe('url mapper', function() {
     const first = {
       url: 'http://foo.com/bar/baz',
       newUrl: 'foo/bar',
-      active: true
+      isLocal: true,
+      isActive: true
     };
     const second = {
       url: 'http://foo.com/bar/baz2',
       newUrl: 'foo/bar2',
-      active: false
+      isLocal: true,
+      isActive: false
     };
 
     beforeEach(function() {
       urlMapper.set(
           first.url,
           first.newUrl,
-          true,
-          first.active
+          first.isLocal,
+          first.isActive
       );
       urlMapper.set(
           second.url,
           second.newUrl,
-          true,
-          second.active
+          first.isLocal,
+          second.isActive
       );
       mappings = urlMapper.mappings();
     });
@@ -319,18 +321,15 @@ describe('url mapper', function() {
     });
 
     it('should provide match url, newUrl url, and whether or not is active', function() {
-      const expected = JSON.stringify([first,second]);
+      const expected = JSON.stringify([first, second]);
       expect(JSON.stringify(mappings)).toEqual(expected);
     });
 
     it('should return a clone, so that mappings can\'t be tampered with', function() {
-      mappings[0].url = "http://jookd.net";
+      mappings[0].url = 'http://jookd.net';
       const unwanted = JSON.stringify(mappings);
       const newMappings = urlMapper.mappings();
       expect(JSON.stringify(newMappings)).not.toEqual(unwanted);
-      console.log();
-      console.log(unwanted);
-      console.log(JSON.stringify(newMappings));
     });
-  })
+  });
 });
