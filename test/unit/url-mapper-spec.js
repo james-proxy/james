@@ -246,7 +246,7 @@ describe('url mapper', function() {
     });
 
     it('returns the number of urlMappings', function() {
-      const count = urlMapper.getCount();
+      const count = urlMapper.count();
       expect(count).toEqual(1);
     });
 
@@ -257,7 +257,7 @@ describe('url mapper', function() {
         isLocal,
         isActive
       );
-      const count = urlMapper.getCount();
+      const count = urlMapper.count();
       expect(count).toEqual(1);
     });
 
@@ -269,7 +269,7 @@ describe('url mapper', function() {
         isActive
       );
       urlMapper.remove(url);
-      const count = urlMapper.getCount();
+      const count = urlMapper.count();
       expect(count).toEqual(0);
     });
 
@@ -281,8 +281,56 @@ describe('url mapper', function() {
         isActive
       );
       urlMapper.removeByNewUrl(newUrl);
-      const count = urlMapper.getCount();
+      const count = urlMapper.count();
       expect(count).toEqual(0);
     });
   });
+  describe('mappings', function() {
+    let mappings;
+    const first = {
+      url: 'http://foo.com/bar/baz',
+      newUrl: 'foo/bar',
+      active: true
+    };
+    const second = {
+      url: 'http://foo.com/bar/baz2',
+      newUrl: 'foo/bar2',
+      active: false
+    };
+
+    beforeEach(function() {
+      urlMapper.set(
+          first.url,
+          first.newUrl,
+          true,
+          first.active
+      );
+      urlMapper.set(
+          second.url,
+          second.newUrl,
+          true,
+          second.active
+      );
+      mappings = urlMapper.mappings();
+    });
+
+    it('returns a list of all mappings, regardless of if active', function() {
+      expect(mappings.length).toEqual(2);
+    });
+
+    it('should provide match url, newUrl url, and whether or not is active', function() {
+      const expected = JSON.stringify([first,second]);
+      expect(JSON.stringify(mappings)).toEqual(expected);
+    });
+
+    it('should return a clone, so that mappings can\'t be tampered with', function() {
+      mappings[0].url = "http://jookd.net";
+      const unwanted = JSON.stringify(mappings);
+      const newMappings = urlMapper.mappings();
+      expect(JSON.stringify(newMappings)).not.toEqual(unwanted);
+      console.log();
+      console.log(unwanted);
+      console.log(JSON.stringify(newMappings));
+    });
+  })
 });

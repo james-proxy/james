@@ -7,10 +7,11 @@ export default class UrlMapper {
     this._mapByNewUrl = {};
     this._count = 0;
 
-    this.getList((err, mappedUrls) => {
+    this._db.find({}, (err, mappedUrls) => {
       mappedUrls.forEach((mappedUrl) => {
         this._addMemoryCopy(mappedUrl);
       });
+      update(); // Inform UI that mappings have been loaded
     });
   }
 
@@ -50,6 +51,51 @@ export default class UrlMapper {
     return !!this._map[url];
   }
 
+  toggleActiveState(url) {
+    if (!this.isMappedUrl(url)) return;
+    this._map[url].isActive = !this._map[url].isActive;
+    this._db.update({url}, {$set: {isActive: this._map[url].isActive}}, {}, () => {
+      this._update();
+    });
+  }
+
+  removeByNewUrl(newUrl) {
+    this._removeMemoryCopyByNewUrl(newUrl);
+    this._db.remove({newUrl: newUrl}, {multi: true}, () => {
+      this._update();
+    });
+  }
+
+  remove(url) {
+    this._removeMemoryCopy(url);
+    this._db.remove({url}, {multi: true}, () => {
+      this._update();
+    });
+  }
+
+  count() {
+    return this._count;
+  }
+
+  mappings() {
+    const list = [];
+    for (const key in this._map) {
+      if (!this._map.hasOwnProperty(key)) {
+        continue;
+      }
+      list.push(this._map[key]);
+    }
+    return list.map(function(mapping) {
+
+      //Remove db-specific and internal properties that exist on each mapping
+      return {
+        url: mapping.url,
+        newUrl: mapping.newUrl,
+        active: mapping.isActive
+      }
+    });
+  }
+
   _addMemoryCopy(mappedUrl) {
     this._removeMemoryCopy(mappedUrl.url);
     this._count++;
@@ -76,36 +122,6 @@ export default class UrlMapper {
 
     delete this._map[url];
     delete this._mapByNewUrl[newUrl];
-  }
-
-  toggleActiveState(url) {
-    if (!this.isMappedUrl(url)) return;
-    this._map[url].isActive = !this._map[url].isActive;
-    this._db.update({url}, {$set: {isActive: this._map[url].isActive}}, {}, () => {
-      this._update();
-    });
-  }
-
-  removeByNewUrl(newUrl) {
-    this._removeMemoryCopyByNewUrl(newUrl);
-    this._db.remove({newUrl: newUrl}, {multi: true}, () => {
-      this._update();
-    });
-  }
-
-  remove(url) {
-    this._removeMemoryCopy(url);
-    this._db.remove({url}, {multi: true}, () => {
-      this._update();
-    });
-  }
-
-  getCount() {
-    return this._count;
-  }
-
-  getList(callback) {
-    this._db.find({}, callback);
   }
 
 }
