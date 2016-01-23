@@ -4,8 +4,7 @@ export default class UrlMapper {
     this._db = db;
     this._update = update;
     this._map = {};
-    this._mapByNewUrl = {};
-    this._count = 0;
+    this._wildcards = {};
 
     this._db.find({}, (err, mappedUrls) => {
       mappedUrls.forEach((mappedUrl) => {
@@ -16,7 +15,15 @@ export default class UrlMapper {
   }
 
   get(url) {
-    return this._map[url];
+    const plainUrl = this._map[url];
+    if (plainUrl) {
+      return plainUrl;
+    }
+
+    /*this._wildcards.forEach(function(map) {
+      const urlChunks = url.split('/');
+      const mapChunks = map.url.split('/');
+    });*/
   }
 
   set(url, newUrl, isLocal, isActive = true) {
@@ -48,20 +55,13 @@ export default class UrlMapper {
   }
 
   isMappedUrl(url) {
-    return !!this._map[url];
+    return !!this.get(url);
   }
 
   toggleActiveState(url) {
     if (!this.isMappedUrl(url)) return;
     this._map[url].isActive = !this._map[url].isActive;
     this._db.update({url}, {$set: {isActive: this._map[url].isActive}}, {}, () => {
-      this._update();
-    });
-  }
-
-  removeByNewUrl(newUrl) {
-    this._removeMemoryCopyByNewUrl(newUrl);
-    this._db.remove({newUrl: newUrl}, {multi: true}, () => {
       this._update();
     });
   }
@@ -74,7 +74,7 @@ export default class UrlMapper {
   }
 
   count() {
-    return this._count;
+    return Object.keys(this._map).length;
   }
 
   mappings() {
@@ -83,37 +83,26 @@ export default class UrlMapper {
       if (!this._map.hasOwnProperty(key)) {
         continue;
       }
-      list.push(this._map[key]);
+
+      // Clone to ensure that consumers can not change internal data
+      list.push(JSON.parse(JSON.stringify(this._map[key])));
     }
-    return JSON.parse(JSON.stringify(list)); // Clone to ensure that consumers can not change internal data
+    return list;
   }
 
   _addMemoryCopy(mappedUrl) {
     this._removeMemoryCopy(mappedUrl.url);
-    this._count++;
-    this._map[mappedUrl.url] = mappedUrl;
-    this._mapByNewUrl[mappedUrl.newUrl] = mappedUrl.url;
-  }
 
-  _removeMemoryCopyByNewUrl(newUrl) {
-    const url = this._mapByNewUrl[newUrl];
-    if (!url) return;
+    if (mappedUrl.url.indexOf('*') === -1) {
+      this._map[mappedUrl.url] = mappedUrl;
+    }
 
-    this._count--;
-
-    delete this._map[url];
-    delete this._mapByNewUrl[newUrl];
+    this._wildcards[mappedUrl.url] = mappedUrl;
   }
 
   _removeMemoryCopy(url) {
-    if (!this._map[url]) return;
-
-    this._count--;
-
-    const newUrl = this._map[url].newUrl;
-
     delete this._map[url];
-    delete this._mapByNewUrl[newUrl];
+    delete this._wildcards[url];
   }
 
 }

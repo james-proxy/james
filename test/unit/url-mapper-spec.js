@@ -102,30 +102,96 @@ describe('url mapper', function() {
   });
 
   describe('get', function() {
-    let url;
-    let newUrl;
-    let isLocal;
-    const isActive = true;
-    beforeEach(function() {
-      url = 'http://foo.com/bar/baz';
-      newUrl = 'foo/bar';
-      isLocal = true;
-      urlMapper.set(
-        url,
-        newUrl,
-        isLocal,
-        isActive
-      );
-    });
 
-    it('stores the mappings in the memory', function() {
-      const mappedUrl = urlMapper.get(url);
+    const isLocal = true;
+    const isActive = true;
+
+    const plain = {
+      url: 'http://bap.com/bar/baz',
+      newUrl: 'foo/plain'
+    };
+
+    const specific = {
+      url: 'http://foo.com/bar/baz',
+      newUrl: 'foo/specific'
+    };
+
+    const oneWildcard = {
+      url: 'http://foo.com/*/baz',
+      newUrl: 'foo/oneWildcard'
+    };
+
+    const earlyWildcard = {
+      url: 'http://foo.com/*/spaghetti',
+      newUrl: 'foo/earlyWildcard'
+    };
+
+    const lateWildcard = {
+      url: 'http://foo.com/bar/*',
+      newUrl: 'foo/lateWildcard'
+    };
+
+    const multiWildcard = {
+      url: 'http://foo.com/*/*',
+      newUrl: 'foo/Multiwildcard'
+    };
+
+    function check(testUrl, expected) {
+      const {url, newUrl} = expected;
+      const mappedUrl = urlMapper.get(testUrl);
       expect(mappedUrl).toEqual({
         url,
         newUrl,
         isLocal,
         isActive
       });
+    }
+
+    beforeEach(function() {
+      function set(mapping) {
+        urlMapper.set(
+          mapping.url,
+          mapping.newUrl,
+          isLocal,
+          isActive
+        );
+      }
+
+      set(plain);
+      set(specific);
+      set(oneWildcard);
+      set(earlyWildcard);
+      set(lateWildcard);
+      set(multiWildcard);
+    });
+
+    it('returns undefined if no matching maps', function() {
+      const mappedUrl = urlMapper.get('http://dunx');
+      expect(mappedUrl).toEqual(undefined);
+    });
+
+    it('matches plain urls', function() {
+      check(plain.url, plain);
+    });
+
+    it('matches wildcards', function() {
+      check('http://foo.com/1/baz', oneWildcard);
+    });
+
+    it('matches multi-wildcards', function() {
+      check('http://foo.com/2/bork', multiWildcard);
+    });
+
+    it('matches plain url if possible', function() {
+      check(specific.url, specific);
+    });
+
+    it('matches most-specific wildcard', function() {
+      check('http://foo.com/app/baz', oneWildcard);
+    });
+
+    it('when the same amount of wildcards, matches the one with the longer direct-match on the left', function() {
+      check('http://foo.com/bar/spaghetti', lateWildcard);
     });
   });
 
@@ -146,13 +212,7 @@ describe('url mapper', function() {
       );
     });
 
-    it('removes mappings by passing the `newUrl`', function() {
-      urlMapper.removeByNewUrl(newUrl);
-      const mappedUrl = urlMapper.get(url);
-      expect(mappedUrl).toEqual(undefined);
-    });
-
-    it('removes mappings by passing the `removeByNewUrl`', function() {
+    it('removes mappings', function() {
       urlMapper.remove(url);
       const mappedUrl = urlMapper.get(url);
       expect(mappedUrl).toEqual(undefined);
@@ -272,18 +332,6 @@ describe('url mapper', function() {
       const count = urlMapper.count();
       expect(count).toEqual(0);
     });
-
-    it('returns 0 after removing a mapping by new url', function() {
-      urlMapper.set(
-        url,
-        newUrl,
-        isLocal,
-        isActive
-      );
-      urlMapper.removeByNewUrl(newUrl);
-      const count = urlMapper.count();
-      expect(count).toEqual(0);
-    });
   });
   describe('mappings', function() {
     let mappings;
@@ -302,16 +350,16 @@ describe('url mapper', function() {
 
     beforeEach(function() {
       urlMapper.set(
-          first.url,
-          first.newUrl,
-          first.isLocal,
-          first.isActive
+        first.url,
+        first.newUrl,
+        first.isLocal,
+        first.isActive
       );
       urlMapper.set(
-          second.url,
-          second.newUrl,
-          first.isLocal,
-          second.isActive
+        second.url,
+        second.newUrl,
+        first.isLocal,
+        second.isActive
       );
       mappings = urlMapper.mappings();
     });
