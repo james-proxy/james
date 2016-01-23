@@ -5,7 +5,7 @@ export default function openBrowser(browser = 'firefox') {
     proxy: 'localhost:1338'
   };
 
-  browserLauncher(function(err, launch) { //TODO handle error, #37
+  browserLauncher(function(err, launch) { // TODO handle error, #37
     launch('http://www.uxebu.com/', opts);
   });
 }
