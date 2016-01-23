@@ -1,4 +1,3 @@
-/*eslint-disable */
 const browserLauncher = require('browser-launcher2');
 export default function openBrowser(browser = 'firefox') {
   const opts = {
