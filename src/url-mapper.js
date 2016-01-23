@@ -136,6 +136,14 @@ export default class UrlMapper {
       // Clone to ensure that consumers can not change internal data
       list.push(JSON.parse(JSON.stringify(this._map[key])));
     }
+    for (const key in this._wildcards) {
+      if (!this._wildcards.hasOwnProperty(key)) {
+        continue;
+      }
+
+      // Clone to ensure that consumers can not change internal data
+      list.push(JSON.parse(JSON.stringify(this._wildcards[key])));
+    }
     return list;
   }
 
@@ -144,6 +152,7 @@ export default class UrlMapper {
 
     if (mappedUrl.url.indexOf('*') === -1) {
       this._map[mappedUrl.url] = mappedUrl;
+      return;
     }
 
     this._wildcards[mappedUrl.url] = mappedUrl;
