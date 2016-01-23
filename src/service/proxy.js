@@ -58,26 +58,23 @@ export default class Proxy {
       request.isMappingActive = this._urlMapper.isActiveMappedUrl(fullUrl);
       request.isMappedUrl = this._urlMapper.isMappedUrl(fullUrl);
 
-      if (!request.isMappingActive) {
-        this._update();
-        return;
-      }
+      if (request.isMappingActive) {
+        const mappedUrl = this._urlMapper.get(fullUrl);
+        request.isLocal = mappedUrl.isLocal;
+        request.newUrl = mappedUrl.newUrl;
 
-      const mappedUrl = this._urlMapper.get(fullUrl);
-      request.isLocal = mappedUrl.isLocal;
-      request.newUrl = mappedUrl.newUrl;
+        if (request.isLocal) {
+          return cycle.serve({
+            path: request.newUrl
+          }, () => {
+            this._update();
+          });
+        }
 
-      if (!request.isLocal) {
         request.fullUrl(request.newUrl);
-        this._update();
-        return;
       }
 
-      return cycle.serve({
-        path: request.newUrl
-      }, () => {
-        this._update();
-      });
+      this._update();
     } catch (e) {
       console.log(e); // eslint-disable-line
     }

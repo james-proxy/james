@@ -102,7 +102,6 @@ describe('url mapper', function() {
   });
 
   describe('get', function() {
-
     const isLocal = true;
     const isActive = true;
 
@@ -208,7 +207,7 @@ describe('url mapper', function() {
 
     it('should do longer direct-match, even when first wildcards are in same position', function() {
       check('http://bar.com/yolo/foo/baz', lateMultiWildcard);
-    })
+    });
   });
 
   describe('remove', function() {

@@ -69,7 +69,6 @@ export default class UrlMapper {
       return diff;
     });
 
-    console.dir(matches);
     return matches[0];
   }
 
