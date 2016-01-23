@@ -133,7 +133,17 @@ describe('url mapper', function() {
 
     const multiWildcard = {
       url: 'http://foo.com/*/*',
-      newUrl: 'foo/Multiwildcard'
+      newUrl: 'foo/multiwildcard'
+    };
+
+    const earlyMultiWildcard = {
+      url: 'http://bar.com/*/*/baz',
+      newUrl: 'bar/earlyMultiWildcard'
+    };
+
+    const lateMultiWildcard = {
+      url: 'http://bar.com/*/foo/*',
+      newUrl: 'bar/lateMultiWildcard'
     };
 
     function check(testUrl, expected) {
@@ -163,6 +173,8 @@ describe('url mapper', function() {
       set(earlyWildcard);
       set(lateWildcard);
       set(multiWildcard);
+      set(earlyMultiWildcard);
+      set(lateMultiWildcard);
     });
 
     it('returns undefined if no matching maps', function() {
@@ -193,6 +205,10 @@ describe('url mapper', function() {
     it('when the same amount of wildcards, matches the one with the longer direct-match on the left', function() {
       check('http://foo.com/bar/spaghetti', lateWildcard);
     });
+
+    it('should do longer direct-match, even when first wildcards are in same position', function() {
+      check('http://bar.com/yolo/foo/baz', lateMultiWildcard);
+    })
   });
 
   describe('remove', function() {

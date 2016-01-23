@@ -20,10 +20,57 @@ export default class UrlMapper {
       return plainUrl;
     }
 
-    /*this._wildcards.forEach(function(map) {
-      const urlChunks = url.split('/');
-      const mapChunks = map.url.split('/');
-    });*/
+    const wildcardList = [];
+    for (const key in this._wildcards) {
+      if (this._wildcards.hasOwnProperty(key)) {
+        wildcardList.push(this._wildcards[key]);
+      }
+    }
+
+    const urlChunks = url.split('/');
+    const matches = wildcardList.filter(function(mapping) {
+      const chunks = mapping.url.split('/');
+
+      if (urlChunks.length !== chunks.length) {
+        return false;
+      }
+
+      let isMatch = true;
+      chunks.forEach(function(chunk, i) {
+        if (chunk === '*') {
+          return;
+        }
+
+        // TODO handle case where chunks contains a "*", e.g. "http://test.com/version*/app.js"
+        // Either properly handle it here, or validate it in UI
+        if (chunk !== urlChunks[i]) {
+          isMatch = false;
+        }
+      });
+      return isMatch;
+    }).sort(function(a, b) {
+      // Use the mapping with the least wildcards
+      const regex = /[^\*]/g;
+      const countDiff = a.url.replace(regex, '').length - b.url.replace(regex, '').length;
+      if (countDiff !== 0) {
+        return countDiff;
+      }
+
+      let aLastPosition = 0;
+      let bLastPosition = 0;
+      let diff;
+      do {
+        aLastPosition = a.url.indexOf('*', aLastPosition + 1);
+        bLastPosition = b.url.indexOf('*', bLastPosition + 1);
+
+        diff = bLastPosition - aLastPosition;
+      } while (diff === 0 && aLastPosition !== -1);
+
+      return diff;
+    });
+
+    console.dir(matches);
+    return matches[0];
   }
 
   set(url, newUrl, isLocal, isActive = true) {
@@ -33,6 +80,9 @@ export default class UrlMapper {
     if (!isLocal && newUrl.split('/').length === 3 && newUrl.indexOf('?') === -1) {
       newUrl += '/';
     }
+
+    url = url.trim();
+    newUrl = newUrl.trim();
 
     const mappedUrl = {
       url,
