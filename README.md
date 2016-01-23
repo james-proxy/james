@@ -30,7 +30,7 @@ Requests which will be redirected:
 * `http://foo.com/version/26.8/app.js`
 * `http://foo.com/version/spaghetti/app.js`
 
-Requests which will not be redirected:
+Requests which will **not** be redirected:
 * `http://foo.com/version/app.js`
 * `http://bar.com/version/1/app.js`
 
