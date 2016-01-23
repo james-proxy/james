@@ -41,7 +41,7 @@ export default class UrlMapper {
           return;
         }
 
-        // TODO handle case where chunks contains a "*", e.g. "http://test.com/version*/app.js"
+        // TODO handle case where chunks aren't a wildcard, but contain one, e.g. "http://test.com/version*/app.js"
         // Either properly handle it here, or validate it in UI
         if (chunk !== urlChunks[i]) {
           isMatch = false;
@@ -56,6 +56,7 @@ export default class UrlMapper {
         return countDiff;
       }
 
+      // Equivalent amount of wildcards, use the url that's the "least-wildcardy"
       let aLastPosition = 0;
       let bLastPosition = 0;
       let diff;
