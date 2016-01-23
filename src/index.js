@@ -10,7 +10,7 @@ import Datastore from 'nedb';
 import UrlMapper from './url-mapper.js';
 import createMenu from './menu';
 import remote from 'remote';
-import openBrowser from './util/open-browser.js';
+import openBrowser from './open-browser.js';
 
 const app = remote.require('app');
 const fs = remote.require('fs');
