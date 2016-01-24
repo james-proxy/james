@@ -60,7 +60,7 @@ export default class MainContent extends React.Component {
     } else {
       const browserElements = browsers.map((browser) => {
         const src = './images/' + browser.name + '_128x128.png';
-        return <img className="open-browser" src={src} key={browser.name}
+        return <img className="open-browser" src={src} key={browser.name} alt={browser.name} title={browser.name}
                     onClick={this._openBrowserFactory(browser.name)} />
       });
 
