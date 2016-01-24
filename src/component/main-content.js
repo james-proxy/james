@@ -3,7 +3,7 @@ import Requests from './requests.js';
 import Search from './search.js';
 import InspectRequest from './inspect-request.js';
 
-const {func, object, arrayOf, shape} = React.PropTypes;
+const {func, object, arrayOf, shape, array} = React.PropTypes;
 
 export default class MainContent extends React.Component {
 
@@ -18,18 +18,16 @@ export default class MainContent extends React.Component {
     });
   }
 
-  _openChrome() {
+  _openBrowserFactory(name) {
     const {openBrowser} = this.props;
-    openBrowser('chrome');
-  }
-
-  _openFirefox() {
-    const {openBrowser} = this.props;
-    openBrowser('firefox');
+    return function() {
+      openBrowser(name);
+    }
   }
 
   render() {
     const {
+      browsers,
       requestData,
       showWindow,
       config,
@@ -60,14 +58,17 @@ export default class MainContent extends React.Component {
     if (requestData.totalCount > 0) {
       SearchBar = <Search filterRequests={filterRequests} />;
     } else {
+      const browserElements = browsers.map((browser) => {
+        const src = './images/' + browser.name + '_128x128.png';
+        return <img className="open-browser" src={src} key={browser.name}
+                    onClick={this._openBrowserFactory(browser.name)} />
+      });
+
       SetupInstructions = <div className="setup-instruction">
         <h2>Proxy started on localhost:1338</h2>
 
         <h3>Setup your browser to use James as proxy</h3>
-        <span className="open-browser chrome"
-              onClick={this._openChrome.bind(this)}></span>
-        <span className="open-browser firefox"
-              onClick={this._openFirefox.bind(this)}></span>
+        {browserElements}
       </div>;
     }
 
@@ -92,6 +93,7 @@ export default class MainContent extends React.Component {
 
 MainContent.propTypes = {
   openBrowser: func.isRequired,
+  browsers: array.isRequired,
   showWindow: func.isRequired,
   setFromIndex: func.isRequired,
   filterRequests: func.isRequired,

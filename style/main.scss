@@ -121,14 +121,6 @@ strong {
   background-size: 100%;
   display: inline-block;
   cursor: pointer;
-
-  &.chrome {
-    background-image: url('./images/chrome_128x128.png');
-  }
-
-  &.firefox {
-    background-image: url('./images/firefox_128x128.png');
-  }
 }
 
 .hidden {

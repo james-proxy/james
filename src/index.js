@@ -133,6 +133,27 @@ function render() {
   data.urlMapCount = urlMapper.getCount();
   const activeWindow = data.activeWindow && data.activeWindow.factory() || null;
   const requestData = proxy.getRequestData(50, data.fromIndex, data.filter);
+  const browsers = [
+    { name: 'chrome',
+      version: '36.0.1985.125',
+      type: 'chrome',
+      command: 'google-chrome' },
+    { name: 'chromium',
+      version: '36.0.1985.125',
+      type: 'chrome',
+      command: 'chromium-browser' },
+    { name: 'firefox',
+      version: '31.0',
+      type: 'firefox',
+      command: 'firefox' },
+    { name: 'phantomjs',
+      version: '1.9.7',
+      type: 'phantom',
+      command: 'phantomjs' },
+    { name: 'opera',
+      version: '12.16',
+      type: 'opera',
+      command: 'opera' } ];
 
   React.render(
     <div className="container">
@@ -142,6 +163,7 @@ function render() {
         openDevTools={openDevTools} />
       <MainContent
         openBrowser={openBrowser}
+        browsers={browsers}
         showWindow={showWindow}
         activeWindow={activeWindow}
         requestData={requestData}
