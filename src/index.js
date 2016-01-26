@@ -27,6 +27,7 @@ const db = new Datastore({
 });
 
 const data = {
+  browsers: [],
   urlMapCount: 0,
   urlMappings: [],
   activeWindowFactory: null,
@@ -88,6 +89,12 @@ const proxy = new Proxy(() => {
 }, config, urlMapper, createHoxy, isCachingEnabled);
 
 browserLauncher.detect(function(available) {
+  available.push({
+    name: 'chrome',
+    version: '1',
+    type: 'chrome',
+    command: 'google-chrome'
+  });
   data.browsers = available;
   render();
 });

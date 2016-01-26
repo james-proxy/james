@@ -6,6 +6,8 @@ export default function openBrowser(browser = 'firefox') {
   };
 
   browserLauncher(function(err, launch) { // TODO handle error, #37
-    launch('http://www.uxebu.com/', opts);
+    launch('http://www.uxebu.com/', opts, function(err) {
+      console.log(err);
+    });
   });
 }
