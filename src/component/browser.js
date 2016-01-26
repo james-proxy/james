@@ -4,7 +4,7 @@ const {string, func} = React.PropTypes;
 
 export default class Browser extends React.Component {
 
-  constructor(props) {
+  constructor() {
     super();
     this.state = {
       disableReason: undefined
@@ -21,10 +21,11 @@ export default class Browser extends React.Component {
   render() {
     const {browserName} = this.props;
     const {disableReason} = this.state;
-    let className = "open-browser", title = browserName;
+    let className = 'open-browser';
+    let title = browserName;
 
     if (disableReason) {
-      className += " disabled";
+      className += ' disabled';
       title = disableReason;
     }
 

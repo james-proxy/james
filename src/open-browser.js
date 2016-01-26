@@ -10,9 +10,9 @@ export default function openBrowser(browser = 'firefox', failCb) {
     if (err) {
       failCb(err);
     }
-    launch('http://www.uxebu.com/', opts, function(err) {
-      if (err) {
-        failCb(err);
+    launch('http://www.uxebu.com/', opts, function(launchErr) {
+      if (launchErr) {
+        failCb(launchErr);
       }
     });
   });
