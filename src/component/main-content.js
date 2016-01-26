@@ -53,7 +53,9 @@ export default class MainContent extends React.Component {
     if (requestData.totalCount > 0) {
       SearchBar = <Search filterRequests={filterRequests} />;
     } else {
-      const browserElements = browsers.map((browser) => <Browser browserName={browser.name} openBrowser={openBrowser} />);
+      const browserElements = browsers.map((browser) => {
+        return <Browser browserName={browser.name} key={browser.name} openBrowser={openBrowser} />;
+      });
 
       SetupInstructions = <div className="setup-instruction">
         <h2>Proxy started on localhost:1338</h2>
