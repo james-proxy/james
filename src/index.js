@@ -12,6 +12,7 @@ import createMenu from './menu';
 import remote from 'remote';
 import openBrowser from './open-browser.js';
 
+const browserLauncher = require('browser-launcher2');
 const app = remote.require('app');
 const fs = remote.require('fs');
 
@@ -86,6 +87,11 @@ const proxy = new Proxy(() => {
   render();
 }, config, urlMapper, createHoxy, isCachingEnabled);
 
+browserLauncher.detect(function(available) {
+  data.browsers = available;
+  render();
+});
+
 const chooseFile = createChooseFile(remote.getCurrentWindow());
 
 const windowFactories = {
@@ -159,6 +165,7 @@ function render() {
         openDevTools={openDevTools} />
       <MainContent
         openBrowser={openBrowser}
+        browsers={data.browsers}
         showWindow={showWindow}
         activeWindow={activeWindow}
         requestData={requestData}

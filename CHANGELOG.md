@@ -1,4 +1,5 @@
 **Upcoming Release**
+- Show all available browsers when launching proxy (i: @mitchhentges, r: @nerdbeere)
 - Implement connection throttling (i: @mitchhentges, r: @nerdbeere)
 
 ### 1.3.2
