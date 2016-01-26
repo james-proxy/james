@@ -3,7 +3,7 @@
 - Implement connection throttling (i: @mitchhentges, r: @nerdbeere)
 
 ### 1.3.2
-- Browsers launched through James automatically proxy requests, load site immediately (i: @mitchhentges, r: @nerdbeere)
+- Browsers launched through James automatically proxy requests (i: @mitchhentges, r: @nerdbeere)
 
 ### 1.3.1
 - Update electron (i: @mitchhentges, r: @nerdbeere)
