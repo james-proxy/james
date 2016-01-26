@@ -1,4 +1,5 @@
 import React from 'react';
+import Throttle from './footer-throttle';
 
 const {func, object} = React.PropTypes;
 
@@ -6,10 +7,11 @@ export default class Footer extends React.Component {
 
   render() {
     const {
-      isCachingEnabled,
       toggleCaching,
+      isCachingEnabled,
+      clearRequests,
       requestData,
-      clearRequests
+      ...other
       } = this.props;
 
     let cachingButton = <span>
@@ -26,10 +28,11 @@ export default class Footer extends React.Component {
 
     return <div className="footer">
       <button onClick={toggleCaching}>{cachingButton}</button>
+      <Throttle {...other} />
       <div className="request-count">
         Requests: {requestData.filteredCount}/{requestData.totalCount}
         <button onClick={clearRequests}>
-          <i className="fa fa-ban"></i>
+          <i className="fa fa-ban" />
         </button>
       </div>
     </div>;

@@ -1,7 +1,6 @@
 # James
 
 [![Build Status](https://travis-ci.org/uxebu/james.svg?branch=master)](https://travis-ci.org/uxebu/james)
-[![Code Climate](https://codeclimate.com/github/uxebu/james/badges/gpa.svg)](https://codeclimate.com/github/uxebu/james)
 
 James is an HTTP Proxy and Monitor that enables developers to view and intercept requests made from the browser.
 It is an open-source alternative to the popular developer tool [Charles](http://www.charlesproxy.com/)
@@ -37,6 +36,12 @@ If you need inspiration, take a look in the issue section.
 - Make sure that no tests are failing
 - Always add tests for new features
 - Make sure that there are no linting errors in your code (use `npm run lint`)
+
+### Contributors
+- @davidneat
+- @klipstein
+- @mitchhentges
+- @nerdbeere
 
 ## License
 The MIT License (MIT)

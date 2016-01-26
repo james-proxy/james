@@ -10,7 +10,7 @@ import Datastore from 'nedb';
 import UrlMapper from './url-mapper.js';
 import createMenu from './menu';
 import remote from 'remote';
-import openBrowser from './util/open-browser.js';
+import openBrowser from './open-browser.js';
 
 const app = remote.require('app');
 const fs = remote.require('fs');
@@ -31,7 +31,8 @@ const data = {
   activeWindowFactory: null,
   fromIndex: 0,
   filter: null,
-  cachingEnabled: false
+  cachingEnabled: false,
+  throttle: {enabled: false, rate: 0} // rate is in kBps
 };
 
 const urlMapper = new UrlMapper(db, function() {
@@ -63,6 +64,21 @@ const toggleCaching = () => {
 const clearRequests = () => {
   proxy.clear();
   render();
+};
+
+const throttleDisable = () => {
+  data.throttle.enabled = false;
+  proxy.disableThrottling();
+};
+
+const throttleEnable = () => {
+  data.throttle.enabled = true;
+  proxy.slow(data.throttle.rate);
+};
+
+const throttleRateChange = (kBps) => {
+  data.throttle.rate = kBps;
+  proxy.slow(kBps);
 };
 
 const domNode = document.getElementById('app');
@@ -133,6 +149,7 @@ function render() {
   data.urlMapCount = urlMapper.getCount();
   const activeWindow = data.activeWindow && data.activeWindow.factory() || null;
   const requestData = proxy.getRequestData(50, data.fromIndex, data.filter);
+  const {enabled, rate} = data.throttle;
   const browsers = [
     { name: 'chrome',
       version: '36.0.1985.125',
@@ -184,7 +201,12 @@ function render() {
         isCachingEnabled={isCachingEnabled}
         requestData={requestData}
         clearRequests={clearRequests}
-        toggleCaching={toggleCaching} />
+        toggleCaching={toggleCaching}
+        onDisableThrottle={throttleDisable}
+        onEnableThrottle={throttleEnable}
+        onRateChange={throttleRateChange}
+        enabled={enabled}
+        rate={rate} />
     </div>,
     domNode
   );
