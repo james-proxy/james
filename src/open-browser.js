@@ -6,7 +6,7 @@ export default function openBrowser(browser = 'firefox', failCb) {
     proxy: 'localhost:1338'
   };
 
-  browserLauncher(function(err, launch) { // TODO handle error, #37
+  browserLauncher(function(err, launch) {
     if (err) {
       failCb(err);
     }
