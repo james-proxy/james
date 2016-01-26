@@ -37,6 +37,12 @@ If you need inspiration, take a look in the issue section.
 - Always add tests for new features
 - Make sure that there are no linting errors in your code (use `npm run lint`)
 
+### Contributors
+- @davidneat
+- @klipstein
+- @mitchhentges
+- @nerdbeere
+
 ## License
 The MIT License (MIT)
 
