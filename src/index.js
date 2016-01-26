@@ -12,6 +12,7 @@ import createMenu from './menu';
 import remote from 'remote';
 import openBrowser from './open-browser.js';
 
+const browserLauncher = require('browser-launcher2');
 const app = remote.require('app');
 const fs = remote.require('fs');
 
@@ -86,6 +87,11 @@ const proxy = new Proxy(() => {
   render();
 }, config, urlMapper, createHoxy, isCachingEnabled);
 
+browserLauncher.detect(function(available) {
+  data.browsers = available;
+  render();
+});
+
 const chooseFile = createChooseFile(remote.getCurrentWindow());
 
 const windowFactories = {
@@ -150,35 +156,6 @@ function render() {
   const activeWindow = data.activeWindow && data.activeWindow.factory() || null;
   const requestData = proxy.getRequestData(50, data.fromIndex, data.filter);
   const {enabled, rate} = data.throttle;
-  const browsers = [
-    { name: 'chrome',
-      version: '36.0.1985.125',
-      type: 'chrome',
-      command: 'google-chrome' },
-    { name: 'chromium',
-      version: '36.0.1985.125',
-      type: 'chrome',
-      command: 'chromium-browser' },
-    { name: 'firefox',
-      version: '31.0',
-      type: 'firefox',
-      command: 'firefox' },
-    { name: 'phantomjs',
-      version: '1.9.7',
-      type: 'phantom',
-      command: 'phantomjs' },
-    { name: 'opera',
-      version: '12.16',
-      type: 'opera',
-      command: 'opera' },
-    { name: 'ie',
-      version: '11',
-      type: 'ie',
-      command: 'ie' },
-    { name: 'safari',
-      version: '1',
-      type: 'safari',
-      command: 'safari' }];
 
   React.render(
     <div className="container">
@@ -188,7 +165,7 @@ function render() {
         openDevTools={openDevTools} />
       <MainContent
         openBrowser={openBrowser}
-        browsers={browsers}
+        browsers={data.browsers}
         showWindow={showWindow}
         activeWindow={activeWindow}
         requestData={requestData}
