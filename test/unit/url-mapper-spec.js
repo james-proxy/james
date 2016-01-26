@@ -105,11 +105,6 @@ describe('url mapper', function() {
     const isLocal = true;
     const isActive = true;
 
-    const plain = {
-      url: 'http://bap.com/bar/baz',
-      newUrl: 'foo/plain'
-    };
-
     const specific = {
       url: 'http://foo.com/bar/baz',
       newUrl: 'foo/specific'
@@ -120,29 +115,9 @@ describe('url mapper', function() {
       newUrl: 'foo/oneWildcard'
     };
 
-    const earlyWildcard = {
-      url: 'http://foo.com/*/spaghetti',
-      newUrl: 'foo/earlyWildcard'
-    };
-
-    const lateWildcard = {
-      url: 'http://foo.com/bar/*',
-      newUrl: 'foo/lateWildcard'
-    };
-
     const multiWildcard = {
       url: 'http://foo.com/*/*',
       newUrl: 'foo/multiwildcard'
-    };
-
-    const earlyMultiWildcard = {
-      url: 'http://bar.com/*/*/baz',
-      newUrl: 'bar/earlyMultiWildcard'
-    };
-
-    const lateMultiWildcard = {
-      url: 'http://bar.com/*/foo/*',
-      newUrl: 'bar/lateMultiWildcard'
     };
 
     function check(testUrl, expected) {
@@ -156,57 +131,76 @@ describe('url mapper', function() {
       });
     }
 
-    beforeEach(function() {
-      function set(mapping) {
-        urlMapper.set(
-          mapping.url,
-          mapping.newUrl,
-          isLocal,
-          isActive
-        );
-      }
-
-      set(plain);
-      set(specific);
-      set(oneWildcard);
-      set(earlyWildcard);
-      set(lateWildcard);
-      set(multiWildcard);
-      set(earlyMultiWildcard);
-      set(lateMultiWildcard);
-    });
+    function set(mapping) {
+      urlMapper.set(
+        mapping.url,
+        mapping.newUrl,
+        isLocal,
+        isActive
+      );
+    }
 
     it('returns undefined if no matching maps', function() {
-      const mappedUrl = urlMapper.get('http://dunx');
-      expect(mappedUrl).toEqual(undefined);
+      set(specific);
+      set(oneWildcard);
+      set(multiWildcard);
+      expect(urlMapper.get('http://dunx')).toEqual(undefined);
     });
 
     it('matches plain urls', function() {
-      check(plain.url, plain);
+      set(specific);
+      check(specific.url, specific);
     });
 
     it('matches wildcards', function() {
+      set(oneWildcard);
       check('http://foo.com/1/baz', oneWildcard);
     });
 
     it('matches multi-wildcards', function() {
+      set(multiWildcard);
       check('http://foo.com/2/bork', multiWildcard);
     });
 
-    it('matches plain url if possible', function() {
-      check(specific.url, specific);
-    });
-
-    it('matches most-specific wildcard', function() {
-      check('http://foo.com/app/baz', oneWildcard);
+    it('matches most-specific url', function() {
+      set(specific);
+      set(oneWildcard);
+      set(multiWildcard);
+      check('http://foo.com/bar/baz', specific);
+      check('http://foo.com/derp/baz', oneWildcard);
+      check('http://foo.com/derp/any', multiWildcard);
     });
 
     it('when the same amount of wildcards, matches the one with the longer direct-match on the left', function() {
-      check('http://foo.com/bar/spaghetti', lateWildcard);
+      const early = {
+        url: 'http://foo.com/*/spaghetti',
+        newUrl: 'foo/earlyWildcard'
+      };
+
+      const late = {
+        url: 'http://foo.com/bar/*',
+        newUrl: 'foo/lateWildcard'
+      };
+
+      set(early);
+      set(late);
+      check('http://foo.com/bar/spaghetti', late);
     });
 
     it('should do longer direct-match, even when first wildcards are in same position', function() {
-      check('http://bar.com/yolo/foo/baz', lateMultiWildcard);
+      const earlyMulti = {
+        url: 'http://bar.com/*/*/baz',
+        newUrl: 'bar/earlyMultiWildcard'
+      };
+
+      const lateMulti = {
+        url: 'http://bar.com/*/foo/*',
+        newUrl: 'bar/lateMultiWildcard'
+      };
+
+      set(earlyMulti);
+      set(lateMulti);
+      check('http://bar.com/yolo/foo/baz', lateMulti);
     });
   });
 
