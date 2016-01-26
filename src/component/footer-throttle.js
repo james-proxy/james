@@ -17,11 +17,11 @@ export default class Throttle extends React.Component {
     this.setState({enabled});
 
     if (enabled) {
-      this.props.onEnable();
+      this.props.onEnableThrottle();
       return;
     }
 
-    this.props.onDisable();
+    this.props.onDisableThrottle();
   }
 
   updateThrottle(event) {
@@ -47,8 +47,8 @@ export default class Throttle extends React.Component {
 }
 
 Throttle.propTypes = {
-  onDisable: func.isRequired,
-  onEnable: func.isRequired,
+  onDisableThrottle: func.isRequired,
+  onEnableThrottle: func.isRequired,
   onRateChange: func.isRequired,
   enabled: bool,
   rate: number

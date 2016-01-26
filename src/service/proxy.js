@@ -122,7 +122,7 @@ export default class Proxy {
   /**
    * Disables throttling, allowing the proxy to run at maximum speed
    */
-  relax() {
+  disableThrottling() {
     this._proxy.slow({});
   }
 }

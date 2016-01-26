@@ -68,7 +68,7 @@ const clearRequests = () => {
 
 const throttleDisable = () => {
   data.throttle.enabled = false;
-  proxy.relax();
+  proxy.disableThrottling();
 };
 
 const throttleEnable = () => {
@@ -172,8 +172,8 @@ function render() {
         requestData={requestData}
         clearRequests={clearRequests}
         toggleCaching={toggleCaching}
-        onDisable={throttleDisable}
-        onEnable={throttleEnable}
+        onDisableThrottle={throttleDisable}
+        onEnableThrottle={throttleEnable}
         onRateChange={throttleRateChange}
         enabled={enabled}
         rate={rate} />
