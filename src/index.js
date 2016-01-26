@@ -153,7 +153,15 @@ function render() {
     { name: 'opera',
       version: '12.16',
       type: 'opera',
-      command: 'opera' } ];
+      command: 'opera' },
+    { name: 'ie',
+      version: '11',
+      type: 'ie',
+      command: 'ie' },
+    { name: 'safari',
+      version: '1',
+      type: 'safari',
+      command: 'safari' }];
 
   React.render(
     <div className="container">
