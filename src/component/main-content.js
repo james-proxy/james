@@ -67,7 +67,7 @@ export default class MainContent extends React.Component {
       SetupInstructions = <div className="setup-instruction">
         <h2>Proxy started on localhost:1338</h2>
 
-        <h3>Setup your browser to use James as proxy</h3>
+        <h3>Launch a browser, using James as a proxy</h3>
         {browserElements}
       </div>;
     }
