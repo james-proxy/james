@@ -1,3 +1,4 @@
+- Show all available browsers when launching proxy (i: @mitchhentges, r: @nerdbeere)
 - Implement connection throttling (i: @mitchhentges, r: @nerdbeere)
 
 - Fix a bug that prevented the user from adding mappings (i: @nerdbeere, r: @davidneat)
