@@ -25,7 +25,7 @@ export default class Throttle extends React.Component {
   }
 
   updateThrottle(event) {
-    const rate = parseInt(event.target.value);
+    const rate = parseInt(event.target.value, 10);
     this.setState({rate});
     this.props.onRateChange(rate);
   }
