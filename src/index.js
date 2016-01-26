@@ -89,12 +89,6 @@ const proxy = new Proxy(() => {
 }, config, urlMapper, createHoxy, isCachingEnabled);
 
 browserLauncher.detect(function(available) {
-  available.push({
-    name: 'chrome',
-    version: '1',
-    type: 'chrome',
-    command: 'google-chrome'
-  });
   data.browsers = available;
   render();
 });
