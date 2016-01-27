@@ -13,7 +13,7 @@ James is build with [hoxy](https://github.com/greim/hoxy), [electron](https://gi
 
  1. Clone the repository
  2. `npm install`
- 3. `npm run development'
+ 3. `npm run development`
 
  The electron instance will automatically reload whenever a change is made
  
