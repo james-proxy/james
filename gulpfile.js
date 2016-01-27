@@ -50,7 +50,7 @@ gulp.task('resources', () => {
 gulp.task('package-resources', ['default'], () => {
   return es.merge([
     gulp.src('node_modules/font-awesome/fonts/**').pipe(gulp.dest('package/fonts')),
-    gulp.src('resource/**').pipe(gulp.dest('package')),
+    gulp.src('resource/**').pipe(gulp.dest('package')), // todo run gulp-useref to not do electron-connect in prod
     gulp.src('build/james.css').pipe(gulp.dest('package'))
   ]);
 });
