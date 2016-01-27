@@ -40,6 +40,7 @@
     "babel-preset-react": "^6.3.13",
     "babel-register": "^6.4.3",
     "browserify": "^13.0.0",
+    "del": "^2.2.0",
     "electron-packager": "^5.2.1",
     "electron-prebuilt": "^0.36.4",
     "eslint": "^1.10.3",
@@ -66,14 +67,5 @@
     "setup-referee-sinon": "^0.3.0",
     "sinon": "^1.17.2",
     "sinon-as-promised": "^4.0.0"
-  },
-  "babel": {
-    "presets": [
-      "react",
-      "es2015"
-    ],
-    "plugins": [
-      "transform-object-rest-spread"
-    ]
   }
 }

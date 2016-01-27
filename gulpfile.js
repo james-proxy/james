@@ -1,6 +1,7 @@
 const gulp = require('gulp');
 const es = require('event-stream');
 const babel = require('gulp-babel');
+const del = require('del');
 const rename = require('gulp-rename');
 const changed = require('gulp-changed');
 const sass = require('gulp-sass');
@@ -38,8 +39,12 @@ gulp.task('resources', () => {
   ]);
 });
 
+gulp.task('clean', () => {
+  del.sync(['build', 'package', 'binaries']);
+});
+
 gulp.task('watch', () => {
-  gulp.start('default');
+  gulp.start('default'); // 'default' isn't a dependant task so that watchers will start immediately after `gulp watch`
   gulp.watch('src/**', ['js']);
   gulp.watch('style/**', ['css']);
   gulp.watch('resource/**', ['resources']);
