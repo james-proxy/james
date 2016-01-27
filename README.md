@@ -9,6 +9,11 @@ James is build with [hoxy](https://github.com/greim/hoxy), [electron](https://gi
 
 ![](resource/screenshot-1.png)
 
+## Installing
+Pre-compiled binaries are available under the [releases](https://github.com/james-proxy/james/releases) tab.
+
+Just download the appropriate one for your system and run it.
+
 ## Running in a development environment
 
  1. Clone the repository
