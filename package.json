@@ -6,12 +6,12 @@
   "scripts": {
     "build": "gulp",
     "watch": "gulp watch",
-    "package": "gulp && rimraf ./package &&  mkdirp ./package && mkdirp ./binaries && browserify --node -e build/index.js -o ./package/index.js -u remote -u child-killer && npm run -s copy-files-package && npm run -s create-binaries",
+    "package": "gulp clean default && mkdirp ./package && mkdirp ./binaries && browserify --node -e build/index.js -o ./package/index.js -u remote -u child-killer && npm run -s copy-files-package && npm run -s create-binaries",
     "create-binaries": "electron-packager ./package James --all --overwrite --icon=./resource/icon.icns --version=0.36.4 --out binaries",
     "zip-binaries": "cd binaries; rm *.zip; for i in *; do zip --symlinks -r \"${i%/}.zip\" \"$i\"; done",
     "copy-files-package": "rimraf package/fonts && mkdirp package/fonts && ncp ./node_modules/font-awesome/fonts/ package/fonts/ && ncp ./resource/ ./package/ && ncp ./build/james.css ./package/james.css",
     "start": "electron .",
-    "lint": "eslint ./src ./test",
+    "lint": "gulp lint",
     "test": "mocha --reporter dot --recursive -r setup-referee-sinon/globals test/unit --compilers js:babel-core/register",
     "test-ci": "npm run lint && npm run test && npm run build && npm run package"
   },
@@ -31,14 +31,11 @@
     "uniqid": "^1.0.0"
   },
   "devDependencies": {
-    "autoprefixer": "^6.3.1",
-    "babel-cli": "^6.4.5",
     "babel-core": "^6.4.5",
     "babel-eslint": "^5.0.0-beta6",
     "babel-plugin-transform-object-rest-spread": "^6.3.13",
     "babel-preset-es2015": "^6.3.13",
     "babel-preset-react": "^6.3.13",
-    "babel-register": "^6.4.3",
     "browserify": "^13.0.0",
     "del": "^2.2.0",
     "electron-packager": "^5.2.1",
@@ -51,21 +48,27 @@
     "gulp-autoprefixer": "^3.1.0",
     "gulp-babel": "^6.1.1",
     "gulp-changed": "^1.3.0",
+    "gulp-eslint": "^1.1.1",
     "gulp-rename": "^1.2.2",
     "gulp-sass": "^2.1.1",
     "gulp-sourcemaps": "^1.6.0",
     "mkdirp": "^0.5.1",
     "mocha": "^2.3.4",
     "ncp": "^2.0.0",
-    "node-sass": "^3.4.2",
-    "nodemon": "^1.8.1",
-    "parallelshell": "^2.0.0",
-    "postcss-cli": "^2.4.0",
     "referee": "^1.2.0",
     "referee-sinon": "^1.0.3",
     "rimraf": "^2.5.0",
     "setup-referee-sinon": "^0.3.0",
     "sinon": "^1.17.2",
     "sinon-as-promised": "^4.0.0"
+  },
+  "babel": {
+    "presets": [
+      "react",
+      "es2015"
+    ],
+    "plugins": [
+      "transform-object-rest-spread"
+    ]
   }
 }

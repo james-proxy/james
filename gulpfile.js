@@ -7,6 +7,7 @@ const changed = require('gulp-changed');
 const sass = require('gulp-sass');
 const sourcemaps = require('gulp-sourcemaps');
 const autoprefixer = require('gulp-autoprefixer');
+const eslint = require('gulp-eslint');
 
 gulp.task('default', ['js', 'css', 'resources']);
 
@@ -39,13 +40,21 @@ gulp.task('resources', () => {
   ]);
 });
 
+gulp.task('lint', () => {
+  return gulp.src(['src/**', 'test/**'])
+    .pipe(eslint())
+    .pipe(eslint.format())
+    .pipe(eslint.failOnError())
+});
+
 gulp.task('clean', () => {
   del.sync(['build', 'package', 'binaries']);
 });
 
 gulp.task('watch', () => {
-  gulp.start('default'); // 'default' isn't a dependant task so that watchers will start immediately after `gulp watch`
-  gulp.watch('src/**', ['js']);
+  gulp.start(['default', 'lint']); // 'default' isn't a dependant task so that watchers will start immediately after `gulp watch`
+  gulp.watch('src/**', ['js', 'lint']);
+  gulp.watch('test/unit/**', ['lint']);
   gulp.watch('style/**', ['css']);
   gulp.watch('resource/**', ['resources']);
 });
