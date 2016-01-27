@@ -23,6 +23,7 @@ To enable HTTPs support follow the [instructions in our wiki](https://github.com
 
 ## Other useful NPM Commands
 
+- `npm run build`: Completely builds the app
 - `npm run watch`: Watches JS, SASS and resource files, transpiling/copying them automatically. Lints sources on-change
 - `npm run lint`: Checks all JS code against defined code styling rules
 - `npm run test`: Runs all tests
