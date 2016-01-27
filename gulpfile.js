@@ -10,6 +10,7 @@ const autoprefixer = require('gulp-autoprefixer');
 const eslint = require('gulp-eslint');
 const browserify = require('browserify');
 const source = require('vinyl-source-stream');
+const electron = require('electron-packager');
 
 gulp.task('default', ['js', 'css', 'resources']);
 
@@ -46,10 +47,11 @@ gulp.task('resources', () => {
   ]);
 });
 
-gulp.task('package-resources', () => {
+gulp.task('package-resources', ['default'], () => {
   return es.merge([
     gulp.src('node_modules/font-awesome/fonts/**').pipe(gulp.dest('package/fonts')),
-    gulp.src('resource/**').pipe(gulp.dest('package'))
+    gulp.src('resource/**').pipe(gulp.dest('package')),
+    gulp.src('build/james.css').pipe(gulp.dest('package'))
   ]);
 });
 
@@ -65,7 +67,18 @@ gulp.task('package-browserify', ['default'], () => {
     pipe(gulp.dest('./package/'))
 });
 
-gulp.task('package', ['package-resources', 'package-browserify']);
+gulp.task('package', ['package-resources', 'package-browserify'], (done) => {
+  electron({
+    all: true,
+    dir: 'package',
+    platform: 'all',
+    name: 'James',
+    overwrite: true,
+    icon: 'resource/icon.icns',
+    version: '0.36.4',
+    out: 'binaries'
+  }, () => done())
+});
 
 gulp.task('lint', () => {
   return gulp.src(['src/**', 'test/**'])

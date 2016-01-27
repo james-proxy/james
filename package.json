@@ -6,14 +6,12 @@
   "scripts": {
     "build": "gulp",
     "watch": "gulp watch",
-    "package": "gulp package && npm run -s create-binaries",
-    "create-binaries": "electron-packager ./package James --all --overwrite --icon=./resource/icon.icns --version=0.36.4 --out binaries",
+    "package": "gulp clean package",
     "zip-binaries": "cd binaries; rm *.zip; for i in *; do zip --symlinks -r \"${i%/}.zip\" \"$i\"; done",
-    "copy-files-package": "rimraf package/fonts && mkdirp package/fonts && ncp ./node_modules/font-awesome/fonts/ package/fonts/ && ncp ./resource/ ./package/ && ncp ./build/james.css ./package/james.css",
     "start": "electron .",
     "lint": "gulp lint",
     "test": "mocha --reporter dot --recursive -r setup-referee-sinon/globals test/unit --compilers js:babel-core/register",
-    "test-ci": "npm run lint && npm run test && npm run build && npm run package"
+    "test-ci": "npm run lint && npm run test && npm run package"
   },
   "author": "Julian Hollmann <hollmann@uxebu.com>",
   "license": "MIT",
