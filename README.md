@@ -9,7 +9,7 @@ James is build with [hoxy](https://github.com/greim/hoxy), [electron](https://gi
 
 ![](resource/screenshot-1.png)
 
-## Running
+## Running in a development environment
 
  1. Clone the repository
  2. `npm install`
