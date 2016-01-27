@@ -9,12 +9,13 @@ James is build with [hoxy](https://github.com/greim/hoxy), [electron](https://gi
 
 ![](resource/screenshot-1.png)
 
-## Installation
+## Running
 
  1. Clone the repository
  2. `npm install`
- 3. `npm run build`
+ 3. `npm run watch`
  4. `npm start`
+ 5. From within the developer tools, refresh the app
  
 ## HTTPs Support
 
@@ -22,10 +23,10 @@ To enable HTTPs support follow the [instructions in our wiki](https://github.com
 
 ## Other useful NPM Commands
 
-- `npm run watch`: Watches JS and SASS files and transpiles them automatically
-- `npm run package`: Creates a standalone App Bundle for OSX
-- `npm run lint`: Checks the `src` folder against all defined codestyle rules
+- `npm run watch`: Watches JS, SASS and resource files, transpiling/copying them automatically. Lints sources on-change
+- `npm run lint`: Checks all JS code against defined code styling rules
 - `npm run test`: Runs all tests
+- `npm run package`: Creates a standalone app bundle for all operating systems
 
 ## Contributing
 
