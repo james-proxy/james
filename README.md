@@ -10,9 +10,13 @@ James is build with [hoxy](https://github.com/greim/hoxy), [electron](https://gi
 ![](resource/screenshot-1.png)
 
 ## Installing
-Pre-compiled binaries are available under the [releases](https://github.com/james-proxy/james/releases) tab.
+Download the correct version for your OS and run
 
-Just download the appropriate one for your system and run it.
+![](https://img.shields.io/badge/download-OSX-green.svg?link=https://github.com/james-proxy/james/releases/download/v1.3.2/James-darwin-x64.zip)
+![](https://img.shields.io/badge/download-linux--ia32-green.svg?link=https://github.com/james-proxy/james/releases/download/v1.3.2/James-linux-ia32.zip)
+![](https://img.shields.io/badge/download-linux--x64-green.svg?link=https://github.com/james-proxy/james/releases/download/v1.3.2/James-linux-x64.zip)
+![](https://img.shields.io/badge/download-windows--ia32-green.svg?https://github.com/james-proxy/james/releases/download/v1.3.2/James-win32-ia32.zip)
+![](https://img.shields.io/badge/download-windows--x64-green.svg?https://github.com/james-proxy/james/releases/download/v1.3.2/James-win32-x64.zip)
 
 ## Running in a development environment
 
