@@ -75,7 +75,7 @@ gulp.task('package', ['package-resources', 'package-browserify'], (done) => {
     name: 'James',
     overwrite: true,
     icon: 'resource/icon.icns',
-    version: '0.36.4',
+    version: '0.36.5',
     out: 'binaries'
   }, () => done())
 });
