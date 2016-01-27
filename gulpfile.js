@@ -54,11 +54,16 @@ gulp.task('clean', () => {
 });
 
 gulp.task('watch', ['default'], () => {
+  gulp.watch('src/**', ['js', 'lint']);
+  gulp.watch('test/unit/**', ['lint']);
+  gulp.watch('style/**', ['css']);
+  gulp.watch('resource/**', ['resources']);
+});
+
+gulp.task('livereload', ['default'], () => {
   electronConnect.start();
   const reload = () => electronConnect.reload();
-
-  gulp.watch('src/**', ['js', 'lint', reload]);
-  gulp.watch('test/unit/**', ['lint']);
+  gulp.watch('src/**', ['js', reload]);
   gulp.watch('style/**', ['css', reload]);
   gulp.watch('resource/**', ['resources', reload]);
 });

@@ -6,6 +6,7 @@
   "scripts": {
     "build": "gulp",
     "watch": "gulp watch",
+    "development": "gulp livereload",
     "package": "gulp clean default && mkdirp ./package && mkdirp ./binaries && browserify --node -e build/index.js -o ./package/index.js -u remote -u child-killer && npm run -s copy-files-package && npm run -s create-binaries",
     "create-binaries": "electron-packager ./package James --all --overwrite --icon=./resource/icon.icns --version=0.36.4 --out binaries",
     "zip-binaries": "cd binaries; rm *.zip; for i in *; do zip --symlinks -r \"${i%/}.zip\" \"$i\"; done",

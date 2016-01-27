@@ -13,9 +13,9 @@ James is build with [hoxy](https://github.com/greim/hoxy), [electron](https://gi
 
  1. Clone the repository
  2. `npm install`
- 3. `npm run watch`
- 4. `npm start`
- 5. From within the developer tools, refresh the app
+ 3. `npm run development'
+
+ The electron instance will automatically reload whenever a change is made
  
 ## HTTPs Support
 
