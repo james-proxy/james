@@ -8,6 +8,8 @@ const sass = require('gulp-sass');
 const sourcemaps = require('gulp-sourcemaps');
 const autoprefixer = require('gulp-autoprefixer');
 const eslint = require('gulp-eslint');
+const useref = require('gulp-useref');
+const electronConnect = require('electron-connect').server.create();
 
 gulp.task('default', ['js', 'css', 'resources']);
 
@@ -51,10 +53,12 @@ gulp.task('clean', () => {
   del.sync(['build', 'package', 'binaries']);
 });
 
-gulp.task('watch', () => {
-  gulp.start(['default', 'lint']); // 'default' isn't a dependant task so that watchers will start immediately after `gulp watch`
-  gulp.watch('src/**', ['js', 'lint']);
+gulp.task('watch', ['default'], () => {
+  electronConnect.start();
+  const reload = () => electronConnect.reload();
+
+  gulp.watch('src/**', ['js', 'lint', reload]);
   gulp.watch('test/unit/**', ['lint']);
-  gulp.watch('style/**', ['css']);
-  gulp.watch('resource/**', ['resources']);
+  gulp.watch('style/**', ['css', reload]);
+  gulp.watch('resource/**', ['resources', reload]);
 });
