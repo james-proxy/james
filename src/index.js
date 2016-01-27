@@ -27,6 +27,7 @@ const db = new Datastore({
 });
 
 const data = {
+  browsers: [],
   urlMapCount: 0,
   urlMappings: [],
   activeWindowFactory: null,

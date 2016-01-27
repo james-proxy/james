@@ -2,6 +2,7 @@ import React from 'react';
 import Requests from './requests.js';
 import Search from './search.js';
 import InspectRequest from './inspect-request.js';
+import Browser from './browser.js';
 
 const {func, object, arrayOf, shape, array} = React.PropTypes;
 
@@ -18,16 +19,10 @@ export default class MainContent extends React.Component {
     });
   }
 
-  _openBrowserFactory(name) {
-    const {openBrowser} = this.props;
-    return function() {
-      openBrowser(name);
-    };
-  }
-
   render() {
     const {
       browsers,
+      openBrowser,
       requestData,
       showWindow,
       config,
@@ -59,14 +54,11 @@ export default class MainContent extends React.Component {
       SearchBar = <Search filterRequests={filterRequests} />;
     } else {
       const browserElements = browsers.map((browser) => {
-        const src = './images/' + browser.name + '_128x128.png';
-        return <img className="open-browser" src={src} key={browser.name} alt={browser.name}
-                    title={browser.name} onClick={this._openBrowserFactory(browser.name)} />;
+        return <Browser browserName={browser.name} key={browser.name} openBrowser={openBrowser} />;
       });
 
       SetupInstructions = <div className="setup-instruction">
         <h2>Proxy started on localhost:1338</h2>
-
         <h3>Launch a browser, using James as a proxy</h3>
         {browserElements}
       </div>;
