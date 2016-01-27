@@ -6,7 +6,7 @@
   "scripts": {
     "build": "gulp",
     "watch": "gulp watch",
-    "package": "gulp clean default && mkdirp ./package && mkdirp ./binaries && browserify --node -e build/index.js -o ./package/index.js -u remote -u child-killer && npm run -s copy-files-package && npm run -s create-binaries",
+    "package": "gulp package && npm run -s create-binaries",
     "create-binaries": "electron-packager ./package James --all --overwrite --icon=./resource/icon.icns --version=0.36.4 --out binaries",
     "zip-binaries": "cd binaries; rm *.zip; for i in *; do zip --symlinks -r \"${i%/}.zip\" \"$i\"; done",
     "copy-files-package": "rimraf package/fonts && mkdirp package/fonts && ncp ./node_modules/font-awesome/fonts/ package/fonts/ && ncp ./resource/ ./package/ && ncp ./build/james.css ./package/james.css",
@@ -60,7 +60,8 @@
     "rimraf": "^2.5.0",
     "setup-referee-sinon": "^0.3.0",
     "sinon": "^1.17.2",
-    "sinon-as-promised": "^4.0.0"
+    "sinon-as-promised": "^4.0.0",
+    "vinyl-source-stream": "^1.1.0"
   },
   "babel": {
     "presets": [

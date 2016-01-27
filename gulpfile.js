@@ -9,8 +9,13 @@ const sourcemaps = require('gulp-sourcemaps');
 const autoprefixer = require('gulp-autoprefixer');
 const eslint = require('gulp-eslint');
 const browserify = require('browserify');
+const source = require('vinyl-source-stream');
 
 gulp.task('default', ['js', 'css', 'resources']);
+
+gulp.task('clean', () => {
+  return del.sync(['build', 'package', 'binaries']);
+});
 
 gulp.task('js', () => {
   return gulp.src('src/**')
@@ -41,6 +46,27 @@ gulp.task('resources', () => {
   ]);
 });
 
+gulp.task('package-resources', () => {
+  return es.merge([
+    gulp.src('node_modules/font-awesome/fonts/**').pipe(gulp.dest('package/fonts')),
+    gulp.src('resource/**').pipe(gulp.dest('package'))
+  ]);
+});
+
+gulp.task('package-browserify', ['default'], () => {
+  return browserify('./build/index.js', {
+    builtins: false, // Attempt to reproduce
+    browserField: false // the `--node` flag
+  })
+    .exclude('remote')
+    .exclude('child-killer')
+    .bundle()
+    .pipe(source('index.js')).
+    pipe(gulp.dest('./package/'))
+});
+
+gulp.task('package', ['package-resources', 'package-browserify']);
+
 gulp.task('lint', () => {
   return gulp.src(['src/**', 'test/**'])
     .pipe(eslint())
@@ -48,18 +74,8 @@ gulp.task('lint', () => {
     .pipe(eslint.failOnError())
 });
 
-gulp.task('package', () => {
-  var b = browserify('./build/index.js', {browserField: false});
-  b.exclude('remote');
-  b.bundle();
-});
-
-gulp.task('clean', () => {
-  del.sync(['build', 'package', 'binaries']);
-});
-
 gulp.task('watch', () => {
-  gulp.start(['default', 'lint']); // 'default' isn't a dependant task so that watchers will start immediately after `gulp watch`
+  gulp.start(['default', 'lint']); // 'default' isn't a dependent task so that watchers will start immediately after `gulp watch`
   gulp.watch('src/**', ['js', 'lint']);
   gulp.watch('test/unit/**', ['lint']);
   gulp.watch('style/**', ['css']);
