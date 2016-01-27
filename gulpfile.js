@@ -8,6 +8,7 @@ const sass = require('gulp-sass');
 const sourcemaps = require('gulp-sourcemaps');
 const autoprefixer = require('gulp-autoprefixer');
 const eslint = require('gulp-eslint');
+const browserify = require('browserify');
 
 gulp.task('default', ['js', 'css', 'resources']);
 
@@ -45,6 +46,12 @@ gulp.task('lint', () => {
     .pipe(eslint())
     .pipe(eslint.format())
     .pipe(eslint.failOnError())
+});
+
+gulp.task('package', () => {
+  var b = browserify('./build/index.js', {browserField: false});
+  b.exclude('remote');
+  b.bundle();
 });
 
 gulp.task('clean', () => {
