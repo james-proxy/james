@@ -6,6 +6,7 @@
   "scripts": {
     "build": "gulp",
     "watch": "gulp watch",
+    "development": "gulp livereload",
     "package": "gulp clean default && mkdirp ./package && mkdirp ./binaries && browserify --node -e build/index.js -o ./package/index.js -u remote -u child-killer && npm run -s copy-files-package && npm run -s create-binaries",
     "create-binaries": "electron-packager ./package James --all --overwrite --icon=./resource/icon.icns --version=0.36.4 --out binaries",
     "zip-binaries": "cd binaries; rm *.zip; for i in *; do zip --symlinks -r \"${i%/}.zip\" \"$i\"; done",
@@ -38,6 +39,7 @@
     "babel-preset-react": "^6.3.13",
     "browserify": "^13.0.0",
     "del": "^2.2.0",
+    "electron-connect": "^0.3.5",
     "electron-packager": "^5.2.1",
     "electron-prebuilt": "^0.36.4",
     "eslint": "^1.10.3",
@@ -52,6 +54,7 @@
     "gulp-rename": "^1.2.2",
     "gulp-sass": "^2.1.1",
     "gulp-sourcemaps": "^1.6.0",
+    "gulp-useref": "^3.0.5",
     "mkdirp": "^0.5.1",
     "mocha": "^2.3.4",
     "ncp": "^2.0.0",
