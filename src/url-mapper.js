@@ -4,18 +4,60 @@ export default class UrlMapper {
     this._db = db;
     this._update = update;
     this._map = {};
-    this._mapByNewUrl = {};
-    this._count = 0;
+    this._wildcards = {};
 
-    this.getList((err, mappedUrls) => {
+    this._db.find({}, (err, mappedUrls) => {
       mappedUrls.forEach((mappedUrl) => {
         this._addMemoryCopy(mappedUrl);
       });
+      update(); // Inform UI that mappings have been loaded
     });
   }
 
   get(url) {
-    return this._map[url];
+    const plainUrl = this._map[url];
+    if (plainUrl) {
+      return plainUrl;
+    }
+
+    const wildcardList = Object.keys(this._wildcards).map((key) => this._wildcards[key]);
+    const urlChunks = url.split('/');
+    const matches = wildcardList.filter(function(mapping) {
+      const chunks = mapping.url.split('/');
+
+      if (urlChunks.length !== chunks.length) {
+        return false;
+      }
+
+      let isMatch = true;
+      chunks.forEach(function(chunk, i) {
+        if (chunk === '*') {
+          return;
+        }
+
+        if (chunk !== urlChunks[i]) {
+          isMatch = false;
+        }
+      });
+      return isMatch;
+    }).sort(function earliestWildcard(a, b) {
+      let aLastPosition = 0;
+      let bLastPosition = 0;
+      let diff;
+      do {
+        aLastPosition = a.url.indexOf('*', aLastPosition + 1);
+        bLastPosition = b.url.indexOf('*', bLastPosition + 1);
+
+        diff = bLastPosition - aLastPosition;
+      } while (diff === 0 && aLastPosition !== -1);
+
+      return diff;
+    }).sort(function leastWildcards(a, b) {
+      const regex = /[^\*]/g;
+      return a.url.replace(regex, '').length - b.url.replace(regex, '').length;
+    });
+
+    return matches[0];
   }
 
   set(url, newUrl, isLocal, isActive = true) {
@@ -25,6 +67,9 @@ export default class UrlMapper {
     if (!isLocal && newUrl.split('/').length === 3 && newUrl.indexOf('?') === -1) {
       newUrl += '/';
     }
+
+    url = url.trim();
+    newUrl = newUrl.trim();
 
     const mappedUrl = {
       url,
@@ -47,48 +92,13 @@ export default class UrlMapper {
   }
 
   isMappedUrl(url) {
-    return !!this._map[url];
-  }
-
-  _addMemoryCopy(mappedUrl) {
-    this._removeMemoryCopy(mappedUrl.url);
-    this._count++;
-    this._map[mappedUrl.url] = mappedUrl;
-    this._mapByNewUrl[mappedUrl.newUrl] = mappedUrl.url;
-  }
-
-  _removeMemoryCopyByNewUrl(newUrl) {
-    const url = this._mapByNewUrl[newUrl];
-    if (!url) return;
-
-    this._count--;
-
-    delete this._map[url];
-    delete this._mapByNewUrl[newUrl];
-  }
-
-  _removeMemoryCopy(url) {
-    if (!this._map[url]) return;
-
-    this._count--;
-
-    const newUrl = this._map[url].newUrl;
-
-    delete this._map[url];
-    delete this._mapByNewUrl[newUrl];
+    return !!this.get(url);
   }
 
   toggleActiveState(url) {
     if (!this.isMappedUrl(url)) return;
     this._map[url].isActive = !this._map[url].isActive;
     this._db.update({url}, {$set: {isActive: this._map[url].isActive}}, {}, () => {
-      this._update();
-    });
-  }
-
-  removeByNewUrl(newUrl) {
-    this._removeMemoryCopyByNewUrl(newUrl);
-    this._db.remove({newUrl: newUrl}, {multi: true}, () => {
       this._update();
     });
   }
@@ -100,12 +110,45 @@ export default class UrlMapper {
     });
   }
 
-  getCount() {
-    return this._count;
+  count() {
+    return Object.keys(this._map).length;
   }
 
-  getList(callback) {
-    this._db.find({}, callback);
+  mappings() {
+    const list = [];
+    for (const key in this._map) {
+      if (!this._map.hasOwnProperty(key)) {
+        continue;
+      }
+
+      // Clone to ensure that consumers can not change internal data
+      list.push(JSON.parse(JSON.stringify(this._map[key])));
+    }
+    for (const key in this._wildcards) {
+      if (!this._wildcards.hasOwnProperty(key)) {
+        continue;
+      }
+
+      // Clone to ensure that consumers can not change internal data
+      list.push(JSON.parse(JSON.stringify(this._wildcards[key])));
+    }
+    return list;
+  }
+
+  _addMemoryCopy(mappedUrl) {
+    this._removeMemoryCopy(mappedUrl.url);
+
+    if (mappedUrl.url.indexOf('*') === -1) {
+      this._map[mappedUrl.url] = mappedUrl;
+      return;
+    }
+
+    this._wildcards[mappedUrl.url] = mappedUrl;
+  }
+
+  _removeMemoryCopy(url) {
+    delete this._map[url];
+    delete this._wildcards[url];
   }
 
 }

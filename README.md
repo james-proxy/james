@@ -15,7 +15,27 @@ The electron instance will automatically reload whenever a change is made
 
  1. Clone the repository
  2. `npm install`
- 3. `npm run development`
+ 3. `npm run build`
+ 4. `npm start`
+
+## URL Mapping
+
+### Wildcard support
+
+To use wildcards in the "url to map" field, put a "*" between two adjacent slashes. For example:
+```
+http://foo.com/version/*/app.js -> http://localhost:8000/app.js
+```
+Requests which will be redirected:
+* `http://foo.com/version/1/app.js`
+* `http://foo.com/version/26.8/app.js`
+* `http://foo.com/version/spaghetti/app.js`
+
+Requests which will **not** be redirected:
+* `http://foo.com/version/app.js`
+* `http://bar.com/version/1/app.js`
+
+You can also use multiple wildcards in the same URL.
  
 ## HTTPs Support
 
