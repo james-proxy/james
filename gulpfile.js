@@ -14,25 +14,20 @@ const electron = require('electron-packager');
 const useref = require('gulp-useref');
 const electronConnect = require('electron-connect').server.create();
 
-function swallowError(error) {
-  console.log(error.toString());
-  this.emit('end');
-}
-
 gulp.task('default', ['js', 'css', 'resources']);
 
 gulp.task('clean', () => {
   return del.sync(['build', 'package', 'binaries']);
 });
 
-gulp.task('js', () => {
+gulp.task('js', (done) => {
   return gulp.src('src/**')
     .pipe(changed('build'))
     .pipe(babel({
       presets: ['es2015', 'react'],
       plugins: ['transform-object-rest-spread']
     }))
-    .on('error', swallowError) //Don't want watch tasks to stop when mid-development
+    .on('error', done)//Don't want watch tasks to stop when mid-development, but still want errcode 1 on `npm run build`
     .pipe(gulp.dest('build'));
 });
 
