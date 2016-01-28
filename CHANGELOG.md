@@ -1,4 +1,5 @@
 **Upcoming Release**
+- Automatically reload Electron instance on-file-change (i: @mitchhentges, r: @nerdbeere)
 - Halves build time (i: @mitchhentges, r: @nerdbeere)
 - Faster build time (i: @mitchhentges, r: @nerdbeere)
 - Show browser as disabled with error message if it won't launch (i: @mitchhentges, r: @nerdbeere)
