@@ -1,8 +1,8 @@
 **Upcoming Release**
-- Make packaging, all file copying occur through gulp
+- Requests in list no longer overlap to the right (i: @davidneat, r: @mitchhentges)
+- `npm run watch` no longer stops on babel-error (i: @mitchhentges, r: @nerdbeere)
 - Automatically reload Electron instance on-file-change (i: @mitchhentges, r: @nerdbeere)
-- Halves build time (i: @mitchhentges, r: @nerdbeere)
-- Faster build time (i: @mitchhentges, r: @nerdbeere)
+- Faster build time (use gulp) (i: @mitchhentges, r: @nerdbeere)
 - Show browser as disabled with error message if it won't launch (i: @mitchhentges, r: @nerdbeere)
 - Show all available browsers when launching proxy (i: @mitchhentges, r: @nerdbeere)
 - Implement connection throttling (i: @mitchhentges, r: @nerdbeere)
