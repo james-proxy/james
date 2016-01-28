@@ -1,5 +1,6 @@
 **Upcoming Release**
-- Make packaging, all file copying occur through gulp
+- `npm run watch` no longer stops on babel-error (i: @mitchhentges, r: @nerdbeere)
+- Make packaging, all file copying occur through gulp (i: @mitchhentges, r: @nerdbeere)
 - Automatically reload Electron instance on-file-change (i: @mitchhentges, r: @nerdbeere)
 - Halves build time (i: @mitchhentges, r: @nerdbeere)
 - Faster build time (i: @mitchhentges, r: @nerdbeere)
