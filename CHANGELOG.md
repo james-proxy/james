@@ -1,4 +1,5 @@
 **Upcoming Release**
+- Halves build time (i: @mitchhentges, r: @nerdbeere)
 - Faster build time (i: @mitchhentges, r: @nerdbeere)
 - Show browser as disabled with error message if it won't launch (i: @mitchhentges, r: @nerdbeere)
 - Show all available browsers when launching proxy (i: @mitchhentges, r: @nerdbeere)
