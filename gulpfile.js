@@ -54,8 +54,7 @@ gulp.task('clean', () => {
 });
 
 gulp.task('watch', ['default'], () => {
-  gulp.watch('src/**', ['js', 'lint']);
-  gulp.watch('test/unit/**', ['lint']);
+  gulp.watch('src/**', ['js', reload]);
   gulp.watch('style/**', ['css']);
   gulp.watch('resource/**', ['resources']);
 });
