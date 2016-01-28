@@ -20,13 +20,7 @@ export default class UrlMapper {
       return plainUrl;
     }
 
-    const wildcardList = [];
-    for (const key in this._wildcards) {
-      if (this._wildcards.hasOwnProperty(key)) {
-        wildcardList.push(this._wildcards[key]);
-      }
-    }
-
+    const wildcardList = Object.keys(this._wildcards).map((key) => this._wildcards[key]);
     const urlChunks = url.split('/');
     const matches = wildcardList.filter(function(mapping) {
       const chunks = mapping.url.split('/');
@@ -41,22 +35,12 @@ export default class UrlMapper {
           return;
         }
 
-        // TODO handle case where chunks aren't a wildcard, but contain one, e.g. "http://test.com/version*/app.js"
-        // Either properly handle it here, or validate it in UI
         if (chunk !== urlChunks[i]) {
           isMatch = false;
         }
       });
       return isMatch;
-    }).sort(function(a, b) {
-      // Use the mapping with the least wildcards
-      const regex = /[^\*]/g;
-      const countDiff = a.url.replace(regex, '').length - b.url.replace(regex, '').length;
-      if (countDiff !== 0) {
-        return countDiff;
-      }
-
-      // Equivalent amount of wildcards, use the url that's the "least-wildcardy"
+    }).sort(function earliestWildcard(a, b) {
       let aLastPosition = 0;
       let bLastPosition = 0;
       let diff;
@@ -68,6 +52,9 @@ export default class UrlMapper {
       } while (diff === 0 && aLastPosition !== -1);
 
       return diff;
+    }).sort(function leastWildcards(a, b) {
+      const regex = /[^\*]/g;
+      return a.url.replace(regex, '').length - b.url.replace(regex, '').length;
     });
 
     return matches[0];
