@@ -88,9 +88,8 @@ gulp.task('lint', () => {
 });
 
 gulp.task('watch', () => {
-  gulp.start(['default', 'lint']); // 'default' isn't a dependent task so that watchers will start immediately after `gulp watch`
-  gulp.watch('src/**', ['js', 'lint']);
-  gulp.watch('test/unit/**', ['lint']);
+  gulp.start(['default', 'lint']); // 'default' isn't a dependant task so that watchers will start immediately after `gulp watch`
+  gulp.watch('src/**', ['js']);
   gulp.watch('style/**', ['css']);
   gulp.watch('resource/**', ['resources']);
 });
