@@ -15,6 +15,7 @@ import openBrowser from './open-browser.js';
 const browserLauncher = require('browser-launcher2');
 const app = remote.require('app');
 const fs = remote.require('fs');
+const path = remote.require('path');
 
 createMenu();
 
@@ -40,6 +41,8 @@ const data = {
 const urlMapper = new UrlMapper(db, function() {
   updateMappings();
 });
+
+urlMapper.set('http://james.james/', path.resolve('./resource/example.html'), true);
 
 const createHoxy = () => {
   const opts = {};
