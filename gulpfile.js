@@ -14,6 +14,11 @@ const electron = require('electron-packager');
 const useref = require('gulp-useref');
 const electronConnect = require('electron-connect').server.create();
 
+function swallowError(error) {
+  console.log(error.toString());
+  this.emit('end');
+}
+
 gulp.task('default', ['js', 'css', 'resources']);
 
 gulp.task('clean', () => {
@@ -27,6 +32,7 @@ gulp.task('js', () => {
       presets: ['es2015', 'react'],
       plugins: ['transform-object-rest-spread']
     }))
+    .on('error', swallowError) //Don't want watch tasks to stop when mid-development
     .pipe(gulp.dest('build'));
 });
 
