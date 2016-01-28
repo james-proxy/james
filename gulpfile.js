@@ -11,6 +11,8 @@ const eslint = require('gulp-eslint');
 const browserify = require('browserify');
 const source = require('vinyl-source-stream');
 const electron = require('electron-packager');
+const useref = require('gulp-useref');
+const electronConnect = require('electron-connect').server.create();
 
 gulp.task('default', ['js', 'css', 'resources']);
 
@@ -87,9 +89,20 @@ gulp.task('lint', () => {
     .pipe(eslint.failOnError())
 });
 
-gulp.task('watch', () => {
-  gulp.start(['default', 'lint']); // 'default' isn't a dependant task so that watchers will start immediately after `gulp watch`
+gulp.task('clean', () => {
+  del.sync(['build', 'package', 'binaries']);
+});
+
+gulp.task('watch', ['default'], () => {
   gulp.watch('src/**', ['js']);
   gulp.watch('style/**', ['css']);
   gulp.watch('resource/**', ['resources']);
+});
+
+gulp.task('livereload', ['default'], () => {
+  electronConnect.start();
+  const reload = () => electronConnect.reload();
+  gulp.watch('src/**', ['js', reload]);
+  gulp.watch('style/**', ['css', reload]);
+  gulp.watch('resource/**', ['resources', reload]);
 });

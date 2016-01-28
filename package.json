@@ -6,6 +6,7 @@
   "scripts": {
     "build": "gulp",
     "watch": "gulp watch",
+    "development": "gulp livereload",
     "package": "gulp clean package",
     "zip-binaries": "cd binaries; rm *.zip; for i in *; do zip --symlinks -r \"${i%/}.zip\" \"$i\"; done",
     "start": "electron .",
@@ -36,6 +37,7 @@
     "babel-preset-react": "^6.3.13",
     "browserify": "^13.0.0",
     "del": "^2.2.0",
+    "electron-connect": "^0.3.5",
     "electron-packager": "^5.2.1",
     "electron-prebuilt": "^0.36.5",
     "eslint": "^1.10.3",
@@ -50,6 +52,7 @@
     "gulp-rename": "^1.2.2",
     "gulp-sass": "^2.1.1",
     "gulp-sourcemaps": "^1.6.0",
+    "gulp-useref": "^3.0.5",
     "mocha": "^2.3.4",
     "referee": "^1.2.0",
     "referee-sinon": "^1.0.3",
