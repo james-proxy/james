@@ -1,7 +1,6 @@
 # James
 
 [![Build Status](https://travis-ci.org/uxebu/james.svg?branch=master)](https://travis-ci.org/uxebu/james)
-[![Code Climate](https://codeclimate.com/github/uxebu/james/badges/gpa.svg)](https://codeclimate.com/github/uxebu/james)
 
 James is an HTTP Proxy and Monitor that enables developers to view and intercept requests made from the browser.
 It is an open-source alternative to the popular developer tool [Charles](http://www.charlesproxy.com/)
@@ -10,7 +9,9 @@ James is build with [hoxy](https://github.com/greim/hoxy), [electron](https://gi
 
 ![](resource/screenshot-1.png)
 
-## Installation
+## Running in a development environment
+
+The electron instance will automatically reload whenever a change is made
 
  1. Clone the repository
  2. `npm install`
@@ -42,10 +43,11 @@ To enable HTTPs support follow the [instructions in our wiki](https://github.com
 
 ## Other useful NPM Commands
 
-- `npm run watch`: Watches JS and SASS files and transpiles them automatically
-- `npm run package`: Creates a standalone App Bundle for OSX
-- `npm run lint`: Checks the `src` folder against all defined codestyle rules
+- `npm run build`: Completely builds the app
+- `npm run watch`: Watches JS, SASS and resource files, transpiling/copying them automatically. Lints sources on-change
+- `npm run lint`: Checks all JS code against defined code styling rules
 - `npm run test`: Runs all tests
+- `npm run package`: Creates a standalone app bundle for all operating systems
 
 ## Contributing
 
@@ -56,6 +58,12 @@ If you need inspiration, take a look in the issue section.
 - Make sure that no tests are failing
 - Always add tests for new features
 - Make sure that there are no linting errors in your code (use `npm run lint`)
+
+### Contributors
+- @davidneat
+- @klipstein
+- @mitchhentges
+- @nerdbeere
 
 ## License
 The MIT License (MIT)

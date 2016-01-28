@@ -1,0 +1,11 @@
+.open-browser {
+  height: 64px;
+  width: 64px;
+  background-size: 100%;
+  display: inline-block;
+  cursor: pointer;
+
+  &.disabled {
+    opacity: 0.4;
+  }
+}
