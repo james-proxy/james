@@ -1,4 +1,5 @@
 **Upcoming Release**
+- Make packaging, all file copying occur through gulp
 - Automatically reload Electron instance on-file-change (i: @mitchhentges, r: @nerdbeere)
 - Halves build time (i: @mitchhentges, r: @nerdbeere)
 - Faster build time (i: @mitchhentges, r: @nerdbeere)
