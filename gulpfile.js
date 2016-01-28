@@ -8,10 +8,17 @@ const sass = require('gulp-sass');
 const sourcemaps = require('gulp-sourcemaps');
 const autoprefixer = require('gulp-autoprefixer');
 const eslint = require('gulp-eslint');
+const browserify = require('browserify');
+const source = require('vinyl-source-stream');
+const electron = require('electron-packager');
 const useref = require('gulp-useref');
 const electronConnect = require('electron-connect').server.create();
 
 gulp.task('default', ['js', 'css', 'resources']);
+
+gulp.task('clean', () => {
+  return del.sync(['build', 'package', 'binaries']);
+});
 
 gulp.task('js', () => {
   return gulp.src('src/**')
@@ -42,6 +49,39 @@ gulp.task('resources', () => {
   ]);
 });
 
+gulp.task('package-resources', ['default'], () => {
+  return es.merge([
+    gulp.src('node_modules/font-awesome/fonts/**').pipe(gulp.dest('package/fonts')),
+    gulp.src('resource/**').pipe(useref({noAssets: true})).pipe(gulp.dest('package')),
+    gulp.src('build/james.css').pipe(gulp.dest('package'))
+  ]);
+});
+
+gulp.task('package-browserify', ['default'], () => {
+  return browserify('./build/index.js', {
+    builtins: false, // Attempt to reproduce
+    browserField: false // the `--node` flag
+  })
+    .exclude('remote')
+    .exclude('child-killer')
+    .bundle()
+    .pipe(source('index.js')).
+    pipe(gulp.dest('./package/'))
+});
+
+gulp.task('package', ['package-resources', 'package-browserify'], (done) => {
+  electron({
+    all: true,
+    dir: 'package',
+    platform: 'all',
+    name: 'James',
+    overwrite: true,
+    icon: 'resource/icon.icns',
+    version: '0.36.5',
+    out: 'binaries'
+  }, () => done())
+});
+
 gulp.task('lint', () => {
   return gulp.src(['src/**', 'test/**'])
     .pipe(eslint())
@@ -54,7 +94,7 @@ gulp.task('clean', () => {
 });
 
 gulp.task('watch', ['default'], () => {
-  gulp.watch('src/**', ['js', reload]);
+  gulp.watch('src/**', ['js']);
   gulp.watch('style/**', ['css']);
   gulp.watch('resource/**', ['resources']);
 });
