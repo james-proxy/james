@@ -1,6 +1,6 @@
 # James
 
-[![Build Status](https://travis-ci.org/uxebu/james.svg?branch=master)](https://travis-ci.org/uxebu/james)
+[![Build Status](https://travis-ci.org/james-proxy/james.svg?branch=master)](https://travis-ci.org/james-proxy/james)
 
 James is an HTTP Proxy and Monitor that enables developers to view and intercept requests made from the browser.
 It is an open-source alternative to the popular developer tool [Charles](http://www.charlesproxy.com/)
@@ -19,7 +19,7 @@ The electron instance will automatically reload whenever a change is made
  
 ## HTTPs Support
 
-To enable HTTPs support follow the [instructions in our wiki](https://github.com/uxebu/james/wiki/Configuring-James-for-HTTPS)
+To enable HTTPs support follow the [instructions in our wiki](https://github.com/james-proxy/james/wiki/Configuring-James-for-HTTPS)
 
 ## Other useful NPM Commands
 

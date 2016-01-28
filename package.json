@@ -18,7 +18,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/uxebu/james.git"
+    "url": "https://github.com/james-proxy/james.git"
   },
   "dependencies": {
     "browser-launcher2": "^0.4.6",
