@@ -1,4 +1,5 @@
 **Upcoming Release**
+- Support for Wildcards in URLs (i: @mitchhentges, r: @davidneat) 
 - Toolbar tab is now aligned properly (i: @mitchhentges, r: @davidneat) 
 - Requests in list no longer overlap to the right (i: @davidneat, r: @mitchhentges)
 - `npm run watch` no longer stops on babel-error (i: @mitchhentges, r: @nerdbeere)
