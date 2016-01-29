@@ -1,4 +1,5 @@
 **Upcoming Release**
+- Replace close shortcut to use 'Q' instead of 'W'
 - Support for Wildcards in URLs (i: @mitchhentges, r: @davidneat) 
 - Toolbar tab is now aligned properly (i: @mitchhentges, r: @davidneat) 
 - Requests in list no longer overlap to the right (i: @davidneat, r: @mitchhentges)
