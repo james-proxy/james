@@ -22,7 +22,7 @@ deploy:
   - binaries/James-win32-x64.zip
   skip_cleanup: true
   on:
-    repo: uxebu/james
+    repo: james-proxy/james
     tags: true
     all_branches: true
 
