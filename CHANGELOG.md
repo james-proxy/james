@@ -1,4 +1,6 @@
 **Upcoming Release**
+
+## 1.4.0
 - Replace close shortcut to use 'Q' instead of 'W' (i: @mitchhentges, r: @davidneat) 
 - Support for Wildcards in URLs (i: @mitchhentges, r: @davidneat) 
 - Toolbar tab is now aligned properly (i: @mitchhentges, r: @davidneat) 
