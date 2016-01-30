@@ -59,26 +59,6 @@ describe('url mapper', function() {
 
       expect(dbMock.remove).toHaveBeenCalledWith({url});
     });
-
-    it('does not add a slash when the path is local', function() {
-      const url = 'http://foo.com/bar/baz';
-      const newUrl = 'foo/bar';
-      const isLocal = true;
-      const isActive = true;
-      urlMapper.set(
-        url,
-        newUrl,
-        isLocal,
-        isActive
-      );
-
-      expect(dbMock.insert).toHaveBeenCalledWith({
-        url,
-        newUrl: 'foo/bar',
-        isLocal,
-        isActive
-      });
-    });
   });
 
   describe('get', function() {
