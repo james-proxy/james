@@ -16,6 +16,8 @@ export default class UrlMapper {
 
   get(url) {
     url = (url.endsWith('/') ? url.substring(0, url.length - 1) : url).trim();
+    console.log('get for url: ', url);
+
     const plainUrl = this._map[url];
     if (plainUrl) {
       return plainUrl;
@@ -74,6 +76,7 @@ export default class UrlMapper {
       isActive
     };
 
+    console.log('adding mapping: ', mappedUrl);
     this._addMemoryCopy(mappedUrl);
 
     this._db.remove({url}, {multi: true}, () => {
