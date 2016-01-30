@@ -24,6 +24,27 @@ describe('url mapper', function() {
     urlMapper = new UrlMapper(dbMock, update);
   });
 
+  function check(testUrl, expected) {
+    const {url, newUrl = 'newUrl', isLocal = true, isActive = true} = expected;
+    const mappedUrl = urlMapper.get(testUrl);
+    expect(mappedUrl).toEqual({
+      url,
+      newUrl,
+      isLocal,
+      isActive
+    });
+  }
+
+  function set(mapping) {
+    const {newUrl = 'newUrl', isLocal = true, isActive = true} = mapping;
+    urlMapper.set(
+      mapping.url,
+      newUrl,
+      isLocal,
+      isActive
+    );
+  }
+
   describe('set', function() {
     it('saves mapped urls to the database', function() {
       const url = 'http://foo.com/bar/baz';
@@ -99,12 +120,27 @@ describe('url mapper', function() {
         isActive
       });
     });
+
+    it('should remove the protocol', function() {
+      const mapping = {
+        url: 'http://foo.com/bar',
+        newUrl: 'newUrl',
+        isLocal: true,
+        isActive: true
+      };
+      const expected = {
+        url: 'foo.com/bar',
+        newUrl: mapping.newUrl,
+        isLocal: mapping.isLocal,
+        isActive: mapping.isActive
+      };
+
+      set(mapping);
+      expect(dbMock.insert).toHaveBeenCalledWith(expected)
+    });
   });
 
   describe('get', function() {
-    const isLocal = true;
-    const isActive = true;
-
     const specific = {
       url: 'http://foo.com/bar/baz',
       newUrl: 'foo/specific'
@@ -119,26 +155,6 @@ describe('url mapper', function() {
       url: 'http://foo.com/*/*',
       newUrl: 'foo/multiwildcard'
     };
-
-    function check(testUrl, expected) {
-      const {url, newUrl} = expected;
-      const mappedUrl = urlMapper.get(testUrl);
-      expect(mappedUrl).toEqual({
-        url,
-        newUrl,
-        isLocal,
-        isActive
-      });
-    }
-
-    function set(mapping) {
-      urlMapper.set(
-        mapping.url,
-        mapping.newUrl,
-        isLocal,
-        isActive
-      );
-    }
 
     it('returns undefined if no matching maps', function() {
       set(specific);
@@ -342,6 +358,7 @@ describe('url mapper', function() {
       expect(count).toEqual(0);
     });
   });
+
   describe('mappings', function() {
     let mappings;
     const first = {

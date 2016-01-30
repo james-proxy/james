@@ -71,6 +71,8 @@ export default class UrlMapper {
     url = url.trim();
     newUrl = newUrl.trim();
 
+    url = url.replace(/https?:\/\//, '');
+
     const mappedUrl = {
       url,
       newUrl,
