@@ -64,7 +64,7 @@ export default class UrlMapper {
     isLocal = !!isLocal;
 
     // fix the url, because hoxy will add a slash to urls without path..
-    if (!isLocal && newUrl.split('/').length === 3 && newUrl.indexOf('?') === -1) {
+    if (!isLocal && newUrl.split('/').length === 1 && newUrl.indexOf('?') === -1) {
       newUrl += '/';
     }
 
