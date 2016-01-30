@@ -16,14 +16,8 @@ export default class UrlMapper {
 
   get(url) {
     url = (url.endsWith('/') ? url.substring(0, url.length - 1) : url).trim();
-    console.log('get for url: ', url, this._map[url]);
-    Object.keys(this._map).map((key) => {
-      console.log('key: ', key, this._map[key]);
-      console.log(key === url);
-    });
 
     const plainUrl = this._map[url];
-    console.log('plainUrl: ', plainUrl);
     if (plainUrl) {
       return plainUrl;
     }
@@ -81,7 +75,6 @@ export default class UrlMapper {
       isActive
     };
 
-    console.log('adding mapping: ', mappedUrl);
     this._addMemoryCopy(mappedUrl);
 
     this._db.remove({url}, {multi: true}, () => {
@@ -92,7 +85,7 @@ export default class UrlMapper {
   }
 
   isActiveMappedUrl(url) {
-    return this.isMappedUrl(url) && this._map[url].isActive;
+    return this.isMappedUrl(url) && this.get(url).isActive;
   }
 
   isMappedUrl(url) {
