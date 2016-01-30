@@ -152,9 +152,41 @@ describe('url mapper', function() {
       check(specific.url, specific);
     });
 
+    it('matches, if no trailing slash', function() {
+      const noTrailing = {
+        url: 'http://foo.com',
+        newUrl: 'newUrl'
+      };
+
+      set(noTrailing);
+      check('http://foo.com', noTrailing);
+      check('http://foo.com/', noTrailing);
+    });
+
+    it('matches, if trailing slash', function() {
+      const trailingSlashes = {
+        url: 'http://foo.com/',
+        newUrl: 'newUrl'
+      };
+
+      set(trailingSlashes);
+      check('http://foo.com', trailingSlashes);
+      check('http://foo.com/', trailingSlashes);
+    });
+
     it('matches wildcards', function() {
       set(oneWildcard);
       check('http://foo.com/1/baz', oneWildcard);
+    });
+
+    it('doesn\'t match wildcard regardless of trailing slash or not', function() {
+      set({
+        url: 'http://foo.com/*',
+        newUrl: 'newUrl'
+      });
+
+      check('http://foo.com', undefined);
+      check('http://foo.com/', undefined);
     });
 
     it('matches multi-wildcards', function() {
