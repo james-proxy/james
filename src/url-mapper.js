@@ -16,6 +16,7 @@ export default class UrlMapper {
 
   get(url) {
     url = url.replace(/https?:\/\//, '');
+    console.log(url, this._map);
     const plainUrl = this._map[url];
     if (plainUrl) {
       return plainUrl;
@@ -91,7 +92,7 @@ export default class UrlMapper {
   }
 
   isActiveMappedUrl(url) {
-    return this.isMappedUrl(url) && this._map[url].isActive;
+    return this.isMappedUrl(url) && this.get(url).isActive;
   }
 
   isMappedUrl(url) {
