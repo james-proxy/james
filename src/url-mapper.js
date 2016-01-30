@@ -15,6 +15,7 @@ export default class UrlMapper {
   }
 
   get(url) {
+    url = url.replace(/https?:\/\//, '');
     const plainUrl = this._map[url];
     if (plainUrl) {
       return plainUrl;

@@ -121,7 +121,53 @@ describe('url mapper', function() {
       });
     });
 
-    it('should remove the protocol', function() {
+    describe('protocol-removal', function() {
+      const newUrl = 'newUrl';
+      const isLocal = true;
+      const isActive = true;
+      const expectedMapping = {
+        url: 'foo.com/bar',
+        newUrl: newUrl,
+        isLocal: isLocal,
+        isActive: isActive
+      };
+
+      it('should work for http sources', function() {
+        const http = {
+          url: 'http://foo.com/bar',
+          newUrl: newUrl,
+          isLocal: isLocal,
+          isActive: isActive
+        };
+        set(http);
+        expect(dbMock.insert).toHaveBeenCalledWith(expectedMapping);
+      });
+
+      it('should work for https sources', function() {
+        const https = {
+          url: 'https://foo.com/bar',
+          newUrl: newUrl,
+          isLocal: isLocal,
+          isActive: isActive
+        };
+        set(https);
+        expect(dbMock.insert).toHaveBeenCalledWith(expectedMapping);
+      });
+
+      it('should apply to requests coming in', function() {
+        const http = {
+          url: 'http://foo.com/bar',
+          newUrl: newUrl,
+          isLocal: isLocal,
+          isActive: isActive
+        };
+
+        set(http);
+        check('http://foo.com/bar', expectedMapping);
+      });
+    });
+
+    it('should remove the protocol from the destination url', function() {
       const mapping = {
         url: 'http://foo.com/bar',
         newUrl: 'newUrl',
