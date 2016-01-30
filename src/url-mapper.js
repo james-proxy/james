@@ -16,9 +16,14 @@ export default class UrlMapper {
 
   get(url) {
     url = (url.endsWith('/') ? url.substring(0, url.length - 1) : url).trim();
-    console.log('get for url: ', url);
+    console.log('get for url: ', url, this._map[url]);
+    Object.keys(this._map).map((key) => {
+      console.log('key: ', key, this._map[key]);
+      console.log(key === url);
+    });
 
     const plainUrl = this._map[url];
+    console.log('plainUrl: ', plainUrl);
     if (plainUrl) {
       return plainUrl;
     }
