@@ -60,26 +60,6 @@ describe('url mapper', function() {
       expect(dbMock.remove).toHaveBeenCalledWith({url});
     });
 
-    it('adds a slash to `newUrl` when the url has no path and no slash at the end', function() {
-      const url = 'http://foo.com/bar/baz';
-      const newUrl = 'http://foo.com';
-      const isLocal = false;
-      const isActive = true;
-      urlMapper.set(
-        url,
-        newUrl,
-        isLocal,
-        isActive
-      );
-
-      expect(dbMock.insert).toHaveBeenCalledWith({
-        url,
-        newUrl: 'http://foo.com/',
-        isLocal,
-        isActive
-      });
-    });
-
     it('does not add a slash when the path is local', function() {
       const url = 'http://foo.com/bar/baz';
       const newUrl = 'foo/bar';
@@ -185,8 +165,8 @@ describe('url mapper', function() {
         newUrl: 'newUrl'
       });
 
-      check('http://foo.com', undefined);
-      check('http://foo.com/', undefined);
+      expect(urlMapper.get('http://foo.com')).toEqual(undefined);
+      expect(urlMapper.get('http://foo.com/')).toEqual(undefined);
     });
 
     it('matches multi-wildcards', function() {
