@@ -182,7 +182,7 @@ describe('url mapper', function() {
       };
 
       set(mapping);
-      expect(dbMock.insert).toHaveBeenCalledWith(expected)
+      expect(dbMock.insert).toHaveBeenCalledWith(expected);
     });
   });
 
