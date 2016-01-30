@@ -101,14 +101,8 @@ describe('url mapper', function() {
     };
 
     function check(testUrl, expected) {
-      const {url, newUrl} = expected;
       const mappedUrl = urlMapper.get(testUrl);
-      expect(mappedUrl).toEqual({
-        url,
-        newUrl,
-        isLocal,
-        isActive
-      });
+      expect(mappedUrl.newUrl).toEqual(expected.newUrl);
     }
 
     function set(mapping) {

@@ -15,6 +15,7 @@ export default class UrlMapper {
   }
 
   get(url) {
+    url = (url.endsWith('/') ? url.substring(0, url.length - 1) : url).trim();
     const plainUrl = this._map[url];
     if (plainUrl) {
       return plainUrl;
@@ -63,7 +64,7 @@ export default class UrlMapper {
   set(url, newUrl, isLocal, isActive = true) {
     isLocal = !!isLocal;
 
-    url = url.trim();
+    url = (url.endsWith('/') ? url.substring(0, url.length - 1) : url).trim();
     newUrl = newUrl.trim();
 
     const mappedUrl = {
