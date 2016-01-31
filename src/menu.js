@@ -63,13 +63,6 @@ function menuTempl() {
         label: 'Close',
         accelerator: 'CommandOrControl+Q',
         role: 'close'
-      },
-      {
-        type: 'separator'
-      },
-      {
-        label: 'Bring All to Front',
-        role: 'front'
       }
     ]
   });
