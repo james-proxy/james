@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import hoxy from 'hoxy';
 import TitleBar from './component/titlebar';
 import Footer from './component/footer';
@@ -151,7 +152,7 @@ function render() {
   const requestData = proxy.getRequestData(50, data.fromIndex, data.filter);
   const {enabled, rate} = data.throttle;
 
-  React.render(
+  ReactDOM.render(
     <div className="container">
       <TitleBar
         urlMapCount={data.urlMapCount}
