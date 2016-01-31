@@ -127,8 +127,8 @@ const showWindow = (windowName, options = {}) => {
   render();
 };
 
-//keyboard.applyShortcut(remote.getCurrentWindow(), 'Esc', closeWindow);
 localShortcut.register(remote.getCurrentWindow(), 'Esc', closeWindow);
+
 /**
  * Set the index of the first request from where we start rendering.
  * This is done because we only want to render elements the user actually sees.
