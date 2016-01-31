@@ -17,7 +17,6 @@ export default class UrlMapper {
   get(url) {
     const protocolRegex = /[a-zA-Z0-9]?:\/\//; // http://, https://, etc
     url = url.replace(protocolRegex, '');
-    console.log(url, this._map);
     const plainUrl = this._map[url];
     if (plainUrl) {
       return plainUrl;
