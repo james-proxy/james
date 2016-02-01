@@ -82,10 +82,6 @@ gulp.task('package', ['package-resources', 'package-browserify'], (done) => {
   }, () => done())
 });
 
-gulp.task('clean', () => {
-  del.sync(['build', 'package', 'binaries']);
-});
-
 gulp.task('watch', ['default'], () => {
   gulp.watch('src/**', ['js']);
   gulp.watch('style/**', ['css']);
