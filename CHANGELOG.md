@@ -1,5 +1,6 @@
 **Upcoming Release**
 
+- Only run useref on html files (i: @mitchhentges, r: @nerdbeere)
 - Fix `package-browserify` (i: @mitchhentges, r: @nerdbeere)
 
 ## 1.4.0
