@@ -2,6 +2,7 @@
 
 - Only run useref on html files (i: @mitchhentges, r: @nerdbeere)
 - Fix `package-browserify` (i: @mitchhentges, r: @nerdbeere)
+- Add `Installing` section to `README.md` that links to releases
 
 ## 1.4.0
 - Replace close shortcut to use 'Q' instead of 'W' (i: @mitchhentges, r: @davidneat) 
