@@ -13,6 +13,7 @@ import remote from 'remote';
 import openBrowser from './open-browser.js';
 
 const browserLauncher = require('browser-launcher2');
+const localShortcut = remote.require('electron-localshortcut');
 const app = remote.require('app');
 const fs = remote.require('fs');
 
@@ -125,6 +126,8 @@ const showWindow = (windowName, options = {}) => {
   };
   render();
 };
+
+localShortcut.register(remote.getCurrentWindow(), 'Esc', closeWindow);
 
 /**
  * Set the index of the first request from where we start rendering.
