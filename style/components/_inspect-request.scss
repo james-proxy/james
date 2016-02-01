@@ -6,7 +6,6 @@
   right: 0;
   bottom: 0;
   z-index: 2;
-  max-height: 600px;
   background: rgba($lightgray-light, 0.9);
 
 
@@ -63,6 +62,11 @@
         }
       }
     }
+  }
+
+  .box-body {
+    max-height: 500px;
+    overflow-y: scroll;
   }
 
   section {

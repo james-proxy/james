@@ -9,7 +9,7 @@ const KeyValue = ({_key, value}) => {
 };
 
 KeyValue.propTypes = {
-  headerKey: string.isRequired,
+  _key: string.isRequired,
   value: string.isRequired
 };
 
