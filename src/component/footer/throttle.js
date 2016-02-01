@@ -34,7 +34,7 @@ export default class Throttle extends React.Component {
     const icon = this.state.enabled ? 'fa fa-circle' : 'fa fa-circle-o';
 
     return <div className="throttle">
-      <button onClick={this.toggleThrottle.bind(this)}>
+      <button title="Toggle throttling" onClick={this.toggleThrottle.bind(this)}>
         <i className={icon}/>
         Throttle to (kBps):
       </button>

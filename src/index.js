@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import hoxy from 'hoxy';
 import TitleBar from './component/titlebar';
-import Footer from './component/footer';
+import {Footer} from './component/footer';
 import MainContent from './component/main-content.js';
 import Proxy from './service/proxy.js';
 import createChooseFile from './service/choose-file.js';
@@ -51,7 +51,7 @@ const createHoxy = () => {
     const cert = fs.readFileSync('./root-ca.crt.pem');
     opts.certAuthority = {key, cert};
   } catch (e) {
-    console.log('Not proxying HTTPS, missing key or certificate: ' + e); // eslint-disable-line
+    console.warn('Not proxying HTTPS, missing key or certificate:\n', e); // eslint-disable-line
   }
 
   return hoxy.createServer(opts).listen(config.proxyPort);

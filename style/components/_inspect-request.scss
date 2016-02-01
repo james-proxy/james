@@ -9,16 +9,15 @@
   background: rgba($lightgray-light, 0.9);
 
   .toolbar {
-    position: absolute;
-    top: -42px;
-    right: 0;
-    left: 0;
-    text-align: right;
+    float: right;
+    margin-top: -40px;
+    padding: 0 5px;
 
     .toolbar-action {
       display: inline-block;
       background: darken($darkgray-light, 10%);
       color: $white;
+      height: 40px;
       border-radius: 8px 8px 0 0;
       margin-left: 3px;
       padding: 10px;
