@@ -13,7 +13,7 @@ const source = require('vinyl-source-stream');
 const electron = require('electron-packager');
 const useref = require('gulp-useref');
 const electronConnect = require('electron-connect').server.create();
-Only const gulpif = require('gulp-if');
+const gulpif = require('gulp-if');
 const exec = require('child_process').exec;
 
 gulp.task('default', ['js', 'css', 'resources']);
