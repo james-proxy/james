@@ -1,6 +1,6 @@
 import React from 'react';
 
-const {bool, func} = React.PropTypes;
+const {func} = React.PropTypes;
 
 export const CacheButton = ({isCachingEnabled, toggleCaching}) => {
   const enabled = isCachingEnabled();
@@ -14,6 +14,6 @@ export const CacheButton = ({isCachingEnabled, toggleCaching}) => {
 };
 
 CacheButton.propTypes = {
-  isCachingEnabled: bool.isRequired,
+  isCachingEnabled: func.isRequired,
   toggleCaching: func.isRequired
 };
