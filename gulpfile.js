@@ -61,7 +61,10 @@ gulp.task('package-resources', ['default'], () => {
 gulp.task('package-browserify', ['default'], () => {
   return browserify('./build/index.js', {
     builtins: false, // Attempt to reproduce
-    browserField: false // the `--node` flag
+    browserField: false, // the `--node` flag
+    insertGlobalVars: {
+      process: function() { return; }
+    }
   })
     .exclude('remote')
     .exclude('child-killer')
