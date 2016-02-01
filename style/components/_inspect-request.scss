@@ -1,12 +1,12 @@
+@import 'inspect/key-value';
+
 .inspect-request {
   position: absolute;
   left: 0;
   right: 0;
   bottom: 0;
   z-index: 2;
-  max-height: 600px;
   background: rgba($lightgray-light, 0.9);
-
 
   .toolbar {
     position: absolute;
@@ -63,7 +63,12 @@
     }
   }
 
-  .section {
+  .box-body {
+    max-height: 500px;
+    overflow-y: scroll;
+  }
+
+  section {
     padding: 10px;
   }
 
