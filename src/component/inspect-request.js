@@ -1,5 +1,6 @@
 import React from 'react';
 import FullUrl from './full-url.js';
+import {Header} from './inspect/header';
 
 const {func, object} = React.PropTypes;
 
@@ -18,18 +19,10 @@ export default class InspectRequest extends React.Component {
     };
 
     const requestHeaders = Object.keys(request.request.headers).map(function(key) {
-      const headerValue = request.request.headers[key];
-      return <li key={key}>
-        <strong>{key}:&nbsp;</strong>
-        {headerValue}
-      </li>;
+      return <Header key={key} headerKey={key} value={request.request.headers[key]} />
     });
     const responseHeaders = Object.keys(request.response.headers).map(function(key) {
-      const headerValue = request.response.headers[key];
-      return <li key={key}>
-        <strong>{key}:&nbsp;</strong>
-        {headerValue}
-      </li>;
+      return <Header key={key} headerKey={key} value={request.request.headers[key]} />
     });
 
     return <div className="inspect-request">
