@@ -19,7 +19,7 @@ export default class InspectRequest extends React.Component {
     };
 
     function keyValues(obj) {
-      return Object.keys(obj).map((key) => <KeyValue key={key} _key={key} value={String(obj[key])} />)
+      return Object.keys(obj).map((key) => <KeyValue key={key} _key={key} value={String(obj[key])} />);
     }
 
     const queryParams = keyValues(request.request.query);
