@@ -1,6 +1,6 @@
 # James
 
-[![Build Status](https://travis-ci.org/uxebu/james.svg?branch=master)](https://travis-ci.org/uxebu/james)
+[![Build Status](https://travis-ci.org/james-proxy/james.svg?branch=master)](https://travis-ci.org/james-proxy/james)
 
 James is an HTTP Proxy and Monitor that enables developers to view and intercept requests made from the browser.
 It is an open-source alternative to the popular developer tool [Charles](http://www.charlesproxy.com/)
@@ -15,11 +15,31 @@ The electron instance will automatically reload whenever a change is made
 
  1. Clone the repository
  2. `npm install`
- 3. `npm run development`
+ 3. `npm run build`
+ 4. `npm start`
+
+## URL Mapping
+
+### Wildcard support
+
+To use wildcards in the "url to map" field, put a "*" between two adjacent slashes. For example:
+```
+http://foo.com/version/*/app.js -> http://localhost:8000/app.js
+```
+Requests which will be redirected:
+* `http://foo.com/version/1/app.js`
+* `http://foo.com/version/26.8/app.js`
+* `http://foo.com/version/spaghetti/app.js`
+
+Requests which will **not** be redirected:
+* `http://foo.com/version/app.js`
+* `http://bar.com/version/1/app.js`
+
+You can also use multiple wildcards in the same URL.
  
 ## HTTPs Support
 
-To enable HTTPs support follow the [instructions in our wiki](https://github.com/uxebu/james/wiki/Configuring-James-for-HTTPS)
+To enable HTTPs support follow the [instructions in our wiki](https://github.com/james-proxy/james/wiki/Configuring-James-for-HTTPS)
 
 ## Other useful NPM Commands
 

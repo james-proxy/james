@@ -39,7 +39,8 @@ const data = {
 };
 
 const urlMapper = new UrlMapper(db, function() {
-  updateMappings();
+  data.urlMappings = urlMapper.mappings();
+  render();
 });
 
 urlMapper.set('http://james.proxy/', path.resolve('./resource/example.html'), true);
@@ -120,14 +121,6 @@ const closeWindow = () => {
   render();
 };
 
-const updateMappings = () => {
-  urlMapper.getList(function(err, urlMappings) {
-    if (err) return;
-    data.urlMappings = urlMappings;
-    render();
-  });
-};
-
 const showWindow = (windowName, options = {}) => {
   data.activeWindow = {
     factory: windowFactories[windowName],
@@ -156,7 +149,7 @@ const filterRequests = (filter) => {
 };
 
 function render() {
-  data.urlMapCount = urlMapper.getCount();
+  data.urlMapCount = urlMapper.count();
   const activeWindow = data.activeWindow && data.activeWindow.factory() || null;
   const requestData = proxy.getRequestData(50, data.fromIndex, data.filter);
   const {enabled, rate} = data.throttle;
@@ -192,7 +185,5 @@ function render() {
     domNode
   );
 }
-
-updateMappings();
 
 render(true);

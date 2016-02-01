@@ -9,7 +9,7 @@ export default class Proxy {
     this._update = update;
     this._isCachingEnabled = isCachingEnabled;
 
-    const proxy = this._proxy = createHoxy();
+    const proxy = createHoxy();
 
     proxy.intercept('response-sent', this._onResponseSent.bind(this));
     proxy.intercept('request', this._onInterceptRequest.bind(this));
@@ -25,19 +25,15 @@ export default class Proxy {
 
   _onInterceptResponse(request, response) {
     if (!this._isCachingEnabled()) {
-      this._modifyCacheHeaders(response);
+      delete response.headers['if-modified-since'];
+      delete response.headers['if-none-match'];
+      delete response.headers['last-modified'];
+      delete response.headers.etag;
+
+      response.headers.expires = '0';
+      response.headers.pragma = 'no-cache';
+      response.headers['cache-control'] = 'no-cache';
     }
-  }
-
-  _modifyCacheHeaders(response) {
-    delete response.headers['if-modified-since'];
-    delete response.headers['if-none-match'];
-    delete response.headers['last-modified'];
-    delete response.headers.etag;
-
-    response.headers.expires = '0';
-    response.headers.pragma = 'no-cache';
-    response.headers['cache-control'] = 'no-cache';
   }
 
   _onInterceptRequest(request, response, cycle) {
