@@ -1,5 +1,7 @@
 **Upcoming Release**
 
+- Fix `package-browserify` (i: @mitchhentges, r: @nerdbeere)
+
 ## 1.4.0
 - Replace close shortcut to use 'Q' instead of 'W' (i: @mitchhentges, r: @davidneat) 
 - Support for Wildcards in URLs (i: @mitchhentges, r: @davidneat) 
