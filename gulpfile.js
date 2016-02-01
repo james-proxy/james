@@ -7,7 +7,6 @@ const changed = require('gulp-changed');
 const sass = require('gulp-sass');
 const sourcemaps = require('gulp-sourcemaps');
 const autoprefixer = require('gulp-autoprefixer');
-const eslint = require('gulp-eslint');
 const browserify = require('browserify');
 const source = require('vinyl-source-stream');
 const electron = require('electron-packager');
@@ -81,13 +80,6 @@ gulp.task('package', ['package-resources', 'package-browserify'], (done) => {
     version: '0.36.5',
     out: 'binaries'
   }, () => done())
-});
-
-gulp.task('lint', () => {
-  return gulp.src(['src/**', 'test/**'])
-    .pipe(eslint())
-    .pipe(eslint.format())
-    .pipe(eslint.failOnError())
 });
 
 gulp.task('clean', () => {
