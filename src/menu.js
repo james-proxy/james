@@ -11,7 +11,7 @@ function menuTempl() {
       {
         label: 'About James',
         click: function() {
-          shell.openExternal('https://github.com/james-proxy/james')
+          shell.openExternal('https://github.com/james-proxy/james');
         }
       }
     ]
