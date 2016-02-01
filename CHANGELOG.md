@@ -1,4 +1,5 @@
 **Upcoming Release**
+- Make `Esc` close current in-app window (i: @mitchhentges, r: @nerdbeere)
 
 ## 1.4.0
 - Only run useref on html files (i: @mitchhentges, r: @nerdbeere)
