@@ -13,6 +13,7 @@ const source = require('vinyl-source-stream');
 const electron = require('electron-packager');
 const useref = require('gulp-useref');
 const electronConnect = require('electron-connect').server.create();
+const exec = require('child_process').exec;
 
 gulp.task('default', ['js', 'css', 'resources']);
 
@@ -58,19 +59,12 @@ gulp.task('package-resources', ['default'], () => {
   ]);
 });
 
-gulp.task('package-browserify', ['default'], () => {
-  return browserify('./build/index.js', {
-    builtins: false, // Attempt to reproduce
-    browserField: false, // the `--node` flag
-    insertGlobalVars: {
-      process: function() { return; }
-    }
+gulp.task('package-browserify', ['default'], (cb) => {
+  exec('browserify --node -e build/index.js -o ./package/index.js -u remote -u child-killer', (err, stdout, stderr) => {
+    console.log(stdout);
+    console.error(stderr);
+    cb(err);
   })
-    .exclude('remote')
-    .exclude('child-killer')
-    .bundle()
-    .pipe(source('index.js')).
-    pipe(gulp.dest('./package/'))
 });
 
 gulp.task('package', ['package-resources', 'package-browserify'], (done) => {

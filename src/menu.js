@@ -61,7 +61,7 @@ function menuTempl() {
       },
       {
         label: 'Close',
-        accelerator: 'CommandOrControl+W',
+        accelerator: 'CommandOrControl+Q',
         role: 'close'
       },
       {
