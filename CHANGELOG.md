@@ -3,6 +3,7 @@
 ### User features
 - Show query params as a key value list in the request detail view (i: @mitchhentges, r: @nerdbeere)
 - Make `Esc` close current in-app window (i: @mitchhentges, r: @nerdbeere)
+- "About James" now opens the github page in the default browser (i: @mitchhentges, r: @nerdbeere)
 
 ### Bugfixes
 - Fix drag-down-whitespace issue (i: @mitchhentges, r: @nerdbeere)
