@@ -42,7 +42,7 @@ const urlMapper = new UrlMapper(db, function() {
   updateMappings();
 });
 
-urlMapper.set('http://james.james/', path.resolve('./resource/example.html'), true);
+urlMapper.set('http://james.proxy/', path.resolve('./resource/example.html'), true);
 
 const createHoxy = () => {
   const opts = {};

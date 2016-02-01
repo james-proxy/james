@@ -10,7 +10,7 @@ export default function openBrowser(browser = 'firefox', failCb) {
     if (err) {
       failCb(err);
     }
-    launch('http://james.james', opts, function(launchErr) {
+    launch('http://james.proxy', opts, function(launchErr) {
       if (launchErr) {
         failCb(launchErr);
       }
