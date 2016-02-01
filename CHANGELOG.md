@@ -1,4 +1,5 @@
 **Upcoming Release**
+- Fix deprecation warnings about ReactDOM (i: @mitchhentges, r: @nerdbeere)
 - Make `Esc` close current in-app window (i: @mitchhentges, r: @nerdbeere)
 
 ## 1.4.0
