@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import hoxy from 'hoxy';
 import TitleBar from './component/titlebar';
-import {Footer} from './component/footer';
+import Footer from './component/footer';
 import MainContent from './component/main-content.js';
 import Proxy from './service/proxy.js';
 import createChooseFile from './service/choose-file.js';

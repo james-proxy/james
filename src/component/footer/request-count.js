@@ -2,7 +2,7 @@ import React from 'react';
 
 const {object, func} = React.PropTypes;
 
-export const RequestCount = ({requestData, clearRequests}) => {
+const RequestCount = ({requestData, clearRequests}) => {
   const {filteredCount, totalCount} = requestData;
   return <div className="request-count">
     {`Requests: ${filteredCount} / ${totalCount}`}
@@ -16,3 +16,5 @@ RequestCount.propTypes = {
   requestData: object.isRequired,
   clearRequests: func.isRequired
 };
+
+export default RequestCount;

@@ -2,7 +2,7 @@ import React from 'react';
 
 const {func} = React.PropTypes;
 
-export const CacheButton = ({isCachingEnabled, toggleCaching}) => {
+const CacheButton = ({isCachingEnabled, toggleCaching}) => {
   const enabled = isCachingEnabled();
   const icon = enabled ? 'fa fa-circle' : 'fa fa-circle-o';
   const label = enabled ? 'Caching enabled' : 'Caching disabled';
@@ -17,3 +17,5 @@ CacheButton.propTypes = {
   isCachingEnabled: func.isRequired,
   toggleCaching: func.isRequired
 };
+
+export default CacheButton;

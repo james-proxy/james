@@ -1,11 +1,11 @@
 import React from 'react';
-import {CacheButton} from './footer/cache';
+import CacheButton from './footer/cache';
 import Throttle from './footer/throttle';
-import {RequestCount} from './footer/requestCount';
+import RequestCount from './footer/request-count';
 
 const {func, object} = React.PropTypes;
 
-export const Footer = (props) => {
+const Footer = (props) => {
   const {
     toggleCaching,
     isCachingEnabled,
@@ -27,3 +27,5 @@ Footer.propTypes = {
   clearRequests: func.isRequired,
   requestData: object.isRequired
 };
+
+export default Footer;
