@@ -1,6 +1,6 @@
 import React from 'react';
 import FullUrl from './full-url.js';
-import {KeyValue} from './inspect/key-value';
+import KeyValue from './inspect/key-value';
 
 const {func, object} = React.PropTypes;
 
