@@ -46,6 +46,7 @@ export default class Requests extends React.Component {
 
   render() {
     const {
+      isRequestActive,
       setActiveRequest,
       showWindow,
       config,
@@ -61,9 +62,12 @@ export default class Requests extends React.Component {
         setActiveRequest(request);
       };
 
+      const isActive = isRequestActive(request);
+
       const positionTop = request.requestNumber * requestElementHeight;
       return <Request
         {...request}
+        isActive={isActive}
         positionTop={positionTop}
         config={config}
         showWindow={showWindow}
@@ -89,10 +93,10 @@ Requests.propTypes = {
   requestData: object.isRequired,
   showWindow: func.isRequired,
   filter: string,
+  isRequestActive: func.isRequired,
   setActiveRequest: func.isRequired,
   setFromIndex: func.isRequired,
   config: object.isRequired,
   removeUrlMapping: func.isRequired,
   toggleUrlMappingActiveState: func.isRequired
 };
-

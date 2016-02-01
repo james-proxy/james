@@ -2,7 +2,7 @@ import React from 'react';
 import FullUrl from './full-url.js';
 import ContextMenu from './context-menu.js';
 
-const {func, object, number} = React.PropTypes;
+const {func, object, number, bool} = React.PropTypes;
 
 export default class Request extends React.Component {
   constructor() {
@@ -16,6 +16,7 @@ export default class Request extends React.Component {
   shouldComponentUpdate(nextProps) {
     return this.props.request.id !== nextProps.request.id ||
       this.props.positionTop !== nextProps.positionTop ||
+      this.props.isActive !== nextProps.isActive ||
       this.done !== nextProps.request.done;
   }
 
@@ -65,13 +66,26 @@ export default class Request extends React.Component {
   }
 
   render() {
-    const {request, response, showWindow, positionTop, removeUrlMapping, toggleUrlMappingActiveState} = this.props;
+    const {
+      request,
+      response,
+      isActive,
+      showWindow,
+      positionTop,
+      removeUrlMapping,
+      toggleUrlMappingActiveState
+    } = this.props;
 
     this.done = request.done;
 
     let took = <i className="fa fa-gear fa-spin"></i>;
     if (request.took) {
       took = request.took + 'ms';
+    }
+
+    const requestClasses = ['request'];
+    if (isActive) {
+      requestClasses.push('request-active');
     }
 
     const style = {
@@ -108,7 +122,7 @@ export default class Request extends React.Component {
       });
     }
 
-    return <div className="request" style={style}>
+    return <div className={requestClasses.join(' ')} style={style}>
       { this.state.isContextMenuActive &&
         <ContextMenu items={contextMenuItems}/>
       }
@@ -134,6 +148,7 @@ Request.propTypes = {
   config: object.isRequired,
   request: object.isRequired,
   response: object.isRequired,
+  isActive: bool.isRequired,
   handleClick: func.isRequired,
   showWindow: func.isRequired,
   positionTop: number.isRequired,
