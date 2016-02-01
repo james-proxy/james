@@ -12,11 +12,7 @@ James is build with [hoxy](https://github.com/greim/hoxy), [electron](https://gi
 ## Installing
 Download the correct version for your OS and run
 
-[![OSX download](https://img.shields.io/badge/download-OSX-green.svg)](https://github.com/james-proxy/james/releases/download/v1.3.2/James-darwin-x64.zip)
-[![Linux x86 download](https://img.shields.io/badge/download-linux--ia32-green.svg)](https://github.com/james-proxy/james/releases/download/v1.3.2/James-linux-ia32.zip)
-[![Linux x64 download](https://img.shields.io/badge/download-linux--x64-green.svg)](https://github.com/james-proxy/james/releases/download/v1.3.2/James-linux-x64.zip)
-[![Windows x86 download](https://img.shields.io/badge/download-windows--ia32-green.svg)](https://github.com/james-proxy/james/releases/download/v1.3.2/James-win32-ia32.zip)
-[![Windows x64 download](https://img.shields.io/badge/download-windows--x64-green.svg)](https://github.com/james-proxy/james/releases/download/v1.3.2/James-win32-x64.zip)
+[![All platforms download](https://img.shields.io/badge/download-any_platform-green.svg)](https://github.com/james-proxy/james/releases/latest)
 
 ## Running in a development environment
 
