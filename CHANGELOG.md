@@ -1,4 +1,5 @@
 **Upcoming Release**
+- Put "lint" task back in `package.json` (i: @mitchhentges, r: @nerdbeere)
 - Fix drag-down-whitespace issue (i: @mitchhentges, r: @nerdbeere)
 - Fix deprecation warnings about ReactDOM (i: @mitchhentges, r: @nerdbeere)
 - Make `Esc` close current in-app window (i: @mitchhentges, r: @nerdbeere)
