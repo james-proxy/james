@@ -59,52 +59,9 @@ describe('url mapper', function() {
 
       expect(dbMock.remove).toHaveBeenCalledWith({url});
     });
-
-    it('adds a slash to `newUrl` when the url has no path and no slash at the end', function() {
-      const url = 'http://foo.com/bar/baz';
-      const newUrl = 'http://foo.com';
-      const isLocal = false;
-      const isActive = true;
-      urlMapper.set(
-        url,
-        newUrl,
-        isLocal,
-        isActive
-      );
-
-      expect(dbMock.insert).toHaveBeenCalledWith({
-        url,
-        newUrl: 'http://foo.com/',
-        isLocal,
-        isActive
-      });
-    });
-
-    it('does not add a slash when the path is local', function() {
-      const url = 'http://foo.com/bar/baz';
-      const newUrl = 'foo/bar';
-      const isLocal = true;
-      const isActive = true;
-      urlMapper.set(
-        url,
-        newUrl,
-        isLocal,
-        isActive
-      );
-
-      expect(dbMock.insert).toHaveBeenCalledWith({
-        url,
-        newUrl: 'foo/bar',
-        isLocal,
-        isActive
-      });
-    });
   });
 
   describe('get', function() {
-    const isLocal = true;
-    const isActive = true;
-
     const specific = {
       url: 'http://foo.com/bar/baz',
       newUrl: 'foo/specific'
@@ -120,55 +77,123 @@ describe('url mapper', function() {
       newUrl: 'foo/multiwildcard'
     };
 
-    function check(testUrl, expected) {
-      const {url, newUrl} = expected;
-      const mappedUrl = urlMapper.get(testUrl);
-      expect(mappedUrl).toEqual({
-        url,
-        newUrl,
-        isLocal,
-        isActive
-      });
-    }
-
-    function set(mapping) {
-      urlMapper.set(
-        mapping.url,
-        mapping.newUrl,
-        isLocal,
-        isActive
-      );
-    }
-
     it('returns undefined if no matching maps', function() {
-      set(specific);
-      set(oneWildcard);
-      set(multiWildcard);
+      urlMapper.set(
+        specific.url,
+        specific.newUrl,
+        true,
+        true
+      );
+      urlMapper.set(
+        oneWildcard.url,
+        oneWildcard.newUrl,
+        true,
+        true
+      );
+      urlMapper.set(
+        multiWildcard.url,
+        multiWildcard.newUrl,
+        true,
+        true
+      );
       expect(urlMapper.get('http://dunx')).toEqual(undefined);
     });
 
     it('matches plain urls', function() {
-      set(specific);
-      check(specific.url, specific);
+      urlMapper.set(
+        specific.url,
+        specific.newUrl,
+        true,
+        true
+      );
+      expect(urlMapper.get(specific.url).newUrl).toEqual(specific.newUrl);
+    });
+
+    it('matches, if no trailing slash', function() {
+      const noTrailing = {
+        url: 'http://foo.com',
+        newUrl: 'newUrl'
+      };
+
+      urlMapper.set(
+        noTrailing.url,
+        noTrailing.newUrl,
+        true,
+        true
+      );
+      expect(urlMapper.get('http://foo.com').newUrl).toEqual(noTrailing.newUrl);
+      expect(urlMapper.get('http://foo.com/').newUrl).toEqual(noTrailing.newUrl);
+    });
+
+    it('matches, if trailing slash', function() {
+      const trailingSlashes = {
+        url: 'http://foo.com/',
+        newUrl: 'newUrl'
+      };
+
+      urlMapper.set(
+        trailingSlashes.url,
+        trailingSlashes.newUrl,
+        true,
+        true
+      );
+      expect(urlMapper.get('http://foo.com').newUrl).toEqual(trailingSlashes.newUrl);
+      expect(urlMapper.get('http://foo.com/').newUrl).toEqual(trailingSlashes.newUrl);
     });
 
     it('matches wildcards', function() {
-      set(oneWildcard);
-      check('http://foo.com/1/baz', oneWildcard);
+      urlMapper.set(
+        oneWildcard.url,
+        oneWildcard.newUrl,
+        true,
+        true
+      );
+      expect(urlMapper.get('http://foo.com/1/baz').newUrl).toEqual(oneWildcard.newUrl);
+    });
+
+    it('doesn\'t match wildcard regardless of trailing slash or not', function() {
+      urlMapper.set(
+        'http://foo.com/*',
+        'newUrl',
+        true,
+        true
+      );
+      expect(urlMapper.get('http://foo.com')).toEqual(undefined);
+      expect(urlMapper.get('http://foo.com/')).toEqual(undefined);
     });
 
     it('matches multi-wildcards', function() {
-      set(multiWildcard);
-      check('http://foo.com/2/bork', multiWildcard);
+      urlMapper.set(
+        multiWildcard.url,
+        multiWildcard.newUrl,
+        true,
+        true
+      );
+      expect(urlMapper.get('http://foo.com/2/bork').newUrl).toEqual(multiWildcard.newUrl);
     });
 
     it('matches most-specific url', function() {
-      set(specific);
-      set(oneWildcard);
-      set(multiWildcard);
-      check('http://foo.com/bar/baz', specific);
-      check('http://foo.com/derp/baz', oneWildcard);
-      check('http://foo.com/derp/any', multiWildcard);
+      urlMapper.set(
+        specific.url,
+        specific.newUrl,
+        true,
+        true
+      );
+      urlMapper.set(
+        oneWildcard.url,
+        oneWildcard.newUrl,
+        true,
+        true
+      );
+      urlMapper.set(
+        multiWildcard.url,
+        multiWildcard.newUrl,
+        true,
+        true
+      );
+      expect(urlMapper.get('http://foo.com/bar/baz').newUrl).toEqual(specific.newUrl);
+      expect(urlMapper.get('http://foo.com/derp/baz').newUrl).toEqual(oneWildcard.newUrl);
+      expect(urlMapper.get('http://foo.com/derp/any').newUrl).toEqual(multiWildcard.newUrl);
     });
 
     it('when the same amount of wildcards, matches the one with the longer direct-match on the left', function() {
@@ -182,9 +207,19 @@ describe('url mapper', function() {
         newUrl: 'foo/lateWildcard'
       };
 
-      set(early);
-      set(late);
-      check('http://foo.com/bar/spaghetti', late);
+      urlMapper.set(
+        early.url,
+        early.newUrl,
+        true,
+        true
+      );
+      urlMapper.set(
+        late.url,
+        late.newUrl,
+        true,
+        true
+      );
+      expect(urlMapper.get('http://foo.com/bar/spaghetti').newUrl).toEqual(late.newUrl);
     });
 
     it('should do longer direct-match, even when first wildcards are in same position', function() {
@@ -198,9 +233,19 @@ describe('url mapper', function() {
         newUrl: 'bar/lateMultiWildcard'
       };
 
-      set(earlyMulti);
-      set(lateMulti);
-      check('http://bar.com/yolo/foo/baz', lateMulti);
+      urlMapper.set(
+        earlyMulti.url,
+        earlyMulti.newUrl,
+        true,
+        true
+      );
+      urlMapper.set(
+        lateMulti.url,
+        lateMulti.newUrl,
+        true,
+        true
+      );
+      expect(urlMapper.get('http://bar.com/yolo/foo/baz').newUrl).toEqual(lateMulti.newUrl);
     });
   });
 
@@ -298,19 +343,14 @@ describe('url mapper', function() {
   });
 
   describe('count', function() {
-    let url;
-    let newUrl;
-    let isLocal;
-    const isActive = true;
+    const url = 'http://foo.com/bar/baz';
+    const newUrl = 'foo/bar';
     beforeEach(function() {
-      url = 'http://foo.com/bar/baz';
-      newUrl = 'foo/bar';
-      isLocal = true;
       urlMapper.set(
         url,
         newUrl,
-        isLocal,
-        isActive
+        true,
+        true
       );
     });
 
@@ -323,8 +363,8 @@ describe('url mapper', function() {
       urlMapper.set(
         url,
         newUrl,
-        isLocal,
-        isActive
+        true,
+        true
       );
       const count = urlMapper.count();
       expect(count).toEqual(1);
@@ -334,8 +374,8 @@ describe('url mapper', function() {
       urlMapper.set(
         url,
         newUrl,
-        isLocal,
-        isActive
+        true,
+        true
       );
       urlMapper.remove(url);
       const count = urlMapper.count();
@@ -344,42 +384,25 @@ describe('url mapper', function() {
   });
   describe('mappings', function() {
     let mappings;
-    const first = {
-      url: 'http://foo.com/bar/baz',
-      newUrl: 'foo/bar',
-      isLocal: true,
-      isActive: true
-    };
-    const second = {
-      url: 'http://foo.com/bar/baz2',
-      newUrl: 'foo/bar2',
-      isLocal: true,
-      isActive: false
-    };
 
     beforeEach(function() {
       urlMapper.set(
-        first.url,
-        first.newUrl,
-        first.isLocal,
-        first.isActive
+        'http://foo.com/bar/baz',
+        'foo/bar',
+        true,
+        true
       );
       urlMapper.set(
-        second.url,
-        second.newUrl,
-        first.isLocal,
-        second.isActive
+        'http://foo.com/bar/baz2',
+        'foo/bar2',
+        true,
+        false
       );
       mappings = urlMapper.mappings();
     });
 
     it('returns a list of all mappings, regardless of if active', function() {
       expect(mappings.length).toEqual(2);
-    });
-
-    it('should provide match url, newUrl url, and whether or not is active', function() {
-      const expected = JSON.stringify([first, second]);
-      expect(JSON.stringify(mappings)).toEqual(expected);
     });
 
     it('should return a clone, so that mappings can\'t be tampered with', function() {

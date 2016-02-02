@@ -1,5 +1,9 @@
 export default class UrlMapper {
 
+  static unslashUrl(url) {
+    return (url.endsWith('/') ? url.substring(0, url.length - 1) : url).trim();
+  }
+
   constructor(db, update) {
     this._db = db;
     this._update = update;
@@ -15,6 +19,8 @@ export default class UrlMapper {
   }
 
   get(url) {
+    url = UrlMapper.unslashUrl(url);
+
     const plainUrl = this._map[url];
     if (plainUrl) {
       return plainUrl;
@@ -63,12 +69,7 @@ export default class UrlMapper {
   set(url, newUrl, isLocal, isActive = true) {
     isLocal = !!isLocal;
 
-    // fix the url, because hoxy will add a slash to urls without path..
-    if (!isLocal && newUrl.split('/').length === 3 && newUrl.indexOf('?') === -1) {
-      newUrl += '/';
-    }
-
-    url = url.trim();
+    url = UrlMapper.unslashUrl(url);
     newUrl = newUrl.trim();
 
     const mappedUrl = {
@@ -88,7 +89,7 @@ export default class UrlMapper {
   }
 
   isActiveMappedUrl(url) {
-    return this.isMappedUrl(url) && this._map[url].isActive;
+    return this.isMappedUrl(url) && this.get(url).isActive;
   }
 
   isMappedUrl(url) {
