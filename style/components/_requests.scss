@@ -33,6 +33,10 @@
       }
     }
 
+    &.request-active .complete-url {
+      font-weight: bold;
+    }
+
     &:hover {
       cursor: pointer;
       background-color: $lightgray-light;

@@ -1,43 +1,25 @@
 import React from 'react';
-import Throttle from './footer-throttle';
+import CacheButton from './footer/cache';
+import Throttle from './footer/throttle';
+import RequestCount from './footer/request-count';
 
 const {func, object} = React.PropTypes;
 
-export default class Footer extends React.Component {
+const Footer = (props) => {
+  const {
+    toggleCaching,
+    isCachingEnabled,
+    clearRequests,
+    requestData,
+    ...other
+  } = props;
 
-  render() {
-    const {
-      toggleCaching,
-      isCachingEnabled,
-      clearRequests,
-      requestData,
-      ...other
-      } = this.props;
-
-    let cachingButton = <span>
-      <i className="fa fa-circle-o"/>
-      Caching disabled
-    </span>;
-
-    if (isCachingEnabled()) {
-      cachingButton = <span>
-        <i className="fa fa-circle"/>
-        Caching enabled
-      </span>;
-    }
-
-    return <div className="footer">
-      <button onClick={toggleCaching}>{cachingButton}</button>
-      <Throttle {...other} />
-      <div className="request-count">
-        Requests: {requestData.filteredCount}/{requestData.totalCount}
-        <button onClick={clearRequests}>
-          <i className="fa fa-ban" />
-        </button>
-      </div>
-    </div>;
-  }
-}
+  return <div className="footer">
+    <CacheButton isCachingEnabled={isCachingEnabled} toggleCaching={toggleCaching} />
+    <Throttle {...other} />
+    <RequestCount requestData={requestData} clearRequests={clearRequests} />
+  </div>;
+};
 
 Footer.propTypes = {
   toggleCaching: func.isRequired,
@@ -45,3 +27,5 @@ Footer.propTypes = {
   clearRequests: func.isRequired,
   requestData: object.isRequired
 };
+
+export default Footer;

@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import Request from './request.js';
 
 const {func, string, object} = React.PropTypes;
@@ -18,25 +19,25 @@ export default class Requests extends React.Component {
   }
 
   _onScroll() {
-    const scrollableDomNode = React.findDOMNode(this);
+    const scrollableDomNode = ReactDOM.findDOMNode(this);
     const fromIndex = Math.ceil(scrollableDomNode.scrollTop / requestElementHeight) - 15;
     this.props.setFromIndex(fromIndex < 0 ? 0 : fromIndex);
   }
 
   componentDidMount() {
-    const scrollableDomNode = React.findDOMNode(this);
+    const scrollableDomNode = ReactDOM.findDOMNode(this);
     scrollableDomNode.addEventListener('scroll', this._onScroll.bind(this));
   }
 
   componentWillUnmount() {
-    const scrollableDomNode = React.findDOMNode(this);
+    const scrollableDomNode = ReactDOM.findDOMNode(this);
     scrollableDomNode.removeEventListener('scroll', this._onScroll);
   }
 
   componentDidUpdate() {
     const previousFilter = this.filter;
     this.filter = this.props.requestData.filter;
-    const requests = React.findDOMNode(this);
+    const requests = ReactDOM.findDOMNode(this);
 
     if (previousFilter !== this.filter) {
       requests.scrollTop = 0;
@@ -45,6 +46,7 @@ export default class Requests extends React.Component {
 
   render() {
     const {
+      isRequestActive,
       setActiveRequest,
       showWindow,
       config,
@@ -60,9 +62,12 @@ export default class Requests extends React.Component {
         setActiveRequest(request);
       };
 
+      const isActive = isRequestActive(request);
+
       const positionTop = request.requestNumber * requestElementHeight;
       return <Request
         {...request}
+        isActive={isActive}
         positionTop={positionTop}
         config={config}
         showWindow={showWindow}
@@ -88,10 +93,10 @@ Requests.propTypes = {
   requestData: object.isRequired,
   showWindow: func.isRequired,
   filter: string,
+  isRequestActive: func.isRequired,
   setActiveRequest: func.isRequired,
   setFromIndex: func.isRequired,
   config: object.isRequired,
   removeUrlMapping: func.isRequired,
   toggleUrlMappingActiveState: func.isRequired
 };
-

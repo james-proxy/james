@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import hoxy from 'hoxy';
 import TitleBar from './component/titlebar';
 import Footer from './component/footer';
@@ -13,6 +14,7 @@ import remote from 'remote';
 import openBrowser from './open-browser.js';
 
 const browserLauncher = require('browser-launcher2');
+const localShortcut = remote.require('electron-localshortcut');
 const app = remote.require('app');
 const fs = remote.require('fs');
 
@@ -49,7 +51,7 @@ const createHoxy = () => {
     const cert = fs.readFileSync('./root-ca.crt.pem');
     opts.certAuthority = {key, cert};
   } catch (e) {
-    console.log('Not proxying HTTPS, missing key or certificate: ' + e); // eslint-disable-line
+    console.warn('Not proxying HTTPS, missing key or certificate:\n', e); // eslint-disable-line
   }
 
   return hoxy.createServer(opts).listen(config.proxyPort);
@@ -126,6 +128,8 @@ const showWindow = (windowName, options = {}) => {
   render();
 };
 
+localShortcut.register(remote.getCurrentWindow(), 'Esc', closeWindow);
+
 /**
  * Set the index of the first request from where we start rendering.
  * This is done because we only want to render elements the user actually sees.
@@ -151,7 +155,7 @@ function render() {
   const requestData = proxy.getRequestData(50, data.fromIndex, data.filter);
   const {enabled, rate} = data.throttle;
 
-  React.render(
+  ReactDOM.render(
     <div className="container">
       <TitleBar
         urlMapCount={data.urlMapCount}

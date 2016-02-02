@@ -80,91 +80,51 @@ describe('url mapper', function() {
 
       expect(dbMock.remove).toHaveBeenCalledWith({url});
     });
+  });
 
-    it('adds a slash to `newUrl` when the url has no path and no slash at the end', function() {
-      const url = 'foo.com/bar/baz';
-      const newUrl = 'foo.com';
-      const isLocal = false;
-      const isActive = true;
-      urlMapper.set(
-        url,
-        newUrl,
-        isLocal,
-        isActive
-      );
+  describe('protocol-removal', function() {
+    const newUrl = 'newUrl';
+    const isLocal = true;
+    const isActive = true;
+    const expectedMapping = {
+      url: 'foo.com/bar',
+      newUrl: newUrl,
+      isLocal: isLocal,
+      isActive: isActive
+    };
 
-      expect(dbMock.insert).toHaveBeenCalledWith({
-        url,
-        newUrl: 'foo.com/',
-        isLocal,
-        isActive
-      });
+    it('should work for http sources', function() {
+      const http = {
+        url: 'http://foo.com/bar',
+        newUrl: newUrl,
+        isLocal: isLocal,
+        isActive: isActive
+      };
+      set(http);
+      expect(dbMock.insert).toHaveBeenCalledWith(expectedMapping);
     });
 
-    it('does not add a slash when the path is local', function() {
-      const url = 'foo.com/bar/baz';
-      const newUrl = 'foo/bar';
-      const isLocal = true;
-      const isActive = true;
-      urlMapper.set(
-        url,
-        newUrl,
-        isLocal,
-        isActive
-      );
-
-      expect(dbMock.insert).toHaveBeenCalledWith({
-        url,
-        newUrl: 'foo/bar',
-        isLocal,
-        isActive
-      });
+    it('should work for https sources', function() {
+      const https = {
+        url: 'https://foo.com/bar',
+        newUrl: newUrl,
+        isLocal: isLocal,
+        isActive: isActive
+      };
+      set(https);
+      expect(dbMock.insert).toHaveBeenCalledWith(expectedMapping);
     });
 
-    describe('protocol-removal', function() {
-      const newUrl = 'newUrl';
-      const isLocal = true;
-      const isActive = true;
-      const expectedMapping = {
-        url: 'foo.com/bar',
+    it('should apply to requests coming in', function() {
+      const http = {
+        url: 'http://foo.com/bar',
         newUrl: newUrl,
         isLocal: isLocal,
         isActive: isActive
       };
 
-      it('should work for http sources', function() {
-        const http = {
-          url: 'http://foo.com/bar',
-          newUrl: newUrl,
-          isLocal: isLocal,
-          isActive: isActive
-        };
-        set(http);
-        expect(dbMock.insert).toHaveBeenCalledWith(expectedMapping);
-      });
-
-      it('should work for https sources', function() {
-        const https = {
-          url: 'https://foo.com/bar',
-          newUrl: newUrl,
-          isLocal: isLocal,
-          isActive: isActive
-        };
-        set(https);
-        expect(dbMock.insert).toHaveBeenCalledWith(expectedMapping);
-      });
-
-      it('should apply to requests coming in', function() {
-        const http = {
-          url: 'http://foo.com/bar',
-          newUrl: newUrl,
-          isLocal: isLocal,
-          isActive: isActive
-        };
-
-        set(http);
-        check('http://foo.com/bar', expectedMapping);
-      });
+      set(http);
+      check('http://foo.com/bar', expectedMapping);
     });
 
     it('should remove the protocol from the destination url', function() {
@@ -186,6 +146,7 @@ describe('url mapper', function() {
     });
   });
 
+  describe('get', function() {
   describe('get', function() {
     const specific = {
       url: 'foo.com/bar/baz',
@@ -210,13 +171,61 @@ describe('url mapper', function() {
     });
 
     it('matches plain urls', function() {
-      set(specific);
-      check(specific.url, specific);
+      urlMapper.set(
+        specific.url,
+        specific.newUrl,
+        true,
+        true
+      );
+      expect(urlMapper.get(specific.url).newUrl).toEqual(specific.newUrl);
+    });
+
+    it('matches, if no trailing slash', function() {
+      const noTrailing = {
+        url: 'http://foo.com',
+        newUrl: 'newUrl'
+      };
+
+      urlMapper.set(
+        noTrailing.url,
+        noTrailing.newUrl,
+        true,
+        true
+      );
+      expect(urlMapper.get('http://foo.com').newUrl).toEqual(noTrailing.newUrl);
+      expect(urlMapper.get('http://foo.com/').newUrl).toEqual(noTrailing.newUrl);
+    });
+
+    it('matches, if trailing slash', function() {
+      const trailingSlashes = {
+        url: 'http://foo.com/',
+        newUrl: 'newUrl'
+      };
+
+      urlMapper.set(
+        trailingSlashes.url,
+        trailingSlashes.newUrl,
+        true,
+        true
+      );
+      expect(urlMapper.get('http://foo.com').newUrl).toEqual(trailingSlashes.newUrl);
+      expect(urlMapper.get('http://foo.com/').newUrl).toEqual(trailingSlashes.newUrl);
     });
 
     it('matches wildcards', function() {
       set(oneWildcard);
       check('foo.com/1/baz', oneWildcard);
+    });
+
+    it('doesn\'t match wildcard regardless of trailing slash or not', function() {
+      urlMapper.set(
+        'http://foo.com/*',
+        'newUrl',
+        true,
+        true
+      );
+      expect(urlMapper.get('http://foo.com')).toEqual(undefined);
+      expect(urlMapper.get('http://foo.com/')).toEqual(undefined);
     });
 
     it('matches multi-wildcards', function() {
@@ -360,19 +369,14 @@ describe('url mapper', function() {
   });
 
   describe('count', function() {
-    let url;
-    let newUrl;
-    let isLocal;
-    const isActive = true;
+    const url = 'http://foo.com/bar/baz';
+    const newUrl = 'foo/bar';
     beforeEach(function() {
-      url = 'foo.com/bar/baz';
-      newUrl = 'foo/bar';
-      isLocal = true;
       urlMapper.set(
         url,
         newUrl,
-        isLocal,
-        isActive
+        true,
+        true
       );
     });
 
@@ -385,8 +389,8 @@ describe('url mapper', function() {
       urlMapper.set(
         url,
         newUrl,
-        isLocal,
-        isActive
+        true,
+        true
       );
       const count = urlMapper.count();
       expect(count).toEqual(1);
@@ -396,8 +400,8 @@ describe('url mapper', function() {
       urlMapper.set(
         url,
         newUrl,
-        isLocal,
-        isActive
+        true,
+        true
       );
       urlMapper.remove(url);
       const count = urlMapper.count();
@@ -407,42 +411,25 @@ describe('url mapper', function() {
 
   describe('mappings', function() {
     let mappings;
-    const first = {
-      url: 'foo.com/bar/baz',
-      newUrl: 'foo/bar',
-      isLocal: true,
-      isActive: true
-    };
-    const second = {
-      url: 'foo.com/bar/baz2',
-      newUrl: 'foo/bar2',
-      isLocal: true,
-      isActive: false
-    };
 
     beforeEach(function() {
       urlMapper.set(
-        first.url,
-        first.newUrl,
-        first.isLocal,
-        first.isActive
+        'http://foo.com/bar/baz',
+        'foo/bar',
+        true,
+        true
       );
       urlMapper.set(
-        second.url,
-        second.newUrl,
-        first.isLocal,
-        second.isActive
+        'http://foo.com/bar/baz2',
+        'foo/bar2',
+        true,
+        false
       );
       mappings = urlMapper.mappings();
     });
 
     it('returns a list of all mappings, regardless of if active', function() {
       expect(mappings.length).toEqual(2);
-    });
-
-    it('should provide match url, newUrl url, and whether or not is active', function() {
-      const expected = JSON.stringify([first, second]);
-      expect(JSON.stringify(mappings)).toEqual(expected);
     });
 
     it('should return a clone, so that mappings can\'t be tampered with', function() {

@@ -7,12 +7,13 @@ const changed = require('gulp-changed');
 const sass = require('gulp-sass');
 const sourcemaps = require('gulp-sourcemaps');
 const autoprefixer = require('gulp-autoprefixer');
-const eslint = require('gulp-eslint');
 const browserify = require('browserify');
 const source = require('vinyl-source-stream');
 const electron = require('electron-packager');
 const useref = require('gulp-useref');
 const electronConnect = require('electron-connect').server.create();
+const gulpif = require('gulp-if');
+const exec = require('child_process').exec;
 
 gulp.task('default', ['js', 'css', 'resources']);
 
@@ -53,21 +54,19 @@ gulp.task('resources', () => {
 gulp.task('package-resources', ['default'], () => {
   return es.merge([
     gulp.src('node_modules/font-awesome/fonts/**').pipe(gulp.dest('package/fonts')),
-    gulp.src('resource/**').pipe(useref({noAssets: true})).pipe(gulp.dest('package')),
-    gulp.src('build/james.css').pipe(gulp.dest('package'))
+    gulp.src('build/james.css').pipe(gulp.dest('package')),
+    gulp.src('resource/**')
+      .pipe(gulpif('*.html', useref()))
+      .pipe(gulp.dest('package'))
   ]);
 });
 
-gulp.task('package-browserify', ['default'], () => {
-  return browserify('./build/index.js', {
-    builtins: false, // Attempt to reproduce
-    browserField: false // the `--node` flag
+gulp.task('package-browserify', ['default'], (cb) => {
+  exec('browserify --node -e build/index.js -o ./package/index.js -u remote -u child-killer -u electron', (err, stdout, stderr) => {
+    console.log(stdout);
+    console.error(stderr);
+    cb(err);
   })
-    .exclude('remote')
-    .exclude('child-killer')
-    .bundle()
-    .pipe(source('index.js')).
-    pipe(gulp.dest('./package/'))
 });
 
 gulp.task('package', ['package-resources', 'package-browserify'], (done) => {
@@ -81,17 +80,6 @@ gulp.task('package', ['package-resources', 'package-browserify'], (done) => {
     version: '0.36.5',
     out: 'binaries'
   }, () => done())
-});
-
-gulp.task('lint', () => {
-  return gulp.src(['src/**', 'test/**'])
-    .pipe(eslint())
-    .pipe(eslint.format())
-    .pipe(eslint.failOnError())
-});
-
-gulp.task('clean', () => {
-  del.sync(['build', 'package', 'binaries']);
 });
 
 gulp.task('watch', ['default'], () => {

@@ -1,5 +1,6 @@
 import React from 'react';
 import FullUrl from './full-url.js';
+import KeyValue from './inspect/key-value';
 
 const {func, object} = React.PropTypes;
 
@@ -17,25 +18,18 @@ export default class InspectRequest extends React.Component {
       setActiveRequest(null);
     };
 
-    const requestHeaders = Object.keys(request.request.headers).map(function(key) {
-      const headerValue = request.request.headers[key];
-      return <li key={key}>
-        <strong>{key}:&nbsp;</strong>
-        {headerValue}
-      </li>;
-    });
-    const responseHeaders = Object.keys(request.response.headers).map(function(key) {
-      const headerValue = request.response.headers[key];
-      return <li key={key}>
-        <strong>{key}:&nbsp;</strong>
-        {headerValue}
-      </li>;
-    });
+    function keyValues(obj) {
+      return Object.keys(obj).map((key) => <KeyValue key={key} _key={key} value={String(obj[key])} />);
+    }
+
+    const queryParams = keyValues(request.request.query);
+    const requestHeaders = keyValues(request.request.headers);
+    const responseHeaders = keyValues(request.response.headers);
 
     return <div className="inspect-request">
       <div className="toolbar">
         <div className="toolbar-action primary" onClick={close}>
-          <i className="action fa fa-close"></i>
+          <i className="action fa fa-close" />
           <span className="description">close</span>
         </div>
       </div>
@@ -45,28 +39,24 @@ export default class InspectRequest extends React.Component {
         </div>
       </div>
       <div className="box-body">
-        <div className="section">
+        <section>
           Request URL:
           <code>
             <FullUrl request={request.request} />
           </code>
-        </div>
-        <div className="section">
+        </section>
+        <section>
+          Request Query Parameters:
+          {queryParams}
+        </section>
+        <section>
           Request Headers:
-          <code>
-            <ul>
-              {requestHeaders}
-            </ul>
-          </code>
-        </div>
-        <div className="section">
+          {requestHeaders}
+        </section>
+        <section>
           Response Headers:
-          <code>
-            <ul>
-              {responseHeaders}
-            </ul>
-          </code>
-        </div>
+          {responseHeaders}
+        </section>
       </div>
     </div>;
   }

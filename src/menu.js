@@ -1,6 +1,7 @@
 const remote = require('remote');
 
 const Menu = remote.require('menu');
+const shell = require('electron').shell;
 
 function menuTempl() {
   const menu = [];
@@ -9,7 +10,9 @@ function menuTempl() {
     submenu: [
       {
         label: 'About James',
-        role: 'hide'
+        click: function() {
+          shell.openExternal('https://github.com/james-proxy/james');
+        }
       }
     ]
   });
@@ -63,13 +66,6 @@ function menuTempl() {
         label: 'Close',
         accelerator: 'CommandOrControl+Q',
         role: 'close'
-      },
-      {
-        type: 'separator'
-      },
-      {
-        label: 'Bring All to Front',
-        role: 'front'
       }
     ]
   });

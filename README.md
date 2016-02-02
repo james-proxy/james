@@ -9,6 +9,11 @@ James is build with [hoxy](https://github.com/greim/hoxy), [electron](https://gi
 
 ![](resource/screenshot-1.png)
 
+## Installing
+Download the correct version for your OS and run
+
+[![All platforms download](https://img.shields.io/badge/download-any_platform-green.svg)](https://github.com/james-proxy/james/releases/latest)
+
 ## Running in a development environment
 
 The electron instance will automatically reload whenever a change is made
