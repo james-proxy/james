@@ -7,6 +7,7 @@
 
 ### Bugfixes
 - Fix drag-down-whitespace issue (i: @mitchhentges, r: @nerdbeere)
+- Don't try to browserify electron (i: @mitchhentges, r: @nerdbeere)
 
 ### Developer Features
 - Put "lint" task back in `package.json` (i: @mitchhentges, r: @nerdbeere)
