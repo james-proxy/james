@@ -5,14 +5,19 @@
 - Make `Esc` close current in-app window (i: @mitchhentges, r: @nerdbeere)
 - "About James" now opens the github page in the default browser (i: @mitchhentges, r: @nerdbeere)
 - Properly handle trailing slashes (i: @mitchhentges, r: @nerdbeere)
+- Tooltips now appear for each function in the footer (i: @tomitm, r: @nerdbeere)
+- Currently-inspected request now bold (i: @tomitm, r: @nerdbeere)
 
 ### Bugfixes
 - Fix drag-down-whitespace issue (i: @mitchhentges, r: @nerdbeere)
 - Don't try to browserify electron (i: @mitchhentges, r: @nerdbeere)
+- Can now scroll through requests when cursor _beside_ "close" tab (i: @tomitm, r: @nerdbeere)
+- Close tab is always aligned properly now (i: @tomitm, r: @nerdbeere)
 
 ### Developer Features
 - Put "lint" task back in `package.json` (i: @mitchhentges, r: @nerdbeere)
 - Fix deprecation warnings about ReactDOM (i: @mitchhentges, r: @nerdbeere)
+- Footer components now utilize React 0.14's "stateless componenets" (i: @tomitm, r: @nerdbeere)
 
 ## 1.4.0
 - Only run useref on html files (i: @mitchhentges, r: @nerdbeere)
