@@ -398,31 +398,19 @@ describe('url mapper', function() {
   });
   describe('mappings', function() {
     let mappings;
-    const first = {
-      url: 'http://foo.com/bar/baz',
-      newUrl: 'foo/bar',
-      isLocal: true,
-      isActive: true
-    };
-    const second = {
-      url: 'http://foo.com/bar/baz2',
-      newUrl: 'foo/bar2',
-      isLocal: true,
-      isActive: false
-    };
 
     beforeEach(function() {
       urlMapper.set(
-        first.url,
-        first.newUrl,
-        first.isLocal,
-        first.isActive
+        'http://foo.com/bar/baz',
+        'foo/bar',
+        true,
+        true
       );
       urlMapper.set(
-        second.url,
-        second.newUrl,
-        first.isLocal,
-        second.isActive
+        'http://foo.com/bar/baz2',
+        'foo/bar2',
+        true,
+        false
       );
       mappings = urlMapper.mappings();
     });
