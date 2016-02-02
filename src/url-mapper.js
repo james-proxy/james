@@ -1,5 +1,9 @@
 export default class UrlMapper {
 
+  static unslashUrl(url) {
+    return (url.endsWith('/') ? url.substring(0, url.length - 1) : url).trim()
+  }
+
   constructor(db, update) {
     this._db = db;
     this._update = update;
@@ -15,7 +19,7 @@ export default class UrlMapper {
   }
 
   get(url) {
-    url = (url.endsWith('/') ? url.substring(0, url.length - 1) : url).trim();
+    url = UrlMapper.unslashUrl(url);
 
     const plainUrl = this._map[url];
     if (plainUrl) {
@@ -65,7 +69,7 @@ export default class UrlMapper {
   set(url, newUrl, isLocal, isActive = true) {
     isLocal = !!isLocal;
 
-    url = (url.endsWith('/') ? url.substring(0, url.length - 1) : url).trim();
+    url = UrlMapper.unslashUrl(url);
     newUrl = newUrl.trim();
 
     const mappedUrl = {
