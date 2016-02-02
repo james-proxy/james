@@ -117,7 +117,7 @@ describe('url mapper', function() {
 
     it('should apply to requests coming in', function() {
       const http = {
-        url: 'http://foo.com/bar',
+        url: 'foo.com/bar',
         newUrl: newUrl,
         isLocal: isLocal,
         isActive: isActive
@@ -127,16 +127,16 @@ describe('url mapper', function() {
       check('http://foo.com/bar', expectedMapping);
     });
 
-    it('should remove the protocol from the destination url', function() {
+    it('should not remove the protocol from the destination url', function() {
       const mapping = {
-        url: 'http://foo.com/bar',
-        newUrl: 'newUrl',
+        url: 'foo.com/bar',
+        newUrl: 'http://newUrl',
         isLocal: true,
         isActive: true
       };
       const expected = {
         url: 'foo.com/bar',
-        newUrl: mapping.newUrl,
+        newUrl: 'http://newUrl',
         isLocal: mapping.isLocal,
         isActive: mapping.isActive
       };
@@ -146,7 +146,6 @@ describe('url mapper', function() {
     });
   });
 
-  describe('get', function() {
   describe('get', function() {
     const specific = {
       url: 'foo.com/bar/baz',
@@ -182,7 +181,7 @@ describe('url mapper', function() {
 
     it('matches, if no trailing slash', function() {
       const noTrailing = {
-        url: 'http://foo.com',
+        url: 'foo.com',
         newUrl: 'newUrl'
       };
 
@@ -192,13 +191,13 @@ describe('url mapper', function() {
         true,
         true
       );
-      expect(urlMapper.get('http://foo.com').newUrl).toEqual(noTrailing.newUrl);
-      expect(urlMapper.get('http://foo.com/').newUrl).toEqual(noTrailing.newUrl);
+      expect(urlMapper.get('foo.com').newUrl).toEqual(noTrailing.newUrl);
+      expect(urlMapper.get('foo.com/').newUrl).toEqual(noTrailing.newUrl);
     });
 
     it('matches, if trailing slash', function() {
       const trailingSlashes = {
-        url: 'http://foo.com/',
+        url: 'foo.com/',
         newUrl: 'newUrl'
       };
 
@@ -208,8 +207,8 @@ describe('url mapper', function() {
         true,
         true
       );
-      expect(urlMapper.get('http://foo.com').newUrl).toEqual(trailingSlashes.newUrl);
-      expect(urlMapper.get('http://foo.com/').newUrl).toEqual(trailingSlashes.newUrl);
+      expect(urlMapper.get('foo.com').newUrl).toEqual(trailingSlashes.newUrl);
+      expect(urlMapper.get('foo.com/').newUrl).toEqual(trailingSlashes.newUrl);
     });
 
     it('matches wildcards', function() {
@@ -219,13 +218,13 @@ describe('url mapper', function() {
 
     it('doesn\'t match wildcard regardless of trailing slash or not', function() {
       urlMapper.set(
-        'http://foo.com/*',
+        'foo.com/*',
         'newUrl',
         true,
         true
       );
-      expect(urlMapper.get('http://foo.com')).toEqual(undefined);
-      expect(urlMapper.get('http://foo.com/')).toEqual(undefined);
+      expect(urlMapper.get('foo.com')).toEqual(undefined);
+      expect(urlMapper.get('foo.com/')).toEqual(undefined);
     });
 
     it('matches multi-wildcards', function() {
@@ -369,7 +368,7 @@ describe('url mapper', function() {
   });
 
   describe('count', function() {
-    const url = 'http://foo.com/bar/baz';
+    const url = 'foo.com/bar/baz';
     const newUrl = 'foo/bar';
     beforeEach(function() {
       urlMapper.set(
@@ -414,13 +413,13 @@ describe('url mapper', function() {
 
     beforeEach(function() {
       urlMapper.set(
-        'http://foo.com/bar/baz',
+        'foo.com/bar/baz',
         'foo/bar',
         true,
         true
       );
       urlMapper.set(
-        'http://foo.com/bar/baz2',
+        'foo.com/bar/baz2',
         'foo/bar2',
         true,
         false
