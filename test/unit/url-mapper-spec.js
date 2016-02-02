@@ -153,14 +153,8 @@ describe('url mapper', function() {
 
     it('doesn\'t match wildcard regardless of trailing slash or not', function() {
       urlMapper.set(
-        {
-          url: 'http://foo.com/*',
-          newUrl: 'newUrl'
-        }.url,
-        {
-          url: 'http://foo.com/*',
-          newUrl: 'newUrl'
-        }.newUrl,
+        'http://foo.com/*',
+        'newUrl',
         true,
         true
       );
