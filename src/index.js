@@ -51,7 +51,7 @@ const createHoxy = () => {
     const cert = fs.readFileSync('./root-ca.crt.pem');
     opts.certAuthority = {key, cert};
   } catch (e) {
-    console.log('Not proxying HTTPS, missing key or certificate: ' + e); // eslint-disable-line
+    console.warn('Not proxying HTTPS, missing key or certificate:\n', e); // eslint-disable-line
   }
 
   return hoxy.createServer(opts).listen(config.proxyPort);

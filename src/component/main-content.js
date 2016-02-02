@@ -43,6 +43,13 @@ export default class MainContent extends React.Component {
       });
     };
 
+    const isRequestActive = (request) => {
+      if (!activeRequest) {
+        return false;
+      }
+      return request.request.id === activeRequest.request.id;
+    };
+
     let activeRequestNode = null;
     if (activeRequest) {
       activeRequestNode = <InspectRequest
@@ -74,6 +81,7 @@ export default class MainContent extends React.Component {
         requestData={requestData}
         showWindow={showWindow}
         config={config}
+        isRequestActive={isRequestActive}
         setActiveRequest={setActiveRequest}
         setFromIndex={setFromIndex}
         removeUrlMapping={removeUrlMapping}
