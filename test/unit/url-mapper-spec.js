@@ -62,9 +62,6 @@ describe('url mapper', function() {
   });
 
   describe('get', function() {
-    const isLocal = true;
-    const isActive = true;
-
     const specific = {
       url: 'http://foo.com/bar/baz',
       newUrl: 'foo/specific'
@@ -84,20 +81,20 @@ describe('url mapper', function() {
       urlMapper.set(
         specific.url,
         specific.newUrl,
-        isLocal,
-        isActive
+        true,
+        true
       );
       urlMapper.set(
         oneWildcard.url,
         oneWildcard.newUrl,
-        isLocal,
-        isActive
+        true,
+        true
       );
       urlMapper.set(
         multiWildcard.url,
         multiWildcard.newUrl,
-        isLocal,
-        isActive
+        true,
+        true
       );
       expect(urlMapper.get('http://dunx')).toEqual(undefined);
     });
@@ -106,8 +103,8 @@ describe('url mapper', function() {
       urlMapper.set(
         specific.url,
         specific.newUrl,
-        isLocal,
-        isActive
+        true,
+        true
       );
       expect(urlMapper.get(specific.url).newUrl).toEqual(specific.newUrl);
     });
@@ -121,8 +118,8 @@ describe('url mapper', function() {
       urlMapper.set(
         noTrailing.url,
         noTrailing.newUrl,
-        isLocal,
-        isActive
+        true,
+        true
       );
       expect(urlMapper.get('http://foo.com').newUrl).toEqual(noTrailing.newUrl);
       expect(urlMapper.get('http://foo.com/').newUrl).toEqual(noTrailing.newUrl);
@@ -137,8 +134,8 @@ describe('url mapper', function() {
       urlMapper.set(
         trailingSlashes.url,
         trailingSlashes.newUrl,
-        isLocal,
-        isActive
+        true,
+        true
       );
       expect(urlMapper.get('http://foo.com').newUrl).toEqual(trailingSlashes.newUrl);
       expect(urlMapper.get('http://foo.com/').newUrl).toEqual(trailingSlashes.newUrl);
@@ -148,8 +145,8 @@ describe('url mapper', function() {
       urlMapper.set(
         oneWildcard.url,
         oneWildcard.newUrl,
-        isLocal,
-        isActive
+        true,
+        true
       );
       expect(urlMapper.get('http://foo.com/1/baz').newUrl).toEqual(oneWildcard.newUrl);
     });
@@ -164,8 +161,8 @@ describe('url mapper', function() {
           url: 'http://foo.com/*',
           newUrl: 'newUrl'
         }.newUrl,
-        isLocal,
-        isActive
+        true,
+        true
       );
       expect(urlMapper.get('http://foo.com')).toEqual(undefined);
       expect(urlMapper.get('http://foo.com/')).toEqual(undefined);
@@ -175,8 +172,8 @@ describe('url mapper', function() {
       urlMapper.set(
         multiWildcard.url,
         multiWildcard.newUrl,
-        isLocal,
-        isActive
+        true,
+        true
       );
       expect(urlMapper.get('http://foo.com/2/bork').newUrl).toEqual(multiWildcard.newUrl);
     });
@@ -185,20 +182,20 @@ describe('url mapper', function() {
       urlMapper.set(
         specific.url,
         specific.newUrl,
-        isLocal,
-        isActive
+        true,
+        true
       );
       urlMapper.set(
         oneWildcard.url,
         oneWildcard.newUrl,
-        isLocal,
-        isActive
+        true,
+        true
       );
       urlMapper.set(
         multiWildcard.url,
         multiWildcard.newUrl,
-        isLocal,
-        isActive
+        true,
+        true
       );
       expect(urlMapper.get('http://foo.com/bar/baz').newUrl).toEqual(specific.newUrl);
       expect(urlMapper.get('http://foo.com/derp/baz').newUrl).toEqual(oneWildcard.newUrl);
@@ -219,14 +216,14 @@ describe('url mapper', function() {
       urlMapper.set(
         early.url,
         early.newUrl,
-        isLocal,
-        isActive
+        true,
+        true
       );
       urlMapper.set(
         late.url,
         late.newUrl,
-        isLocal,
-        isActive
+        true,
+        true
       );
       expect(urlMapper.get('http://foo.com/bar/spaghetti').newUrl).toEqual(late.newUrl);
     });
@@ -245,14 +242,14 @@ describe('url mapper', function() {
       urlMapper.set(
         earlyMulti.url,
         earlyMulti.newUrl,
-        isLocal,
-        isActive
+        true,
+        true
       );
       urlMapper.set(
         lateMulti.url,
         lateMulti.newUrl,
-        isLocal,
-        isActive
+        true,
+        true
       );
       expect(urlMapper.get('http://bar.com/yolo/foo/baz').newUrl).toEqual(lateMulti.newUrl);
     });
@@ -354,14 +351,12 @@ describe('url mapper', function() {
   describe('count', function() {
     const url = 'http://foo.com/bar/baz';
     const newUrl = 'foo/bar';
-    const isLocal = true;
-    const isActive = true;
     beforeEach(function() {
       urlMapper.set(
         url,
         newUrl,
-        isLocal,
-        isActive
+        true,
+        true
       );
     });
 
@@ -374,8 +369,8 @@ describe('url mapper', function() {
       urlMapper.set(
         url,
         newUrl,
-        isLocal,
-        isActive
+        true,
+        true
       );
       const count = urlMapper.count();
       expect(count).toEqual(1);
@@ -385,8 +380,8 @@ describe('url mapper', function() {
       urlMapper.set(
         url,
         newUrl,
-        isLocal,
-        isActive
+        true,
+        true
       );
       urlMapper.remove(url);
       const count = urlMapper.count();
