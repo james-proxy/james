@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Request from './request.js';
+import Request from './request';
 
 const {func, string, object} = React.PropTypes;
 
@@ -49,22 +49,23 @@ export default class Requests extends React.Component {
     const amountOfRequests = requestData.filteredCount;
 
     const requestNodes = requestData.requests.map((request) => {
+      const isActive = isActiveRequest(request);
+      const isContextMenu = isContextMenuRequest(request);
+
       const handleClick = () => {
-        console.log('click');
         setContextMenuRequest(null);
         setActiveRequest(request);
       };
 
       const handleContextMenu = () => {
-        console.log('context');
         setContextMenuRequest(request);
       };
 
       const positionTop = request.requestNumber * requestElementHeight;
       return <Request
         {...request}
-        isActive={isActiveRequest(request)}
-        isContextMenu={isContextMenuRequest(request)}
+        isActive={isActive}
+        isContextMenu={isContextMenu}
         positionTop={positionTop}
         config={config}
         showWindow={showWindow}

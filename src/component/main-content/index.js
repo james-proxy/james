@@ -1,8 +1,8 @@
 import React from 'react';
-import Requests from './requests.js';
-import Search from './search.js';
-import InspectRequest from './inspect-request.js';
-import Browser from './browser.js';
+import Requests from '../requests.js';
+import Search from '../search';
+import Welcome from './welcome.js';
+import InspectRequest from '../inspect-request';
 
 const {func, object, arrayOf, shape, array} = React.PropTypes;
 
@@ -32,13 +32,10 @@ export default class MainContent extends React.Component {
   }
 
   setContextMenuRequest(request) {
-    console.log("setContextMenuRequest", request, this.state.contextMenuRequest);
     if (!request || request.request.id === this.state.contextMenuRequest) {
-      console.log("set context menu to null");
       this.setState({contextMenuRequest: null});
       return;
     }
-    console.log("set context menu to", request.request.id);
     this.setState({contextMenuRequest: request.request.id});
   }
 
@@ -64,21 +61,13 @@ export default class MainContent extends React.Component {
     } = this.props;
 
     const {activeRequest} = this.state;
-    let SearchBar;
-    let SetupInstructions;
+    let search;
+    let welcome;
 
     if (requestData.totalCount > 0) {
-      SearchBar = <Search filterRequests={filterRequests} />;
+      search = <Search filterRequests={filterRequests} />;
     } else {
-      const browserElements = browsers.map((browser) => {
-        return <Browser browserName={browser.name} key={browser.name} openBrowser={openBrowser} />;
-      });
-
-      SetupInstructions = <div className="setup-instruction">
-        <h2>Proxy started on localhost:1338</h2>
-        <h3>Launch a browser, using James as a proxy</h3>
-        {browserElements}
-      </div>;
+      welcome = <Welcome browsers={browsers} openBrowser={openBrowser} />;
     }
 
     let activeRequestNode = null;
@@ -90,10 +79,10 @@ export default class MainContent extends React.Component {
 
     return <div className="main-content">
       <div className="header">
-        {SearchBar}
+        {search}
       </div>
       {activeWindow}
-      {SetupInstructions}
+      {welcome}
       <Requests
         requestData={requestData}
         showWindow={showWindow}

@@ -1,6 +1,7 @@
 import React from 'react';
 import FullUrl from './full-url.js';
-import ContextMenu from './context-menu.js';
+import RequestLabels from './request-labels.js';
+import ContextMenu from '../context-menu';
 
 const {func, object, number, bool} = React.PropTypes;
 
@@ -14,38 +15,9 @@ export default class Request extends React.Component {
       this.done !== nextProps.request.done;
   }
 
-  _getLabels(request) {
-    const {labels} = this.props.config;
-    const url = request.fullUrl();
-    const labelElements = [];
-
-    if (request.isMappedUrl) {
-      const activeClass = request.isMappingActive ? 'mapped' : 'mapped-inactive';
-
-      labelElements.push(
-        <span className={`label ${activeClass}`} key="mapped">
-          <i className="fa fa-warning"></i>
-          mapped
-        </span>
-      );
-    }
-
-    labels.forEach(function(label, index) {
-      if (!label.regex.test(url)) {
-        return;
-      }
-      labelElements.push(
-        <span className={`label ${label.className}`} key={index}>
-          {label.name}
-        </span>
-      );
-    });
-
-    return labelElements;
-  }
-
   render() {
     const {
+      config,
       request,
       response,
       isActive,
@@ -75,7 +47,6 @@ export default class Request extends React.Component {
     };
 
     let contextMenuNode = null;
-    console.log("request render, isContextMenu:", isContextMenu);
     if (isContextMenu) {
       const handleMenuClick = (fn) => (event) => {
         event.preventDefault();
@@ -110,8 +81,6 @@ export default class Request extends React.Component {
       contextMenuNode = <ContextMenu items={contextMenuItems} />;
     }
 
-    console.log('context menu', handleContextMenu);
-
     return <div className={requestClasses.join(' ')} style={style}>
       { contextMenuNode }
       <div className="request-inner" onClick={handleClick} onContextMenu={handleContextMenu}>
@@ -123,10 +92,7 @@ export default class Request extends React.Component {
             {response.statusCode}
           </span>
         <FullUrl request={request} />
-
-        <div className="labels">
-          {this._getLabels(request)}
-        </div>
+        <RequestLabels request={request} labels={config.labels} />
       </div>
     </div>;
   }
