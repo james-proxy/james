@@ -5,18 +5,12 @@ import ContextMenu from './context-menu.js';
 const {func, object, number, bool} = React.PropTypes;
 
 export default class Request extends React.Component {
-  constructor() {
-    super();
-
-    this.state = {
-      isContextMenuActive: false
-    };
-  }
 
   shouldComponentUpdate(nextProps) {
     return this.props.request.id !== nextProps.request.id ||
       this.props.positionTop !== nextProps.positionTop ||
       this.props.isActive !== nextProps.isActive ||
+      this.props.isContextMenu !== nextProps.isContextMenu ||
       this.done !== nextProps.request.done;
   }
 
@@ -29,7 +23,7 @@ export default class Request extends React.Component {
       const activeClass = request.isMappingActive ? 'mapped' : 'mapped-inactive';
 
       labelElements.push(
-        <span className={'label ' + activeClass} key="mapped">
+        <span className={`label ${activeClass}`} key="mapped">
           <i className="fa fa-warning"></i>
           mapped
         </span>
@@ -37,32 +31,17 @@ export default class Request extends React.Component {
     }
 
     labels.forEach(function(label, index) {
-      if (label.regex.test(url)) {
-        const classes = ['label'];
-        classes.push(label.className);
-        labelElements.push(
-          <span className={classes.join(' ')} key={index}>
-            {label.name}
-          </span>
-        );
+      if (!label.regex.test(url)) {
+        return;
       }
+      labelElements.push(
+        <span className={`label ${label.className}`} key={index}>
+          {label.name}
+        </span>
+      );
     });
 
     return labelElements;
-  }
-
-  _setContextMenuState(newState) {
-    this.setState({isContextMenuActive: newState});
-    this.forceUpdate();
-  }
-
-  _toggleContextMenu() {
-    this._setContextMenuState(!this.state.isContextMenuActive);
-  }
-
-  _onClick() {
-    this._setContextMenuState(false);
-    this.props.handleClick();
   }
 
   render() {
@@ -70,7 +49,10 @@ export default class Request extends React.Component {
       request,
       response,
       isActive,
+      isContextMenu,
       showWindow,
+      handleClick,
+      handleContextMenu,
       positionTop,
       removeUrlMapping,
       toggleUrlMappingActiveState
@@ -92,41 +74,47 @@ export default class Request extends React.Component {
       top: positionTop
     };
 
-    const contextMenuItems = [{
-      title: 'Add mapping',
-      icon: 'fa-plus',
-      onClick: (event) => {
+    let contextMenuNode = null;
+    console.log("request render, isContextMenu:", isContextMenu);
+    if (isContextMenu) {
+      const handleMenuClick = (fn) => (event) => {
         event.preventDefault();
-        showWindow('UrlMapping', {urlInput: request.originalUrl});
-        this._toggleContextMenu();
-      }
-    }];
+        handleContextMenu();
+        fn();
+      };
 
-    if (request.isMappedUrl) {
-      contextMenuItems.push({
-        title: 'Remove mapping',
-        icon: 'fa-trash-o',
-        onClick: (event) => {
-          event.preventDefault();
-          removeUrlMapping(request.originalUrl);
-          this._toggleContextMenu();
-        }
-      }, {
-        title: 'Activate/Deactivate',
-        icon: 'fa-toggle-on',
-        onClick: (event) => {
-          event.preventDefault();
-          toggleUrlMappingActiveState(request.originalUrl);
-          this._toggleContextMenu();
-        }
-      });
+      const contextMenuItems = [{
+        title: 'Add mapping',
+        icon: 'fa-plus',
+        onClick: handleMenuClick(() => {
+          showWindow('UrlMapping', {urlInput: request.originalUrl});
+        })
+      }];
+
+      if (request.isMappedUrl) {
+        contextMenuItems.push({
+          title: 'Remove mapping',
+          icon: 'fa-trash-o',
+          onClick: handleMenuClick(() => {
+            removeUrlMapping(request.originalUrl);
+          })
+        }, {
+          title: 'Activate/Deactivate',
+          icon: 'fa-toggle-on',
+          onClick: handleMenuClick(() => {
+            toggleUrlMappingActiveState(request.originalUrl);
+          })
+        });
+      }
+
+      contextMenuNode = <ContextMenu items={contextMenuItems} />;
     }
 
+    console.log('context menu', handleContextMenu);
+
     return <div className={requestClasses.join(' ')} style={style}>
-      { this.state.isContextMenuActive &&
-        <ContextMenu items={contextMenuItems}/>
-      }
-      <div className="request-inner" onClick={this._onClick.bind(this)} onContextMenu={this._toggleContextMenu.bind(this)}>
+      { contextMenuNode }
+      <div className="request-inner" onClick={handleClick} onContextMenu={handleContextMenu}>
         <span className="method property">{request.method}</span>
           <span className="time property">
             {took}
@@ -149,7 +137,9 @@ Request.propTypes = {
   request: object.isRequired,
   response: object.isRequired,
   isActive: bool.isRequired,
+  isContextMenu: bool.isRequired,
   handleClick: func.isRequired,
+  handleContextMenu: func.isRequired,
   showWindow: func.isRequired,
   positionTop: number.isRequired,
   removeUrlMapping: func.isRequired,

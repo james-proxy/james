@@ -7,17 +7,6 @@ const {func, string, object} = React.PropTypes;
 const requestElementHeight = 34;
 
 export default class Requests extends React.Component {
-
-  _filter(arr) {
-    const filter = this.state.filter;
-    if (!filter) {
-      return arr;
-    }
-    return arr.filter((request) => {
-      return request.request.fullUrl().indexOf(filter) !== -1;
-    });
-  }
-
   _onScroll() {
     const scrollableDomNode = ReactDOM.findDOMNode(this);
     const fromIndex = Math.ceil(scrollableDomNode.scrollTop / requestElementHeight) - 15;
@@ -46,8 +35,10 @@ export default class Requests extends React.Component {
 
   render() {
     const {
-      isRequestActive,
+      isActiveRequest,
       setActiveRequest,
+      isContextMenuRequest,
+      setContextMenuRequest,
       showWindow,
       config,
       requestData,
@@ -59,19 +50,26 @@ export default class Requests extends React.Component {
 
     const requestNodes = requestData.requests.map((request) => {
       const handleClick = () => {
+        console.log('click');
+        setContextMenuRequest(null);
         setActiveRequest(request);
       };
 
-      const isActive = isRequestActive(request);
+      const handleContextMenu = () => {
+        console.log('context');
+        setContextMenuRequest(request);
+      };
 
       const positionTop = request.requestNumber * requestElementHeight;
       return <Request
         {...request}
-        isActive={isActive}
+        isActive={isActiveRequest(request)}
+        isContextMenu={isContextMenuRequest(request)}
         positionTop={positionTop}
         config={config}
         showWindow={showWindow}
         handleClick={handleClick}
+        handleContextMenu={handleContextMenu}
         key={request.request.id}
         removeUrlMapping={removeUrlMapping}
         toggleUrlMappingActiveState={toggleUrlMappingActiveState} />;
@@ -93,8 +91,10 @@ Requests.propTypes = {
   requestData: object.isRequired,
   showWindow: func.isRequired,
   filter: string,
-  isRequestActive: func.isRequired,
+  isActiveRequest: func.isRequired,
   setActiveRequest: func.isRequired,
+  isContextMenuRequest: func.isRequired,
+  setContextMenuRequest: func.isRequired,
   setFromIndex: func.isRequired,
   config: object.isRequired,
   removeUrlMapping: func.isRequired,

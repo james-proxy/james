@@ -71,19 +71,23 @@ const clearRequests = () => {
   render();
 };
 
-const throttleDisable = () => {
-  data.throttle.enabled = false;
-  proxy.disableThrottling();
-};
+const toggleThrottle = () => {
+  const enabled = !data.throttle.enabled;
+  data.throttle.enabled = enabled;
 
-const throttleEnable = () => {
-  data.throttle.enabled = true;
-  proxy.slow(data.throttle.rate);
+  if (enabled) {
+    proxy.slow(data.throttle.rate);
+  } else {
+    proxy.disableThrottling();
+  }
+
+  render();
 };
 
 const throttleRateChange = (kBps) => {
   data.throttle.rate = kBps;
   proxy.slow(kBps);
+  render();
 };
 
 const domNode = document.getElementById('app');
@@ -177,8 +181,7 @@ function render() {
         requestData={requestData}
         clearRequests={clearRequests}
         toggleCaching={toggleCaching}
-        onDisableThrottle={throttleDisable}
-        onEnableThrottle={throttleEnable}
+        toggleThrottle={toggleThrottle}
         onRateChange={throttleRateChange}
         enabled={enabled}
         rate={rate} />

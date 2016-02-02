@@ -15,8 +15,38 @@ export default class MainContent extends React.Component {
   componentWillMount() {
     this.setState({
       filter: null,
-      activeRequest: null
+      activeRequest: null,
+      contextMenuRequest: null
     });
+  }
+
+  setActiveRequest(request) {
+    this.setState({activeRequest: request});
+  }
+
+  isActiveRequest(request) {
+    if (!this.state.activeRequest || !request) {
+      return false;
+    }
+    return this.state.activeRequest.request.id === request.request.id;
+  }
+
+  setContextMenuRequest(request) {
+    console.log("setContextMenuRequest", request, this.state.contextMenuRequest);
+    if (!request || request.request.id === this.state.contextMenuRequest) {
+      console.log("set context menu to null");
+      this.setState({contextMenuRequest: null});
+      return;
+    }
+    console.log("set context menu to", request.request.id);
+    this.setState({contextMenuRequest: request.request.id});
+  }
+
+  isContextMenuRequest(request) {
+    if (!this.state.contextMenuRequest || !request) {
+      return false;
+    }
+    return this.state.contextMenuRequest === request.request.id;
   }
 
   render() {
@@ -37,26 +67,6 @@ export default class MainContent extends React.Component {
     let SearchBar;
     let SetupInstructions;
 
-    const setActiveRequest = (request) => {
-      this.setState({
-        activeRequest: request
-      });
-    };
-
-    const isRequestActive = (request) => {
-      if (!activeRequest) {
-        return false;
-      }
-      return request.request.id === activeRequest.request.id;
-    };
-
-    let activeRequestNode = null;
-    if (activeRequest) {
-      activeRequestNode = <InspectRequest
-        request={activeRequest}
-        setActiveRequest={setActiveRequest} />;
-    }
-
     if (requestData.totalCount > 0) {
       SearchBar = <Search filterRequests={filterRequests} />;
     } else {
@@ -71,6 +81,13 @@ export default class MainContent extends React.Component {
       </div>;
     }
 
+    let activeRequestNode = null;
+    if (activeRequest) {
+      activeRequestNode = <InspectRequest
+        request={activeRequest}
+        setActiveRequest={this.setActiveRequest.bind(this)} />;
+    }
+
     return <div className="main-content">
       <div className="header">
         {SearchBar}
@@ -81,8 +98,10 @@ export default class MainContent extends React.Component {
         requestData={requestData}
         showWindow={showWindow}
         config={config}
-        isRequestActive={isRequestActive}
-        setActiveRequest={setActiveRequest}
+        isActiveRequest={this.isActiveRequest.bind(this)}
+        setActiveRequest={this.setActiveRequest.bind(this)}
+        isContextMenuRequest={this.isContextMenuRequest.bind(this)}
+        setContextMenuRequest={this.setContextMenuRequest.bind(this)}
         setFromIndex={setFromIndex}
         removeUrlMapping={removeUrlMapping}
         toggleUrlMappingActiveState={toggleUrlMappingActiveState} />

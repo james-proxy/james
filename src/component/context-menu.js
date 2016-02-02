@@ -2,21 +2,22 @@ import React from 'react';
 
 const {array} = React.PropTypes;
 
-export default class ContextMenu extends React.Component {
+const ContextMenu = (props) => {
+  const {items} = props;
 
-  render() {
-    const contextItems = this.props.items.map((item, index) => {
-      return <li className="context-menu-item" key={index} onClick={item.onClick}>
-        <i className={'fa ' + item.icon}></i><span className="title">{item.title}</span>
-      </li>;
-    });
+  const contextItems = items.map((item, index) => {
+    return <li className="context-menu-item" key={index} onClick={item.onClick}>
+      <i className={'fa ' + item.icon}></i><span className="title">{item.title}</span>
+    </li>;
+  });
 
-    return <ul className="context-menu">
-      {contextItems}
-    </ul>;
-  }
-}
+  return <ul className="context-menu">
+    {contextItems}
+  </ul>;
+};
 
 ContextMenu.propTypes = {
   items: array.isRequired
 };
+
+export default ContextMenu;
