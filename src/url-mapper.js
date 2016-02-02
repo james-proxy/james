@@ -1,7 +1,7 @@
 export default class UrlMapper {
 
   static unslashUrl(url) {
-    return (url.endsWith('/') ? url.substring(0, url.length - 1) : url).trim()
+    return (url.endsWith('/') ? url.substring(0, url.length - 1) : url).trim();
   }
 
   constructor(db, update) {
