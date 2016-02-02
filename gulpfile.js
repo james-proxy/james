@@ -62,7 +62,7 @@ gulp.task('package-resources', ['default'], () => {
 });
 
 gulp.task('package-browserify', ['default'], (cb) => {
-  exec('browserify --node -e build/index.js -o ./package/index.js -u remote -u child-killer', (err, stdout, stderr) => {
+  exec('browserify --node -e build/index.js -o ./package/index.js -u remote -u child-killer -u electron', (err, stdout, stderr) => {
     console.log(stdout);
     console.error(stderr);
     cb(err);
