@@ -352,14 +352,11 @@ describe('url mapper', function() {
   });
 
   describe('count', function() {
-    let url;
-    let newUrl;
-    let isLocal;
+    const url = 'http://foo.com/bar/baz';
+    const newUrl = 'foo/bar';
+    const isLocal = true;
     const isActive = true;
     beforeEach(function() {
-      url = 'http://foo.com/bar/baz';
-      newUrl = 'foo/bar';
-      isLocal = true;
       urlMapper.set(
         url,
         newUrl,
