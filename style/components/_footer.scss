@@ -17,10 +17,8 @@
   }
 
   .request-count {
-    display: block;
-    position: absolute;
-    right: 0;
-    top: 7px;
+    display: inline;
+    height: 13px;
 
     button {
       padding: 0;
@@ -28,4 +26,21 @@
       margin-right: 5px;
     }
   }
+
+  .https-status {
+    display: inline;
+    float: right;
+
+    &.failed i {
+      color: #FF4444;
+    }
+
+    &.succeeded i {
+      color: #44EE44;
+    }
+  }
+}
+
+.footer > *:not(:first-child) {
+  margin-left: 5%;
 }

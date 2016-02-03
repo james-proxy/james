@@ -2,6 +2,7 @@ import React from 'react';
 import CacheButton from './footer/cache';
 import Throttle from './footer/throttle';
 import RequestCount from './footer/request-count';
+import HttpsStatus from './footer/https-status';
 
 const {func, object} = React.PropTypes;
 
@@ -18,6 +19,7 @@ const Footer = (props) => {
     <CacheButton isCachingEnabled={isCachingEnabled} toggleCaching={toggleCaching} />
     <Throttle {...other} />
     <RequestCount requestData={requestData} clearRequests={clearRequests} />
+    <HttpsStatus enabled={true} />
   </div>;
 };
 
