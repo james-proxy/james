@@ -33,8 +33,12 @@
       }
     }
 
-    &.request-active .complete-url {
-      font-weight: bold;
+    &.request-active {
+      .complete-url,
+      .status-code,
+      .time {
+        font-weight: bold;
+      }
     }
 
     &:hover {
