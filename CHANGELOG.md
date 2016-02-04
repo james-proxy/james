@@ -15,6 +15,7 @@
 - Don't try to browserify electron (i: @mitchhentges, r: @nerdbeere)
 - Can now scroll through requests when cursor _beside_ "close" tab (i: @tomitm, r: @nerdbeere)
 - Close tab is always aligned properly now (i: @tomitm, r: @nerdbeere)
+- Copy the entire `electron-localshortcut` file (i: @mitchhentges, r: @nerdbeere)
 
 ### Developer Features
 - Put "lint" task back in `package.json` (i: @mitchhentges, r: @nerdbeere)
