@@ -57,7 +57,7 @@ To enable HTTPs support follow the [instructions in our wiki](https://github.com
 ## Communication
 
 We're using [Matrix](http://matrix.org/) for communication, and you can use the
-[Vector.im](https://vector.im/beta/#/room/#james:matrix.org) client to join the room.
+[Vector.im client to join the room.](https://vector.im/beta/#/room/#james:matrix.org)
 (If it doesn't load when you click "join", refresh the page).
 
 ## Contributing
