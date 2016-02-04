@@ -4,3 +4,4 @@ node_modules
 binaries
 root-ca.crt.pem
 root-ca.key.pem
+resource/example-site

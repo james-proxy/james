@@ -43,7 +43,7 @@ const urlMapper = new UrlMapper(db, function() {
   render();
 });
 
-urlMapper.set('http://james.proxy/', path.resolve('./resource/example.html'), true);
+urlMapper.set('http://james.proxy/', path.resolve('./resource/example-site/index.html'), true);
 
 const createHoxy = () => {
   const opts = {};
