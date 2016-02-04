@@ -21,6 +21,9 @@
 - Fix deprecation warnings about ReactDOM (i: @mitchhentges, r: @nerdbeere)
 - Footer components now utilize React 0.14's "stateless componenets" (i: @tomitm, r: @nerdbeere)
 
+### Documentation
+- Add section to readme about joining Matrix room (i: @mitchhentges, r: @nerdbeere)
+
 ## 1.4.0
 - Only run useref on html files (i: @mitchhentges, r: @nerdbeere)
 - Fix `package-browserify` (i: @mitchhentges, r: @nerdbeere)
