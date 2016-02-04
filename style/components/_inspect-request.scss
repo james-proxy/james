@@ -7,6 +7,7 @@
   bottom: 0;
   z-index: 2;
   background: rgba($lightgray-light, 0.9);
+  max-height: 60%;
 
   .toolbar {
     float: right;
@@ -63,7 +64,6 @@
   }
 
   .box-body {
-    max-height: 500px;
     overflow-y: scroll;
   }
 
