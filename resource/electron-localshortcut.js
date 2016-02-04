@@ -1,3 +1,9 @@
+// commit 497538685305a683d85c92a78ea4a12bbef00a58
+// https://github.com/parro-it/electron-localshortcut
+
+// Electron's `remote.require('...')` always checks the local filesystem (node_modules, etc). So, when trying to
+// `remote.require` something not pre-included in Electron, it fails unless it exists on the local filesystem.
+// So, instead of bundling `electron-localshortcut` with the rest of the JS, it's beside everything in a separate file.
 'use strict';
 
 const electron = require('electron');
