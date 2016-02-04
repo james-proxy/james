@@ -7,6 +7,7 @@
 - Properly handle trailing slashes (i: @mitchhentges, r: @nerdbeere)
 - Tooltips now appear for each function in the footer (i: @tomitm, r: @nerdbeere)
 - Currently-inspected request now bold (i: @tomitm, r: @nerdbeere)
+- Also time and status code are now bold  (i: @tomitm, r: @nerdbeere)
 
 ### Bugfixes
 - Fix drag-down-whitespace issue (i: @mitchhentges, r: @nerdbeere)
