@@ -54,6 +54,12 @@ To enable HTTPs support follow the [instructions in our wiki](https://github.com
 - `npm run test`: Runs all tests
 - `npm run package`: Creates a standalone app bundle for all operating systems
 
+## Communication
+
+We're using [Matrix](http://matrix.org/) for communication, and you can use the
+[Vector.im client to join the room.](https://vector.im/beta/#/room/#james:matrix.org)
+(If it doesn't load when you click "join", refresh the page).
+
 ## Contributing
 
 Feel free to open pull requests and issues!
