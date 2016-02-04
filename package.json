@@ -13,7 +13,7 @@
     "lint": "gulp lint",
     "test": "mocha --reporter dot --recursive -r setup-referee-sinon/globals test/unit --compilers js:babel-core/register",
     "test-ci": "npm run lint && npm run test && npm run package",
-    "build-example-site": "./script/build-example-site.js"
+    "build-example-site": "node ./script/build-example-site.js"
   },
   "author": "Julian Hollmann <hollmann@uxebu.com>",
   "license": "MIT",
