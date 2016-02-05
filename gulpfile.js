@@ -61,15 +61,23 @@ gulp.task('package-resources', ['default'], () => {
   ]);
 });
 
-gulp.task('package-browserify', ['default'], (cb) => {
-  exec('browserify --node -e build/index.js -o ./package/index.js -u remote -u child-killer -u electron', (err, stdout, stderr) => {
+const browserifyCb = (cb) => {
+  return (err, stdout, stderr) => {
     console.log(stdout);
     console.error(stderr);
     cb(err);
-  })
+  }
+};
+
+gulp.task('package-render', ['default'], (cb) => {
+  exec('browserify --node -e build/index.js -o ./package/index.js --im', browserifyCb(cb));
 });
 
-gulp.task('package', ['package-resources', 'package-browserify'], (done) => {
+gulp.task('package-main', ['default'], (cb) => {
+  exec('browserify --node -e build/electron-app.js -o ./package/electron-app.js --im', browserifyCb(cb));
+});
+
+gulp.task('package', ['package-resources', 'package-render', 'package-main'], (done) => {
   electron({
     all: true,
     dir: 'package',

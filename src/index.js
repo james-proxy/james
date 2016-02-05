@@ -12,9 +12,9 @@ import UrlMapper from './url-mapper.js';
 import createMenu from './menu';
 import remote from 'remote';
 import openBrowser from './open-browser.js';
+import browserLauncher from 'browser-launcher2';
+import Keyboard from './keyboard';
 
-const browserLauncher = require('browser-launcher2');
-const localShortcut = remote.require('./electron-localshortcut.js');
 const app = remote.require('app');
 const fs = remote.require('fs');
 
@@ -39,6 +39,7 @@ const data = {
   throttle: {enabled: false, rate: 0} // rate is in kBps
 };
 
+const keyboard = new Keyboard();
 const urlMapper = new UrlMapper(db, function() {
   data.urlMappings = urlMapper.mappings();
   render();
@@ -128,7 +129,7 @@ const showWindow = (windowName, options = {}) => {
   render();
 };
 
-localShortcut.register(remote.getCurrentWindow(), 'Esc', closeWindow);
+keyboard.register('Esc', closeWindow);
 
 /**
  * Set the index of the first request from where we start rendering.
