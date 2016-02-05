@@ -10,8 +10,6 @@ import Footer from './component/footer/footer.js';
 import MainContent from './component/main-content/main-content.js';
 
 import Proxy from './service/proxy.js';
-import createChooseFile from './service/choose-file.js';
-
 import config from './config.js';
 import UrlMapper from './url-mapper.js';
 import createMenu from './menu.js';
@@ -104,8 +102,6 @@ browserLauncher.detect(function(available) {
   render();
 });
 
-const chooseFile = createChooseFile(remote.getCurrentWindow());
-
 const windowFactories = {
   UrlMapping: () => {
     return <UrlMappingWindow
@@ -114,7 +110,6 @@ const windowFactories = {
       setUrlMapping={urlMapper.set.bind(urlMapper)}
       removeUrlMapping={urlMapper.remove.bind(urlMapper)}
       closeWindow={closeWindow}
-      chooseFile={chooseFile}
       toggleUrlMappingIsActive={urlMapper.toggleActiveState.bind(urlMapper)} />;
   }
 };

@@ -1,57 +1,19 @@
 import React from 'react';
+import NewMapping from '../mapping/new-mapping.js';
 
 const {func, array, object} = React.PropTypes;
 
 export default class UrlMappingWindow extends React.Component {
 
-  constructor(props) {
-    super();
-
-    this.state = {
-      urlInput: props.options.urlInput ? props.options.urlInput : '',
-      newUrlInput: '',
-      localPath: false
-    };
-  }
-
-  setUrlValue(event) {
-    this.setState({urlInput: event.target.value});
-  }
-
-  setNewUrlValue(event) {
-    this.setState({newUrlInput: event.target.value});
-  }
-
-  setNewLocalUrlValue() {
-    const {chooseFile} = this.props;
-
-    chooseFile((paths) => {
-      if (!paths) return;
-      const path = paths[0];
-
-      this.setState({
-        newUrlInput: path,
-        localPath: true
-      });
-    });
-  }
-
-  saveMapping() {
-    const {setUrlMapping} = this.props;
-    const {urlInput, newUrlInput, localPath} = this.state;
-
-    this.setState({
-      urlInput: '',
-      newUrlInput: ''
-    });
-
-    setUrlMapping(urlInput, newUrlInput, localPath);
-  }
-
   render() {
-    const {urlInput, newUrlInput} = this.state;
     let {urlMappings} = this.props;
-    const {removeUrlMapping, toggleUrlMappingIsActive, closeWindow} = this.props;
+
+    const {
+      setUrlMapping,
+      removeUrlMapping,
+      toggleUrlMappingIsActive,
+      closeWindow
+    } = this.props;
 
     urlMappings = urlMappings.map((map, index) => {
       const removeMapping = () => {
@@ -93,33 +55,8 @@ export default class UrlMappingWindow extends React.Component {
         <i className="fa fa-remove"></i>
       </a>
       <h4>URL Mappings</h4>
+      <NewMapping saveMapping={setUrlMapping} />
       <ul className="collection with-header">
-        <li className="collection-item add-mapping">
-          <div>
-            <input
-              value={urlInput}
-              className="col"
-              type="text"
-              placeholder="Enter the URL to map"
-              onChange={this.setUrlValue.bind(this)}
-              />
-            <span className="seperator">
-              <i className="fa fa-chevron-right"></i>
-            </span>
-            <input
-              value={newUrlInput}
-              className="col"
-              type="text"
-              placeholder="Enter the new URL"
-              onChange={this.setNewUrlValue.bind(this)}
-              />
-            <a onClick={this.setNewLocalUrlValue.bind(this)}>Choose file</a>
-            <a href="#!" className="secondary-content"
-               onClick={this.saveMapping.bind(this)}>
-              <i className="fa fa-plus"></i>
-            </a>
-          </div>
-        </li>
         {urlMappings}
       </ul>
     </div>;

@@ -33,3 +33,34 @@
     text-align: center;
   }
 }
+
+.new-mapping {
+  background-color: $lightgray-light;
+  border: 1px solid $lightgray-dark;
+  border-radius: 2px;
+  padding: 10px;
+  margin-bottom: 10px;
+
+  h1 {
+    margin: 0;
+    line-height: inherit;
+    font-size: 21px;
+  }
+
+  .description {
+    color: $darkgray-light;
+    margin-top: 5px;
+  }
+
+  .btn,
+  .btn-flat {
+    height: 32px;
+    line-height: 32px;
+    padding: 0 1.25rem;
+  }
+
+  .btn + .btn,
+  .btn + .btn-flat {
+    margin-left: 5px;
+  }
+}
