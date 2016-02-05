@@ -15,8 +15,20 @@
     left: 0;
     bottom: 0;
     right: 0;
-    height: 40px;
-    padding: 5px;
+
+    .search {
+      @extend .card;
+      margin: 10px;
+      padding: 0 15px;
+
+      input[type="text"] {
+        margin: 0;
+        border: 0;
+        box-shadow: none;
+        height: 25px;
+        padding: 5px 0;
+      }
+    }
   }
 
   h1 {
