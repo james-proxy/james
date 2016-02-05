@@ -60,8 +60,7 @@
     "rimraf": "^2.5.0",
     "setup-referee-sinon": "^0.3.0",
     "sinon": "^1.17.2",
-    "sinon-as-promised": "^4.0.0",
-    "vinyl-source-stream": "^1.1.0"
+    "sinon-as-promised": "^4.0.0"
   },
   "babel": {
     "presets": [
