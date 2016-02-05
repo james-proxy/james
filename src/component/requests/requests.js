@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Request from './request';
+import Request from './request.js';
 
 const {func, string, object} = React.PropTypes;
 

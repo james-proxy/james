@@ -1,7 +1,7 @@
 import React from 'react';
 import FullUrl from './full-url.js';
 import RequestLabels from './request-labels.js';
-import ContextMenu from '../context-menu';
+import ContextMenu from '../context-menu/context-menu.js';
 
 const {func, object, number, bool} = React.PropTypes;
 

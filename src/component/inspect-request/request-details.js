@@ -1,6 +1,6 @@
 import React from 'react';
 import RequestHeaders from './request-headers.js';
-import FullUrl from '../request/full-url.js';
+import FullUrl from '../requests/full-url.js';
 
 const {object} = React.PropTypes;
 

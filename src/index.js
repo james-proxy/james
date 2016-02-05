@@ -1,19 +1,22 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import hoxy from 'hoxy';
-import TitleBar from './component/title-bar';
-import Footer from './component/footer';
-import MainContent from './component/main-content';
+import remote from 'remote';
+import Datastore from 'nedb';
+import browserLauncher from 'browser-launcher2';
+
+import TitleBar from './component/title-bar/title-bar.js';
+import Footer from './component/footer/footer.js';
+import MainContent from './component/main-content/main-content.js';
+
 import Proxy from './service/proxy.js';
 import createChooseFile from './service/choose-file.js';
+
 import config from './config.js';
-import Datastore from 'nedb';
 import UrlMapper from './url-mapper.js';
-import createMenu from './menu';
-import remote from 'remote';
+import createMenu from './menu.js';
 import openBrowser from './open-browser.js';
 
-const browserLauncher = require('browser-launcher2');
 const localShortcut = remote.require('./electron-localshortcut.js');
 const app = remote.require('app');
 const fs = remote.require('fs');

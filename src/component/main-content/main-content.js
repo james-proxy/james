@@ -1,8 +1,8 @@
 import React from 'react';
-import Requests from '../requests.js';
-import Search from '../search';
+import Requests from '../requests/requests.js';
+import Search from '../search/search.js';
+import InspectRequest from '../inspect-request/inspect-request.js';
 import Welcome from './welcome.js';
-import InspectRequest from '../inspect-request';
 
 const {func, object, arrayOf, shape, array} = React.PropTypes;
 
