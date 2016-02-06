@@ -14,7 +14,8 @@ const initialState = {
   step: Step.target,
   target: null,
   destination: null,
-  isLocal: null
+  isLocal: null,
+  valid: null
 };
 
 export default class NewMapping extends React.Component {
@@ -29,16 +30,29 @@ export default class NewMapping extends React.Component {
     }
   }
 
+  validate() {
+    let valid = true;
+    if (this.state.step === Step.target) {
+      valid = !!this.state.target;
+    } else if (this.state.step === Step.destination) {
+      valid = !!this.state.destination;
+    }
+    this.setState({valid: valid});
+    return valid;
+  }
+
   handleTarget(event) {
     this.setState({target: event.target.value});
   }
 
   createUrl() {
-    this.setState({step: Step.destination, isLocal: false});
+    if (!this.validate()) { return; }
+    this.setState({step: Step.destination, isLocal: false, valid: null});
   }
 
   createFile() {
-    this.setState({step: Step.destination, isLocal: true});
+    if (!this.validate()) { return; }
+    this.setState({step: Step.destination, isLocal: true, valid: null});
   }
 
   handleDestination(event) {
@@ -52,11 +66,12 @@ export default class NewMapping extends React.Component {
       if (!paths) return;
       const path = paths[0];
 
-      this.setState({destination: path});
+      this.setState({destination: path, valid: true});
     });
   }
 
   finish() {
+    if (!this.validate()) { return; }
     const {saveMapping} = this.props;
     const {target, destination, isLocal} = this.state;
 
@@ -70,37 +85,36 @@ export default class NewMapping extends React.Component {
 
   render() {
     let form;
+    const {step, target, destination, isLocal} = this.state;
 
-    if (this.state.step === Step.target) {
+    if (step === Step.target) {
       form = <div className="mapping-target">
         <h1>Create new URL Mapping</h1>
         <div className="description">URL mappings allow James to intercept a request and respond with a URL or file of your choice.</div>
         <input type="text"
                 placeholder="Enter target URL to map"
-                value={this.state.target}
+                value={target}
                 onChange={this.handleTarget.bind(this)} />
         <a className="btn waves-effect waves-light"
             onClick={this.createUrl.bind(this)}>URL to URL</a>
         <a className="btn waves-effect waves-light"
             onClick={this.createFile.bind(this)}>URL to File</a>
       </div>;
-    } else if (this.state.step === Step.destination) {
+    } else if (step === Step.destination) {
       let input;
-      if (this.state.isLocal) {
+      if (isLocal) {
         input = <input
                   type="text"
                   disabled
                   placeholder="Choose file"
-                  value={this.state.destination}
-                  onClick={this.selectFile.bind(this)}
+                  value={destination}
                   onChange={this.handleDestination.bind(this)}
                 />;
       } else {
         input = <input
                   type="text"
                   placeholder="http(s)://"
-                  value={this.state.destination}
-                  onChange={this.handleDestination.bind(this)}
+                  value={destination}
                 />;
       }
 
