@@ -67,7 +67,6 @@ export default class UrlMappingWindow extends React.Component {
 
 UrlMappingWindow.propTypes = {
   setUrlMapping: func.isRequired,
-  chooseFile: func.isRequired,
   options: object.isRequired,
   removeUrlMapping: func.isRequired,
   closeWindow: func.isRequired,

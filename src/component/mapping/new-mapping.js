@@ -95,10 +95,10 @@ export default class NewMapping extends React.Component {
                 placeholder="Enter target URL to map"
                 value={target}
                 onChange={this.handleTarget.bind(this)} />
-        <a className="btn waves-effect waves-light"
-            onClick={this.createUrl.bind(this)}>URL to URL</a>
-        <a className="btn waves-effect waves-light"
-            onClick={this.createFile.bind(this)}>URL to File</a>
+        <button className="btn waves-effect waves-light"
+            onClick={this.createUrl.bind(this)}>URL to URL</button>
+        <button className="btn waves-effect waves-light"
+            onClick={this.createFile.bind(this)}>URL to File</button>
       </div>;
     } else if (step === Step.destination) {
       let input;
@@ -115,6 +115,7 @@ export default class NewMapping extends React.Component {
                   type="text"
                   placeholder="http(s)://"
                   value={destination}
+                  onChange={this.handleDestination.bind(this)}
                 />;
       }
 
@@ -122,10 +123,10 @@ export default class NewMapping extends React.Component {
         <h1>Enter destination</h1>
         <div className="description">James will respond with this URL or file instead.</div>
         {input}
-        <a className="btn waves-effect waves-light"
-            onClick={this.finish.bind(this)}>Create</a>
-        <a className="btn-flat waves-effect waves-light"
-            onClick={this.reset.bind(this)}>Cancel</a>
+        <button className="btn waves-effect waves-light"
+            onClick={this.finish.bind(this)}>Create</button>
+        <button className="btn-flat waves-effect waves-light"
+            onClick={this.reset.bind(this)}>Cancel</button>
       </div>;
     }
 
