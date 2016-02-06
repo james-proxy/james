@@ -15,6 +15,8 @@ export default class UrlMappingWindow extends React.Component {
       closeWindow
     } = this.props;
 
+    const {urlInput} = this.props.options;
+
     urlMappings = urlMappings.map((map, index) => {
       const removeMapping = () => {
         removeUrlMapping(map.url);
@@ -55,7 +57,7 @@ export default class UrlMappingWindow extends React.Component {
         <i className="fa fa-remove"></i>
       </a>
       <h4>URL Mappings</h4>
-      <NewMapping saveMapping={setUrlMapping} />
+      <NewMapping saveMapping={setUrlMapping} target={urlInput} />
       <ul className="collection with-header">
         {urlMappings}
       </ul>

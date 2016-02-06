@@ -1,9 +1,9 @@
 import React from 'react';
 import remote from 'remote';
 
-import createChooseFile from '../../service/choose-file';
+import createChooseFile from '../../service/choose-file.js';
 
-const {func} = React.PropTypes;
+const {func, string} = React.PropTypes;
 
 const Step = {
   target: 0,
@@ -22,6 +22,11 @@ export default class NewMapping extends React.Component {
   constructor(props) {
     super(props);
     this.state = initialState;
+
+    // prefill from external source (e.g., request context menu)
+    if (props.target) {
+      this.state.target = props.target;
+    }
   }
 
   handleTarget(event) {
@@ -115,5 +120,6 @@ export default class NewMapping extends React.Component {
 }
 
 NewMapping.propTypes = {
-  saveMapping: func.isRequired
+  saveMapping: func.isRequired,
+  target: string
 };
