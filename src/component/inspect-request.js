@@ -6,13 +6,32 @@ const {func, object} = React.PropTypes;
 
 export default class InspectRequest extends React.Component {
 
+  _getMaxHeight() {
+    return window.innerHeight * 0.6 - 100;
+  }
+
+  _onResize() {
+    const maxHeight = this._getMaxHeight();
+    this.setState({maxHeight});
+  }
+
   componentWillMount() {
     this.setState({
-      showUrlMapperWindow: false
+      showUrlMapperWindow: false,
+      maxHeight: this._getMaxHeight()
     });
   }
 
+  componentDidMount() {
+    window.addEventListener('resize', this._onResize.bind(this));
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this._onResize.bind(this));
+  }
+
   render() {
+    const {maxHeight} = this.state;
     const {request, setActiveRequest} = this.props;
     const close = () => {
       setActiveRequest(null);
@@ -26,6 +45,8 @@ export default class InspectRequest extends React.Component {
     const requestHeaders = keyValues(request.request.headers);
     const responseHeaders = keyValues(request.response.headers);
 
+    const bodyStyle = {maxHeight};
+
     return <div className="inspect-request">
       <div className="toolbar">
         <div className="toolbar-action primary" onClick={close}>
@@ -38,7 +59,7 @@ export default class InspectRequest extends React.Component {
           {request.request.hostname}
         </div>
       </div>
-      <div className="box-body">
+      <div className="box-body" style={bodyStyle}>
         <section>
           Request URL:
           <code>
