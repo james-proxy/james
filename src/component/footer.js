@@ -19,7 +19,7 @@ const Footer = (props) => {
     <CacheButton isCachingEnabled={isCachingEnabled} toggleCaching={toggleCaching} />
     <Throttle {...other} />
     <RequestCount requestData={requestData} clearRequests={clearRequests} />
-    <HttpsStatus enabled={true} />
+    <HttpsStatus state='working' />
   </div>;
 };
 

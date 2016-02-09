@@ -1,19 +1,22 @@
 import React from 'react';
 
-const {bool} = React.PropTypes;
+const {string, oneOf} = React.PropTypes;
 
-const HttpsStatus = ({enabled}) => {
-  const icon = enabled ? 'fa fa-circle' : 'fa fa-circle-o';
-  const label = enabled ? 'Https working' : 'Https failed';
+const HttpsStatus = ({state, message}) => {
+  const icon = state !== 'failed' ? 'fa fa-circle' : 'fa fa-circle-o';
+  const label = message ? message : 'Https: ' + state;
+  const classes = ['https-status'];
+  classes.push(state);
 
-  return <div className='https-status succeeded' title={label}>
+  return <div className={classes.join(' ')} title={label}>
     <i className={icon} />
     {label}
   </div>;
 };
 
 HttpsStatus.propTypes = {
-  enabled: bool.isRequired
+  state: oneOf(['working', 'partial', 'failed']),
+  message: string
 };
 
 export default HttpsStatus;

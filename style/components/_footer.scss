@@ -31,12 +31,16 @@
     display: inline;
     float: right;
 
-    &.failed i {
-      color: #FF4444;
+    &.working i {
+      color: #55dd33;
     }
 
-    &.succeeded i {
-      color: #44EE44;
+    &.partial i {
+      color: #bbaa44;
+    }
+
+    &.failed i {
+      color: #FF4444;
     }
   }
 }
