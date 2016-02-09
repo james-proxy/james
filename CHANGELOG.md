@@ -1,6 +1,8 @@
 ## Upcoming Release
 
-### User features
+### 1.4.1
+
+#### User features
 - Show query params as a key value list in the request detail view (i: @mitchhentges, r: @nerdbeere)
 - Make `Esc` close current in-app window (i: @mitchhentges, r: @nerdbeere)
 - "About James" now opens the github page in the default browser (i: @mitchhentges, r: @nerdbeere)
@@ -10,7 +12,7 @@
 - Also time and status code are now bold  (i: @tomitm, r: @nerdbeere)
 - Protocol doesn't matter anymore in URL mapping source (i: @mitchhentges, r: @nerdbeere)
 
-### Bugfixes
+#### Bugfixes
 - Fix drag-down-whitespace issue (i: @mitchhentges, r: @nerdbeere)
 - Don't try to browserify electron (i: @mitchhentges, r: @nerdbeere)
 - Can now scroll through requests when cursor _beside_ "close" tab (i: @tomitm, r: @nerdbeere)
@@ -18,12 +20,12 @@
 - Copy the entire `electron-localshortcut` file (i: @mitchhentges, r: @nerdbeere)
 - Fix max height for inspect-request (i: @tomitm, r: @nerdbeere)
 
-### Developer Features
+#### Developer Features
 - Put "lint" task back in `package.json` (i: @mitchhentges, r: @nerdbeere)
 - Fix deprecation warnings about ReactDOM (i: @mitchhentges, r: @nerdbeere)
 - Footer components now utilize React 0.14's "stateless componenets" (i: @tomitm, r: @nerdbeere)
 
-### Documentation
+#### Documentation
 - Add section to readme about joining Matrix room (i: @mitchhentges, r: @nerdbeere)
 
 ## 1.4.0

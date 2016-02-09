@@ -5,7 +5,6 @@
   bottom: 0;
   z-index: 2;
   background: rgba($lightgray-light, 0.9);
-  max-height: 60%;
 
   .toolbar {
     float: right;
@@ -63,6 +62,7 @@
 
   .box-body {
     overflow-y: scroll;
+    /* max-height set via component */
   }
 
   section {
