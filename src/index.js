@@ -14,7 +14,7 @@ import remote from 'remote';
 import openBrowser from './open-browser.js';
 
 const browserLauncher = require('browser-launcher2');
-const localShortcut = remote.require('electron-localshortcut');
+const localShortcut = remote.require('./electron-localshortcut.js');
 const app = remote.require('app');
 const fs = remote.require('fs');
 

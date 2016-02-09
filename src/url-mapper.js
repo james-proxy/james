@@ -1,7 +1,10 @@
 export default class UrlMapper {
 
-  static unslashUrl(url) {
-    return (url.endsWith('/') ? url.substring(0, url.length - 1) : url).trim();
+  static prepare(url) {
+    const protocolRegex = /[a-zA-Z0-9]*?:\/\//; // http://, https://, etc
+    return (url.endsWith('/') ? url.substring(0, url.length - 1) : url)
+      .replace(protocolRegex, '')
+      .trim();
   }
 
   constructor(db, update) {
@@ -19,7 +22,7 @@ export default class UrlMapper {
   }
 
   get(url) {
-    url = UrlMapper.unslashUrl(url);
+    url = UrlMapper.prepare(url);
 
     const plainUrl = this._map[url];
     if (plainUrl) {
@@ -66,10 +69,8 @@ export default class UrlMapper {
     return matches[0];
   }
 
-  set(url, newUrl, isLocal, isActive = true) {
-    isLocal = !!isLocal;
-
-    url = UrlMapper.unslashUrl(url);
+  set(url, newUrl, isLocal = true, isActive = true) {
+    url = UrlMapper.prepare(url);
     newUrl = newUrl.trim();
 
     const mappedUrl = {

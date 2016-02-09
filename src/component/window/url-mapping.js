@@ -66,13 +66,16 @@ export default class UrlMappingWindow extends React.Component {
 
       return <li className="collection-item" key={index}>
         <div>
-          <span className="col text-ellipsis">
+          <span className="col protocol">
+            http(s)://
+          </span>
+          <span className="col text-ellipsis mask">
             {map.url}
           </span>
           <span className="seperator">
             <i className="fa fa-chevron-right"></i>
           </span>
-          <span className="col text-ellipsis">
+          <span className="col text-ellipsis new-url">
             {map.newUrl}
           </span>
           <a href="#!" className="secondary-content" onClick={toggleIsActive}>
