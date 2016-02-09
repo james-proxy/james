@@ -23,7 +23,7 @@ const FullUrl = (props) => {
   }
 
   return <div className="complete-url">
-    <span className="protocol">{request.protocol}//</span>
+    <span className="protocol">{request.protocol}</span>
     <span className="hostname">{request.hostname}</span>
     {port}
     <span className="url">{_shorten(request.url, maxUrlLength)}</span>

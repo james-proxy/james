@@ -1,5 +1,5 @@
 import React from 'react';
-import RequestHeaders from './request-headers.js';
+import RequestMetadata from './request-metadata.js';
 import FullUrl from '../requests/full-url.js';
 
 const {object} = React.PropTypes;
@@ -14,15 +14,15 @@ const RequestDetails = (props) => {
     </section>
     <section>
       Request Query Params:
-      <RequestHeaders headers={request.request.query} />
+      <RequestMetadata metadata={request.request.query} />
     </section>
     <section>
       Request Headers:
-      <RequestHeaders headers={request.request.headers} />
+      <RequestMetadata metadata={request.request.headers} />
     </section>
     <section>
       Response Headers:
-      <RequestHeaders headers={request.response.headers} />
+      <RequestMetadata metadata={request.response.headers} />
     </section>
   </div>;
 };

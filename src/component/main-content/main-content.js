@@ -21,17 +21,19 @@ export default class MainContent extends React.Component {
   }
 
   setActiveRequest(request) {
+    // update activeRequest to request (no toggle); use null to clear
     this.setState({activeRequest: request});
   }
 
   isActiveRequest(request) {
-    if (!this.state.activeRequest || !request) {
+    if (!request || !this.state.activeRequest) {
       return false;
     }
     return this.state.activeRequest.request.id === request.request.id;
   }
 
   setContextMenuRequest(request) {
+    // clear if no request, or current request provided (toggle)
     if (!request || request.request.id === this.state.contextMenuRequest) {
       this.setState({contextMenuRequest: null});
       return;
@@ -40,7 +42,7 @@ export default class MainContent extends React.Component {
   }
 
   isContextMenuRequest(request) {
-    if (!this.state.contextMenuRequest || !request) {
+    if (!request || !this.state.contextMenuRequest) {
       return false;
     }
     return this.state.contextMenuRequest === request.request.id;
