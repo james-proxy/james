@@ -6,6 +6,11 @@ const {func, object} = React.PropTypes;
 
 export default class InspectRequest extends React.Component {
 
+  constructor() {
+    super();
+    this._onResize = this._onResize.bind(this);
+  }
+
   _getMaxHeight() {
     return window.innerHeight * 0.6 - 100;
   }
@@ -23,11 +28,11 @@ export default class InspectRequest extends React.Component {
   }
 
   componentDidMount() {
-    window.addEventListener('resize', this._onResize.bind(this));
+    window.addEventListener('resize', this._onResize);
   }
 
   componentWillUnmount() {
-    window.removeEventListener('resize', this._onResize.bind(this));
+    window.removeEventListener('resize', this._onResize);
   }
 
   render() {
