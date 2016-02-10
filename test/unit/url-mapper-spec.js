@@ -59,6 +59,36 @@ describe('url mapper', function() {
 
       expect(dbMock.remove).toHaveBeenCalledWith({url});
     });
+
+    it('does not add a mapping to the db when url is an empty string', function() {
+      const url = '';
+      const newUrl = 'foo.com/bar/mapped';
+      const isLocal = false;
+      const isActive = true;
+      urlMapper.set(
+        url,
+        newUrl,
+        isLocal,
+        isActive
+      );
+
+      expect(dbMock.insert).not.toHaveBeenCalled();
+    });
+
+    it('does not add a mapping to the db when url is an empty string', function() {
+      const url = 'foo.com';
+      const newUrl = '';
+      const isLocal = false;
+      const isActive = true;
+      urlMapper.set(
+        url,
+        newUrl,
+        isLocal,
+        isActive
+      );
+
+      expect(dbMock.insert).not.toHaveBeenCalled();
+    });
   });
 
   describe('protocol-removal', function() {

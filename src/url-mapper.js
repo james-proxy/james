@@ -73,6 +73,10 @@ export default class UrlMapper {
     url = UrlMapper.prepare(url);
     newUrl = newUrl.trim();
 
+    if (url === '' || newUrl === '') {
+      return;
+    }
+
     const mappedUrl = {
       url,
       newUrl,
@@ -139,6 +143,11 @@ export default class UrlMapper {
 
   _addMemoryCopy(mappedUrl) {
     this._removeMemoryCopy(mappedUrl.url);
+
+    // ignore broken url mappings
+    if (!mappedUrl.url) {
+      return;
+    }
 
     if (mappedUrl.url.indexOf('*') === -1) {
       this._map[mappedUrl.url] = mappedUrl;
