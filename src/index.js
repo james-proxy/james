@@ -1,19 +1,22 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import hoxy from 'hoxy';
-import TitleBar from './component/titlebar';
-import Footer from './component/footer';
-import MainContent from './component/main-content.js';
+import remote from 'remote';
+import Datastore from 'nedb';
+import browserLauncher from 'browser-launcher2';
+
+import TitleBar from './component/title-bar/title-bar.js';
+import Footer from './component/footer/footer.js';
+import MainContent from './component/main-content/main-content.js';
+
 import Proxy from './service/proxy.js';
 import createChooseFile from './service/choose-file.js';
+
 import config from './config.js';
-import Datastore from 'nedb';
 import UrlMapper from './url-mapper.js';
-import createMenu from './menu';
-import remote from 'remote';
+import createMenu from './menu.js';
 import openBrowser from './open-browser.js';
 
-const browserLauncher = require('browser-launcher2');
 const localShortcut = remote.require('./electron-localshortcut.js');
 const app = remote.require('app');
 const fs = remote.require('fs');
@@ -71,19 +74,23 @@ const clearRequests = () => {
   render();
 };
 
-const throttleDisable = () => {
-  data.throttle.enabled = false;
-  proxy.disableThrottling();
-};
+const toggleThrottle = () => {
+  const enabled = !data.throttle.enabled;
+  data.throttle.enabled = enabled;
 
-const throttleEnable = () => {
-  data.throttle.enabled = true;
-  proxy.slow(data.throttle.rate);
+  if (enabled) {
+    proxy.slow(data.throttle.rate);
+  } else {
+    proxy.disableThrottling();
+  }
+
+  render();
 };
 
 const throttleRateChange = (kBps) => {
   data.throttle.rate = kBps;
   proxy.slow(kBps);
+  render();
 };
 
 const domNode = document.getElementById('app');
@@ -177,8 +184,7 @@ function render() {
         requestData={requestData}
         clearRequests={clearRequests}
         toggleCaching={toggleCaching}
-        onDisableThrottle={throttleDisable}
-        onEnableThrottle={throttleEnable}
+        toggleThrottle={toggleThrottle}
         onRateChange={throttleRateChange}
         enabled={enabled}
         rate={rate} />
