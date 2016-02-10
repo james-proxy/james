@@ -141,7 +141,7 @@ export default class UrlMapper {
     this._removeMemoryCopy(mappedUrl.url);
 
     // ignore broken url mappings
-    if(!mappedUrl.url) {
+    if (!mappedUrl.url) {
       return;
     }
 
