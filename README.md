@@ -75,6 +75,7 @@ If you need inspiration, take a look in the issue section.
 - @klipstein
 - @mitchhentges
 - @nerdbeere
+- @tomitm
 
 ## License
 The MIT License (MIT)
