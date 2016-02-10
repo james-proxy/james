@@ -73,6 +73,10 @@ export default class UrlMapper {
     url = UrlMapper.prepare(url);
     newUrl = newUrl.trim();
 
+    if (url === '' || newUrl === '') {
+      return;
+    }
+
     const mappedUrl = {
       url,
       newUrl,
