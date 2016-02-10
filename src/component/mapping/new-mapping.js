@@ -1,7 +1,7 @@
 import React from 'react';
-import remote from 'remote';
 
-import createChooseFile from '../../service/choose-file.js';
+import NewMappingTarget from './new-mapping-target.js';
+import NewMappingDestination from './new-mapping-destination.js';
 
 const {func, string} = React.PropTypes;
 
@@ -41,8 +41,12 @@ export default class NewMapping extends React.Component {
     return valid;
   }
 
-  handleTarget(event) {
-    this.setState({target: event.target.value});
+  updateTarget(value) {
+    this.setState({target: value});
+  }
+
+  updateDestination(value) {
+    this.setState({destination: value});
   }
 
   createUrl() {
@@ -53,21 +57,6 @@ export default class NewMapping extends React.Component {
   createFile() {
     if (!this.validate()) { return; }
     this.setState({step: Step.destination, isLocal: true, valid: null});
-  }
-
-  handleDestination(event) {
-    this.setState({destination: event.target.value});
-  }
-
-  selectFile() {
-    const chooseFile = createChooseFile(remote.getCurrentWindow());
-
-    chooseFile((paths) => {
-      if (!paths) return;
-      const path = paths[0];
-
-      this.setState({destination: path, valid: true});
-    });
   }
 
   finish() {
@@ -88,46 +77,20 @@ export default class NewMapping extends React.Component {
     const {step, target, destination, isLocal} = this.state;
 
     if (step === Step.target) {
-      form = <div className="mapping-target">
-        <h1>Create new URL Mapping</h1>
-        <div className="description">URL mappings allow James to intercept a request and respond with a URL or file of your choice.</div>
-        <input type="text"
-                placeholder="Enter target URL to map"
-                value={target}
-                onChange={this.handleTarget.bind(this)} />
-        <button className="btn waves-effect waves-light"
-            onClick={this.createUrl.bind(this)}>URL to URL</button>
-        <button className="btn waves-effect waves-light"
-            onClick={this.createFile.bind(this)}>URL to File</button>
-      </div>;
+      form = <NewMappingTarget
+                target={target}
+                update={this.updateTarget.bind(this)}
+                createUrl={this.createUrl.bind(this)}
+                createFile={this.createFile.bind(this)}
+              />;
     } else if (step === Step.destination) {
-      let input;
-      if (isLocal) {
-        input = <input
-                  type="text"
-                  disabled
-                  placeholder="Choose file"
-                  value={destination}
-                  onChange={this.handleDestination.bind(this)}
-                />;
-      } else {
-        input = <input
-                  type="text"
-                  placeholder="http(s)://"
-                  value={destination}
-                  onChange={this.handleDestination.bind(this)}
-                />;
-      }
-
-      form = <div className="mapping-destination">
-        <h1>Enter destination</h1>
-        <div className="description">James will respond with this URL or file instead.</div>
-        {input}
-        <button className="btn waves-effect waves-light"
-            onClick={this.finish.bind(this)}>Create</button>
-        <button className="btn-flat waves-effect waves-light"
-            onClick={this.reset.bind(this)}>Cancel</button>
-      </div>;
+      form = <NewMappingDestination
+                isLocal={isLocal}
+                destination={destination}
+                update={this.updateDestination.bind(this)}
+                create={this.finish.bind(this)}
+                cancel={this.reset.bind(this)}
+              />;
     }
 
     return <div className="new-mapping">{form}</div>;
