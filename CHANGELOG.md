@@ -1,5 +1,8 @@
 ## Upcoming Release
 
+#### Developer Features
+- Massive component refactoring (i: @tomitm, r: @mitchhentges, @nerdbeere)
+
 ### 1.4.1
 
 #### User features

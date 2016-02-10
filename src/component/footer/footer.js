@@ -1,7 +1,7 @@
 import React from 'react';
-import CacheButton from './footer/cache';
-import Throttle from './footer/throttle';
-import RequestCount from './footer/request-count';
+import CacheButton from './cache.js';
+import Throttle from './throttle.js';
+import RequestCount from './request-count.js';
 
 const {func, object} = React.PropTypes;
 
