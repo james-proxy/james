@@ -21,10 +21,14 @@ const NewMappingTarget = (props) => {
 };
 
 NewMappingTarget.propTypes = {
-  target: string.isRequired,
+  target: string,
   update: func.isRequired,
-  createUrl: func.isRequred,
+  createUrl: func.isRequired,
   createFile: func.isRequired
+};
+
+NewMappingTarget.defaultProps = {
+  target: ''
 };
 
 export default NewMappingTarget;

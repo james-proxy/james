@@ -23,6 +23,7 @@ const NewMappingTarget = (props) => {
   let input;
   if (isLocal) {
     input = {
+      className: 'input-file',
       disabled: 'disabled',
       placeholder: 'Choose file',
       onClick: selectFile
@@ -45,11 +46,16 @@ const NewMappingTarget = (props) => {
 };
 
 NewMappingTarget.propTypes = {
-  isLocal: bool.isRequired,
-  destination: string.isRequired,
+  isLocal: bool,
+  destination: string,
   update: func.isRequired,
-  create: func.isRequred,
+  create: func.isRequired,
   cancel: func.isRequired
+};
+
+NewMappingTarget.defaultProps = {
+  isLocal: false,
+  destination: ''
 };
 
 export default NewMappingTarget;

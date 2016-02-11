@@ -5,18 +5,18 @@ import NewMappingDestination from './new-mapping-destination.js';
 
 const {func, string} = React.PropTypes;
 
-const Step = {
+const Step = Object.freeze({
   target: 0,
   destination: 1
-};
+});
 
-const initialState = {
+const initialState = Object.freeze({
   step: Step.target,
-  target: null,
-  destination: null,
-  isLocal: null,
-  valid: null
-};
+  target: undefined,
+  destination: undefined,
+  isLocal: undefined,
+  valid: undefined
+});
 
 export default class NewMapping extends React.Component {
 
