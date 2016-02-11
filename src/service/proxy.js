@@ -9,11 +9,10 @@ export default class Proxy {
     this._update = update;
     this._isCachingEnabled = isCachingEnabled;
 
-    const proxy = this._proxy = createHoxy();
-
-    proxy.intercept('response-sent', this._onResponseSent.bind(this));
-    proxy.intercept('request', this._onInterceptRequest.bind(this));
-    proxy.intercept('response', this._onInterceptResponse.bind(this));
+    this._proxy = createHoxy();
+    this._proxy.intercept('response-sent', this._onResponseSent.bind(this));
+    this._proxy.intercept('request', this._onInterceptRequest.bind(this));
+    this._proxy.intercept('response', this._onInterceptResponse.bind(this));
   }
 
   _onResponseSent(req) {
