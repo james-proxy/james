@@ -88,8 +88,7 @@ const toggleThrottle = () => {
   render();
 };
 
-const throttleRateChange = (event) => {
-  const kBps = parseInt(event.target.value, 10);
+const throttleRateChange = (kBps) => {
   data.throttle.rate = kBps;
   proxy.slow(kBps);
   render();
