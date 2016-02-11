@@ -137,6 +137,7 @@ const showWindow = (windowName, options = {}) => {
 };
 
 keyboard.register('Esc', closeWindow);
+keyboard.register('CommandOrControl+U', () => showWindow('UrlMapping'));
 
 /**
  * Set the index of the first request from where we start rendering.
