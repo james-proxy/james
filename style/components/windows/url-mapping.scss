@@ -54,6 +54,10 @@
 
   .input-file {
     cursor: pointer;
+    border: 1px dotted rgba(0,0,0,0.26);
+    padding: 0 10px;
+    margin-bottom: 16px;
+    box-sizing: border-box;
   }
 
   .btn,
