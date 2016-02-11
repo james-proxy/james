@@ -22,7 +22,7 @@ import DevTools from './dev-tools.js';
 const app = remote.require('app');
 const fs = remote.require('fs');
 
-//createMenu();
+createMenu();
 
 // windows
 import UrlMappingWindow from './component/window/url-mapping.js';
