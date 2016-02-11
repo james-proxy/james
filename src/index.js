@@ -137,7 +137,9 @@ const showWindow = (windowName, options = {}) => {
 keyboard.register('Esc', closeWindow);
 keyboard.register('CommandOrControl+U', () => showWindow('UrlMapping'));
 keyboard.register('F12', devTools.toggle.bind(devTools));
-keyboard.register('CommandOrControl+Shift+I', devTools.toggle.bind(devTools));
+keyboard.register('Ctrl+Shift+I', devTools.toggle.bind(devTools));
+keyboard.register('Command+Alt+I', devTools.toggle.bind(devTools));
+keyboard.register('Command+Alt+U', devTools.toggle.bind(devTools));
 
 /**
  * Set the index of the first request from where we start rendering.
