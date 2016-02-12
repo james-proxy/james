@@ -1,22 +1,27 @@
 import React from 'react';
 
-const {string, oneOf} = React.PropTypes;
+const {string, oneOf, func} = React.PropTypes;
 
-const ProxyStatus = ({proxyStatus, proxyMessage}) => {
+const ProxyStatus = ({proxyStatus, proxyMessage, proxyWindow}) => {
   const icon = proxyStatus !== 'offline' ? 'fa fa-circle' : 'fa fa-circle-o';
   const label = 'Proxy: ' + (proxyMessage ? proxyMessage : proxyStatus);
   const classes = ['proxy-status'];
+
+  if (proxyWindow) {
+    classes.push('with-info');
+  }
   classes.push(proxyStatus);
 
-  return <div className={classes.join(' ')} title={label}>
+  return <div className={classes.join(' ')} title={label} onClick={proxyWindow}>
     <i className={icon} />
     {label}
   </div>;
 };
 
 ProxyStatus.propTypes = {
-  state: oneOf(['working', 'partial', 'offline']),
-  message: string
+  proxyStatus: oneOf(['working', 'partial', 'offline']).isRequired,
+  proxyWindow: func,
+  proxyMessage: string
 };
 
 export default ProxyStatus;

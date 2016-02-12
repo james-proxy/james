@@ -31,6 +31,10 @@
     display: inline;
     float: right;
 
+    &.with-info {
+      cursor: pointer;
+    }
+
     &.working i {
       color: #55dd33;
     }

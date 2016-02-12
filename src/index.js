@@ -40,9 +40,10 @@ const data = {
   fromIndex: 0,
   filter: null,
   cachingEnabled: false,
-  proxyStatus: 'offline',
+  throttle: {enabled: false, rate: 0}, // rate is in kBps
+  proxyStatus: 'working',
   proxyMessage: undefined,
-  throttle: {enabled: false, rate: 0} // rate is in kBps
+  proxyWindow: undefined
 };
 
 const keyboard = new Keyboard();
@@ -63,7 +64,15 @@ const createHoxy = () => {
     data.proxyMessage = 'no HTTPS';
   }
 
-  return hoxy.createServer(opts).listen(config.proxyPort);
+  const hoxyServer = hoxy.createServer(opts);
+  hoxyServer.on('error', (event) => {
+    data.proxyStatus = 'offline';
+    data.proxyMessage = event.code;
+    if (event.code === 'EADDRINUSE') {
+      // TODO make custom window
+    }
+  });
+  return hoxyServer.listen(config.proxyPort);
 };
 
 const isCachingEnabled = () => {
@@ -115,12 +124,12 @@ const windowFactories = {
   UrlMapping: () => {
     return <UrlMappingWindow
       urlMappings={data.urlMappings}
-      options={data.activeWindow.options}
       setUrlMapping={urlMapper.set.bind(urlMapper)}
       removeUrlMapping={urlMapper.remove.bind(urlMapper)}
       closeWindow={closeWindow}
       chooseFile={chooseFile}
-      toggleUrlMappingIsActive={urlMapper.toggleActiveState.bind(urlMapper)} />;
+      toggleUrlMappingIsActive={urlMapper.toggleActiveState.bind(urlMapper)}
+      {...data.activeWindow.options}/>;
   }
 };
 
@@ -195,6 +204,7 @@ function render() {
         onRateChange={throttleRateChange}
         proxyStatus={data.proxyStatus}
         proxyMessage={data.proxyMessage}
+        proxyWindow={data.proxyWindow}
         enabled={enabled}
         rate={rate} />
     </div>,
