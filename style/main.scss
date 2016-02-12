@@ -89,15 +89,19 @@ $windowHeight: 400;
 
   .close-button {
     display: block;
-    right: 0;
-    top: 0;
-    position: absolute;
-    background-color: $lightgray-dark;
-    padding: 7px;
+    height: 33px;
+    width: 33px;
+
+    position: relative;
+    top: -16px;
+    right: -16px;
+    float: right;
+
     z-index: 1000;
+    background-color: $lightgray-dark;
     color: $darkgray-dark;
-    padding-left: 13px;
-    padding-top: 4px;
+    padding-left: 11px;
+    padding-top: 5px;
 
     i {
       padding: 0;
