@@ -1,4 +1,6 @@
 .titlebar {
+  @extend .z-depth-2;
+  
   -webkit-app-region: drag;
   position: absolute;
   left: 0;

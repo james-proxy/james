@@ -23,6 +23,7 @@
   "dependencies": {
     "browser-launcher2": "^0.4.6",
     "hoxy": "^3.2.0",
+    "materialize-css": "^0.97.5",
     "nedb": "^1.7.1",
     "react": "^0.14.6",
     "react-dom": "^0.14.6",
