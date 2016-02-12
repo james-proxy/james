@@ -80,10 +80,10 @@ export default class MainContent extends React.Component {
     }
 
     return <div className="main-content">
+      {activeWindow}
       <div className="header">
         {search}
       </div>
-      {activeWindow}
       {welcome}
       <Requests
         requestData={requestData}

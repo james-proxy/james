@@ -7,19 +7,21 @@
   bottom: 30px;
   right: 0;
   float: left;
-  padding: 10px;
 
-  .header .search {
-    @extend .card;
-    margin: 0;
-    padding: 0;
-
-    input[type="text"] {
+  .header {
+    margin: 10px;
+    .search {
+      @extend .card;
       margin: 0;
-      border: 0;
-      box-shadow: none;
-      height: 25px;
-      padding: 5px 15px;
+      padding: 0;
+
+      input[type="text"] {
+        margin: 0;
+        border: 0;
+        box-shadow: none;
+        height: 25px;
+        padding: 5px 15px;
+      }
     }
   }
 

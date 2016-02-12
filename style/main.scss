@@ -76,20 +76,12 @@ $windowHeight: 400;
 
 .window {
   background: $white;
-  //color: $white;
-  position: fixed;
-  //width: #{$windowWidth}px;
-  //height: #{$windowHeight}px;
+  height: calc(100% - 40px);
+
+  box-sizing: border-box;
   z-index: 1000;
 
-  //left: calc(50% - #{$windowWidth / 2}px);
-  //top: calc(50% - #{$windowHeight / 2}px);
-
-  left: 20px;
-  right: 20px;
-  top: 70px;
-  bottom: 20px;
-
+  margin: 20px;
   padding: 10px;
   border: 6px solid $lightgray-dark;
 

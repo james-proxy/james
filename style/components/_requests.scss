@@ -1,21 +1,10 @@
 .requests {
-
-  position: absolute;
-  top: 55px;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  overflow-y: auto;
-
   .request-inner {
     padding: 5px;
     overflow: hidden;
   }
 
   .request {
-    position: absolute;
-    left: 0;
-    right: 0;
     border-bottom: 2px solid $lightgray-light;
 
     .complete-url {
