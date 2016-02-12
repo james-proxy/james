@@ -7,6 +7,9 @@
 - Massive component refactoring (i: @tomitm, r: @mitchhentges, @nerdbeere)
 - Don't include electron-localshortcut code in repo, set up `keyboard` (i: @mitchhentges, r: @nerdbeere)
 
+#### Bugfixes
+- Throttle works again! (i: @mitchhentges, r: @nerdbeere)
+
 ### 1.4.1
 
 #### User features
