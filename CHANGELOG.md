@@ -2,6 +2,7 @@
 
 #### User features
 - Add shortcuts for open/close dev tools (i: @mitchhentges, r: @nerdbeere)
+- Design changes and refactoring (i: @tomitm, r: @nerdbeere)
 
 #### Developer Features
 - Massive component refactoring (i: @tomitm, r: @mitchhentges, @nerdbeere)
