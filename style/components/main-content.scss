@@ -30,16 +30,13 @@
   }
 
   .setup-instruction {
-    position: absolute;
-    left: calc(50% - 200px);
-    top: calc(50% - 200px);
     text-align: center;
     width: 400px;
+    margin: 5% auto;
     background: $lightgray-light;
     color: $darkgray-light;
     padding: 20px;
     border-radius: 8px;
-    z-index: 999;
 
     h2 {
       font-size: 24px;
