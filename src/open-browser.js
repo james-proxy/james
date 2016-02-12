@@ -1,4 +1,4 @@
-const browserLauncher = require('browser-launcher2');
+import browserLauncher from 'browser-launcher2';
 
 export default function openBrowser(browser = 'firefox', failCb) {
   const opts = {
