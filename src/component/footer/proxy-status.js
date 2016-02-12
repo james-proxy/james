@@ -3,8 +3,8 @@ import React from 'react';
 const {string, oneOf} = React.PropTypes;
 
 const ProxyStatus = ({proxyStatus, proxyMessage}) => {
-  const icon = proxyStatus !== 'failed' ? 'fa fa-circle' : 'fa fa-circle-o';
-  const label = proxyMessage ? proxyMessage : 'Proxy: ' + proxyStatus;
+  const icon = proxyStatus !== 'offline' ? 'fa fa-circle' : 'fa fa-circle-o';
+  const label = 'Proxy: ' + (proxyMessage ? proxyMessage : proxyStatus);
   const classes = ['proxy-status'];
   classes.push(proxyStatus);
 
@@ -15,7 +15,7 @@ const ProxyStatus = ({proxyStatus, proxyMessage}) => {
 };
 
 ProxyStatus.propTypes = {
-  state: oneOf(['working', 'partial', 'failed']),
+  state: oneOf(['working', 'partial', 'offline']),
   message: string
 };
 

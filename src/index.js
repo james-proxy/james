@@ -40,6 +40,8 @@ const data = {
   fromIndex: 0,
   filter: null,
   cachingEnabled: false,
+  proxyStatus: 'offline',
+  proxyMessage: undefined,
   throttle: {enabled: false, rate: 0} // rate is in kBps
 };
 
@@ -57,7 +59,8 @@ const createHoxy = () => {
     const cert = fs.readFileSync('./root-ca.crt.pem');
     opts.certAuthority = {key, cert};
   } catch (e) {
-    console.warn('Not proxying HTTPS, missing key or certificate:\n', e); // eslint-disable-line
+    data.proxyStatus = 'partial';
+    data.proxyMessage = 'no HTTPS';
   }
 
   return hoxy.createServer(opts).listen(config.proxyPort);
@@ -190,7 +193,8 @@ function render() {
         toggleCaching={toggleCaching}
         toggleThrottle={toggleThrottle}
         onRateChange={throttleRateChange}
-        proxyStatus='partial'
+        proxyStatus={data.proxyStatus}
+        proxyMessage={data.proxyMessage}
         enabled={enabled}
         rate={rate} />
     </div>,
