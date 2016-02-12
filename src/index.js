@@ -190,6 +190,7 @@ function render() {
         toggleCaching={toggleCaching}
         toggleThrottle={toggleThrottle}
         onRateChange={throttleRateChange}
+        proxyStatus='partial'
         enabled={enabled}
         rate={rate} />
     </div>,
