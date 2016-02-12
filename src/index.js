@@ -16,7 +16,8 @@ import config from './config.js';
 import UrlMapper from './url-mapper.js';
 import createMenu from './menu.js';
 import openBrowser from './open-browser.js';
-import Keyboard from './keyboard';
+import Keyboard from './keyboard.js';
+import DevTools from './dev-tools.js';
 
 const app = remote.require('app');
 const fs = remote.require('fs');
@@ -43,6 +44,7 @@ const data = {
 };
 
 const keyboard = new Keyboard();
+const devTools = new DevTools();
 const urlMapper = new UrlMapper(db, function() {
   data.urlMappings = urlMapper.mappings();
   render();
@@ -119,10 +121,6 @@ const windowFactories = {
   }
 };
 
-const openDevTools = () => {
-  remote.getCurrentWindow().openDevTools({detach: true});
-};
-
 const closeWindow = () => {
   data.activeWindow = null;
   render();
@@ -137,6 +135,11 @@ const showWindow = (windowName, options = {}) => {
 };
 
 keyboard.register('Esc', closeWindow);
+keyboard.register('CommandOrControl+U', () => showWindow('UrlMapping'));
+keyboard.register('F12', devTools.toggle.bind(devTools));
+keyboard.register('Ctrl+Shift+I', devTools.toggle.bind(devTools));
+keyboard.register('Command+Alt+I', devTools.toggle.bind(devTools));
+keyboard.register('Command+Alt+U', devTools.toggle.bind(devTools));
 
 /**
  * Set the index of the first request from where we start rendering.
@@ -168,7 +171,7 @@ function render() {
       <TitleBar
         urlMapCount={data.urlMapCount}
         showWindow={showWindow}
-        openDevTools={openDevTools} />
+        openDevTools={devTools.toggle.bind(devTools)} />
       <MainContent
         openBrowser={openBrowser}
         browsers={data.browsers}
