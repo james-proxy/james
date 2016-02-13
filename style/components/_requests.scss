@@ -25,6 +25,10 @@
       }
     }
 
+    &.request-filler {
+      height: 34px;
+    }
+
     &.request-active {
       .complete-url,
       .status-code,

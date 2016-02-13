@@ -4,33 +4,41 @@ import Request from './request.js';
 
 const {func, string, object} = React.PropTypes;
 
-const requestElementHeight = 33;
+const requestHeight = 34;
 
 export default class Requests extends React.Component {
+  constructor() {
+    super();
+    this.fromIndex = 0;
+    this.requestCount = 0;
+    this._onScroll = this._onScroll.bind(this);
+    this._onResize = this._onResize.bind(this);
+  }
+
   _onScroll() {
     const scrollableDomNode = ReactDOM.findDOMNode(this);
-    const fromIndex = Math.ceil(scrollableDomNode.scrollTop / requestElementHeight) - 15;
-    this.props.setFromIndex(fromIndex < 0 ? 0 : fromIndex);
+
+    //Subtracting 1 so that, when scrolling, still have partial element at the top
+    this.fromIndex = Math.ceil(scrollableDomNode.scrollTop / requestHeight) - 1;
+    this.fromIndex = this.fromIndex < 0 ? 0 : this.fromIndex;
+    this.props.setFromIndex(this.fromIndex);
+  }
+
+  _onResize() {
+    const height = ReactDOM.findDOMNode(this).clientHeight;
+    this.requestCount = Math.ceil(height / requestHeight) + 1; // +1 if partial requests elements at top and bottom
+    this.props.setVisibleCount(this.requestCount);
   }
 
   componentDidMount() {
-    const scrollableDomNode = ReactDOM.findDOMNode(this);
-    scrollableDomNode.addEventListener('scroll', this._onScroll.bind(this));
+    ReactDOM.findDOMNode(this).addEventListener('scroll', this._onScroll);
+    window.addEventListener('resize', this._onResize);
+    this._onResize();
   }
 
   componentWillUnmount() {
-    const scrollableDomNode = ReactDOM.findDOMNode(this);
-    scrollableDomNode.removeEventListener('scroll', this._onScroll);
-  }
-
-  componentDidUpdate() {
-    const previousFilter = this.filter;
-    this.filter = this.props.requestData.filter;
-    const requests = ReactDOM.findDOMNode(this);
-
-    if (previousFilter !== this.filter) {
-      requests.scrollTop = 0;
-    }
+    ReactDOM.findDOMNode(this).removeEventListener('scroll', this._onScroll);
+    window.removeEventListener('resize', this._onResize);
   }
 
   render() {
@@ -45,6 +53,9 @@ export default class Requests extends React.Component {
       removeUrlMapping,
       toggleUrlMappingActiveState
     } = this.props;
+
+    const culledBefore = this.fromIndex;
+    const culledAfter = requestData.totalCount - culledBefore - this.requestCount;
 
     const requestNodes = requestData.requests.map((request) => {
       const isActive = isActiveRequest(request);
@@ -73,9 +84,9 @@ export default class Requests extends React.Component {
     });
 
     return <div className="requests">
-      <div className="requests-inner">
-        {requestNodes}
-      </div>
+      <div style={{height: culledBefore * requestHeight}}></div>
+      {requestNodes}
+      <div style={{height: culledAfter * requestHeight}}></div>
     </div>;
   }
 }
@@ -89,6 +100,7 @@ Requests.propTypes = {
   isContextMenuRequest: func.isRequired,
   setContextMenuRequest: func.isRequired,
   setFromIndex: func.isRequired,
+  setVisibleCount: func.isRequired,
   config: object.isRequired,
   removeUrlMapping: func.isRequired,
   toggleUrlMappingActiveState: func.isRequired
