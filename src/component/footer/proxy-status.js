@@ -1,9 +1,14 @@
 import React from 'react';
 
 const {string, oneOf, func} = React.PropTypes;
+const iconMap = {
+  'working': 'fa-check',
+  'partial': 'fa-check',
+  'offline': 'fa-exclamation-triangle'
+};
 
 const ProxyStatus = ({proxyStatus, proxyMessage, proxyWindow}) => {
-  const icon = proxyStatus !== 'offline' ? 'fa fa-circle' : 'fa fa-circle-o';
+  const icon = 'fa ' + iconMap[proxyStatus];
   const label = 'Proxy: ' + (proxyMessage ? proxyMessage : proxyStatus);
   const classes = ['proxy-status', proxyStatus];
 
