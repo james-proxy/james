@@ -4,7 +4,7 @@ import Request from './request.js';
 
 const {func, string, object} = React.PropTypes;
 
-const requestElementHeight = 34;
+const requestElementHeight = 33;
 
 export default class Requests extends React.Component {
   _onScroll() {
@@ -46,8 +46,6 @@ export default class Requests extends React.Component {
       toggleUrlMappingActiveState
     } = this.props;
 
-    const amountOfRequests = requestData.filteredCount;
-
     const requestNodes = requestData.requests.map((request) => {
       const isActive = isActiveRequest(request);
       const isContextMenu = isContextMenuRequest(request);
@@ -61,12 +59,10 @@ export default class Requests extends React.Component {
         setContextMenuRequest(request);
       };
 
-      const positionTop = request.requestNumber * requestElementHeight;
       return <Request
         {...request}
         isActive={isActive}
         isContextMenu={isContextMenu}
-        positionTop={positionTop}
         config={config}
         showWindow={showWindow}
         handleClick={handleClick}
@@ -76,12 +72,8 @@ export default class Requests extends React.Component {
         toggleUrlMappingActiveState={toggleUrlMappingActiveState} />;
     });
 
-    const style = {
-      height: amountOfRequests * requestElementHeight
-    };
-
     return <div className="requests">
-      <div className="requests-inner" style={style}>
+      <div className="requests-inner">
         {requestNodes}
       </div>
     </div>;

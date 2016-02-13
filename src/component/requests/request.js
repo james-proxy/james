@@ -3,13 +3,12 @@ import FullUrl from './full-url.js';
 import RequestContextMenu from './request-context-menu.js';
 import RequestLabels from './request-labels.js';
 
-const {func, object, number, bool} = React.PropTypes;
+const {func, object, bool} = React.PropTypes;
 
 export default class Request extends React.Component {
 
   shouldComponentUpdate(nextProps) {
     return this.props.request.id !== nextProps.request.id ||
-      this.props.positionTop !== nextProps.positionTop ||
       this.props.isActive !== nextProps.isActive ||
       this.props.isContextMenu !== nextProps.isContextMenu ||
       this.done !== nextProps.request.done;
@@ -25,14 +24,13 @@ export default class Request extends React.Component {
       showWindow,
       handleClick,
       handleContextMenu,
-      positionTop,
       removeUrlMapping,
       toggleUrlMappingActiveState
     } = this.props;
 
     this.done = request.done;
 
-    let took = <i className="fa fa-gear fa-spin"></i>;
+    let took = <i className="fa fa-gear fa-spin" />;
     if (request.took) {
       took = request.took + 'ms';
     }
@@ -41,10 +39,6 @@ export default class Request extends React.Component {
     if (isActive) {
       requestClasses.push('request-active');
     }
-
-    const style = {
-      top: positionTop
-    };
 
     let contextMenuNode = null;
     if (isContextMenu) {
@@ -58,7 +52,7 @@ export default class Request extends React.Component {
       contextMenuNode = <RequestContextMenu {...contextMenuProps} />;
     }
 
-    return <div className={requestClasses.join(' ')} style={style}>
+    return <div className={requestClasses.join(' ')}>
       { contextMenuNode }
       <div className="request-inner" onClick={handleClick} onContextMenu={handleContextMenu}>
         <span className="method property">{request.method}</span>
@@ -84,7 +78,6 @@ Request.propTypes = {
   handleClick: func.isRequired,
   handleContextMenu: func.isRequired,
   showWindow: func.isRequired,
-  positionTop: number.isRequired,
   removeUrlMapping: func.isRequired,
   toggleUrlMappingActiveState: func.isRequired
 };
