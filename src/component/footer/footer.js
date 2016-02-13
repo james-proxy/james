@@ -2,7 +2,7 @@ import React from 'react';
 import CacheButton from './cache.js';
 import Throttle from './throttle.js';
 import RequestCount from './request-count.js';
-import HttpsStatus from './proxy-status';
+import ProxyStatus from './proxy-status';
 
 const {func, object} = React.PropTypes;
 
@@ -11,7 +11,7 @@ const Footer = (props) => {
     <CacheButton {...props} />
     <Throttle {...props} />
     <RequestCount {...props} />
-    <HttpsStatus {...props} />
+    <ProxyStatus {...props} />
   </div>;
 };
 

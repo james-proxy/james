@@ -5,12 +5,11 @@ const {string, oneOf, func} = React.PropTypes;
 const ProxyStatus = ({proxyStatus, proxyMessage, proxyWindow}) => {
   const icon = proxyStatus !== 'offline' ? 'fa fa-circle' : 'fa fa-circle-o';
   const label = 'Proxy: ' + (proxyMessage ? proxyMessage : proxyStatus);
-  const classes = ['proxy-status'];
+  const classes = ['proxy-status', proxyStatus];
 
   if (proxyWindow) {
     classes.push('with-info');
   }
-  classes.push(proxyStatus);
 
   return <div className={classes.join(' ')} title={label} onClick={proxyWindow}>
     <i className={icon} />

@@ -28,6 +28,7 @@
   }
 
   .proxy-status {
+    padding: 1px 6px;
     display: inline;
     float: right;
 
@@ -36,15 +37,15 @@
     }
 
     &.working i {
-      color: #55dd33;
+      color: $grass-dark;
     }
 
     &.partial i {
-      color: #bbaa44;
+      color: $sunflower-dark;
     }
 
     &.offline i {
-      color: #FF4444;
+      color: $grapefruit-dark;
     }
   }
 }
