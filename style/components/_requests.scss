@@ -1,5 +1,5 @@
 .requests {
-  overflow-y: scroll;
+  overflow-y: auto;
   height: calc(100% - 55px); //55px is height of search bar (header)
 
   .request-inner {
