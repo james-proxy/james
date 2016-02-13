@@ -1,6 +1,5 @@
 .requests {
   .request-inner {
-    padding: 5px;
     overflow: hidden;
   }
 
@@ -8,15 +7,15 @@
     border-bottom: 2px solid $lightgray-light;
 
     .complete-url {
-      width: calc(100% - 165px);
+      width: calc(100% - 170px);
       white-space: nowrap;
 
       .fade-out {
-        position: absolute;
-        right: 0;
-        display: block;
+        position: relative;
+        float: right;
+        margin-top: -21px;
+
         width: 180px;
-        top: 0;
         height: 30px;
         background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 1) 70%, rgba(255, 255, 255, 1) 75%, rgba(255, 255, 255, 1) 100%);
       }
@@ -49,6 +48,7 @@
       }
 
       &.method {
+        margin-left: 5px;
         background: $darkgray-dark;
         color: $white;
       }

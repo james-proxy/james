@@ -197,5 +197,4 @@ function render() {
   );
 }
 
-showWindow('UrlMapping');
 render(true);
