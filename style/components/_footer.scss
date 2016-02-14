@@ -10,6 +10,7 @@
   padding: 6px;
   font-size: 11px;
   color: #fff;
+  cursor: default;
 
   button {
     background: none;
@@ -21,9 +22,7 @@
     height: 13px;
 
     button {
-      padding: 0;
-      margin-left: 8px;
-      margin-right: 5px;
+      padding-right: 0;
     }
   }
 
