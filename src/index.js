@@ -71,6 +71,7 @@ const createHoxy = () => {
     if (event.code === 'EADDRINUSE') {
       // TODO make custom window
     }
+    render();
   });
   return hoxyServer.listen(config.proxyPort);
 };
