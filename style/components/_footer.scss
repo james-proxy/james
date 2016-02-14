@@ -41,7 +41,7 @@
     }
 
     &.partial i {
-      color: white;
+      color: $white;
     }
 
     &.offline i {
@@ -50,6 +50,10 @@
   }
 }
 
-.footer > *:not(:first-child) {
+.footer > * {
   margin-left: 5%;
+}
+
+.footer > *:first-child {
+  margin-left: 0;
 }
