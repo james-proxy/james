@@ -18,7 +18,7 @@ export default class Requests extends React.Component {
   _onScroll() {
     const scrollableDomNode = ReactDOM.findDOMNode(this);
 
-    //Subtracting 1 so that, when scrolling, still have partial element at the top
+    // Subtracting 1 so that, when scrolling, still have partial element at the top
     this.fromIndex = Math.ceil(scrollableDomNode.scrollTop / requestHeight) - 1;
     this.fromIndex = this.fromIndex < 0 ? 0 : this.fromIndex;
     this.props.setFromIndex(this.fromIndex);
