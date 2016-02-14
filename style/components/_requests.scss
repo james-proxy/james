@@ -62,9 +62,10 @@
     }
 
     .labels {
-      position: absolute;
+      position: relative;
+      float: right;
       right: 3px;
-      top: 3px;
+      margin-top: -22px;
     }
   }
 }
