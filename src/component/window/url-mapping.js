@@ -5,7 +5,7 @@ const {func, array, object} = React.PropTypes;
 export default class UrlMappingWindow extends React.Component {
 
   constructor(props) {
-    super();
+    super(props);
 
     this.state = {
       urlInput: props.options.urlInput ? props.options.urlInput : '',

@@ -8,10 +8,6 @@ const {func, object, arrayOf, shape, array} = React.PropTypes;
 
 export default class MainContent extends React.Component {
 
-  constructor() {
-    super();
-  }
-
   componentWillMount() {
     this.setState({
       filter: null,

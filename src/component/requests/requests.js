@@ -7,8 +7,9 @@ const {func, string, object} = React.PropTypes;
 const requestHeight = 34;
 
 export default class Requests extends React.Component {
-  constructor() {
-    super();
+
+  constructor(props) {
+    super(props);
     this.fromIndex = 0;
     this.requestCount = 0;
     this._onScroll = this._onScroll.bind(this);

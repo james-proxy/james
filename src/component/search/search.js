@@ -4,8 +4,8 @@ const {func} = React.PropTypes;
 
 export default class Search extends React.Component {
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.state = {
       inputChanges: 0
