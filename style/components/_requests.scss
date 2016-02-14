@@ -3,7 +3,7 @@
   height: calc(100% - 55px); //55px is height of search bar (header)
 
   .request-inner {
-    padding: 5px 0;
+    padding: 2px 0;
     overflow: hidden;
   }
 
@@ -47,7 +47,7 @@
       display: inline-block;
       text-align: center;
       width: 50px;
-      margin-right: 5px;
+      margin: 2px 5px 2px 0;
 
       .fa {
         padding-right: 0;
@@ -65,7 +65,7 @@
       position: relative;
       float: right;
       right: 3px;
-      margin-top: -22px;
+      margin-top: -26px;
     }
   }
 }
