@@ -66,7 +66,7 @@ const createHoxy = () => {
 
   const hoxyServer = hoxy.createServer(opts);
   hoxyServer.on('error', (event) => {
-    console.warn('hoxy error: ', event);
+    console.warn('hoxy error: ', event); // eslint-disable-line
     if (event.code === 'EADDRINUSE') {
       data.proxyStatus = constants.PROXY_STATUS_ERROR_ADDRESS_IN_USE;
     }
