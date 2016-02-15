@@ -19,6 +19,8 @@ import openBrowser from './open-browser.js';
 import Keyboard from './keyboard.js';
 import DevTools from './dev-tools.js';
 
+import constants from './constants.js';
+
 const app = remote.require('app');
 const fs = remote.require('fs');
 
@@ -42,7 +44,6 @@ const data = {
   cachingEnabled: false,
   throttle: {enabled: false, rate: 0}, // rate is in kBps
   proxyStatus: 'working',
-  proxyMessage: 'online',
   proxyWindow: undefined
 };
 
@@ -60,16 +61,14 @@ const createHoxy = () => {
     const cert = fs.readFileSync('./root-ca.crt.pem');
     opts.certAuthority = {key, cert};
   } catch (e) {
-    data.proxyStatus = 'partial';
-    data.proxyMessage = 'no HTTPS';
+    data.proxyStatus = constants.PROXY_STATUS_NO_HTTPS;
   }
 
   const hoxyServer = hoxy.createServer(opts);
   hoxyServer.on('error', (event) => {
-    data.proxyStatus = 'offline';
-    data.proxyMessage = event.code;
+    data.proxyStatus = constants.PROXY_STATUS_ERROR_GENERIC;
     if (event.code === 'EADDRINUSE') {
-      // TODO make custom window
+      data.proxyStatus = constants.PROXY_STATUS_ERROR_ADDRESS_IN_USE;
     }
     render();
   });
@@ -204,7 +203,6 @@ function render() {
         toggleThrottle={toggleThrottle}
         onRateChange={throttleRateChange}
         proxyStatus={data.proxyStatus}
-        proxyMessage={data.proxyMessage}
         proxyWindow={data.proxyWindow}
         enabled={enabled}
         rate={rate} />
