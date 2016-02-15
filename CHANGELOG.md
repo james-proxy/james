@@ -12,6 +12,9 @@
 
 #### Bugfixes
 - Throttle works again! (i: @mitchhentges, r: @nerdbeere)
+- Context menu doesn't go away when clicking in whitespace (i: @mitchhentges, r: @tomitm)
+- Hoxy error makes scary icon after enough time (i: @mitchhentges, r: @tomitm)
+- Electron X11 can't handle registering command (i: @mitchhentges, r: @tomitm)
 
 ### 1.4.1
 
