@@ -46,8 +46,10 @@ export default class MainContent extends React.Component {
     return this.state.contextMenuRequest === request.request.id;
   }
 
-  onLeftClick(event) {
-    console.log("clicked 'main-content'", event, event.target)
+  onClick(event) {
+    if (this.state.contextMenuRequest && !event.target.matches('.request *')) {
+      this.setContextMenuRequest(undefined);
+    }
   }
 
   render() {
@@ -80,8 +82,9 @@ export default class MainContent extends React.Component {
         request={activeRequest}
         setActiveRequest={this.setActiveRequest.bind(this)} />;
     }
+    const clickHandler = this.onClick.bind(this);
 
-    return <div className="main-content" onClick={this.onLeftClick.bind(this)}>
+    return <div className="main-content" onClick={clickHandler} onContextMenu={clickHandler}>
       <div className="header">
         {search}
       </div>
