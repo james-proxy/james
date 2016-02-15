@@ -66,7 +66,7 @@ const createHoxy = () => {
 
   const hoxyServer = hoxy.createServer(opts);
   hoxyServer.on('error', (event) => {
-    data.proxyStatus = constants.PROXY_STATUS_ERROR_GENERIC;
+    console.warn('hoxy error: ', event);
     if (event.code === 'EADDRINUSE') {
       data.proxyStatus = constants.PROXY_STATUS_ERROR_ADDRESS_IN_USE;
     }
