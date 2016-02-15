@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import Requests from '../requests/requests.js';
 import Search from '../search/search.js';
 import InspectRequest from '../inspect-request/inspect-request.js';
