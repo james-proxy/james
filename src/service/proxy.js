@@ -80,20 +80,15 @@ export default class Proxy {
   }
 
   getRequestData(filter) {
-    let requestCount = 0;
     const filteredRequests = !filter ? this._requests : this._requests
       .filter((request) => {
-        if (request.request.fullUrl().indexOf(filter) !== -1) {
-          request.requestNumber = requestCount++;
-          return true;
-        }
-        return false;
+        return request.request.fullUrl().indexOf(filter) !== -1
       });
 
     return {
       requests: filteredRequests,
       totalCount: this._requests.length,
-      filteredCount: requestCount
+      filteredCount: filteredRequests.length
     };
   }
 

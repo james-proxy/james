@@ -118,6 +118,7 @@ describe('Proxy', function() {
       });
 
       it('returns a totalCount value of 20 after intercepting 20 requests', function() {
+        //Only generates 19 requests and expects 20 because of the beforeEach()
         for (let i = 0; i < 19; i++) {
           generateRequest();
         }
@@ -129,68 +130,22 @@ describe('Proxy', function() {
       it('filters by url and returns an array only with matching requests', function() {
         generateRequest();
         const filter = 'url1';
-        const requestData = proxy.getRequestData(null, null, filter);
+        const requestData = proxy.getRequestData(filter);
         expect(requestData.requests[0].request.fullUrl()).toEqual('url1');
       });
 
       it('shows the correct totalCount even when requests are filtered', function() {
         generateRequest();
         const filter = 'url1';
-        const requestData = proxy.getRequestData(null, null, filter);
+        const requestData = proxy.getRequestData(filter);
         expect(requestData.totalCount).toEqual(2);
       });
 
       it('shows the correct filteredCount when requests are filtered', function() {
         generateRequest();
         const filter = 'url1';
-        const requestData = proxy.getRequestData(null, null, filter);
+        const requestData = proxy.getRequestData(filter);
         expect(requestData.filteredCount).toEqual(1);
-      });
-
-      it('limits the result when the limit argument is passed', function() {
-        generateRequest();
-        const limit = 1;
-        const requestData = proxy.getRequestData(limit, null, null);
-        expect(requestData.requests.length).toEqual(1);
-      });
-
-      it('limits the result when a starting point (from) is passed', function() {
-        generateRequest();
-        const fromIndex = 1;
-        const requestData = proxy.getRequestData(null, fromIndex, null);
-        expect(requestData.requests.length).toEqual(1);
-      });
-
-      it('limits the result by starting point (from) and limit', function() {
-        generateRequest();
-        generateRequest();
-        generateRequest();
-        const fromIndex = 1;
-        const limit = 2;
-        const requestData = proxy.getRequestData(limit, fromIndex, null);
-        expect(requestData.requests.length).toEqual(2);
-      });
-
-      it('limits the result by starting point (from) and limit and filter', function() {
-        generateRequest();
-        generateRequest();
-        generateRequest();
-        const fromIndex = 0;
-        const limit = 1;
-        const filter = 'url3';
-        const requestData = proxy.getRequestData(limit, fromIndex, filter);
-        expect(requestData.requests.length).toEqual(1);
-      });
-
-      it('filters before limit and fromIndex are considered', function() {
-        generateRequest();
-        generateRequest();
-        generateRequest();
-        const fromIndex = 0;
-        const limit = 1;
-        const filter = 'url0';
-        const requestData = proxy.getRequestData(limit, fromIndex, filter);
-        expect(requestData.requests.length).toEqual(1);
       });
     });
   });
