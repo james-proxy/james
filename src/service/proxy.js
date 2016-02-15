@@ -79,20 +79,16 @@ export default class Proxy {
     }
   }
 
-  getRequestData(limit, fromIndex, filter) {
-    fromIndex = fromIndex || 0;
-    limit = limit || this._config.maxLogEntries;
-
+  getRequestData(filter) {
     let requestCount = 0;
-    const filteredRequests = this._requests
+    const filteredRequests = !filter ? this._requests : this._requests
       .filter((request) => {
-        if (!filter || request.request.fullUrl().indexOf(filter) !== -1) {
+        if (request.request.fullUrl().indexOf(filter) !== -1) {
           request.requestNumber = requestCount++;
           return true;
         }
         return false;
-      })
-      .slice(fromIndex, fromIndex + limit);
+      });
 
     return {
       requests: filteredRequests,

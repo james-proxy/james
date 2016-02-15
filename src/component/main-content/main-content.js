@@ -52,8 +52,6 @@ export default class MainContent extends React.Component {
       showWindow,
       config,
       activeWindow,
-      setFromIndex,
-      setVisibleCount,
       filterRequests,
       removeUrlMapping,
       toggleUrlMappingActiveState
@@ -90,8 +88,6 @@ export default class MainContent extends React.Component {
         setActiveRequest={this.setActiveRequest.bind(this)}
         isContextMenuRequest={this.isContextMenuRequest.bind(this)}
         setContextMenuRequest={this.setContextMenuRequest.bind(this)}
-        setFromIndex={setFromIndex}
-        setVisibleCount={setVisibleCount}
         removeUrlMapping={removeUrlMapping}
         toggleUrlMappingActiveState={toggleUrlMappingActiveState} />
       {activeRequestNode}
@@ -103,8 +99,6 @@ MainContent.propTypes = {
   openBrowser: func.isRequired,
   browsers: array.isRequired,
   showWindow: func.isRequired,
-  setFromIndex: func.isRequired,
-  setVisibleCount: func.isRequired,
   filterRequests: func.isRequired,
   requests: arrayOf(shape({
     request: object,
