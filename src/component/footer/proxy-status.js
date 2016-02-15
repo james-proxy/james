@@ -39,7 +39,12 @@ const ProxyStatus = ({proxyStatus, proxyWindow}) => {
 };
 
 ProxyStatus.propTypes = {
-  proxyStatus: oneOf(Object.keys(constants).map(key => constants[key])).isRequired,
+  proxyStatus: oneOf([
+    constants.PROXY_STATUS_WORKING,
+    constants.PROXY_STATUS_NO_HTTPS,
+    constants.PROXY_STATUS_ERROR_ADDRESS_IN_USE,
+    constants.PROXY_STATUS_ERROR_GENERIC
+  ]).isRequired,
   proxyWindow: func,
   proxyMessage: string
 };
