@@ -2,7 +2,7 @@
 
 #### User features
 - Show status of proxy in the bottom-right corner (i: @mitchhentges, r: @nerdbeere)
-- Add shortcuts for open/close dev tools (i: @mitchhentges, r: @nerdbeere)
+- Add keyboard shortcuts for open/close dev tools (i: @mitchhentges, r: @nerdbeere)
 - Design changes and refactoring (i: @tomitm, r: @nerdbeere)
 
 #### Developer Features
