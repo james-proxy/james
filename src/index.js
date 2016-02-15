@@ -42,7 +42,7 @@ const data = {
   cachingEnabled: false,
   throttle: {enabled: false, rate: 0}, // rate is in kBps
   proxyStatus: 'working',
-  proxyMessage: undefined,
+  proxyMessage: 'online',
   proxyWindow: undefined
 };
 
