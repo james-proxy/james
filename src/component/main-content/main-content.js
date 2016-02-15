@@ -8,16 +8,13 @@ const {func, object, arrayOf, shape, array} = React.PropTypes;
 
 export default class MainContent extends React.Component {
 
-  constructor() {
-    super();
-  }
-
-  componentWillMount() {
-    this.setState({
+  constructor(props) {
+    super(props);
+    this.state = {
       filter: null,
       activeRequest: null,
       contextMenuRequest: null
-    });
+    };
   }
 
   setActiveRequest(request) {
