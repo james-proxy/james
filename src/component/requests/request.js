@@ -64,6 +64,7 @@ export default class Request extends React.Component {
           </span>
         <FullUrl request={request} />
         <RequestLabels request={request} labels={config.labels} />
+        <span className="fade-out" />
       </div>
     </div>;
   }

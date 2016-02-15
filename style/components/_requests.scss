@@ -3,26 +3,17 @@
   height: calc(100% - 55px); //55px is height of search bar (header)
 
   .request-inner {
-    padding: 2px 0;
     overflow: hidden;
   }
 
   .request {
+    position: relative; //absolutely-positioned context menu needs to be attached to request
     border-bottom: 2px solid $lightgray-light;
+    padding: 2px 0;
 
     .complete-url {
       width: calc(100% - 170px);
       white-space: nowrap;
-
-      .fade-out {
-        position: relative;
-        float: right;
-        margin-top: -21px;
-
-        width: 180px;
-        height: 21px;
-        background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 1) 70%, rgba(255, 255, 255, 1) 75%, rgba(255, 255, 255, 1) 100%);
-      }
     }
 
     &.request-filler {
@@ -66,6 +57,17 @@
       float: right;
       right: 3px;
       margin-top: -26px;
+      z-index: 1;
+    }
+
+    .fade-out {
+      position: relative;
+      float: right;
+      margin-top: -30px;
+
+      width: 180px;
+      height: 30px;
+      background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 1) 70%, rgba(255, 255, 255, 1) 75%, rgba(255, 255, 255, 1) 100%);
     }
   }
 }
