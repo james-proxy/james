@@ -76,14 +76,8 @@ $windowHeight: 400;
 
 .window {
   background: $white;
-  //color: $white;
   position: fixed;
-  //width: #{$windowWidth}px;
-  //height: #{$windowHeight}px;
   z-index: 1000;
-
-  //left: calc(50% - #{$windowWidth / 2}px);
-  //top: calc(50% - #{$windowHeight / 2}px);
 
   left: 20px;
   right: 20px;
