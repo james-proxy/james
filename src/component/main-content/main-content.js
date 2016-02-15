@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import Requests from '../requests/requests.js';
 import Search from '../search/search.js';
 import InspectRequest from '../inspect-request/inspect-request.js';
@@ -45,6 +46,10 @@ export default class MainContent extends React.Component {
     return this.state.contextMenuRequest === request.request.id;
   }
 
+  onLeftClick(event) {
+    console.log("clicked 'main-content'", event, event.target)
+  }
+
   render() {
     const {
       browsers,
@@ -76,7 +81,7 @@ export default class MainContent extends React.Component {
         setActiveRequest={this.setActiveRequest.bind(this)} />;
     }
 
-    return <div className="main-content">
+    return <div className="main-content" onClick={this.onLeftClick.bind(this)}>
       <div className="header">
         {search}
       </div>
