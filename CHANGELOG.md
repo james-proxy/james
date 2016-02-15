@@ -1,12 +1,14 @@
 ## Upcoming Release
 
 #### User features
+- Show status of proxy in the bottom-right corner (i: @mitchhentges, r: @nerdbeere)
 - Add shortcuts for open/close dev tools (i: @mitchhentges, r: @nerdbeere)
 - Design changes and refactoring (i: @tomitm, r: @nerdbeere)
 
 #### Developer Features
 - Massive component refactoring (i: @tomitm, r: @mitchhentges, @nerdbeere)
 - Don't include electron-localshortcut code in repo, set up `keyboard` (i: @mitchhentges, r: @nerdbeere)
+- Refactor proxy status to be more simple, yet still flexible (i: @nerdbeere, r: @mitchhentges)
 
 #### Bugfixes
 - Throttle works again! (i: @mitchhentges, r: @nerdbeere)
