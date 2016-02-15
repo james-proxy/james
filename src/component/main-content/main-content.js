@@ -10,6 +10,7 @@ export default class MainContent extends React.Component {
 
   constructor(props) {
     super(props);
+    this.onClick = this.onClick.bind(this);
     this.state = {
       filter: null,
       activeRequest: null,
@@ -81,9 +82,8 @@ export default class MainContent extends React.Component {
         request={activeRequest}
         setActiveRequest={this.setActiveRequest.bind(this)} />;
     }
-    const clickHandler = this.onClick.bind(this);
 
-    return <div className="main-content" onClick={clickHandler} onContextMenu={clickHandler}>
+    return <div className="main-content" onClick={this.onClick} onContextMenu={this.onClick}>
       <div className="header">
         {search}
       </div>
