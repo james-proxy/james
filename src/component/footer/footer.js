@@ -2,22 +2,16 @@ import React from 'react';
 import CacheButton from './cache.js';
 import Throttle from './throttle.js';
 import RequestCount from './request-count.js';
+import ProxyStatus from './proxy-status.js';
 
 const {func, object} = React.PropTypes;
 
 const Footer = (props) => {
-  const {
-    toggleCaching,
-    isCachingEnabled,
-    clearRequests,
-    requestData,
-    ...other
-  } = props;
-
   return <div className="footer">
-    <CacheButton isCachingEnabled={isCachingEnabled} toggleCaching={toggleCaching} />
-    <Throttle {...other} />
-    <RequestCount requestData={requestData} clearRequests={clearRequests} />
+    <CacheButton {...props} />
+    <Throttle {...props} />
+    <RequestCount {...props} />
+    <ProxyStatus {...props} />
   </div>;
 };
 
