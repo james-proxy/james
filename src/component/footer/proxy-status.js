@@ -11,7 +11,7 @@ const iconMap = {
 
 const labelMap = {
   [constants.PROXY_STATUS_WORKING]: 'Online',
-  [constants.PROXY_STATUS_NO_HTTPS]: 'HTTPs disabled',
+  [constants.PROXY_STATUS_NO_HTTPS]: 'HTTPS disabled',
   [constants.PROXY_STATUS_ERROR_ADDRESS_IN_USE]: 'Address already in use',
   [constants.PROXY_STATUS_ERROR_GENERIC]: 'Error'
 };
