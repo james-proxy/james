@@ -2,10 +2,6 @@
   overflow-y: auto;
   height: calc(100% - 55px); //55px is height of search bar (header)
 
-  .request-inner {
-    overflow: hidden;
-  }
-
   .request {
     position: relative; //absolutely-positioned context menu needs to be attached to request
     border-bottom: 2px solid $lightgray-light;
@@ -63,7 +59,7 @@
     .fade-out {
       position: relative;
       float: right;
-      margin-top: -30px;
+      margin-top: -28px;
 
       width: 180px;
       height: 30px;
