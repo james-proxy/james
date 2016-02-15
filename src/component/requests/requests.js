@@ -1,10 +1,7 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import Request from './request.js';
 
 const {func, string, object} = React.PropTypes;
-
-const requestHeight = 34;
 
 export default class Requests extends React.Component {
 

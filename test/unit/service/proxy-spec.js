@@ -118,7 +118,7 @@ describe('Proxy', function() {
       });
 
       it('returns a totalCount value of 20 after intercepting 20 requests', function() {
-        //Only generates 19 requests and expects 20 because of the beforeEach()
+        // Only generates 19 requests and expects 20 because of the beforeEach()
         for (let i = 0; i < 19; i++) {
           generateRequest();
         }
