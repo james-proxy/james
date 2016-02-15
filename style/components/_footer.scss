@@ -4,32 +4,42 @@
   position: fixed;
   left: 0;
   right: 0;
-  bottom: 0;
+  bottom: -1px;
   height: 30px;
+  line-height: 30px;
+  vertical-align: middle;
   background-color: $darkgray-dark;
-  padding: 6px;
   font-size: 11px;
-  color: #fff;
+  color: $white;
   cursor: default;
+  user-select: none;
+  overflow: hidden;
+  padding: 0 15px;
 
   button {
     background: none;
     border: none;
+    padding: 0;
+  }
+
+  .cache-button {
+    display: inline;
   }
 
   .request-count {
     display: inline;
     height: 13px;
-
-    button {
-      padding-right: 0;
-    }
   }
 
   .proxy-status {
-    padding: 1px 6px;
     display: inline;
     float: right;
+
+    @media(max-width: 550px) {
+      .message {
+        display: none;
+      }
+    }
 
     &.with-info {
       cursor: pointer;
@@ -50,7 +60,7 @@
 }
 
 .footer > * {
-  margin-left: 5%;
+  margin-left: 25px;
 }
 
 .footer > *:first-child {
