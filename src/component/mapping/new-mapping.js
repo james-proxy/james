@@ -1,13 +1,13 @@
 import React from 'react';
 
-import Constants from '../../constants.js';
+import constants from '../../constants.js';
 import NewMappingTarget from './new-mapping-target.js';
 import NewMappingDestination from './new-mapping-destination.js';
 
 const {func, string} = React.PropTypes;
 
 const initialState = Object.freeze({
-  step: Constants.NEW_MAPPING_STEP_TARGET,
+  step: constants.NEW_MAPPING_STEP_TARGET,
   target: undefined,
   destination: undefined,
   isLocal: undefined,
@@ -36,9 +36,9 @@ export default class NewMapping extends React.Component {
 
   validate() {
     let valid = true;
-    if (this.state.step === Constants.NEW_MAPPING_STEP_TARGET) {
+    if (this.state.step === constants.NEW_MAPPING_STEP_TARGET) {
       valid = !!this.state.target;
-    } else if (this.state.step === Constants.NEW_MAPPING_STEP_DESTINATION) {
+    } else if (this.state.step === constants.NEW_MAPPING_STEP_DESTINATION) {
       valid = !!this.state.destination;
     }
     this.setState({valid: valid});
@@ -55,12 +55,12 @@ export default class NewMapping extends React.Component {
 
   createUrl() {
     if (!this.validate()) { return; }
-    this.setState({step: Constants.NEW_MAPPING_STEP_DESTINATION, isLocal: false, valid: null});
+    this.setState({step: constants.NEW_MAPPING_STEP_DESTINATION, isLocal: false, valid: null});
   }
 
   createFile() {
     if (!this.validate()) { return; }
-    this.setState({step: Constants.NEW_MAPPING_STEP_DESTINATION, isLocal: true, valid: null});
+    this.setState({step: constants.NEW_MAPPING_STEP_DESTINATION, isLocal: true, valid: null});
   }
 
   finish() {
@@ -78,10 +78,10 @@ export default class NewMapping extends React.Component {
 
   render() {
     let form;
-    let submit;
+    let submit = () => {};
     const {step, target, destination, isLocal} = this.state;
 
-    if (step === Constants.NEW_MAPPING_STEP_TARGET) {
+    if (step === constants.NEW_MAPPING_STEP_TARGET) {
       submit = this.createUrl;
       form = <NewMappingTarget
                 target={target}
@@ -89,7 +89,7 @@ export default class NewMapping extends React.Component {
                 createUrl={this.createUrl}
                 createFile={this.createFile}
               />;
-    } else if (step === Constants.NEW_MAPPING_STEP_DESTINATION) {
+    } else if (step === constants.NEW_MAPPING_STEP_DESTINATION) {
       submit = this.finish;
       form = <NewMappingDestination
                 isLocal={isLocal}
@@ -100,7 +100,12 @@ export default class NewMapping extends React.Component {
               />;
     }
 
-    return <form className="new-mapping" onSubmit={submit}>{form}</form>;
+    const onSubmit = (event) => {
+      submit();
+      event.preventDefault();
+    };
+
+    return <form className="new-mapping" onSubmit={onSubmit}>{form}</form>;
   }
 }
 
