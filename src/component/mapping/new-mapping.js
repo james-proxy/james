@@ -1,17 +1,13 @@
 import React from 'react';
 
+import Constants from '../../constants.js';
 import NewMappingTarget from './new-mapping-target.js';
 import NewMappingDestination from './new-mapping-destination.js';
 
 const {func, string} = React.PropTypes;
 
-const Step = Object.freeze({
-  target: 0,
-  destination: 1
-});
-
 const initialState = Object.freeze({
-  step: Step.target,
+  step: Constants.NEW_MAPPING_STEP_TARGET,
   target: undefined,
   destination: undefined,
   isLocal: undefined,
@@ -40,9 +36,9 @@ export default class NewMapping extends React.Component {
 
   validate() {
     let valid = true;
-    if (this.state.step === Step.target) {
+    if (this.state.step === Constants.NEW_MAPPING_STEP_TARGET) {
       valid = !!this.state.target;
-    } else if (this.state.step === Step.destination) {
+    } else if (this.state.step === Constants.NEW_MAPPING_STEP_DESTINATION) {
       valid = !!this.state.destination;
     }
     this.setState({valid: valid});
@@ -59,12 +55,12 @@ export default class NewMapping extends React.Component {
 
   createUrl() {
     if (!this.validate()) { return; }
-    this.setState({step: Step.destination, isLocal: false, valid: null});
+    this.setState({step: Constants.NEW_MAPPING_STEP_DESTINATION, isLocal: false, valid: null});
   }
 
   createFile() {
     if (!this.validate()) { return; }
-    this.setState({step: Step.destination, isLocal: true, valid: null});
+    this.setState({step: Constants.NEW_MAPPING_STEP_DESTINATION, isLocal: true, valid: null});
   }
 
   finish() {
@@ -85,7 +81,7 @@ export default class NewMapping extends React.Component {
     let submit;
     const {step, target, destination, isLocal} = this.state;
 
-    if (step === Step.target) {
+    if (step === Constants.NEW_MAPPING_STEP_TARGET) {
       submit = this.createUrl;
       form = <NewMappingTarget
                 target={target}
@@ -93,7 +89,7 @@ export default class NewMapping extends React.Component {
                 createUrl={this.createUrl}
                 createFile={this.createFile}
               />;
-    } else if (step === Step.destination) {
+    } else if (step === Constants.NEW_MAPPING_STEP_DESTINATION) {
       submit = this.finish;
       form = <NewMappingDestination
                 isLocal={isLocal}
