@@ -4,7 +4,7 @@ import createChooseFile from '../../service/choose-file.js';
 
 const {bool, string, func} = React.PropTypes;
 
-const NewMappingTarget = (props) => {
+const NewMappingDestination = (props) => {
   const {isLocal, destination, update, create, cancel} = props;
 
   const chooseFile = createChooseFile(remote.getCurrentWindow());
@@ -45,7 +45,7 @@ const NewMappingTarget = (props) => {
   </div>;
 };
 
-NewMappingTarget.propTypes = {
+NewMappingDestination.propTypes = {
   isLocal: bool,
   destination: string,
   update: func.isRequired,
@@ -53,9 +53,9 @@ NewMappingTarget.propTypes = {
   cancel: func.isRequired
 };
 
-NewMappingTarget.defaultProps = {
+NewMappingDestination.defaultProps = {
   isLocal: false,
   destination: ''
 };
 
-export default NewMappingTarget;
+export default NewMappingDestination;
