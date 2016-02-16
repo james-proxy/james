@@ -74,9 +74,11 @@ export default class NewMapping extends React.Component {
 
   render() {
     let form;
+    let submit;
     const {step, target, destination, isLocal} = this.state;
 
     if (step === Step.target) {
+      submit = this.createUrl.bind(this);
       form = <NewMappingTarget
                 target={target}
                 update={this.updateTarget.bind(this)}
@@ -84,6 +86,7 @@ export default class NewMapping extends React.Component {
                 createFile={this.createFile.bind(this)}
               />;
     } else if (step === Step.destination) {
+      submit = this.finish.bind(this);
       form = <NewMappingDestination
                 isLocal={isLocal}
                 destination={destination}
@@ -93,7 +96,7 @@ export default class NewMapping extends React.Component {
               />;
     }
 
-    return <div className="new-mapping">{form}</div>;
+    return <form className="new-mapping" onSubmit={submit}>{form}</form>;
   }
 }
 
