@@ -32,7 +32,7 @@ const UrlMappingWindow = (props) => {
       {urlMappings}
     </ul>
   </div>;
-}
+};
 
 UrlMappingWindow.defaultProps = {
   urlInput: ''
