@@ -14,7 +14,10 @@ import config from './config.js';
 import UrlMapper from './url-mapper.js';
 import createMenu from './menu.js';
 import openBrowser from './open-browser.js';
-import Keyboard from './keyboard';
+import Keyboard from './keyboard.js';
+import DevTools from './dev-tools.js';
+
+import constants from './constants.js';
 
 const app = remote.require('app');
 const fs = remote.require('fs');
@@ -37,10 +40,13 @@ const data = {
   fromIndex: 0,
   filter: null,
   cachingEnabled: false,
-  throttle: {enabled: false, rate: 0} // rate is in kBps
+  throttle: {enabled: false, rate: 0}, // rate is in kBps
+  proxyStatus: 'working',
+  proxyWindow: undefined
 };
 
 const keyboard = new Keyboard();
+const devTools = new DevTools();
 const urlMapper = new UrlMapper(db, function() {
   data.urlMappings = urlMapper.mappings();
   render();
@@ -53,10 +59,18 @@ const createHoxy = () => {
     const cert = fs.readFileSync('./root-ca.crt.pem');
     opts.certAuthority = {key, cert};
   } catch (e) {
-    console.warn('Not proxying HTTPS, missing key or certificate:\n', e); // eslint-disable-line
+    data.proxyStatus = constants.PROXY_STATUS_NO_HTTPS;
   }
 
-  return hoxy.createServer(opts).listen(config.proxyPort);
+  const hoxyServer = hoxy.createServer(opts);
+  hoxyServer.on('error', (event) => {
+    console.warn('hoxy error: ', event); // eslint-disable-line
+    if (event.code === 'EADDRINUSE') {
+      data.proxyStatus = constants.PROXY_STATUS_ERROR_ADDRESS_IN_USE;
+    }
+    render();
+  });
+  return hoxyServer.listen(config.proxyPort);
 };
 
 const isCachingEnabled = () => {
@@ -106,16 +120,13 @@ const windowFactories = {
   UrlMapping: () => {
     return <UrlMappingWindow
       urlMappings={data.urlMappings}
-      options={data.activeWindow.options}
       setUrlMapping={urlMapper.set.bind(urlMapper)}
       removeUrlMapping={urlMapper.remove.bind(urlMapper)}
       closeWindow={closeWindow}
-      toggleUrlMappingIsActive={urlMapper.toggleActiveState.bind(urlMapper)} />;
+      toggleUrlMappingIsActive={urlMapper.toggleActiveState.bind(urlMapper)}
+      {...data.activeWindow.options}
+    />;
   }
-};
-
-const openDevTools = () => {
-  remote.getCurrentWindow().openDevTools({detach: true});
 };
 
 const closeWindow = () => {
@@ -132,6 +143,11 @@ const showWindow = (windowName, options = {}) => {
 };
 
 keyboard.register('Esc', closeWindow);
+keyboard.register('CommandOrControl+U', () => showWindow('UrlMapping'));
+keyboard.register('F12', devTools.toggle.bind(devTools));
+keyboard.register('Ctrl+Shift+I', devTools.toggle.bind(devTools));
+keyboard.register('CommandOrControl+Alt+I', devTools.toggle.bind(devTools));
+keyboard.register('CommandOrControl+Alt+U', devTools.toggle.bind(devTools));
 
 /**
  * Set the index of the first request from where we start rendering.
@@ -163,7 +179,7 @@ function render() {
       <TitleBar
         urlMapCount={data.urlMapCount}
         showWindow={showWindow}
-        openDevTools={openDevTools} />
+        openDevTools={devTools.toggle.bind(devTools)} />
       <MainContent
         openBrowser={openBrowser}
         browsers={data.browsers}
@@ -182,6 +198,8 @@ function render() {
         toggleCaching={toggleCaching}
         toggleThrottle={toggleThrottle}
         onRateChange={throttleRateChange}
+        proxyStatus={data.proxyStatus}
+        proxyWindow={data.proxyWindow}
         enabled={enabled}
         rate={rate} />
     </div>,

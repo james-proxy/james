@@ -1,22 +1,20 @@
 import React from 'react';
 import NewMapping from '../mapping/new-mapping.js';
 
-const {func, array, object} = React.PropTypes;
+const {func, array, string} = React.PropTypes;
 
 export default class UrlMappingWindow extends React.Component {
 
   render() {
-    let {urlMappings} = this.props;
-
     const {
+      urlInput,
       setUrlMapping,
       removeUrlMapping,
       toggleUrlMappingIsActive,
       closeWindow
     } = this.props;
 
-    const {urlInput} = this.props.options;
-
+    let {urlMappings} = this.props;
     urlMappings = urlMappings.map((map, index) => {
       const removeMapping = () => {
         removeUrlMapping(map.url);
@@ -65,11 +63,15 @@ export default class UrlMappingWindow extends React.Component {
   }
 }
 
+UrlMappingWindow.defaultProps = {
+  urlInput: ''
+};
+
 UrlMappingWindow.propTypes = {
-  setUrlMapping: func.isRequired,
-  options: object.isRequired,
-  removeUrlMapping: func.isRequired,
-  closeWindow: func.isRequired,
+  urlInput: string,
   urlMappings: array.isRequired,
-  toggleUrlMappingIsActive: func.isRequired
+  setUrlMapping: func.isRequired,
+  removeUrlMapping: func.isRequired,
+  toggleUrlMappingIsActive: func.isRequired,
+  closeWindow: func.isRequired
 };

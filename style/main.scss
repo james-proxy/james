@@ -1,5 +1,8 @@
 $fa-font-path: "fonts" !default;
 
+@import '../node_modules/font-awesome/scss/font-awesome';
+@import '../node_modules/materialize-css/sass/materialize';
+
 @import 'colors';
 @import 'components/titlebar';
 @import 'components/footer';
@@ -8,7 +11,6 @@ $fa-font-path: "fonts" !default;
 @import 'components/context-menu';
 @import 'components/inspect-request';
 @import 'components/windows/url-mapping';
-@import '../node_modules/font-awesome/scss/font-awesome';
 
 @import url(http://fonts.googleapis.com/css?family=Lato:300,400,700);
 @import url(http://fonts.googleapis.com/css?family=Droid+Sans+Mono);
@@ -74,14 +76,8 @@ $windowHeight: 400;
 
 .window {
   background: $white;
-  //color: $white;
   position: fixed;
-  //width: #{$windowWidth}px;
-  //height: #{$windowHeight}px;
   z-index: 1000;
-
-  //left: calc(50% - #{$windowWidth / 2}px);
-  //top: calc(50% - #{$windowHeight / 2}px);
 
   left: 20px;
   right: 20px;

@@ -10,6 +10,7 @@
   padding: 6px;
   font-size: 11px;
   color: #fff;
+  cursor: default;
 
   button {
     background: none;
@@ -17,15 +18,41 @@
   }
 
   .request-count {
-    display: block;
-    position: absolute;
-    right: 0;
-    top: 7px;
+    display: inline;
+    height: 13px;
 
     button {
-      padding: 0;
-      margin-left: 8px;
-      margin-right: 5px;
+      padding-right: 0;
     }
   }
+
+  .proxy-status {
+    padding: 1px 6px;
+    display: inline;
+    float: right;
+
+    &.with-info {
+      cursor: pointer;
+    }
+
+    &.working i {
+      color: $grass-dark;
+    }
+
+    &.no_https i {
+      color: $sunflower-dark;
+    }
+
+    &.generic_error i, &.error_address_in_use i {
+      color: $grapefruit-dark;
+    }
+  }
+}
+
+.footer > * {
+  margin-left: 5%;
+}
+
+.footer > *:first-child {
+  margin-left: 0;
 }

@@ -22,7 +22,7 @@ export default class NewMapping extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = initialState;
+    this.state = Object.assign({}, initialState);
 
     // prefill from external source (e.g., request context menu)
     if (props.target) {
@@ -69,7 +69,7 @@ export default class NewMapping extends React.Component {
   }
 
   reset() {
-    this.setState(initialState);
+    this.setState(Object.assign({}, initialState));
   }
 
   render() {
