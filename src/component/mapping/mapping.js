@@ -1,0 +1,51 @@
+import React from 'react';
+const {object, func} = React.PropTypes;
+
+const Mapping = (props) => {
+  const {
+    mapping,
+    toggleActive,
+    remove
+  } = props;
+
+  const toggleIsActive = () => {
+    toggleActive(mapping.url);
+  };
+
+  const removeMapping = () => {
+    remove(mapping.url);
+  };
+
+  const isActiveClass = mapping.isActive ? 'on' : 'off';
+
+  return <li className="collection-item">
+    <div>
+      <span className="col protocol">
+        http(s)://
+      </span>
+      <span className="col text-ellipsis mask">
+        {mapping.url}
+      </span>
+      <span className="seperator">
+        <i className="fa fa-chevron-right"></i>
+      </span>
+      <span className="col text-ellipsis new-url">
+        {mapping.newUrl}
+      </span>
+      <a href="#!" className="secondary-content" onClick={toggleIsActive}>
+        <i className={'fa fa-toggle-' + isActiveClass}></i>
+      </a>
+      <a href="#!" className="secondary-content" onClick={removeMapping}>
+        <i className="fa fa-remove"></i>
+      </a>
+    </div>
+  </li>;
+};
+
+Mapping.propTypes = {
+  mapping: object.isRequired,
+  toggleActive: func.isRequired,
+  remove: func.isRequired
+};
+
+export default Mapping;
