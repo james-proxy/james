@@ -28,6 +28,14 @@ export default class NewMapping extends React.Component {
     if (props.target) {
       this.state.target = props.target;
     }
+
+    this.validate = this.validate.bind(this);
+    this.updateTarget = this.updateTarget.bind(this);
+    this.updateDestination = this.updateDestination.bind(this);
+    this.createUrl = this.createUrl.bind(this);
+    this.createFile = this.createFile.bind(this);
+    this.finish = this.finish.bind(this);
+    this.reset = this.reset.bind(this);
   }
 
   validate() {
@@ -78,21 +86,21 @@ export default class NewMapping extends React.Component {
     const {step, target, destination, isLocal} = this.state;
 
     if (step === Step.target) {
-      submit = this.createUrl.bind(this);
+      submit = this.createUrl;
       form = <NewMappingTarget
                 target={target}
-                update={this.updateTarget.bind(this)}
-                createUrl={this.createUrl.bind(this)}
-                createFile={this.createFile.bind(this)}
+                update={this.updateTarget}
+                createUrl={this.createUrl}
+                createFile={this.createFile}
               />;
     } else if (step === Step.destination) {
-      submit = this.finish.bind(this);
+      submit = this.finish;
       form = <NewMappingDestination
                 isLocal={isLocal}
                 destination={destination}
-                update={this.updateDestination.bind(this)}
-                create={this.finish.bind(this)}
-                cancel={this.reset.bind(this)}
+                update={this.updateDestination}
+                create={this.finish}
+                cancel={this.reset}
               />;
     }
 
