@@ -1,7 +1,7 @@
 import React from 'react';
 const {object, func} = React.PropTypes;
 
-const Mapping = (props) => {
+const UrlMapping = (props) => {
   const {
     mapping,
     toggleActive,
@@ -42,10 +42,10 @@ const Mapping = (props) => {
   </li>;
 };
 
-Mapping.propTypes = {
+UrlMapping.propTypes = {
   mapping: object.isRequired,
   toggleActive: func.isRequired,
   remove: func.isRequired
 };
 
-export default Mapping;
+export default UrlMapping;

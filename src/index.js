@@ -25,7 +25,7 @@ const fs = remote.require('fs');
 createMenu();
 
 // windows
-import UrlMappingWindow from './component/window/url-mapping.js';
+import UrlMappingWindow from './component/mapping/url-mapping-window.js';
 
 const db = new Datastore({
   filename: app.getPath('userData') + '/data.nedb',
