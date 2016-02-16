@@ -4,6 +4,7 @@
 - Show status of proxy in the bottom-right corner (i: @mitchhentges, r: @nerdbeere)
 - Add keyboard shortcuts for open/close dev tools (i: @mitchhentges, r: @nerdbeere)
 - Design changes and refactoring (i: @tomitm, r: @nerdbeere)
+- Create new URL Mapping (i: @tomitm, r: @mitchhentges, @nerdbeere)
 
 #### Developer Features
 - Massive component refactoring (i: @tomitm, r: @mitchhentges, @nerdbeere)
