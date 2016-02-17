@@ -10,8 +10,6 @@ import Footer from './component/footer/footer.js';
 import MainContent from './component/main-content/main-content.js';
 
 import Proxy from './service/proxy.js';
-import createChooseFile from './service/choose-file.js';
-
 import config from './config.js';
 import UrlMapper from './url-mapper.js';
 import createMenu from './menu.js';
@@ -19,13 +17,15 @@ import openBrowser from './open-browser.js';
 import Keyboard from './keyboard.js';
 import DevTools from './dev-tools.js';
 
+import constants from './constants.js';
+
 const app = remote.require('app');
 const fs = remote.require('fs');
 
 createMenu();
 
 // windows
-import UrlMappingWindow from './component/window/url-mapping.js';
+import UrlMappingWindow from './component/mapping/url-mapping-window.js';
 
 const db = new Datastore({
   filename: app.getPath('userData') + '/data.nedb',
@@ -41,7 +41,6 @@ const data = {
   cachingEnabled: false,
   throttle: {enabled: false, rate: 0}, // rate is in kBps
   proxyStatus: 'working',
-  proxyMessage: undefined,
   proxyWindow: undefined
 };
 
@@ -59,16 +58,14 @@ const createHoxy = () => {
     const cert = fs.readFileSync('./root-ca.crt.pem');
     opts.certAuthority = {key, cert};
   } catch (e) {
-    data.proxyStatus = 'partial';
-    data.proxyMessage = 'no HTTPS';
+    data.proxyStatus = constants.PROXY_STATUS_NO_HTTPS;
   }
 
   const hoxyServer = hoxy.createServer(opts);
   hoxyServer.on('error', (event) => {
-    data.proxyStatus = 'offline';
-    data.proxyMessage = event.code;
+    console.warn('hoxy error: ', event); // eslint-disable-line
     if (event.code === 'EADDRINUSE') {
-      // TODO make custom window
+      data.proxyStatus = constants.PROXY_STATUS_ERROR_ADDRESS_IN_USE;
     }
     render();
   });
@@ -118,8 +115,6 @@ browserLauncher.detect(function(available) {
   render();
 });
 
-const chooseFile = createChooseFile(remote.getCurrentWindow());
-
 const windowFactories = {
   UrlMapping: () => {
     return <UrlMappingWindow
@@ -127,9 +122,9 @@ const windowFactories = {
       setUrlMapping={urlMapper.set.bind(urlMapper)}
       removeUrlMapping={urlMapper.remove.bind(urlMapper)}
       closeWindow={closeWindow}
-      chooseFile={chooseFile}
       toggleUrlMappingIsActive={urlMapper.toggleActiveState.bind(urlMapper)}
-      {...data.activeWindow.options}/>;
+      {...data.activeWindow.options}
+    />;
   }
 };
 
@@ -191,7 +186,6 @@ function render() {
         toggleThrottle={toggleThrottle}
         onRateChange={throttleRateChange}
         proxyStatus={data.proxyStatus}
-        proxyMessage={data.proxyMessage}
         proxyWindow={data.proxyWindow}
         enabled={enabled}
         rate={rate} />

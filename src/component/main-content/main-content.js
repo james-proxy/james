@@ -8,7 +8,9 @@ const {func, object, arrayOf, shape, array} = React.PropTypes;
 
 export default class MainContent extends React.Component {
 
-  componentWillMount() {
+  constructor(props) {
+    super(props);
+    this.onClick = this.onClick.bind(this);
     this.setState({
       filter: null,
       activeRequest: null,
@@ -44,6 +46,12 @@ export default class MainContent extends React.Component {
     return this.state.contextMenuRequest === request.request.id;
   }
 
+  onClick(event) {
+    if (this.state.contextMenuRequest && !event.target.matches('.request *')) {
+      this.setContextMenuRequest(undefined);
+    }
+  }
+
   render() {
     const {
       browsers,
@@ -74,7 +82,7 @@ export default class MainContent extends React.Component {
         setActiveRequest={this.setActiveRequest.bind(this)} />;
     }
 
-    return <div className="main-content">
+    return <div className="main-content" onClick={this.onClick} onContextMenu={this.onClick}>
       {activeWindow}
       <div className="header">
         {search}

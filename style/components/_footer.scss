@@ -39,11 +39,11 @@
       color: $grass-dark;
     }
 
-    &.partial i {
-      color: $white;
+    &.no_https i {
+      color: $sunflower-dark;
     }
 
-    &.offline i {
+    &.generic_error i, &.error_address_in_use i {
       color: $grapefruit-dark;
     }
   }
