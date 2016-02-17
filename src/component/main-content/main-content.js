@@ -11,11 +11,11 @@ export default class MainContent extends React.Component {
   constructor(props) {
     super(props);
     this.onClick = this.onClick.bind(this);
-    this.setState({
+    this.state = {
       filter: null,
       activeRequest: null,
       contextMenuRequest: null
-    });
+    };
   }
 
   setActiveRequest(request) {
