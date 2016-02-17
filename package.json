@@ -28,6 +28,10 @@
     "raven-js": "^3.0.2",
     "react": "^15.0.0",
     "react-dom": "^15.0.0",
+    "react-redux": "^4.4.5",
+    "redux": "^3.5.2",
+    "redux-logger": "^2.6.1",
+    "redux-thunk": "^2.0.1",
     "tmp": "0.0.28",
     "uniqid": "^1.0.0"
   },

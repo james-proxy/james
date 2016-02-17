@@ -23,16 +23,12 @@ const getMessage = (status) => {
   return messageMap[status];
 };
 
-const ProxyStatus = ({proxyStatus, proxyWindow}) => {
+const ProxyStatus = ({proxyStatus}) => {
   const icon = 'fa ' + iconMap[proxyStatus];
   const message = 'Proxy: ' + getMessage(proxyStatus);
   const classes = ['proxy-status', proxyStatus];
 
-  if (proxyWindow) {
-    classes.push('with-info');
-  }
-
-  return <div className={classes.join(' ')} title={message} onClick={proxyWindow}>
+  return <div className={classes.join(' ')} title={message}>
     <i className={icon} />
     <span className="message">{message}</span>
   </div>;
@@ -45,7 +41,6 @@ ProxyStatus.propTypes = {
     constants.PROXY_STATUS_ERROR_ADDRESS_IN_USE,
     constants.PROXY_STATUS_ERROR_GENERIC
   ]).isRequired,
-  proxyWindow: func,
   proxyMessage: string
 };
 

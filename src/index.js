@@ -1,33 +1,47 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+
+import { Provider } from 'react-redux';
+import thunkMiddleware from 'redux-thunk';
+import createLogger from 'redux-logger';
+import { createStore, applyMiddleware } from 'redux';
+
 import hoxy from 'hoxy';
 import remote from 'remote';
 import Datastore from 'nedb';
-import browserLauncher from 'james-browser-launcher';
 
-import TitleBar from './component/title-bar/title-bar.js';
-import Footer from './component/footer/footer.js';
-import MainContent from './component/main-content/main-content.js';
-
-import ravenInit from './service/raven.js';
 import Proxy from './service/proxy.js';
+import UrlMapper from './service/url-mapper.js';
+import Keyboard from './service/keyboard.js';
+import DevTools from './service/dev-tools.js';
+import ravenInit from './service/raven.js';
+
 import config from './config.js';
-import UrlMapper from './url-mapper.js';
 import createMenu from './menu.js';
-import openBrowser from './open-browser.js';
-import Keyboard from './keyboard.js';
-import DevTools from './dev-tools.js';
 
 import constants from './constants.js';
+
+import rootReducer from './reducers/root.js';
+import { updateProxyStatus } from './actions/proxy.js';
+import { detectBrowsers } from './actions/browsers.js';
+
+import AppContainer from './component/app.js';
+import UrlMappingWindow from './component/mapping/url-mapping-window.js';
+
+ravenInit();
 
 const app = remote.require('app');
 const fs = remote.require('fs');
 
-ravenInit();
-createMenu();
 
-// windows
-import UrlMappingWindow from './component/mapping/url-mapping-window.js';
+const loggerMiddleware = createLogger();
+const store = createStore(
+  rootReducer,
+  applyMiddleware(
+    thunkMiddleware,
+    loggerMiddleware
+  )
+);
 
 const db = new Datastore({
   filename: app.getPath('userData') + '/data.nedb',
@@ -35,19 +49,13 @@ const db = new Datastore({
 });
 
 const data = {
-  browsers: [],
   urlMapCount: 0,
   urlMappings: [],
-  activeWindowFactory: null,
   filter: null,
-  cachingEnabled: false,
-  throttle: {enabled: false, rate: 0}, // rate is in kBps
-  proxyStatus: 'working',
-  proxyWindow: undefined
+  activeWindowFactory: null
 };
 
-const keyboard = new Keyboard();
-const devTools = new DevTools(constants.DEV);
+
 const urlMapper = new UrlMapper(db, function() {
   data.urlMappings = urlMapper.mappings();
   render();
@@ -60,62 +68,48 @@ const createHoxy = () => {
     const cert = fs.readFileSync('./root-ca.crt.pem');
     opts.certAuthority = {key, cert};
   } catch (e) {
-    data.proxyStatus = constants.PROXY_STATUS_NO_HTTPS;
+    store.dispatch(updateProxyStatus(constants.PROXY_STATUS_NO_HTTPS));
   }
 
   const hoxyServer = hoxy.createServer(opts);
   hoxyServer.on('error', (event) => {
     console.warn('hoxy error: ', event); // eslint-disable-line
     if (event.code === 'EADDRINUSE') {
-      data.proxyStatus = constants.PROXY_STATUS_ERROR_ADDRESS_IN_USE;
+      store.dispatch(updateProxyStatus(constants.PROXY_STATUS_ERROR_ADDRESS_IN_USE));
     }
-    render();
   });
+
   return hoxyServer.listen(config.proxyPort);
 };
 
-const isCachingEnabled = () => {
-  return data.cachingEnabled;
-};
-
-const toggleCaching = () => {
-  data.cachingEnabled = !data.cachingEnabled;
+const proxy = new Proxy(() => {
   render();
-};
+}, config, urlMapper, createHoxy, store);
 
 const clearRequests = () => {
   proxy.clear();
   render();
 };
 
-const toggleThrottle = () => {
-  const enabled = !data.throttle.enabled;
-  data.throttle.enabled = enabled;
+const filterRequests = (filter) => {
+  if (filter === '') {
+    filter = null;
+  }
+  data.filter = filter;
+  render();
+};
 
-  if (enabled) {
-    proxy.slow(data.throttle.rate);
+store.subscribe(() => {
+  const state = store.getState();
+
+  if (state.proxy.throttleEnabled) {
+    proxy.slow(state.proxy.throttleRate);
   } else {
     proxy.disableThrottling();
   }
-
-  render();
-};
-
-const throttleRateChange = (kBps) => {
-  data.throttle.rate = kBps;
-  proxy.slow(kBps);
-  render();
-};
-
-const domNode = document.getElementById('app');
-const proxy = new Proxy(() => {
-  render();
-}, config, urlMapper, createHoxy, isCachingEnabled);
-
-browserLauncher.detect(function(available) {
-  data.browsers = available;
-  render();
 });
+
+
 
 const windowFactories = {
   UrlMapping: () => {
@@ -128,11 +122,6 @@ const windowFactories = {
       {...data.activeWindow.options}
     />;
   }
-};
-
-const closeWindow = () => {
-  data.activeWindow = null;
-  render();
 };
 
 const toggleWindow = (windowName, options = {}) => {
@@ -148,6 +137,16 @@ const toggleWindow = (windowName, options = {}) => {
   render();
 };
 
+const closeWindow = () => {
+  data.activeWindow = null;
+  render();
+};
+
+
+
+const keyboard = new Keyboard();
+const devTools = new DevTools(constants.DEV);
+
 keyboard.register('Esc', closeWindow);
 keyboard.register('CommandOrControl+U', () => toggleWindow('UrlMapping'));
 keyboard.register('F12', devTools.toggle.bind(devTools));
@@ -155,50 +154,28 @@ keyboard.register('Ctrl+Shift+I', devTools.toggle.bind(devTools));
 keyboard.register('CommandOrControl+Alt+I', devTools.toggle.bind(devTools));
 keyboard.register('CommandOrControl+Alt+U', devTools.toggle.bind(devTools));
 
-const filterRequests = (filter) => {
-  if (filter === '') {
-    filter = null;
-  }
-  data.filter = filter;
-  render();
-};
+
+
+const domNode = document.getElementById('app');
 
 function render() {
   data.urlMapCount = urlMapper.count();
   const activeWindow = data.activeWindow && data.activeWindow.factory() || null;
   const requestData = proxy.getRequestData(data.filter);
-  const {enabled, rate} = data.throttle;
+
+  const appProps = {
+    data, config,
+    devTools, toggleWindow, activeWindow,
+    urlMapper, requestData, filterRequests, clearRequests
+  };
 
   ReactDOM.render(
-    <div className="container">
-      <TitleBar
-        urlMapCount={data.urlMapCount}
-        toggleWindow={toggleWindow}
-        openDevTools={devTools.toggle.bind(devTools)} />
-      <MainContent
-        openBrowser={openBrowser}
-        browsers={data.browsers}
-        toggleWindow={toggleWindow}
-        activeWindow={activeWindow}
-        requestData={requestData}
-        filterRequests={filterRequests}
-        config={config}
-        removeUrlMapping={urlMapper.remove.bind(urlMapper)}
-        toggleUrlMappingActiveState={urlMapper.toggleActiveState.bind(urlMapper)} />
-      <Footer
-        isCachingEnabled={isCachingEnabled}
-        requestData={requestData}
-        clearRequests={clearRequests}
-        toggleCaching={toggleCaching}
-        toggleThrottle={toggleThrottle}
-        onRateChange={throttleRateChange}
-        proxyStatus={data.proxyStatus}
-        proxyWindow={data.proxyWindow}
-        enabled={enabled}
-        rate={rate} />
-    </div>,
-    domNode
-  );
+    <Provider store={store}>
+      <AppContainer {...appProps} />
+    </Provider>
+  , domNode);
 }
 
+createMenu();
+store.dispatch(detectBrowsers());
 render(true);

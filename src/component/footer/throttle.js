@@ -3,15 +3,15 @@ import React from 'react';
 const {func, bool, number} = React.PropTypes;
 
 const Throttle = (props) => {
-  const {rate, enabled, onRateChange, toggleThrottle} = props;
+  const {throttleRate, throttleEnabled, setThrottleRate, toggleThrottle} = props;
 
-  const icon = enabled ? 'fa fa-circle' : 'fa fa-circle-o';
-  const message = enabled ? 'Throttle to (kBps):' : 'Throttling disabled';
+  const icon = throttleEnabled ? 'fa fa-circle' : 'fa fa-circle-o';
+  const message = throttleEnabled ? 'Throttle to (kBps):' : 'Throttling disabled';
 
   let input = null;
-  if (enabled) {
-    const onChange = (event) => onRateChange(parseInt(event.target.value, 10));
-    input = <input type="text" defaultValue={rate} onChange={onChange} />;
+  if (throttleEnabled) {
+    const onChange = (event) => setThrottleRate(parseInt(event.target.value, 10));
+    input = <input type="text" defaultValue={throttleRate} onChange={onChange} />;
   }
 
   return <div className="throttle">
@@ -25,9 +25,9 @@ const Throttle = (props) => {
 
 Throttle.propTypes = {
   toggleThrottle: func.isRequired,
-  onRateChange: func.isRequired,
-  enabled: bool,
-  rate: number
+  setThrottleRate: func.isRequired,
+  throttleEnabled: bool,
+  throttleRate: number
 };
 
 export default Throttle;

@@ -54,8 +54,6 @@ export default class MainContent extends React.Component {
 
   render() {
     const {
-      browsers,
-      openBrowser,
       requestData,
       toggleWindow,
       config,
@@ -72,7 +70,7 @@ export default class MainContent extends React.Component {
     if (requestData.totalCount > 0) {
       search = <Search filterRequests={filterRequests} />;
     } else {
-      welcome = <Welcome browsers={browsers} openBrowser={openBrowser} />;
+      welcome = <Welcome />;
     }
 
     let activeRequestNode = null;
@@ -104,8 +102,6 @@ export default class MainContent extends React.Component {
 }
 
 MainContent.propTypes = {
-  openBrowser: func.isRequired,
-  browsers: array.isRequired,
   toggleWindow: func.isRequired,
   filterRequests: func.isRequired,
   requests: arrayOf(shape({
