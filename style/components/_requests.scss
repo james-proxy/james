@@ -1,36 +1,20 @@
 .requests {
-
-  position: absolute;
-  top: 55px;
-  left: 0;
-  bottom: 0;
-  right: 0;
   overflow-y: auto;
-
-  .request-inner {
-    padding: 5px;
-    overflow: hidden;
-  }
+  overflow-x: hidden;
+  height: calc(100% - 55px); //55px is height of search bar (header)
 
   .request {
-    position: absolute;
-    left: 0;
-    right: 0;
+    position: relative; //absolutely-positioned context menu needs to be attached to request
     border-bottom: 2px solid $lightgray-light;
+    padding: 2px 0;
 
     .complete-url {
-      width: calc(100% - 165px);
+      width: calc(100% - 170px);
       white-space: nowrap;
+    }
 
-      .fade-out {
-        position: absolute;
-        right: 0;
-        display: block;
-        width: 180px;
-        top: 0;
-        height: 30px;
-        background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 1) 70%, rgba(255, 255, 255, 1) 75%, rgba(255, 255, 255, 1) 100%);
-      }
+    &.request-filler {
+      height: 34px;
     }
 
     &.request-active {
@@ -48,11 +32,10 @@
     }
 
     .property {
-
       display: inline-block;
       text-align: center;
       width: 50px;
-      margin-right: 5px;
+      margin: 2px 5px 2px 0;
 
       .fa {
         padding-right: 0;
@@ -60,15 +43,28 @@
       }
 
       &.method {
+        margin-left: 5px;
         background: $darkgray-dark;
         color: $white;
       }
     }
 
     .labels {
-      position: absolute;
+      position: relative;
+      float: right;
       right: 3px;
-      top: 3px;
+      margin-top: -26px;
+      z-index: 1;
+    }
+
+    .fade-out {
+      position: relative;
+      float: right;
+      margin-top: -28px;
+
+      width: 180px;
+      height: 30px;
+      background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 1) 70%, rgba(255, 255, 255, 1) 75%, rgba(255, 255, 255, 1) 100%);
     }
   }
 }

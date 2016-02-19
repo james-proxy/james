@@ -37,7 +37,6 @@ const data = {
   urlMapCount: 0,
   urlMappings: [],
   activeWindowFactory: null,
-  fromIndex: 0,
   filter: null,
   cachingEnabled: false,
   throttle: {enabled: false, rate: 0}, // rate is in kBps
@@ -149,17 +148,6 @@ keyboard.register('Ctrl+Shift+I', devTools.toggle.bind(devTools));
 keyboard.register('CommandOrControl+Alt+I', devTools.toggle.bind(devTools));
 keyboard.register('CommandOrControl+Alt+U', devTools.toggle.bind(devTools));
 
-/**
- * Set the index of the first request from where we start rendering.
- * This is done because we only want to render elements the user actually sees.
- *
- * @param fromIndex
- */
-const setFromIndex = (fromIndex) => {
-  data.fromIndex = fromIndex;
-  render();
-};
-
 const filterRequests = (filter) => {
   if (filter === '') {
     filter = null;
@@ -171,7 +159,7 @@ const filterRequests = (filter) => {
 function render() {
   data.urlMapCount = urlMapper.count();
   const activeWindow = data.activeWindow && data.activeWindow.factory() || null;
-  const requestData = proxy.getRequestData(50, data.fromIndex, data.filter);
+  const requestData = proxy.getRequestData(data.filter);
   const {enabled, rate} = data.throttle;
 
   ReactDOM.render(
@@ -186,7 +174,6 @@ function render() {
         showWindow={showWindow}
         activeWindow={activeWindow}
         requestData={requestData}
-        setFromIndex={setFromIndex}
         filterRequests={filterRequests}
         config={config}
         removeUrlMapping={urlMapper.remove.bind(urlMapper)}

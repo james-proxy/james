@@ -103,8 +103,9 @@ export default class UrlMapper {
 
   toggleActiveState(url) {
     if (!this.isMappedUrl(url)) return;
-    this._map[url].isActive = !this._map[url].isActive;
-    this._db.update({url}, {$set: {isActive: this._map[url].isActive}}, {}, () => {
+    const mapping = this.get(url);
+    mapping.isActive = !mapping.isActive;
+    this._db.update({url}, {$set: {isActive: mapping.isActive}}, {}, () => {
       this._update();
     });
   }

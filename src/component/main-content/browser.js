@@ -4,8 +4,8 @@ const {string, func} = React.PropTypes;
 
 export default class Browser extends React.Component {
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       disableReason: undefined
     };

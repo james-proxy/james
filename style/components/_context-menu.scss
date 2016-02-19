@@ -1,11 +1,12 @@
 .context-menu {
   position: absolute;
+  float: right;
   right: 20px;
-  top: 20px;
+  top: 25px;
   margin: 0;
-  z-index: 1;
   border: 2px solid $darkgray-dark;
   color: $white;
+  z-index: 5;
 
   .context-menu-item {
     background: $darkgray-dark;

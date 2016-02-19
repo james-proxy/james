@@ -6,19 +6,12 @@
   left: 0;
   bottom: 30px;
   right: 0;
-  float: left;
-  padding: 10px;
 
   .header {
-    position: absolute;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-
+    margin: 10px;
     .search {
       @extend .card;
-      margin: 10px;
+      margin: 0;
       padding: 0;
 
       input[type="text"] {
@@ -36,16 +29,13 @@
   }
 
   .setup-instruction {
-    position: absolute;
-    left: calc(50% - 200px);
-    top: calc(50% - 200px);
     text-align: center;
     width: 400px;
+    margin: 5% auto;
     background: $lightgray-light;
     color: $darkgray-light;
     padding: 20px;
     border-radius: 8px;
-    z-index: 999;
 
     h2 {
       font-size: 24px;

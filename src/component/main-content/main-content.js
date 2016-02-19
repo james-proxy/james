@@ -60,7 +60,6 @@ export default class MainContent extends React.Component {
       showWindow,
       config,
       activeWindow,
-      setFromIndex,
       filterRequests,
       removeUrlMapping,
       toggleUrlMappingActiveState
@@ -84,10 +83,10 @@ export default class MainContent extends React.Component {
     }
 
     return <div className="main-content" onClick={this.onClick} onContextMenu={this.onClick}>
+      {activeWindow}
       <div className="header">
         {search}
       </div>
-      {activeWindow}
       {welcome}
       <Requests
         requestData={requestData}
@@ -97,7 +96,6 @@ export default class MainContent extends React.Component {
         setActiveRequest={this.setActiveRequest.bind(this)}
         isContextMenuRequest={this.isContextMenuRequest.bind(this)}
         setContextMenuRequest={this.setContextMenuRequest.bind(this)}
-        setFromIndex={setFromIndex}
         removeUrlMapping={removeUrlMapping}
         toggleUrlMappingActiveState={toggleUrlMappingActiveState} />
       {activeRequestNode}
@@ -109,7 +107,6 @@ MainContent.propTypes = {
   openBrowser: func.isRequired,
   browsers: array.isRequired,
   showWindow: func.isRequired,
-  setFromIndex: func.isRequired,
   filterRequests: func.isRequired,
   requests: arrayOf(shape({
     request: object,

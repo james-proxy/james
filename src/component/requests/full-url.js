@@ -27,7 +27,6 @@ const FullUrl = (props) => {
     <span className="hostname">{request.hostname}</span>
     {port}
     <span className="url">{_shorten(request.url, maxUrlLength)}</span>
-    <span className="fade-out"></span>
   </div>;
 };
 
