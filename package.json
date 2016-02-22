@@ -7,12 +7,13 @@
     "build": "gulp",
     "watch": "gulp watch",
     "development": "gulp livereload",
-    "package": "gulp clean package",
+    "package": "npm run build-example-site && gulp clean package",
     "zip-binaries": "cd binaries; rm *.zip; for i in *; do zip --symlinks -r \"${i%/}.zip\" \"$i\"; done",
     "start": "electron .",
     "lint": "eslint ./src ./test",
     "test": "mocha --reporter dot --recursive -r setup-referee-sinon/globals test/unit --compilers js:babel-core/register",
-    "test-ci": "npm run lint && npm run test && npm run package"
+    "test-ci": "npm run lint && npm run test && npm run package",
+    "build-example-site": "node ./script/build-example-site.js"
   },
   "author": "Julian Hollmann <hollmann@uxebu.com>",
   "license": "MIT",
@@ -55,10 +56,11 @@
     "gulp-sass": "^2.1.1",
     "gulp-sourcemaps": "^1.6.0",
     "gulp-useref": "^3.0.5",
+    "marked": "^0.3.5",
     "mocha": "^2.3.4",
     "referee": "^1.2.0",
     "referee-sinon": "^1.0.3",
-    "rimraf": "^2.5.0",
+    "rimraf": "^2.5.1",
     "setup-referee-sinon": "^0.3.0",
     "sinon": "^1.17.2",
     "sinon-as-promised": "^4.0.0"

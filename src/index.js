@@ -21,6 +21,7 @@ import constants from './constants.js';
 
 const app = remote.require('app');
 const fs = remote.require('fs');
+const path = remote.require('path');
 
 createMenu();
 
@@ -50,6 +51,8 @@ const urlMapper = new UrlMapper(db, function() {
   data.urlMappings = urlMapper.mappings();
   render();
 });
+
+urlMapper.set('http://james.proxy/', path.resolve('./resource/example-site/index.html'), true);
 
 const createHoxy = () => {
   const opts = {};
