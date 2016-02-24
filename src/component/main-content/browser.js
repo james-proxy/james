@@ -13,7 +13,12 @@ export default class Browser extends React.Component {
 
   _openBrowserFactory() {
     const {openBrowser, browser} = this.props;
-    return () => openBrowser(browser.name, (disableReason) => {
+    const launchOptions = {
+      browser: browser.name,
+      version: browser.version
+    };
+
+    return () => openBrowser(launchOptions, (disableReason) => {
       this.setState({disableReason});
     });
   }
