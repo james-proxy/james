@@ -22,10 +22,12 @@ const Welcome = (props) => {
       return <Browser browser={browser} openBrowser={openBrowser} key={index} />;
     });
 
-  return <div className="setup-instruction">
-    <h2>Proxy started on localhost:1338</h2>
-    <h3>Launch a browser, using James as a proxy</h3>
-    <div className="browsers">{browserElements}</div>
+  return <div className="setup-instructions">
+    <div className="setup-instructions-wrapper">
+      <h2>Proxy started on localhost:1338</h2>
+      <h3>Launch a browser, using James as a proxy</h3>
+      <div className="browsers">{browserElements}</div>
+    </div>
   </div>;
 };
 
