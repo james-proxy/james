@@ -6,6 +6,7 @@
 - Design changes and refactoring (i: @tomitm, r: @nerdbeere)
 - Create new URL Mapping (i: @tomitm, r: @mitchhentges, @nerdbeere)
 - Narrow footer (i: @tomitm, r: @nerdbeere)
+- UI overhaul of browser list, showing version and fixing React duplication complaints (i: @tomitm, r: @mitchhentges)
 
 #### Developer Features
 - Massive component refactoring (i: @tomitm, r: @mitchhentges, @nerdbeere)
