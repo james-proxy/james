@@ -4,15 +4,22 @@ const {func, bool, number} = React.PropTypes;
 
 const Throttle = (props) => {
   const {rate, enabled, onRateChange, toggleThrottle} = props;
+
   const icon = enabled ? 'fa fa-circle' : 'fa fa-circle-o';
-  const onChange = (event) => onRateChange(parseInt(event.target.value, 10));
+  const message = enabled ? 'Throttle to (kBps):' : 'Throttling disabled';
+
+  let input = null;
+  if (enabled) {
+    const onChange = (event) => onRateChange(parseInt(event.target.value, 10));
+    input = <input type="text" defaultValue={rate} onChange={onChange} />;
+  }
 
   return <div className="throttle">
     <button title="Toggle throttling" onClick={toggleThrottle}>
       <i className={icon} />
-      Throttle to (kBps):
+      <span className="message">{message}</span>
     </button>
-    <input type="text" defaultValue={rate} onChange={onChange} />
+    {input}
   </div>;
 };
 

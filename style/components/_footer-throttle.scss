@@ -2,9 +2,12 @@
   display: inline;
 
   input {
-    text-align: right;
-    width: 150px;
+    width: 50px;
     height: inherit;
+    margin: 0 5px;
+    padding-bottom: 3px;
+    font-size: inherit;
+    text-align: right;
   }
 
   input:focus {

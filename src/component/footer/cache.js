@@ -5,12 +5,14 @@ const {func} = React.PropTypes;
 const CacheButton = ({isCachingEnabled, toggleCaching}) => {
   const enabled = isCachingEnabled();
   const icon = enabled ? 'fa fa-circle' : 'fa fa-circle-o';
-  const label = enabled ? 'Caching enabled' : 'Caching disabled';
+  const message = enabled ? 'Caching enabled' : 'Caching disabled';
 
-  return <button title="Toggle caching" onClick={toggleCaching}>
-    <i className={icon} />
-    {label}
-  </button>;
+  return <div className="cache-button">
+    <button title="Toggle caching" onClick={toggleCaching}>
+      <i className={icon} />
+      <span className="message">{message}</span>
+    </button>
+  </div>;
 };
 
 CacheButton.propTypes = {
