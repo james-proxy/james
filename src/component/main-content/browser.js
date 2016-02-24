@@ -1,6 +1,6 @@
 import React from 'react';
 
-const {string, func} = React.PropTypes;
+const {object, func} = React.PropTypes;
 
 export default class Browser extends React.Component {
 
@@ -12,30 +12,53 @@ export default class Browser extends React.Component {
   }
 
   _openBrowserFactory() {
-    const {openBrowser, browserName} = this.props;
-    return () => openBrowser(browserName, (disableReason) => {
+    const {openBrowser, browser} = this.props;
+    const launchOptions = {
+      browser: browser.name,
+      version: browser.version
+    };
+
+    return () => openBrowser(launchOptions, (disableReason) => {
       this.setState({disableReason});
     });
   }
 
+  _enhanceBrowserName(browser) {
+    if (browser.name === 'ie') {
+      return 'Internet Explorer';
+    } else if (browser.type === 'chrome' && /SxS/.test(browser.command)) {
+      return 'Chrome Canary';
+    } else if (browser.type === 'firefox' && /Developer Edition/i.test(browser.command)) {
+      return 'Firefox Developer Edition';
+    }
+    return browser.name;
+  }
+
   render() {
-    const {browserName} = this.props;
+    const {browser} = this.props;
     const {disableReason} = this.state;
-    let className = 'open-browser';
+    const browserName = this._enhanceBrowserName(browser);
+
     let title = browserName;
+    let className = 'open-browser';
 
     if (disableReason) {
       className += ' disabled';
       title = disableReason;
     }
 
-    const src = './images/' + browserName + '_128x128.png';
-    return <img className={className} src={src} alt={browserName}
-                title={title} onClick={this._openBrowserFactory()} />;
+    const src = `./images/${browser.type}_128x128.png`;
+    return <a className={className} onClick={this._openBrowserFactory()}>
+      <img className="browser-icon" src={src} alt={browserName} title={title} />
+      <div className="browser-info">
+        <div className="browser-name">{browserName}</div>
+        <div className="browser-version">{browser.version}</div>
+      </div>
+    </a>;
   }
 }
 
 Browser.propTypes = {
-  browserName: string.isRequired,
+  browser: object.isRequired,
   openBrowser: func.isRequired
 };
