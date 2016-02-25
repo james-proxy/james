@@ -56,41 +56,4 @@
       margin: 0;
     }
   }
-
-  .browsers {
-    text-align: left;
-    margin-top: 15px;
-
-    .open-browser {
-      background-color: $lightgray-dark;
-      border: 1px solid $mediumgray-light;
-      width: 100%;
-      padding: 5px 15px;
-
-      &:hover {
-        background-color: $mediumgray-light;
-      }
-      &:first-child {
-        border-top-left-radius: 5px;
-        border-top-right-radius: 5px;
-      }
-      &:last-child {
-        border-bottom-left-radius: 5px;
-        border-bottom-right-radius: 5px;
-      }
-    }
-    .browser-icon {
-      width: 32px;
-      height: 32px;
-    }
-    .browser-info {
-      display: inline-block;
-      margin-left: 15px;
-    }
-    .browser-name {
-      font-size: 16px;
-      font-weight: bold;
-      text-transform: capitalize;
-    }
-  }
 }
