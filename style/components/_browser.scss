@@ -1,11 +1,52 @@
-.open-browser {
-  height: 64px;
-  width: 64px;
-  background-size: 100%;
-  display: inline-block;
-  cursor: pointer;
+.browsers {
+  text-align: left;
+  margin-top: 15px;
 
-  &.disabled {
-    opacity: 0.4;
+  .browser {
+    display: block;
+    height: 64px;
+    width: 100%;
+    padding: 5px 15px;
+    border: 1px solid $mediumgray-light;
+    background-color: $lightgray-dark;
+    background-size: 100%;
+    cursor: pointer;
+
+    &:hover {
+      background-color: $mediumgray-light;
+    }
+    &:first-child {
+      border-top-left-radius: 5px;
+      border-top-right-radius: 5px;
+    }
+    &:last-child {
+      border-bottom-left-radius: 5px;
+      border-bottom-right-radius: 5px;
+    }
+
+    &.disabled {
+      opacity: 0.4;
+    }
+    &.no-version .browser-name {
+      margin-top: 12px;
+    }
+  }
+
+  .browser-icon {
+    float: left;
+    width: 32px;
+    height: 32px;
+    margin-top: 8px;
+  }
+
+  .browser-info {
+    height: 100%;
+    margin-left: 48px;
+  }
+
+  .browser-name {
+    font-size: 16px;
+    font-weight: bold;
+    text-transform: capitalize;
   }
 }

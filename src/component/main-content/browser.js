@@ -40,11 +40,15 @@ export default class Browser extends React.Component {
     const browserName = this._enhanceBrowserName(browser);
 
     let title = browserName;
-    let className = 'open-browser';
+    let className = 'browser';
 
     if (disableReason) {
       className += ' disabled';
       title = disableReason;
+    }
+
+    if (!browser.version) {
+      className += ' no-version';
     }
 
     const src = `./images/${browser.type}_128x128.png`;
