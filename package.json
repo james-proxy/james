@@ -1,6 +1,6 @@
 {
   "name": "james",
-  "version": "1.4.1",
+  "version": "1.4.2",
   "description": "",
   "main": "./build/electron-app.js",
   "scripts": {

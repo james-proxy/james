@@ -1,6 +1,17 @@
 ## Upcoming Release
 
 #### User features
+- None yet
+
+#### Developer Features
+- None yet
+
+#### Bugfixes
+- None yet
+
+### 1.4.2
+
+#### User features
 - Show status of proxy in the bottom-right corner (i: @mitchhentges, r: @nerdbeere)
 - Add keyboard shortcuts for open/close dev tools (i: @mitchhentges, r: @nerdbeere)
 - Design changes and refactoring (i: @tomitm, r: @nerdbeere)
