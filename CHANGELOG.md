@@ -7,6 +7,7 @@
 - Create new URL Mapping (i: @tomitm, r: @mitchhentges, @nerdbeere)
 - Narrow footer (i: @tomitm, r: @nerdbeere)
 - UI overhaul of browser list, showing version and fixing React duplication complaints (i: @tomitm, r: @mitchhentges)
+- Update UI of browser list so that browser icon is centered, even if no version shown (i: @tomitm, r: @mitchhentges)
 
 #### Developer Features
 - Massive component refactoring (i: @tomitm, r: @mitchhentges, @nerdbeere)
