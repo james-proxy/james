@@ -23,14 +23,19 @@ const UrlMappingWindow = (props) => {
   });
 
   return <div className="window url-mapping-window">
-    <a href="#!" className="close-button" onClick={closeWindow}>
-      <i className="fa fa-remove" />
-    </a>
-    <h4>URL Mappings</h4>
-    <NewMapping target={urlInput} saveMapping={setUrlMapping} />
-    <ul className="collection with-header">
-      {urlMappings}
-    </ul>
+    <div className="url-mapping-header">
+      <button className="window-close-button btn waves-effect waves-light" onClick={closeWindow}>
+        <i className="fa fa-remove" />
+        close
+      </button>
+      <h4>URL Mappings</h4>
+      <NewMapping target={urlInput} saveMapping={setUrlMapping} />
+    </div>
+    <div className="url-mapping-footer">
+      <ul className="collection with-header">
+        {urlMappings}
+      </ul>
+    </div>
   </div>;
 };
 
