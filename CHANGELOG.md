@@ -7,7 +7,7 @@
 - None yet
 
 #### Bugfixes
-- None yet
+- Browser versions not detected on Linux (i: @mitchhentges, r: @tomitm)
 
 ### 1.4.2
 
