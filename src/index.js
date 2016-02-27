@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import hoxy from 'hoxy';
 import remote from 'remote';
 import Datastore from 'nedb';
-import browserLauncher from 'browser-launcher2';
+import browserLauncher from 'james-browser-launcher';
 
 import TitleBar from './component/title-bar/title-bar.js';
 import Footer from './component/footer/footer.js';
