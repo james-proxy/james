@@ -1,4 +1,4 @@
-import browserLauncher from 'browser-launcher2';
+import browserLauncher from 'james-browser-launcher';
 
 const defaultOptions = {
   browser: 'firefox',
