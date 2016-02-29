@@ -72,7 +72,7 @@ gulp.task('package-render', ['default'], (cb) => {
 });
 
 gulp.task('package-main', ['default'], (cb) => {
-  exec('browserify --node -e build/electron-app.js -o ./package/electron-app.js --im', browserifyCb(cb));
+  exec('browserify --node --igv=false -e build/electron-app.js -o ./package/electron-app.js --im', browserifyCb(cb));
 });
 
 gulp.task('package', ['package-resources', 'package-render', 'package-main'], (done) => {
