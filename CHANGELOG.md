@@ -4,10 +4,11 @@
 - None yet
 
 #### Developer Features
-- None yet
+- Add scrolling to request mappings (i: @nerdbeere, r: @mitchhentges, @tomitm)
 
 #### Bugfixes
 - Browser versions not detected on Linux (i: @mitchhentges, r: @tomitm)
+- Don't compile "global vars" (igv) to keep dirname in electron-app (i: @mitchhentges, r: @nerdbeere)
 
 ### 1.4.2
 
