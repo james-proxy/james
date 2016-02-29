@@ -1,5 +1,29 @@
 .url-mapping-window {
 
+  .url-mapping-header {
+    height: 220px;
+    padding-left: 10px;
+    padding-right: 10px;
+
+    .window-close-button {
+      position: absolute;
+      right: 10px;
+      top: 10px;
+    }
+  }
+
+  .url-mapping-footer {
+    height: calc(100% - 260px);
+    overflow: auto;
+    margin: 10px;
+    border: 1px solid #e0e0e0;
+
+    .collection {
+      margin: 0;
+      border: 0;
+    }
+  }
+
   input.col {
     width: 45%;
   }

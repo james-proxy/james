@@ -76,37 +76,17 @@ $windowHeight: 400;
 
 .window {
   background: $white;
-  height: calc(100% - 40px);
 
   box-sizing: border-box;
   z-index: 1000;
+  position: absolute;
 
-  margin: 20px;
-  padding: 10px;
-  border: 6px solid $lightgray-dark;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
 
   box-shadow: 0 0 30px;
-
-  .close-button {
-    display: block;
-    height: 33px;
-    width: 33px;
-
-    position: relative;
-    top: -16px;
-    right: -16px;
-    float: right;
-
-    z-index: 1000;
-    background-color: $lightgray-dark;
-    color: $darkgray-dark;
-    padding-left: 11px;
-    padding-top: 5px;
-
-    i {
-      padding: 0;
-    }
-  }
 }
 
 strong {
