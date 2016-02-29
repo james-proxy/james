@@ -18,26 +18,21 @@ describe('Proxy', function() {
 
   let proxy;
   let hoxyInstanceMock;
-  let callbacksRequest;
-  let callbacksResponseSent;
-  let callbacksResponse;
   let generateRequest;
   let cycle;
 
   beforeEach(function() {
-    callbacksRequest = [];
-    callbacksResponseSent = [];
-    callbacksResponse = [];
+    const callbacksRequest = [];
+    const callbacksResponseSent = [];
+    const callbacksResponse = [];
 
     const intercept = function(name, callback) {
       if (name === 'request') {
-        return callbacksRequest.push(callback);
-      }
-      if (name === 'response-sent') {
-        return callbacksResponseSent.push(callback);
-      }
-      if (name === 'response') {
-        return callbacksResponse.push(callback);
+        callbacksRequest.push(callback);
+      } else if (name === 'response-sent') {
+        callbacksResponseSent.push(callback);
+      } else if (name === 'response') {
+        callbacksResponse.push(callback);
       }
     };
     hoxyInstanceMock = {
