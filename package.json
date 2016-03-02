@@ -21,7 +21,7 @@
     "url": "https://github.com/james-proxy/james.git"
   },
   "dependencies": {
-    "james-browser-launcher": "^1.1.0",
+    "james-browser-launcher": "^1.2.1",
     "hoxy": "^3.2.0",
     "materialize-css": "^0.97.5",
     "nedb": "^1.7.1",
