@@ -34,9 +34,9 @@ export default class Browser extends React.Component {
   _enhanceBrowserName(browser) {
     if (browser.name === 'ie') {
       return 'Internet Explorer';
-    } else if (browser.name === 'chrome-canary' || (browser.type === 'chrome' && /SxS/.test(browser.command))) {
+    } else if (browser.type === 'chrome' && /SxS/.test(browser.command) || browser.name === 'chrome-canary') {
       return 'Chrome Canary';
-    } else if (browser.name === 'firefox-developer' || (browser.type === 'firefox' && /Developer Edition/i.test(browser.command))) {
+    } else if (browser.type === 'firefox' && /Developer Edition/i.test(browser.command) || browser.name === 'firefox-developer') {
       return 'Firefox Developer Edition';
     }
     return browser.name;
