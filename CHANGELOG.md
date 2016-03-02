@@ -11,9 +11,6 @@
 
 ### 1.4.3
 
-#### User features
-- None yet
-
 #### Developer Features
 - Add scrolling to request mappings (i: @nerdbeere, r: @mitchhentges, @tomitm)
 
