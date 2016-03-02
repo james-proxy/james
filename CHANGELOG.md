@@ -1,10 +1,10 @@
 ## Upcoming Release
 
 #### User features
-- None yet
+- Improved browser detection (i: @mitchhentges, r: @tomitm)
 
 #### Developer Features
-- None yet
+- Update eslint (i: @mitchhentges, r: @tomitm)
 
 #### Bugfixes
 - None yet
