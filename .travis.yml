@@ -26,3 +26,8 @@ deploy:
     tags: true
     all_branches: true
 
+cache:
+  apt: true
+  directories:
+    - node_modules
+    - $HOME/.electron
