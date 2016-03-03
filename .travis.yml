@@ -22,3 +22,8 @@ deploy:
   skip_cleanup: true
   on:
     tags: true
+cache:
+  apt: true
+  directories:
+    - node_modules
+    - $HOME/.electron
