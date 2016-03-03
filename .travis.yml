@@ -8,7 +8,6 @@ addons:
 script:
   - npm run test-ci
 before_deploy:
-  - npm run package
   - npm run zip-binaries
 deploy:
   provider: releases
