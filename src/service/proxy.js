@@ -63,12 +63,11 @@ export default class Proxy {
         request.newUrl = mappedUrl.newUrl;
 
         if (request.isLocal) {
-          cycle.serve({
+          return cycle.serve({
             path: request.newUrl
           }, () => {
             this._update();
           });
-          return;
         }
 
         request.fullUrl(request.newUrl);
