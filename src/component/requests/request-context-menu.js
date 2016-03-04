@@ -11,6 +11,7 @@ const RequestContextMenu = (props) => {
     removeUrlMapping,
     toggleUrlMappingActiveState
   } = props;
+  const fullUrl = request.original.fullUrl;
 
   const handleMenuClick = (fn) => (event) => {
     event.preventDefault();
@@ -22,7 +23,7 @@ const RequestContextMenu = (props) => {
     title: 'Add mapping',
     icon: 'fa-plus',
     onClick: handleMenuClick(() => {
-      showWindow('UrlMapping', {urlInput: request.originalUrl});
+      showWindow('UrlMapping', {urlInput: fullUrl});
     })
   }];
 
@@ -31,13 +32,13 @@ const RequestContextMenu = (props) => {
       title: 'Remove mapping',
       icon: 'fa-trash-o',
       onClick: handleMenuClick(() => {
-        removeUrlMapping(request.originalUrl);
+        removeUrlMapping(fullUrl);
       })
     }, {
       title: 'Activate/Deactivate',
       icon: 'fa-toggle-on',
       onClick: handleMenuClick(() => {
-        toggleUrlMappingActiveState(request.originalUrl);
+        toggleUrlMappingActiveState(fullUrl);
       })
     });
   }
