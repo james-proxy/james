@@ -42,7 +42,7 @@ export default class Proxy {
     request.id = uniqid();
     request.started = new Date().getTime();
     request.original = {
-      fullUrl: fullUrl,
+      fullUrl,
       port: request.port,
       protocol: request.protocol,
       hostname: request.hostname,
