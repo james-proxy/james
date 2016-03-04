@@ -41,7 +41,13 @@ export default class Proxy {
     request.done = false;
     request.id = uniqid();
     request.started = new Date().getTime();
-    request.originalUrl = fullUrl;
+    request.original = {
+      fullUrl: fullUrl,
+      port: request.port,
+      protocol: request.protocol,
+      hostname: request.hostname,
+      url: request.url
+    };
 
     const requestContainer = {
       request: request,
