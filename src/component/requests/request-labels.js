@@ -12,7 +12,7 @@ const RequestLabels = (props) => {
     const activeClass = request.isMappingActive ? 'mapped' : 'mapped-inactive';
 
     labelNodes.push(
-      <span className={`label ${activeClass}`} key="mapped" title={request.originalUrl}>
+      <span className={`label ${activeClass}`} key="mapped" title={url}>
         <i className="fa fa-warning" />
         mapped
       </span>
