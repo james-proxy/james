@@ -4,6 +4,7 @@
 - Improved browser detection (i: @mitchhentges, r: @tomitm)
 - Add tooltip of mapped address to "mapped" label (i: @mitchhentges, r: @nerdbeere)
 - URL list should show browser's requested URLs (i: @mitchhentges, r: @nerdbeere)
+- Search both mapped url and original url (i: @mitchhentges, r: @nerdbeere)
 
 #### Developer Features
 - Update eslint (i: @mitchhentges, r: @tomitm)
