@@ -7,7 +7,7 @@
 - Update eslint (i: @mitchhentges, r: @tomitm)
 
 #### Bugfixes
-- None yet
+- Fix URL-to-file mapping (i: @mitchhentges, r: @nerdbeere)
 
 ### 1.4.3
 
