@@ -88,7 +88,7 @@ export default class Proxy {
   getRequestData(filter) {
     const filteredRequests = !filter ? this._requests : this._requests
       .filter((request) => {
-        return request.request.fullUrl().indexOf(filter) !== -1;
+        return request.request.fullUrl().includes(filter) || request.request.original.fullUrl.includes(filter);
       });
 
     return {
