@@ -11,6 +11,7 @@ const _shorten = (str, maxLength) => {
 
 const FullUrl = (props) => {
   const {request, isShortened} = props;
+  const original = request.original;
 
   let maxUrlLength = 1000;
   if (isShortened) {
@@ -19,14 +20,14 @@ const FullUrl = (props) => {
 
   let port = null;
   if (request.port) {
-    port = <span className="port">:{request.port}</span>;
+    port = <span className="port">:{original.port}</span>;
   }
 
   return <div className="complete-url">
-    <span className="protocol">{request.protocol + '//'}</span>
-    <span className="hostname">{request.hostname}</span>
+    <span className="protocol">{original.protocol + '//'}</span>
+    <span className="hostname">{original.hostname}</span>
     {port}
-    <span className="url">{_shorten(request.url, maxUrlLength)}</span>
+    <span className="url">{_shorten(original.url, maxUrlLength)}</span>
   </div>;
 };
 
