@@ -7,6 +7,7 @@
 
 #### Developer Features
 - Update eslint (i: @mitchhentges, r: @tomitm)
+- Run npm update prior to running `test-ci` (i: @mitchhentges, r: @nerdbeere)
 
 #### Bugfixes
 - Fix URL-to-file mapping (i: @mitchhentges, r: @nerdbeere)
