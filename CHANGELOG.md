@@ -2,6 +2,7 @@
 
 #### User features
 - Improved browser detection (i: @mitchhentges, r: @tomitm)
+- Add tooltip of mapped address to "mapped" label (i: @mitchhentges, r: @nerdbeere)
 
 #### Developer Features
 - Update eslint (i: @mitchhentges, r: @tomitm)
