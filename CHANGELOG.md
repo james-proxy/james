@@ -2,12 +2,13 @@
 
 #### User features
 - Improved browser detection (i: @mitchhentges, r: @tomitm)
+- Add tooltip of mapped address to "mapped" label (i: @mitchhentges, r: @nerdbeere)
 
 #### Developer Features
 - Update eslint (i: @mitchhentges, r: @tomitm)
 
 #### Bugfixes
-- None yet
+- Fix URL-to-file mapping (i: @mitchhentges, r: @nerdbeere)
 
 ### 1.4.3
 
