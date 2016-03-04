@@ -6,6 +6,7 @@ addons:
     packages:
       - wine
 script:
+  - npm --depth Infinity update
   - npm run test-ci
 before_deploy:
   - npm run zip-binaries
