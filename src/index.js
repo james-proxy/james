@@ -171,12 +171,12 @@ function render() {
     <div className="container">
       <TitleBar
         urlMapCount={data.urlMapCount}
-        showWindow={toggleWindow}
+        toggleWindow={toggleWindow}
         openDevTools={devTools.toggle.bind(devTools)} />
       <MainContent
         openBrowser={openBrowser}
         browsers={data.browsers}
-        showWindow={toggleWindow}
+        toggleWindow={toggleWindow}
         activeWindow={activeWindow}
         requestData={requestData}
         filterRequests={filterRequests}

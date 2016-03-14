@@ -57,7 +57,7 @@ export default class MainContent extends React.Component {
       browsers,
       openBrowser,
       requestData,
-      showWindow,
+      toggleWindow,
       config,
       activeWindow,
       filterRequests,
@@ -90,7 +90,7 @@ export default class MainContent extends React.Component {
       {welcome}
       <Requests
         requestData={requestData}
-        showWindow={showWindow}
+        toggleWindow={toggleWindow}
         config={config}
         isActiveRequest={this.isActiveRequest.bind(this)}
         setActiveRequest={this.setActiveRequest.bind(this)}
@@ -106,7 +106,7 @@ export default class MainContent extends React.Component {
 MainContent.propTypes = {
   openBrowser: func.isRequired,
   browsers: array.isRequired,
-  showWindow: func.isRequired,
+  toggleWindow: func.isRequired,
   filterRequests: func.isRequired,
   requests: arrayOf(shape({
     request: object,

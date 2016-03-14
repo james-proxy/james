@@ -6,7 +6,7 @@ const {object, func} = React.PropTypes;
 const RequestContextMenu = (props) => {
   const {
     request,
-    showWindow,
+    toggleWindow,
     handleContextMenu,
     removeUrlMapping,
     toggleUrlMappingActiveState
@@ -23,7 +23,7 @@ const RequestContextMenu = (props) => {
     title: 'Add mapping',
     icon: 'fa-plus',
     onClick: handleMenuClick(() => {
-      showWindow('UrlMapping', {urlInput: fullUrl});
+      toggleWindow('UrlMapping', {urlInput: fullUrl});
     })
   }];
 
@@ -48,7 +48,7 @@ const RequestContextMenu = (props) => {
 
 RequestContextMenu.propTypes = {
   request: object.isRequired,
-  showWindow: func.isRequired,
+  toggleWindow: func.isRequired,
   handleContextMenu: func.isRequired,
   removeUrlMapping: func.isRequired,
   toggleUrlMappingActiveState: func.isRequired
