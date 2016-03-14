@@ -4,6 +4,7 @@ import hoxy from 'hoxy';
 import remote from 'remote';
 import Datastore from 'nedb';
 import browserLauncher from 'james-browser-launcher';
+import Raven from 'raven-js';
 
 import TitleBar from './component/title-bar/title-bar.js';
 import Footer from './component/footer/footer.js';
@@ -22,6 +23,7 @@ import constants from './constants.js';
 const app = remote.require('app');
 const fs = remote.require('fs');
 
+Raven.config('https://efe270d1329547fa9856935a2c535cba@sentry.fuzzlesoft.ca/6').install()
 createMenu();
 
 // windows
