@@ -23,7 +23,9 @@ import constants from './constants.js';
 const app = remote.require('app');
 const fs = remote.require('fs');
 
-Raven.config('https://efe270d1329547fa9856935a2c535cba@sentry.fuzzlesoft.ca/6').install()
+Raven.config('https://efe270d1329547fa9856935a2c535cba@sentry.fuzzlesoft.ca/6', {
+  release: app.getVersion()
+}).install()
 createMenu();
 
 // windows
