@@ -133,16 +133,21 @@ const closeWindow = () => {
   render();
 };
 
-const showWindow = (windowName, options = {}) => {
-  data.activeWindow = {
-    factory: windowFactories[windowName],
-    options: options
-  };
+const toggleWindow = (windowName, options = {}) => {
+  if (data.activeWindow && data.activeWindow.name === windowName) {
+    data.activeWindow = null;
+  } else {
+    data.activeWindow = {
+      name: windowName,
+      factory: windowFactories[windowName],
+      options: options
+    };
+  }
   render();
 };
 
 keyboard.register('Esc', closeWindow);
-keyboard.register('CommandOrControl+U', () => showWindow('UrlMapping'));
+keyboard.register('CommandOrControl+U', () => toggleWindow('UrlMapping'));
 keyboard.register('F12', devTools.toggle.bind(devTools));
 keyboard.register('Ctrl+Shift+I', devTools.toggle.bind(devTools));
 keyboard.register('CommandOrControl+Alt+I', devTools.toggle.bind(devTools));
@@ -166,12 +171,12 @@ function render() {
     <div className="container">
       <TitleBar
         urlMapCount={data.urlMapCount}
-        showWindow={showWindow}
+        showWindow={toggleWindow}
         openDevTools={devTools.toggle.bind(devTools)} />
       <MainContent
         openBrowser={openBrowser}
         browsers={data.browsers}
-        showWindow={showWindow}
+        showWindow={toggleWindow}
         activeWindow={activeWindow}
         requestData={requestData}
         filterRequests={filterRequests}
