@@ -11,7 +11,7 @@ export default class Requests extends React.Component {
       setActiveRequest,
       isContextMenuRequest,
       setContextMenuRequest,
-      showWindow,
+      toggleWindow,
       config,
       requestData,
       removeUrlMapping,
@@ -36,7 +36,7 @@ export default class Requests extends React.Component {
         isActive={isActive}
         isContextMenu={isContextMenu}
         config={config}
-        showWindow={showWindow}
+        toggleWindow={toggleWindow}
         handleClick={handleClick}
         handleContextMenu={handleContextMenu}
         key={request.request.id}
@@ -52,7 +52,7 @@ export default class Requests extends React.Component {
 
 Requests.propTypes = {
   requestData: object.isRequired,
-  showWindow: func.isRequired,
+  toggleWindow: func.isRequired,
   filter: string,
   isActiveRequest: func.isRequired,
   setActiveRequest: func.isRequired,

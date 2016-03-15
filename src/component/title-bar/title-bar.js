@@ -4,13 +4,13 @@ const {func, number} = React.PropTypes;
 
 const TitleBar = (props) => {
   const {
-    showWindow,
+    toggleWindow,
     openDevTools,
     urlMapCount
   } = props;
 
   const openUrlMapping = () => {
-    showWindow('UrlMapping');
+    toggleWindow('UrlMapping');
   };
 
   let UrlMapCountLabel;
@@ -37,7 +37,7 @@ const TitleBar = (props) => {
 };
 
 TitleBar.propTypes = {
-  showWindow: func.isRequired,
+  toggleWindow: func.isRequired,
   openDevTools: func.isRequired,
   urlMapCount: number.isRequired
 };
