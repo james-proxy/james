@@ -5,10 +5,13 @@
 - Add tooltip of mapped address to "mapped" label (i: @mitchhentges, r: @nerdbeere)
 - URL list should show browser's requested URLs (i: @mitchhentges, r: @nerdbeere)
 - Search both mapped url and original url (i: @mitchhentges, r: @nerdbeere)
+- Clicking "URL Mapping" button toggles URL Mapping window instead of just opening (i: @mitchhentges, r: @tomitm)
 
 #### Developer Features
 - Update eslint (i: @mitchhentges, r: @tomitm)
 - Run npm update prior to running `test-ci` (i: @mitchhentges, r: @nerdbeere)
+- Electron updated to `0.37` (i: @mitchhentges, r: @tomitm)
+- Fix eslint build error (update to v6.0.0-beta.6 babel-eslint) (i: @mitchhentges, r: @tomitm)
 
 #### Bugfixes
 - Fix URL-to-file mapping (i: @mitchhentges, r: @nerdbeere)
