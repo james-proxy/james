@@ -26,7 +26,7 @@ gulp.task('js', (done) => {
       presets: ['es2015', 'react'],
       plugins: ['transform-object-rest-spread']
     }))
-    .on('error', done)//Don't want watch tasks to stop when mid-development, but still want errcode 1 on `npm run build`
+    .on('error', done) // Handle error so 'watch' tasks don't stop mid-development, but still send errcode 1
     .pipe(gulp.dest('build'));
 });
 
@@ -64,7 +64,7 @@ const browserifyCb = (cb) => {
     console.log(stdout);
     console.error(stderr);
     cb(err);
-  }
+  };
 };
 
 gulp.task('package-render', ['default'], (cb) => {
@@ -83,9 +83,9 @@ gulp.task('package', ['package-resources', 'package-render', 'package-main'], (d
     name: 'James',
     overwrite: true,
     icon: 'resource/icon.icns',
-    version: '0.36.5',
+    version: '0.37.2',
     out: 'binaries'
-  }, () => done())
+  }, () => done());
 });
 
 gulp.task('watch', ['default'], () => {
