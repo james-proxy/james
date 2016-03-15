@@ -23,7 +23,7 @@ import constants from './constants.js';
 const app = remote.require('app');
 const fs = remote.require('fs');
 
-Raven.config('https://efe270d1329547fa9856935a2c535cba@sentry.fuzzlesoft.ca/6', {
+Raven.config('https://' + config.sentry.dsn + '@' + config.sentry.host, {
   release: app.getVersion()
 }).install();
 createMenu();
