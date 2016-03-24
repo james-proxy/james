@@ -5,7 +5,7 @@ import constants from '../constants.js';
 const app = remote.require('app');
 
 export default function init() {
-  if (!constants.DEV) {
+  if (constants.DEV) {
     return;
   }
   
