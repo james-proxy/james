@@ -4,12 +4,12 @@ import hoxy from 'hoxy';
 import remote from 'remote';
 import Datastore from 'nedb';
 import browserLauncher from 'james-browser-launcher';
-import Raven from 'raven-js';
 
 import TitleBar from './component/title-bar/title-bar.js';
 import Footer from './component/footer/footer.js';
 import MainContent from './component/main-content/main-content.js';
 
+import ravenInit from './service/raven.js';
 import Proxy from './service/proxy.js';
 import config from './config.js';
 import UrlMapper from './url-mapper.js';
@@ -23,9 +23,7 @@ import constants from './constants.js';
 const app = remote.require('app');
 const fs = remote.require('fs');
 
-Raven.config('https://' + config.sentry.dsn + '@' + config.sentry.host, {
-  release: app.getVersion()
-}).install();
+ravenInit();
 createMenu();
 
 // windows
