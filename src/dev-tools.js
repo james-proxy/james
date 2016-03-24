@@ -1,8 +1,11 @@
 import remote from 'remote';
 
 export default class DevTools {
-  constructor() {
+  constructor(initial) {
     this._open = false;
+    if (initial) {
+      this.toggle();
+    }
   }
 
   toggle() {

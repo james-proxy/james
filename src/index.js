@@ -47,7 +47,7 @@ const data = {
 };
 
 const keyboard = new Keyboard();
-const devTools = new DevTools();
+const devTools = new DevTools(constants.DEV);
 const urlMapper = new UrlMapper(db, function() {
   data.urlMappings = urlMapper.mappings();
   render();
