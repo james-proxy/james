@@ -13,6 +13,7 @@
 - Electron updated to `0.37` (i: @mitchhentges, r: @tomitm)
 - Fix eslint build error (update to v6.0.0-beta.6 babel-eslint) (i: @mitchhentges, r: @tomitm)
 - Add Raven to report errors to Sentry (i: @mitchhentges, r: @tomitm)
+- Don't report errors to Sentry if in development environment (i: @mitchhentges, r: @tomitm)
 
 #### Bugfixes
 - Fix URL-to-file mapping (i: @mitchhentges, r: @nerdbeere)
