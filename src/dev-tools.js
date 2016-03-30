@@ -1,7 +1,7 @@
 import remote from 'remote';
 
 export default class DevTools {
-  constructor() {
+  constructor(startOpen) {
     this._window = remote.getCurrentWindow();
     this._open = false;
     if (startOpen) {
