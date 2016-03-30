@@ -4,5 +4,6 @@ export default {
   'PROXY_STATUS_ERROR_GENERIC': 'generic_error',
   'PROXY_STATUS_ERROR_ADDRESS_IN_USE': 'error_address_in_use',
   'NEW_MAPPING_STEP_TARGET': 'target',
-  'NEW_MAPPING_STEP_DESTINATION': 'destination'
+  'NEW_MAPPING_STEP_DESTINATION': 'destination',
+  'DEV': process.execPath.indexOf('electron-prebuilt') >= 0
 };
