@@ -16,6 +16,7 @@ $fa-font-path: "fonts" !default;
 @import url(http://fonts.googleapis.com/css?family=Droid+Sans+Mono);
 
 body {
+  background-color: $white;
   font-family: 'Lato', sans-serif;
   overflow: hidden;
 }

@@ -83,7 +83,7 @@ gulp.task('package', ['package-resources', 'package-render', 'package-main'], (d
     name: 'James',
     overwrite: true,
     icon: 'resource/icon.icns',
-    version: '0.37.2',
+    version: '0.37.3',
     out: 'binaries'
   }, () => done());
 });
