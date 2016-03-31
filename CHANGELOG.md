@@ -17,6 +17,7 @@
 
 #### Bugfixes
 - Fix URL-to-file mapping (i: @mitchhentges, r: @nerdbeere)
+- Fix "object of undefined" exception with electron-connect (i: @mitchhentges, r: @nerdbeere)
 
 ### 1.4.3
 
