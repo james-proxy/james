@@ -1,3 +1,4 @@
+const fs = require('fs');
 const gulp = require('gulp');
 const es = require('event-stream');
 const babel = require('gulp-babel');
@@ -76,6 +77,9 @@ gulp.task('package-main', ['default'], (cb) => {
 });
 
 gulp.task('package', ['package-resources', 'package-render', 'package-main'], (done) => {
+  const manifest = JSON.parse(fs.readFileSync('package.json', 'utf8'));
+  const electronVersion = manifest.devDependencies['electron-prebuilt'];
+
   electron({
     all: true,
     dir: 'package',
@@ -83,7 +87,7 @@ gulp.task('package', ['package-resources', 'package-render', 'package-main'], (d
     name: 'James',
     overwrite: true,
     icon: 'resource/icon.icns',
-    version: '0.37.3',
+    version: electronVersion,
     out: 'binaries'
   }, () => done());
 });
