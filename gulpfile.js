@@ -1,4 +1,5 @@
 const fs = require('fs');
+const mkdirp = require('mkdirp');
 const gulp = require('gulp');
 const es = require('event-stream');
 const babel = require('gulp-babel');
@@ -27,7 +28,10 @@ const browserifyOpts = {
     __dirname: undefined,
     __filename: undefined
   },
-  ignoreMissing: true
+  ignoreMissing: true,
+  transform: [
+    'envify'
+  ]
 };
 
 gulp.task('default', ['js', 'css', 'resources']);
@@ -66,7 +70,12 @@ gulp.task('resources', () => {
   ]);
 });
 
-gulp.task('package-resources', ['default'], () => {
+gulp.task('package-init', () => {
+  mkdirp.sync('package');
+  process.env.NODE_ENV = 'production';
+});
+
+gulp.task('package-resources', ['default', 'package-init'], () => {
   return es.merge([
     gulp.src('node_modules/font-awesome/fonts/**').pipe(gulp.dest('package/fonts')),
     gulp.src('build/james.css').pipe(gulp.dest('package')),
@@ -76,13 +85,13 @@ gulp.task('package-resources', ['default'], () => {
   ]);
 });
 
-gulp.task('package-render', ['default'], () => {
+gulp.task('package-render', ['default', 'package-init'], () => {
   browserify('build/index.js', browserifyOpts)
     .bundle()
     .pipe(fs.createWriteStream('package/index.js'));
 });
 
-gulp.task('package-main', ['default'], () => {
+gulp.task('package-main', ['default', 'package-init'], () => {
   browserify('build/electron-app.js', browserifyOpts)
     .bundle()
     .pipe(fs.createWriteStream('package/electron-app.js'));
