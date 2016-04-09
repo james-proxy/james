@@ -11,7 +11,8 @@ const electron = require('electron-packager');
 const useref = require('gulp-useref');
 const electronConnect = require('electron-connect').server.create();
 const gulpif = require('gulp-if');
-const exec = require('child_process').exec;
+const browserify = require('browserify');
+const source = require('vinyl-source-stream');
 
 gulp.task('default', ['js', 'css', 'resources']);
 
@@ -59,23 +60,43 @@ gulp.task('package-resources', ['default'], () => {
   ]);
 });
 
-const browserifyCb = (cb) => {
-  return (err, stdout, stderr) => {
-    console.log(stdout);
-    console.error(stderr);
-    cb(err);
-  };
-};
+function gulpBrowserify(entry) {
+  process.env.NODE_ENV = 'production';
+  return browserify(entry, {
+    builtins: false,
+    commondir: false,
+    browserField: false,
+    insertGlobals: false,
+    insertGlobalVars: {
+      process: undefined,
+      global: undefined,
+      'Buffer.isBuffer': undefined,
+      Buffer: undefined,
+      __dirname: undefined,
+      __filename: undefined
+    },
+    ignoreMissing: true,
+    transform: [
+      'envify'
+    ]
+  }).bundle();
+}
 
-gulp.task('package-render', ['default'], (cb) => {
-  exec('browserify --node -e build/index.js -o ./package/index.js --im', browserifyCb(cb));
+gulp.task('package-render', ['default'], () => {
+  gulpBrowserify('build/index.js')
+    .pipe(source('index.js'))
+    .pipe(gulp.dest('./package'));
 });
 
-gulp.task('package-main', ['default'], (cb) => {
-  exec('browserify --node --igv=false -e build/electron-app.js -o ./package/electron-app.js --im', browserifyCb(cb));
+gulp.task('package-main', ['default'], () => {
+  gulpBrowserify('build/electron-app.js')
+    .pipe(source('electron-app.js'))
+    .pipe(gulp.dest('./package'));
 });
 
 gulp.task('package', ['package-resources', 'package-render', 'package-main'], (done) => {
+  const electronVersion = require('electron-prebuilt/package.json').version;
+
   electron({
     all: true,
     dir: 'package',
@@ -83,9 +104,9 @@ gulp.task('package', ['package-resources', 'package-render', 'package-main'], (d
     name: 'James',
     overwrite: true,
     icon: 'resource/icon.icns',
-    version: '0.37.3',
+    version: electronVersion,
     out: 'binaries'
-  }, () => done());
+  }, (err) => done(err));
 });
 
 gulp.task('watch', ['default'], () => {
