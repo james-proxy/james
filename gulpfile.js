@@ -94,8 +94,8 @@ gulp.task('package-main', ['default'], () => {
     .pipe(gulp.dest('./package'));
 });
 
-gulp.task('package', ['package-resources', 'package-render', 'package-main'], () => {
-  const electronVersion = require('electron-packager/package.json').version;
+gulp.task('package', ['package-resources', 'package-render', 'package-main'], (done) => {
+  const electronVersion = require('electron-prebuilt/package.json').version;
 
   electron({
     all: true,
