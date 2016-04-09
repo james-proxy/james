@@ -106,7 +106,7 @@ gulp.task('package', ['package-resources', 'package-render', 'package-main'], (d
     icon: 'resource/icon.icns',
     version: electronVersion,
     out: 'binaries'
-  }, () => done());
+  }, (err) => done(err));
 });
 
 gulp.task('watch', ['default'], () => {
