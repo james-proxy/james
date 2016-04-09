@@ -1,5 +1,3 @@
-const fs = require('fs');
-const mkdirp = require('mkdirp');
 const gulp = require('gulp');
 const es = require('event-stream');
 const babel = require('gulp-babel');
@@ -14,25 +12,7 @@ const useref = require('gulp-useref');
 const electronConnect = require('electron-connect').server.create();
 const gulpif = require('gulp-if');
 const browserify = require('browserify');
-
-const browserifyOpts = {
-  builtins: false,
-  commondir: false,
-  browserField: false,
-  insertGlobals: false,
-  insertGlobalVars: {
-    process: undefined,
-    global: undefined,
-    'Buffer.isBuffer': undefined,
-    Buffer: undefined,
-    __dirname: undefined,
-    __filename: undefined
-  },
-  ignoreMissing: true,
-  transform: [
-    'envify'
-  ]
-};
+const source = require('vinyl-source-stream');
 
 gulp.task('default', ['js', 'css', 'resources']);
 
@@ -70,12 +50,7 @@ gulp.task('resources', () => {
   ]);
 });
 
-gulp.task('package-init', () => {
-  mkdirp.sync('package');
-  process.env.NODE_ENV = 'production';
-});
-
-gulp.task('package-resources', ['default', 'package-init'], () => {
+gulp.task('package-resources', ['default'], () => {
   return es.merge([
     gulp.src('node_modules/font-awesome/fonts/**').pipe(gulp.dest('package/fonts')),
     gulp.src('build/james.css').pipe(gulp.dest('package')),
@@ -85,21 +60,42 @@ gulp.task('package-resources', ['default', 'package-init'], () => {
   ]);
 });
 
-gulp.task('package-render', ['default', 'package-init'], () => {
-  browserify('build/index.js', browserifyOpts)
-    .bundle()
-    .pipe(fs.createWriteStream('package/index.js'));
+function gulpBrowserify(entry) {
+  process.env.NODE_ENV = 'production';
+  return browserify(entry, {
+    builtins: false,
+    commondir: false,
+    browserField: false,
+    insertGlobals: false,
+    insertGlobalVars: {
+      process: undefined,
+      global: undefined,
+      'Buffer.isBuffer': undefined,
+      Buffer: undefined,
+      __dirname: undefined,
+      __filename: undefined
+    },
+    ignoreMissing: true,
+    transform: [
+      'envify'
+    ]
+  }).bundle();
+}
+
+gulp.task('package-render', ['default'], () => {
+  gulpBrowserify('build/index.js')
+    .pipe(source('index.js'))
+    .pipe(gulp.dest('./package'));
 });
 
-gulp.task('package-main', ['default', 'package-init'], () => {
-  browserify('build/electron-app.js', browserifyOpts)
-    .bundle()
-    .pipe(fs.createWriteStream('package/electron-app.js'));
+gulp.task('package-main', ['default'], () => {
+  gulpBrowserify('build/electron-app.js')
+    .pipe(source('electron-app.js'))
+    .pipe(gulp.dest('./package'));
 });
 
-gulp.task('package', ['package-resources', 'package-render', 'package-main'], (done) => {
-  const manifest = JSON.parse(fs.readFileSync('package.json', 'utf8'));
-  const electronVersion = manifest.devDependencies['electron-prebuilt'];
+gulp.task('package', ['package-resources', 'package-render', 'package-main'], () => {
+  const electronVersion = require('electron-packager/package.json').version;
 
   electron({
     all: true,
