@@ -11,7 +11,7 @@ export default class DevTools {
 
   toggle() {
     if (!this._open) {
-      this._window.openDevTools({detach: true});
+      this._window.openDevTools({mode: 'detach'});
       this._open = true;
     } else {
       this._window.closeDevTools();
