@@ -58,6 +58,7 @@
     "gulp-sourcemaps": "^1.6.0",
     "gulp-useref": "^3.0.5",
     "mocha": "^2.3.4",
+    "node-sass": "3.6.0",
     "referee": "^1.2.0",
     "referee-sinon": "^1.0.3",
     "rimraf": "^2.5.0",
