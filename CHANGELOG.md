@@ -15,6 +15,7 @@
 - Add Raven to report errors to Sentry (i: @mitchhentges, r: @tomitm)
 - Don't report errors to Sentry if in development environment (i: @mitchhentges, r: @tomitm)
 - Update React, Electron, and Travis' Node version (i: @mitchhentges, r: @tomitm)
+- Upgrade electron-packager, electron, etc (i: @mitchhentges, r: @tomitm)
 
 #### Bugfixes
 - Fix URL-to-file mapping (i: @mitchhentges, r: @nerdbeere)
