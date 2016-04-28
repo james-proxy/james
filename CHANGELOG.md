@@ -1,6 +1,17 @@
 ## Upcoming Release
 
 #### User features
+- Nothing yet
+
+#### Developer Features
+- Nothing yet
+
+#### Bugfixes
+- Nothing yet
+
+### 1.4.4
+
+#### User features
 - Improved browser detection (i: @mitchhentges, r: @tomitm)
 - Add tooltip of mapped address to "mapped" label (i: @mitchhentges, r: @nerdbeere)
 - URL list should show browser's requested URLs (i: @mitchhentges, r: @nerdbeere)
