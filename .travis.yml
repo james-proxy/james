@@ -13,7 +13,7 @@ before_deploy:
 deploy:
   provider: releases
   api_key:
-    secure: fnzRn6GAv7ppX2HhmiJ8Z0Ej0p7M2NlJ0ondxgDY1qu6Ukc9zT6A7Qr4vwnSkYihjkjfyDQRN8Fz09/pJRHfk5ydnptAvJoV3sErb2DQ62NVEkDXybEiKC9+zBuXGTaBOSOl4WfYrfaUe3KdU2gjt+4mIAy5dnWWm93sqZbd5gK7V6zjksZo8ca8/qBL4OaUMYLgB5Uy3yJvm8Kx7Y5gBYTFpKuDWSr6wQRcQ7JAFNUoRbyWXeCyrV32KULsiImrTLGBp2tIBb6R5LN5kWrfuSAdFOvaEq/ToUiTykoTCpm6FMUvbhG697rNe4AebW3fUazcXB3S9GBUdnUNJYXIVULxDfQ4z+ZDpH9iu+X9QDEM4dvvHGJAxOJyQOEoOQWqEVebxLWhYY2TuJjdQstYvUA4xga9iJ+T0+rjRP+2ngMluhrXzXsmKDAbdJTajm74TvRKh/w5sIzjb8n+Pup0Dp+awZLE5ZkCEsPeTN66HesvMur2sLS0gFPdvjEsR/8tWVqPVBH5fVDKVdbnbv1WzN/eHExOx6qIV3GiMcDmK14CQ100VRTlqommpxM+S/LwL7F6vgwg9oi1OONBJpfOWRSJCD6huFPSA3tbS2eh3FkyAkcxGSbOFNSC3e2F07Pmjb0dGaKWBQ9D025xe1/I0qX8vx7TL49SjiEVznKGNhY=
+    secure: secure: KEDggFkivi1iJbO/G4hicXznWk+bGA7sDuKSd36fBB9pIN/JSr08HlasrmqLmRva/rkHinbEdu+f75k/xh/m0UKll5jXUhmJVgbvNjPWQDtRSeeRM8UjveCL9wTZopkM4bLLxmWD2klyCC8qde5mMOJ1gRi+aPboGBgxEmtD69Bdhq1k3Dd2HTFnqQEh+8al2//+ayhne512Mo+lgwR1+4pLbhE/xK0iV7gQllRzTT2/ifbn5an8vbUkwfmm2NivNhSJTaPD2NndLvOVBKKQVcbIx+37gXO1Hn6F7Wr0MMHeh/ypJzGygxPQ2xZHtCKABw8jFetpFaFzm4xFcbyHsqclQlDLCv9J1e5DMvWk2ay29L9qWXT5dc7tnjaIVFPMEw4ViwIC30ThO44HHm6m+/tQAp3cDAD37uunp83wDAImbyCzZ3UoNLcmWHc39fxaD1s4Fzan3/++QbqSgdB+p4dXraxlRyqFcmKW+O5S+oGFolmdLuRbxPaaeIMMGm9AN7+fmGJgmiRzPU5k3/ao6eHoycXVPcIiuFV+2ZxvJS4ewqT+HiH6cNOFeeHEXx2O0fjEuj7mZG5Jey5GNsOdcq7loPnipcGbDnIHs+wRyqPCQ5aZ+94gQAemjBdtVnDTKd7RSjKHWmbo3Xx260XnwAEsTDtVuUJmyVjpIdCdNAs=
   file:
   - binaries/James-darwin-x64.zip
   - binaries/James-linux-ia32.zip
@@ -22,6 +22,7 @@ deploy:
   - binaries/James-win32-x64.zip
   skip_cleanup: true
   on:
+    repo: james-proxy/james
     tags: true
 cache:
   apt: true
