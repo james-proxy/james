@@ -95,7 +95,9 @@ gulp.task('package-main', ['default'], () => {
 });
 
 gulp.task('package', ['package-resources', 'package-render', 'package-main'], (done) => {
+  const appVersion = require('./package.json').version;
   const electronVersion = require('electron-prebuilt/package.json').version;
+  console.log(`Packaging James v${appVersion}...`);
 
   electron({
     all: true,
@@ -104,6 +106,7 @@ gulp.task('package', ['package-resources', 'package-render', 'package-main'], (d
     name: 'James',
     overwrite: true,
     icon: 'resource/icon.icns',
+    'app-version': appVersion,
     version: electronVersion,
     out: 'binaries'
   }, (err) => done(err));

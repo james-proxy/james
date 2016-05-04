@@ -1,8 +1,6 @@
-const electron = require('electron');
-const app = electron.app;  // Module to control application life.
-const ipc = electron.ipcMain;
-const BrowserWindow = require('browser-window');  // Module to create native browser window.
-const localShortcut = require('electron-localshortcut');
+import { app, ipcMain as ipc } from 'electron'; // app controls application life.
+import BrowserWindow from 'browser-window'; // Module to create native browser window.
+import localShortcut from 'electron-localshortcut';
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the javascript object is GCed.
