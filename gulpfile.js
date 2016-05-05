@@ -72,7 +72,6 @@ function gulpBrowserify(entry) {
       global: undefined,
       'Buffer.isBuffer': undefined,
       Buffer: undefined,
-      __dirname: undefined,
       __filename: undefined
     },
     ignoreMissing: true,
