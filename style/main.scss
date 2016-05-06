@@ -12,8 +12,11 @@ $fa-font-path: "fonts" !default;
 @import 'components/inspect-request';
 @import 'components/windows/url-mapping';
 
-@import url(http://fonts.googleapis.com/css?family=Lato:300,400,700);
-@import url(http://fonts.googleapis.com/css?family=Droid+Sans+Mono);
+$lato-font-path: '../node_modules/lato-font/fonts';
+@import '../node_modules/lato-font/scss/public-api';
+@include lato-include-font('light'); // 300
+@include lato-include-font('normal'); // 400
+@include lato-include-font('bold'); // 600
 
 body {
   font-family: 'Lato', sans-serif;
