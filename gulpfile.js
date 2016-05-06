@@ -9,7 +9,7 @@ const sourcemaps = require('gulp-sourcemaps');
 const autoprefixer = require('gulp-autoprefixer');
 const electron = require('electron-packager');
 const useref = require('gulp-useref');
-const electronConnect = require('electron-connect').server.create();
+const electronConnect = require('electron-connect').server;
 const gulpif = require('gulp-if');
 const browserify = require('browserify');
 const source = require('vinyl-source-stream');
@@ -44,6 +44,7 @@ gulp.task('css', () => {
 gulp.task('resources', () => {
   return es.merge([
     gulp.src('node_modules/font-awesome/fonts/**').pipe(gulp.dest('build/fonts')),
+    gulp.src('package.json').pipe(gulp.dest('build')),
     gulp.src('resource/**')
       .pipe(changed('build'))
       .pipe(gulp.dest('build'))
@@ -120,8 +121,10 @@ gulp.task('watch', ['default'], () => {
 });
 
 gulp.task('livereload', ['default'], () => {
-  electronConnect.start();
-  const reload = () => electronConnect.reload();
+  var server = electronConnect.create({path: './build'});
+  server.start();
+  const reload = () => server.reload();
+
   gulp.watch('src/**', ['js', reload]);
   gulp.watch('style/**', ['css', reload]);
   gulp.watch('resource/**', ['resources', reload]);
