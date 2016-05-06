@@ -2,7 +2,7 @@
   "name": "james",
   "version": "1.4.4",
   "description": "",
-  "main": "./build/electron-app.js",
+  "main": "./electron-app.js",
   "scripts": {
     "build": "gulp",
     "watch": "gulp watch",
