@@ -37,7 +37,7 @@
     "babel-plugin-transform-object-rest-spread": "^6.3.13",
     "babel-preset-es2015": "^6.3.13",
     "babel-preset-react": "^6.3.13",
-    "browserify": "^13.0.0",
+    "browserify": "^13.0.1",
     "del": "^2.2.0",
     "electron-connect": "^0.3.5",
     "electron-localshortcut": "^0.6.0",
