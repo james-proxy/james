@@ -7,7 +7,7 @@
 - Nothing yet
 
 #### Bugfixes
-- Nothing yet
+- Browsers are now detected on Windows again (Fixed in `james-browser-launcher` dependency)
 
 ### 1.4.4
 
