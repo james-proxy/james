@@ -8,6 +8,7 @@
 
 #### Bugfixes
 - Browsers are now detected on Windows again (Fixed in `james-browser-launcher` dependency)
+- Version is properly reported on PROD builds (i: @tomitm, r: @mitchhentges)
 
 ### 1.4.4
 
