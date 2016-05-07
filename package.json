@@ -2,14 +2,14 @@
   "name": "james",
   "version": "1.4.4",
   "description": "",
-  "main": "./build/electron-app.js",
+  "main": "electron-app.js",
   "scripts": {
     "build": "gulp",
     "watch": "gulp watch",
     "development": "gulp livereload",
     "package": "gulp clean package",
     "zip-binaries": "cd binaries; rm *.zip; for i in *; do zip --symlinks -r \"${i%/}.zip\" \"$i\"; done",
-    "start": "electron .",
+    "start": "electron ./build",
     "lint": "eslint ./src ./test",
     "test": "mocha --reporter dot --recursive -r setup-referee-sinon/globals test/unit --compilers js:babel-core/register",
     "test-ci": "npm run lint && npm run test && npm run package"
