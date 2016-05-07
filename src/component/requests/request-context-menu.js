@@ -1,4 +1,12 @@
 import React from 'react';
+import { connect } from 'react-redux';
+
+import {
+  showAddUrlMapping,
+  toggleUrlMapping,
+  removeUrlMapping
+} from '../../actions/url-mappings.js';
+
 import ContextMenu from '../context-menu/context-menu.js';
 
 const {object, func} = React.PropTypes;
@@ -6,10 +14,10 @@ const {object, func} = React.PropTypes;
 const RequestContextMenu = (props) => {
   const {
     request,
-    toggleWindow,
     handleContextMenu,
-    removeUrlMapping,
-    toggleUrlMappingActiveState
+    showAddMapping,
+    toggleMapping,
+    removeMapping
   } = props;
   const fullUrl = request.original.fullUrl;
 
@@ -23,7 +31,7 @@ const RequestContextMenu = (props) => {
     title: 'Add mapping',
     icon: 'fa-plus',
     onClick: handleMenuClick(() => {
-      toggleWindow('UrlMapping', {urlInput: fullUrl});
+      showAddMapping(fullUrl);
     })
   }];
 
@@ -32,13 +40,13 @@ const RequestContextMenu = (props) => {
       title: 'Remove mapping',
       icon: 'fa-trash-o',
       onClick: handleMenuClick(() => {
-        removeUrlMapping(fullUrl);
+        removeMapping(fullUrl);
       })
     }, {
       title: 'Activate/Deactivate',
       icon: 'fa-toggle-on',
       onClick: handleMenuClick(() => {
-        toggleUrlMappingActiveState(fullUrl);
+        toggleMapping(fullUrl);
       })
     });
   }
@@ -48,10 +56,16 @@ const RequestContextMenu = (props) => {
 
 RequestContextMenu.propTypes = {
   request: object.isRequired,
-  toggleWindow: func.isRequired,
   handleContextMenu: func.isRequired,
-  removeUrlMapping: func.isRequired,
-  toggleUrlMappingActiveState: func.isRequired
+  showAddMapping: func.isRequired,
+  toggleMapping: func.isRequired,
+  removeMapping: func.isRequired
 };
 
-export default RequestContextMenu;
+const mapDispatchToProps = (dispatch) => ({
+  showAddMapping: (url) => { dispatch(showAddUrlMapping(url)); },
+  toggleMapping: (url) => { dispatch(toggleUrlMapping(url)); },
+  removeMapping: (url) => { dispatch(removeUrlMapping(url)); }
+});
+
+export default connect(null, mapDispatchToProps)(RequestContextMenu);

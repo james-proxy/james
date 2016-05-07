@@ -21,7 +21,6 @@ export default class Request extends React.Component {
       response,
       isActive,
       isContextMenu,
-      toggleWindow,
       handleClick,
       handleContextMenu,
       removeUrlMapping,
@@ -44,7 +43,6 @@ export default class Request extends React.Component {
     if (isContextMenu) {
       const contextMenuProps = {
         request,
-        toggleWindow,
         handleContextMenu,
         removeUrlMapping,
         toggleUrlMappingActiveState
@@ -78,7 +76,6 @@ Request.propTypes = {
   isContextMenu: bool.isRequired,
   handleClick: func.isRequired,
   handleContextMenu: func.isRequired,
-  toggleWindow: func.isRequired,
   removeUrlMapping: func.isRequired,
   toggleUrlMappingActiveState: func.isRequired
 };

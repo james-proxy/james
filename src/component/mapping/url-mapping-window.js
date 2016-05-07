@@ -9,8 +9,7 @@ const UrlMappingWindow = (props) => {
     urlInput,
     setUrlMapping,
     removeUrlMapping,
-    toggleUrlMappingIsActive,
-    closeWindow
+    toggleUrlMappingIsActive
   } = props;
 
   let {urlMappings} = props;
@@ -22,12 +21,8 @@ const UrlMappingWindow = (props) => {
             />;
   });
 
-  return <div className="window url-mapping-window">
+  return <div className="url-mapping-window">
     <div className="url-mapping-header">
-      <button className="window-close-button btn waves-effect waves-light" onClick={closeWindow}>
-        <i className="fa fa-remove" />
-        close
-      </button>
       <h4>URL Mappings</h4>
       <NewMapping target={urlInput} saveMapping={setUrlMapping} />
     </div>
@@ -48,8 +43,7 @@ UrlMappingWindow.propTypes = {
   urlMappings: array.isRequired,
   setUrlMapping: func.isRequired,
   removeUrlMapping: func.isRequired,
-  toggleUrlMappingIsActive: func.isRequired,
-  closeWindow: func.isRequired
+  toggleUrlMappingIsActive: func.isRequired
 };
 
 export default UrlMappingWindow;

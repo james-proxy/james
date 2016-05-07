@@ -1,8 +1,20 @@
+import { push } from 'react-router-redux';
+
 export const ADD_URL_MAPPING = 'ADD_URL_MAPPING';
 export const UPDATE_URL_MAPPING = 'UPDATE_URL_MAPPING';
 export const REMOVE_URL_MAPPING = 'REMOVE_URL_MAPPING';
 export const TOGGLE_URL_MAPPING = 'TOGGLE_URL_MAPPING';
 
+export function showAddUrlMapping(url) {
+  return (dispatch) => {
+    dispatch(push({
+      pathname: '/url-mappings',
+      state: {
+        url
+      }
+    }));
+  };
+}
 export function addUrlMapping(url, newUrl, isLocal = false) {
   return {
     type: ADD_URL_MAPPING,
@@ -19,7 +31,7 @@ export function updateUrlMapping(url, newUrl, isLocal = false, isActive = true) 
     newUrl,
     isLocal,
     isActive
-  }
+  };
 }
 
 export function removeUrlMapping(id) {

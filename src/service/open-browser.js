@@ -5,20 +5,19 @@ const defaultOptions = {
   proxy: 'localhost:1338'
 };
 
-export default function openBrowser(options, failCb) {
+export default function openBrowser(options) {
   const launchOptions = {
     ...defaultOptions,
     ...options
   };
 
-  browserLauncher(function(err, launch) {
-    if (err) {
-      failCb(err);
-    }
-    launch('http://www.uxebu.com/', launchOptions, function(launchErr) {
-      if (launchErr) {
-        failCb(launchErr);
-      }
+  return new Promise((resolve, reject) => {
+    browserLauncher((err, launch) => {
+      if (err) return reject(err);
+      launch('http://www.uxebu.com/', launchOptions, (launchErr) => {
+        if (launchErr) return reject(launchErr);
+        resolve();
+      });
     });
   });
 }

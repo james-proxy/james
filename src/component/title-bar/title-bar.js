@@ -1,18 +1,12 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { Link } from 'react-router';
+
+import { toggleDevTools } from '../../actions/app.js';
 
 const {func, number} = React.PropTypes;
 
-const TitleBar = (props) => {
-  const {
-    toggleWindow,
-    openDevTools,
-    urlMapCount
-  } = props;
-
-  const openUrlMapping = () => {
-    toggleWindow('UrlMapping');
-  };
-
+const TitleBar = ({urlMapCount, openDevTools}) => {
   let UrlMapCountLabel;
   if (urlMapCount > 0) {
     UrlMapCountLabel = <span className="label default">
@@ -24,11 +18,18 @@ const TitleBar = (props) => {
     <span className="logo">
       J
     </span>
-    <a onClick={openUrlMapping}>
-      <i className=" fa fa-plug" />
-      URL Mappings
+    <Link to="/">
+      Home
+    </Link>
+    <Link to="/requests">
+      <i className="fa fa-exchange" />
+      Requests
+    </Link>
+    <Link to="/url-mappings">
+      <i className="fa fa-plug" />
+      Mappings
       {UrlMapCountLabel}
-    </a>
+    </Link>
     <a className="right" onClick={openDevTools}>
       <i className=" fa fa-cog" />
       Developer
@@ -37,9 +38,12 @@ const TitleBar = (props) => {
 };
 
 TitleBar.propTypes = {
-  toggleWindow: func.isRequired,
   openDevTools: func.isRequired,
   urlMapCount: number.isRequired
 };
 
-export default TitleBar;
+const mapDispatchToProps = (dispatch) => ({
+  openDevTools: () => { dispatch(toggleDevTools()); }
+});
+
+export default connect(null, mapDispatchToProps)(TitleBar);

@@ -1,8 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
 
-import { launchBrowser } from '../../actions/browsers.js';
-
 import Browser from './Browser.js';
 
 const byNameThenVersion = (a, b) => {
@@ -24,6 +22,14 @@ const Browsers = ({browsers, launchBrowser}) => {
 
   return <div className="browsers">{browserElements}</div>;
 };
+
+Browsers.propTypes = {
+  browsers: React.propTypes.array,
+  launchBrowser: React.propTypes.fun.isRequired
+};
+
+
+import { launchBrowser } from '../../actions/browsers.js';
 
 const mapStateToProps = (state) => ({
   browsers: state.browsers.browsers

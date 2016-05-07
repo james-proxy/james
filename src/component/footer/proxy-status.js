@@ -1,7 +1,7 @@
 import React from 'react';
 import constants from '../../constants.js';
 
-const {string, oneOf, func} = React.PropTypes;
+const {string, oneOf} = React.PropTypes;
 const iconMap = {
   [constants.PROXY_STATUS_WORKING]: 'fa-check',
   [constants.PROXY_STATUS_NO_HTTPS]: 'fa-check',

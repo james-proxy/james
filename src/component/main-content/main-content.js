@@ -2,9 +2,8 @@ import React from 'react';
 import Requests from '../requests/requests.js';
 import Search from '../search/search.js';
 import InspectRequest from '../inspect-request/inspect-request.js';
-import Welcome from './welcome.js';
 
-const {func, object, arrayOf, shape, array} = React.PropTypes;
+const {func, object, arrayOf, shape} = React.PropTypes;
 
 export default class MainContent extends React.Component {
 
@@ -55,22 +54,17 @@ export default class MainContent extends React.Component {
   render() {
     const {
       requestData,
-      toggleWindow,
       config,
-      activeWindow,
       filterRequests,
       removeUrlMapping,
       toggleUrlMappingActiveState
     } = this.props;
 
     const {activeRequest} = this.state;
-    let search;
-    let welcome;
 
+    let search;
     if (requestData.totalCount > 0) {
       search = <Search filterRequests={filterRequests} />;
-    } else {
-      welcome = <Welcome />;
     }
 
     let activeRequestNode = null;
@@ -80,15 +74,12 @@ export default class MainContent extends React.Component {
         setActiveRequest={this.setActiveRequest.bind(this)} />;
     }
 
-    return <div className="main-content" onClick={this.onClick} onContextMenu={this.onClick}>
-      {activeWindow}
+    return <span onClick={this.onClick} onContextMenu={this.onClick}>
       <div className="header">
         {search}
       </div>
-      {welcome}
       <Requests
         requestData={requestData}
-        toggleWindow={toggleWindow}
         config={config}
         isActiveRequest={this.isActiveRequest.bind(this)}
         setActiveRequest={this.setActiveRequest.bind(this)}
@@ -97,20 +88,18 @@ export default class MainContent extends React.Component {
         removeUrlMapping={removeUrlMapping}
         toggleUrlMappingActiveState={toggleUrlMappingActiveState} />
       {activeRequestNode}
-    </div>;
+    </span>;
   }
 }
 
 MainContent.propTypes = {
-  toggleWindow: func.isRequired,
-  filterRequests: func.isRequired,
+  config: object.isRequired,
   requests: arrayOf(shape({
     request: object,
     response: object
   })),
-  config: object.isRequired,
+  filterRequests: func.isRequired,
   requestData: object.isRequired,
-  activeWindow: object,
   removeUrlMapping: func.isRequired,
   toggleUrlMappingActiveState: func.isRequired
 };

@@ -19,7 +19,7 @@ const enhanceBrowserName = (browser) => {
     return 'Firefox Developer Edition';
   }
   return browser.name;
-}
+};
 
 const Browser = ({browser, launchBrowser}) => {
   const browserName = enhanceBrowserName(browser);
@@ -45,7 +45,7 @@ const Browser = ({browser, launchBrowser}) => {
       <div className="browser-version">{browser.version}</div>
     </div>
   </a>;
-}
+};
 
 Browser.propTypes = {
   browser: object.isRequired,

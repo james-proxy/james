@@ -1,7 +1,7 @@
 import browserLauncher from 'james-browser-launcher';
 
-import constants from '../constants.js';
 import openBrowser from '../service/open-browser.js';
+import {push} from 'react-router-redux';
 
 export const ADD_BROWSERS = 'ADD_BROWSERS';
 export const UPDATE_BROWSER = 'UPDATE_BROWSER';
@@ -13,8 +13,8 @@ export function detectBrowsers() {
         dispatch(addBrowsers(available));
         resolve();
       });
-    })
-  }
+    });
+  };
 }
 
 export function launchBrowser(browser) {
@@ -23,14 +23,10 @@ export function launchBrowser(browser) {
       browser: browser.name,
       version: browser.version
     };
-    return new Promise((resolve) => {
-      openBrowser(options, (err) => {
-        dispatch(updateBrowser(browser, err));
-        resolve();
-      });
-    })
-
-  }
+    return openBrowser(options)
+      .then(() => { dispatch(push('/requests')); })
+      .catch((err) => { dispatch(updateBrowser(browser, err)); });
+  };
 }
 
 export function addBrowsers(browsers = []) {

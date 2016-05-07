@@ -1,6 +1,6 @@
 import React from 'react';
 
-const {bool,func} = React.PropTypes;
+const {bool, func} = React.PropTypes;
 
 const CacheButton = ({cachingEnabled, toggleCaching}) => {
   const icon = cachingEnabled ? 'fa fa-circle' : 'fa fa-circle-o';
