@@ -1,6 +1,17 @@
 ## Upcoming Release
 
 #### User features
+- Nothing yet
+
+#### Developer Features
+- Nothing yet
+
+#### Bugfixes
+- Nothing yet
+
+### 1.4.5
+
+#### User features
 - Fonts work without network connection, and titlebar drop shadow is nicer (i: @tomitm, r: @mitchhentges)
 
 #### Developer Features
