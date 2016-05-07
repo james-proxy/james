@@ -4,6 +4,7 @@ $fa-font-path: "fonts" !default;
 @import '../node_modules/materialize-css/sass/materialize';
 
 @import 'colors';
+@import 'fonts';
 @import 'components/titlebar';
 @import 'components/footer';
 @import 'components/main-content';
@@ -11,12 +12,6 @@ $fa-font-path: "fonts" !default;
 @import 'components/context-menu';
 @import 'components/inspect-request';
 @import 'components/windows/url-mapping';
-
-$lato-font-path: '../node_modules/lato-font/fonts';
-@import '../node_modules/lato-font/scss/public-api';
-@include lato-include-font('light'); // 300
-@include lato-include-font('normal'); // 400
-@include lato-include-font('bold'); // 600
 
 body {
   font-family: 'Lato', sans-serif;
