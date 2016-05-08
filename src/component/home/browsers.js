@@ -24,8 +24,8 @@ const Browsers = ({browsers, launchBrowser}) => {
 };
 
 Browsers.propTypes = {
-  browsers: React.propTypes.array,
-  launchBrowser: React.propTypes.fun.isRequired
+  browsers: React.PropTypes.array,
+  launchBrowser: React.PropTypes.func.isRequired
 };
 
 

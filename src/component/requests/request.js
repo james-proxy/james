@@ -1,11 +1,13 @@
 import React from 'react';
+import { connect } from 'react-redux';
+
 import FullUrl from './full-url.js';
 import RequestContextMenu from './request-context-menu.js';
 import RequestLabels from './request-labels.js';
 
 const {func, object, bool} = React.PropTypes;
 
-export default class Request extends React.Component {
+class Request extends React.Component {
 
   shouldComponentUpdate(nextProps) {
     return this.props.request.id !== nextProps.request.id ||
@@ -22,9 +24,7 @@ export default class Request extends React.Component {
       isActive,
       isContextMenu,
       handleClick,
-      handleContextMenu,
-      removeUrlMapping,
-      toggleUrlMappingActiveState
+      handleContextMenu
     } = this.props;
 
     this.done = request.done;
@@ -43,9 +43,7 @@ export default class Request extends React.Component {
     if (isContextMenu) {
       const contextMenuProps = {
         request,
-        handleContextMenu,
-        removeUrlMapping,
-        toggleUrlMappingActiveState
+        handleContextMenu
       };
       contextMenuNode = <RequestContextMenu {...contextMenuProps} />;
     }
@@ -72,10 +70,27 @@ Request.propTypes = {
   config: object.isRequired,
   request: object.isRequired,
   response: object.isRequired,
-  isActive: bool.isRequired,
-  isContextMenu: bool.isRequired,
+  isActive: bool,
+  isContextMenu: bool,
   handleClick: func.isRequired,
-  handleContextMenu: func.isRequired,
-  removeUrlMapping: func.isRequired,
-  toggleUrlMappingActiveState: func.isRequired
+  handleContextMenu: func.isRequired
 };
+
+import { setActiveRequest, setContextRequest } from '../../actions/requests.js';
+
+const mapStateToProps = (state, {request}) => ({
+  isActive: state.requests.active && state.requests.active === request.id,
+  isContextMenu: state.requests.context && state.requests.context === request.id
+});
+
+const mapDispatchToProps = (dispatch, {request}) => ({
+  handleClick: () => {
+    dispatch(setActiveRequest(request.id));
+    dispatch(setContextRequest(null));
+  },
+  handleContextMenu: () => {
+    dispatch(setContextRequest(request.id));
+  }
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Request);

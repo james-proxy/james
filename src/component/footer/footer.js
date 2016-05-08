@@ -6,13 +6,13 @@ import Throttle from './throttle.js';
 import RequestCount from './request-count.js';
 import ProxyStatus from './proxy-status.js';
 
-const {func, object, bool, string} = React.PropTypes;
+const {func, number, object, bool, string} = React.PropTypes;
 
 const Footer = (props) => {
   const {
     cachingEnabled, toggleCaching,
     throttleEnabled, throttleRate, setThrottleRate, toggleThrottle,
-    requestData, clearRequests, // TODO
+    requestData, clearRequests,
     proxyStatus
   } = props;
 
@@ -39,20 +39,28 @@ Footer.propTypes = {
 import {
   toggleCaching,
   toggleThrottling,
-  setThrottleRate
+  setThrottleRate,
+  clearRequests
 } from '../../actions/proxy.js';
+
+import proxy from '../../proxy.js';
 
 const mapStateToProps = (state) => ({
   cachingEnabled: state.proxy.cachingEnabled,
   throttleEnabled: state.proxy.throttleEnabled,
   throttleRate: state.proxy.throttleRate,
-  proxyStatus: state.proxy.status
+  proxyStatus: state.proxy.status,
+  requestData: proxy.getRequestData(state.requests.filter)
 });
 
 const mapDispatchToProps = (dispatch) => ({
   toggleCaching: () => { dispatch(toggleCaching()); },
   toggleThrottle: () => { dispatch(toggleThrottling()); },
-  setThrottleRate: rate => { dispatch(setThrottleRate(rate)); }
+  setThrottleRate: rate => { dispatch(setThrottleRate(rate)); },
+  clearRequests: () => {
+    proxy.clear();
+    dispatch(clearRequests());
+  }
 });
 
 // export default Footer;

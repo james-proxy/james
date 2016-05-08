@@ -1,61 +1,25 @@
 import React from 'react';
 import Request from './request.js';
 
-const {func, string, object} = React.PropTypes;
+const {object} = React.PropTypes;
 
-export default class Requests extends React.Component {
+const Requests = ({config, requestData}) => {
+  const requestNodes = requestData.requests.map((request) =>
+    <Request
+      {...request}
+      config={config}
+      key={request.request.id}
+    />
+  );
 
-  render() {
-    const {
-      isActiveRequest,
-      setActiveRequest,
-      isContextMenuRequest,
-      setContextMenuRequest,
-      config,
-      requestData,
-      removeUrlMapping,
-      toggleUrlMappingActiveState
-    } = this.props;
-
-    const requestNodes = requestData.requests.map((request) => {
-      const isActive = isActiveRequest(request);
-      const isContextMenu = isContextMenuRequest(request);
-
-      const handleClick = () => {
-        setContextMenuRequest(null);
-        setActiveRequest(request);
-      };
-
-      const handleContextMenu = () => {
-        setContextMenuRequest(request);
-      };
-
-      return <Request
-        {...request}
-        isActive={isActive}
-        isContextMenu={isContextMenu}
-        config={config}
-        handleClick={handleClick}
-        handleContextMenu={handleContextMenu}
-        key={request.request.id}
-        removeUrlMapping={removeUrlMapping}
-        toggleUrlMappingActiveState={toggleUrlMappingActiveState} />;
-    });
-
-    return <div className="requests">
-      {requestNodes}
-    </div>;
-  }
-}
+  return <div className="requests">
+    {requestNodes}
+  </div>;
+};
 
 Requests.propTypes = {
   requestData: object.isRequired,
-  filter: string,
-  isActiveRequest: func.isRequired,
-  setActiveRequest: func.isRequired,
-  isContextMenuRequest: func.isRequired,
-  setContextMenuRequest: func.isRequired,
-  config: object.isRequired,
-  removeUrlMapping: func.isRequired,
-  toggleUrlMappingActiveState: func.isRequired
+  config: object.isRequired
 };
+
+export default Requests;

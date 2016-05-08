@@ -14,8 +14,8 @@ const UrlMappings = (props) => {
 };
 
 UrlMappings.propTypes = {
-  data: React.propTypes.object.isRequired,
-  urlMapper: React.propTypes.object.isRequired
+  data: React.PropTypes.object.isRequired,
+  urlMapper: React.PropTypes.object.isRequired
 };
 
 export default UrlMappings;

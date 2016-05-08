@@ -89,6 +89,11 @@ export default class Proxy {
     }
   }
 
+  getRequestById(id) {
+    if (!id) return null;
+    return this._requests.find((request) => request.request.id === id);
+  }
+
   getRequestData(filter) {
     const filteredRequests = !filter ? this._requests : this._requests
       .filter((request) => {

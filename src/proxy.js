@@ -42,20 +42,6 @@ const proxy = new Proxy(() => {
   render();
 }, config, urlMapper, createHoxy, store);
 
-
-export const filterRequests = (filter) => {
-  if (filter === '') {
-    filter = null;
-  }
-  data.filter = filter;
-  render();
-};
-
-export const clearRequests = () => {
-  proxy.clear();
-  render();
-};
-
 store.subscribe(() => {
   const state = store.getState();
 
