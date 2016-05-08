@@ -2,21 +2,17 @@ import uniqid from 'uniqid';
 
 export default class Proxy {
 
-  constructor(update, config, urlMapper, createHoxy, store) {
+  constructor(update, config, urlMapper, createHoxy) {
     this._requests = [];
     this._urlMapper = urlMapper;
     this._config = config;
     this._update = update;
+    this._isCachingEnabled = false;
 
     this._proxy = createHoxy();
     this._proxy.intercept('response-sent', this._onResponseSent.bind(this));
     this._proxy.intercept('request', this._onInterceptRequest.bind(this));
     this._proxy.intercept('response', this._onInterceptResponse.bind(this));
-
-    store.subscribe(() => {
-      const state = store.getState();
-      this._isCachingEnabled = state.proxy.cachingEnabled;
-    });
   }
 
   _onResponseSent(req) {
@@ -85,7 +81,7 @@ export default class Proxy {
 
       this._update();
     } catch (e) {
-      console.log(e); // eslint-disable-line
+      console.error(e); // eslint-disable-line
     }
   }
 
@@ -109,6 +105,7 @@ export default class Proxy {
 
   clear() {
     this._requests = [];
+    this._update();
   }
 
   /**

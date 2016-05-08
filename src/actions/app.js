@@ -5,22 +5,20 @@ import { detectBrowsers } from './browsers.js';
 
 const devTools = new DevTools();
 
+export const INIT = 'INIT';
 export const TOGGLE_DEVTOOLS = 'TOGGLE_DEVTOOLS';
-export const RENDER = 'RENDER';
 
-export function init() {
+export function init(config) {
   return (dispatch) => {
+    dispatch({
+      type: INIT,
+      config
+    });
     dispatch(detectBrowsers());
 
     if (constants.DEV) {
       dispatch(toggleDevTools());
     }
-  };
-}
-
-export function render() {
-  return {
-    type: RENDER
   };
 }
 

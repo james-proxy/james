@@ -1,21 +1,47 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
-import UrlMappingWindow from '../component/mapping/url-mapping-window.js';
+import urlMapper from '../url-mapper.js';
 
-const UrlMappings = (props) => {
-  const {data, urlMapper} = props;
+import NewMapping from '../component/mapping/new-mapping.js';
+import UrlMapping from '../component/mapping/url-mapping.js';
 
-  return <UrlMappingWindow
-    urlMappings={data.urlMappings}
-    setUrlMapping={urlMapper.set.bind(urlMapper)}
-    removeUrlMapping={urlMapper.remove.bind(urlMapper)}
-    toggleUrlMappingIsActive={urlMapper.toggleActiveState.bind(urlMapper)}
-  />;
+const setUrlMapping = urlMapper.set.bind(urlMapper);
+const removeUrlMapping = urlMapper.remove.bind(urlMapper);
+const toggleUrlMappingIsActive = urlMapper.toggleActiveState.bind(urlMapper);
+
+const UrlMappings = ({urlMappings, urlInput}) => {
+  const urlMappingNodes = urlMappings.map((mapping, index) => {
+    return <UrlMapping key={index}
+              mapping={mapping}
+              toggleActive={toggleUrlMappingIsActive}
+              remove={removeUrlMapping}
+            />;
+  });
+
+  return <div className="url-mapping-window">
+    <div className="url-mapping-header">
+      <NewMapping target={urlInput} saveMapping={setUrlMapping} />
+    </div>
+    <div className="url-mapping-footer">
+      <ul className="collection with-header">
+        {urlMappingNodes}
+      </ul>
+    </div>
+  </div>;
+};
+
+UrlMappings.defaultProps = {
+  urlInput: ''
 };
 
 UrlMappings.propTypes = {
-  data: React.PropTypes.object.isRequired,
-  urlMapper: React.PropTypes.object.isRequired
+  urlInput: React.PropTypes.string,
+  urlMappings: React.PropTypes.array.isRequired
 };
 
-export default UrlMappings;
+const mapStateToProps = (state) => ({
+  urlMappings: state.urlMappings.mappings
+});
+
+export default connect(mapStateToProps)(UrlMappings);

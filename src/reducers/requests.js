@@ -3,7 +3,8 @@ import * as actions from '../actions/requests.js';
 const initialState = {
   filter: null,
   active: null,
-  context: null
+  context: null,
+  requests: []
 };
 
 export default function requests(state = initialState, action) {
@@ -23,6 +24,11 @@ export default function requests(state = initialState, action) {
     const nextContext = state.context !== action.requestId ? action.requestId : null;
     return Object.assign({}, state, {
       context: nextContext
+    });
+
+  case actions.SYNC_REQUESTS:
+    return Object.assign({}, state, {
+      requests: action.requests
     });
 
   default:

@@ -10,12 +10,7 @@ import urlMapper from './url-mapper.js';
 import Proxy from './service/proxy.js';
 import store from './store/index.js';
 import { updateProxyStatus } from './actions/proxy.js';
-import { render as renderAction } from './actions/app.js';
-
-const render = () => {
-  // TODO: replace this with something that makes actual sense
-  store.dispatch(renderAction());
-};
+import { syncRequests } from './actions/requests.js';
 
 const createHoxy = () => {
   const opts = {};
@@ -38,15 +33,19 @@ const createHoxy = () => {
   return hoxyServer.listen(config.proxyPort);
 };
 
-const proxy = new Proxy(() => {
-  render();
-}, config, urlMapper, createHoxy, store);
+const handleUpdate = () => {
+  const {requests} = proxy.getRequestData();
+  store.dispatch(syncRequests(requests));
+};
+
+const proxy = new Proxy(handleUpdate, config, urlMapper, createHoxy);
 
 store.subscribe(() => {
-  const state = store.getState();
+  const {proxy: state} = store.getState();
+  proxy._isCachingEnabled = state.cachingEnabled;
 
-  if (state.proxy.throttleEnabled) {
-    proxy.slow(state.proxy.throttleRate);
+  if (state.throttleEnabled) {
+    proxy.slow(state.throttleRate);
   } else {
     proxy.disableThrottling();
   }

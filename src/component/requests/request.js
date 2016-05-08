@@ -5,7 +5,7 @@ import FullUrl from './full-url.js';
 import RequestContextMenu from './request-context-menu.js';
 import RequestLabels from './request-labels.js';
 
-const {func, object, bool} = React.PropTypes;
+const {func, array, object, bool} = React.PropTypes;
 
 class Request extends React.Component {
 
@@ -18,7 +18,7 @@ class Request extends React.Component {
 
   render() {
     const {
-      config,
+      labels,
       request,
       response,
       isActive,
@@ -59,7 +59,7 @@ class Request extends React.Component {
             {response.statusCode}
           </span>
         <FullUrl request={request} />
-        <RequestLabels request={request} labels={config.labels} />
+        <RequestLabels request={request} labels={labels} />
         <span className="fade-out" />
       </div>
     </div>;
@@ -67,7 +67,7 @@ class Request extends React.Component {
 }
 
 Request.propTypes = {
-  config: object.isRequired,
+  labels: array.isRequired,
   request: object.isRequired,
   response: object.isRequired,
   isActive: bool,
@@ -80,7 +80,8 @@ import { setActiveRequest, setContextRequest } from '../../actions/requests.js';
 
 const mapStateToProps = (state, {request}) => ({
   isActive: state.requests.active && state.requests.active === request.id,
-  isContextMenu: state.requests.context && state.requests.context === request.id
+  isContextMenu: state.requests.context && state.requests.context === request.id,
+  labels: state.app.config.labels
 });
 
 const mapDispatchToProps = (dispatch, {request}) => ({

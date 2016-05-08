@@ -42,8 +42,12 @@ TitleBar.propTypes = {
   urlMapCount: number.isRequired
 };
 
+const mapStateToProps = (state) => ({
+  urlMapCount: state.urlMappings.count
+});
+
 const mapDispatchToProps = (dispatch) => ({
   openDevTools: () => { dispatch(toggleDevTools()); }
 });
 
-export default connect(null, mapDispatchToProps)(TitleBar);
+export default connect(mapStateToProps, mapDispatchToProps)(TitleBar);

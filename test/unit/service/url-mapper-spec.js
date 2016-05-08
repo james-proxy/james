@@ -1,4 +1,4 @@
-import UrlMapper from '../../src/url-mapper.js';
+import UrlMapper from '../../../src/service/url-mapper.js';
 
 describe('url mapper', function() {
   const update = sinon.spy();
