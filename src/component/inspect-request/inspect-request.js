@@ -39,11 +39,10 @@ InspectRequest.propTypes = {
   clearActiveRequest: func.isRequired
 };
 
-import proxy from '../../proxy.js';
 import { setActiveRequest } from '../../actions/requests.js';
 
 const mapStateToProps = (state) => ({
-  request: proxy.getRequestById(state.requests.active)
+  request: state.requests.active
 });
 
 const mapDispatchToProps = (dispatch) => ({

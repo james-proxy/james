@@ -4,7 +4,6 @@ const app = remote.require('app');
 
 import UrlMapper from './service/url-mapper.js';
 
-import store from './store/index.js';
 import { syncUrlMappings } from './actions/url-mappings.js';
 
 const db = new Datastore({
@@ -12,10 +11,11 @@ const db = new Datastore({
   autoload: true
 });
 
-const handleUpdate = () => {
-  store.dispatch(syncUrlMappings(urlMapper.mappings()));
+export default (store) => {
+  const handleUpdate = () => {
+    // store.dispatch(syncUrlMappings(urlMapper.mappings()));
+  };
+
+  const urlMapper = new UrlMapper(db, handleUpdate);
+  return urlMapper;
 };
-
-const urlMapper = new UrlMapper(db, handleUpdate);
-
-export default urlMapper;

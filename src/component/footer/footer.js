@@ -43,24 +43,19 @@ import {
   clearRequests
 } from '../../actions/proxy.js';
 
-import proxy from '../../proxy.js';
-
 const mapStateToProps = (state) => ({
   cachingEnabled: state.proxy.cachingEnabled,
   throttleEnabled: state.proxy.throttleEnabled,
   throttleRate: state.proxy.throttleRate,
   proxyStatus: state.proxy.status,
-  requestData: proxy.getRequestData(state.requests.filter)
+  requestData: state.requests.data
 });
 
 const mapDispatchToProps = (dispatch) => ({
   toggleCaching: () => { dispatch(toggleCaching()); },
   toggleThrottle: () => { dispatch(toggleThrottling()); },
   setThrottleRate: rate => { dispatch(setThrottleRate(rate)); },
-  clearRequests: () => {
-    proxy.clear();
-    dispatch(clearRequests());
-  }
+  clearRequests: () => { dispatch(clearRequests()) }
 });
 
 // export default Footer;

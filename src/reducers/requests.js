@@ -4,7 +4,11 @@ const initialState = {
   filter: null,
   active: null,
   context: null,
-  requests: []
+  data: {
+    requests: [],
+    totalCount: 0,
+    filteredCount: 0
+  }
 };
 
 export default function requests(state = initialState, action) {
@@ -28,7 +32,7 @@ export default function requests(state = initialState, action) {
 
   case actions.SYNC_REQUESTS:
     return Object.assign({}, state, {
-      requests: action.requests
+      data: action.data
     });
 
   default:

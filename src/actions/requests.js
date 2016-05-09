@@ -4,9 +4,12 @@ export const SET_CONTEXT_REQUEST = 'SET_CONTEXT_REQUEST';
 export const SYNC_REQUESTS = 'SYNC_REQUESTS';
 
 export function setRequestFilter(filter = '') {
-  return {
-    type: SET_REQUEST_FILTER,
-    filter
+  return (dispatch) => {
+    dispatch({
+      type: SET_REQUEST_FILTER,
+      filter
+    });
+    dispatch(syncRequests());
   };
 }
 
@@ -24,9 +27,8 @@ export function setContextRequest(requestId = null) {
   };
 }
 
-export function syncRequests(requests) {
+export function syncRequests() {
   return {
-    type: SYNC_REQUESTS,
-    requests
+    type: SYNC_REQUESTS
   };
 }

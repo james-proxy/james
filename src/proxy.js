@@ -4,51 +4,39 @@ import remote from 'remote';
 const fs = remote.require('fs');
 
 import config from './config.js';
-import constants from './constants.js';
-import urlMapper from './url-mapper.js';
+// import constants from './constants.js';
 
 import Proxy from './service/proxy.js';
-import store from './store/index.js';
-import { updateProxyStatus } from './actions/proxy.js';
-import { syncRequests } from './actions/requests.js';
+// import store from './store/index.js';
+// import { updateProxyStatus } from './actions/proxy.js';
 
-const createHoxy = () => {
-  const opts = {};
-  try {
-    const key = fs.readFileSync('./root-ca.key.pem');
-    const cert = fs.readFileSync('./root-ca.crt.pem');
-    opts.certAuthority = {key, cert};
-  } catch (e) {
-    store.dispatch(updateProxyStatus(constants.PROXY_STATUS_NO_HTTPS));
-  }
-
-  const hoxyServer = hoxy.createServer(opts);
-  hoxyServer.on('error', (event) => {
-    console.warn('hoxy error: ', event); // eslint-disable-line
-    if (event.code === 'EADDRINUSE') {
-      store.dispatch(updateProxyStatus(constants.PROXY_STATUS_ERROR_ADDRESS_IN_USE));
+export default (urlMapper, cb) => {
+  const createHoxy = () => {
+    const opts = {};
+    try {
+      const key = fs.readFileSync('./root-ca.key.pem');
+      const cert = fs.readFileSync('./root-ca.crt.pem');
+      opts.certAuthority = {key, cert};
+    } catch (e) {
+      cb(e);
+      // store.dispatch(updateProxyStatus(constants.PROXY_STATUS_NO_HTTPS));
     }
-  });
 
-  return hoxyServer.listen(config.proxyPort);
-};
+    const hoxyServer = hoxy.createServer(opts);
+    hoxyServer.on('error', (event) => {
+      console.warn('hoxy error: ', event); // eslint-disable-line
+      if (event.code === 'EADDRINUSE') {
+        cb(event);
+        // store.dispatch(updateProxyStatus(constants.PROXY_STATUS_ERROR_ADDRESS_IN_USE));
+      }
+    });
 
-const handleUpdate = () => {
-  const {requests} = proxy.getRequestData();
-  store.dispatch(syncRequests(requests));
-};
+    return hoxyServer.listen(config.proxyPort);
+  };
 
-const proxy = new Proxy(handleUpdate, config, urlMapper, createHoxy);
+  const handleUpdate = () => cb(null, true);
 
-store.subscribe(() => {
-  const {proxy: state} = store.getState();
-  proxy._isCachingEnabled = state.cachingEnabled;
+  const proxy = new Proxy(handleUpdate, config, urlMapper, createHoxy);
 
-  if (state.throttleEnabled) {
-    proxy.slow(state.throttleRate);
-  } else {
-    proxy.disableThrottling();
-  }
-});
-
-export default proxy;
+  return proxy;
+}

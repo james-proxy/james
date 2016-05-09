@@ -79,14 +79,14 @@ Request.propTypes = {
 import { setActiveRequest, setContextRequest } from '../../actions/requests.js';
 
 const mapStateToProps = (state, {request}) => ({
-  isActive: state.requests.active && state.requests.active === request.id,
+  isActive: state.requests.active && state.requests.active.id === request.id,
   isContextMenu: state.requests.context && state.requests.context === request.id,
   labels: state.app.config.labels
 });
 
-const mapDispatchToProps = (dispatch, {request}) => ({
+const mapDispatchToProps = (dispatch, {request, response}) => ({
   handleClick: () => {
-    dispatch(setActiveRequest(request.id));
+    dispatch(setActiveRequest({request, response, id: request.id}));
     dispatch(setContextRequest(null));
   },
   handleContextMenu: () => {

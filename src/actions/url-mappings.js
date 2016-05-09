@@ -16,36 +16,33 @@ export function showAddUrlMapping(url) {
     }));
   };
 }
-export function addUrlMapping(url, newUrl, isLocal = false) {
+export function setUrlMapping(url, newUrl, isLocal = false, isActive: true) {
   return {
     type: ADD_URL_MAPPING,
-    url,
-    newUrl,
-    isLocal
+    mapping: {
+      url,
+      newUrl,
+      isLocal,
+      isActive
+    }
   };
 }
 
-export function updateUrlMapping(url, newUrl, isLocal = false, isActive = true) {
-  return {
-    type: UPDATE_URL_MAPPING,
-    url,
-    newUrl,
-    isLocal,
-    isActive
-  };
-}
-
-export function removeUrlMapping(id) {
+export function removeUrlMapping(url) {
   return {
     type: REMOVE_URL_MAPPING,
-    id
+    mapping: {
+      url
+    }
   };
 }
 
-export function toggleUrlMapping(id) {
+export function toggleUrlMapping(url) {
   return {
     type: TOGGLE_URL_MAPPING,
-    id
+    mapping: {
+      url
+    }
   };
 }
 

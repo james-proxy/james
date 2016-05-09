@@ -1,20 +1,22 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import urlMapper from '../url-mapper.js';
-
 import NewMapping from '../component/mapping/new-mapping.js';
 import UrlMapping from '../component/mapping/url-mapping.js';
 
-const setUrlMapping = urlMapper.set.bind(urlMapper);
-const removeUrlMapping = urlMapper.remove.bind(urlMapper);
-const toggleUrlMappingIsActive = urlMapper.toggleActiveState.bind(urlMapper);
+const UrlMappings = (props) => {
+  const {
+    urlInput,
+    urlMappings,
+    setUrlMapping,
+    toggleUrlMapping,
+    removeUrlMapping
+  } = props;
 
-const UrlMappings = ({urlMappings, urlInput}) => {
   const urlMappingNodes = urlMappings.map((mapping, index) => {
     return <UrlMapping key={index}
               mapping={mapping}
-              toggleActive={toggleUrlMappingIsActive}
+              toggleActive={toggleUrlMapping}
               remove={removeUrlMapping}
             />;
   });
@@ -37,11 +39,23 @@ UrlMappings.defaultProps = {
 
 UrlMappings.propTypes = {
   urlInput: React.PropTypes.string,
-  urlMappings: React.PropTypes.array.isRequired
+  urlMappings: React.PropTypes.array.isRequired,
+  setUrlMapping: React.PropTypes.func.isRequired,
+  toggleUrlMapping: React.PropTypes.func.isRequired,
+  removeUrlMapping: React.PropTypes.func.isRequired
 };
+
+
+import { setUrlMapping, toggleUrlMapping, removeUrlMapping } from '../actions/url-mappings.js';
 
 const mapStateToProps = (state) => ({
   urlMappings: state.urlMappings.mappings
 });
 
-export default connect(mapStateToProps)(UrlMappings);
+const mapDispatchToProps = (dispatch) => ({
+  setUrlMapping: (...args) => dispatch(setUrlMapping(...args)),
+  toggleUrlMapping: (url) => dispatch(toggleUrlMapping(url)),
+  removeUrlMapping: (url) => dispatch(removeUrlMapping(urL))
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(UrlMappings);

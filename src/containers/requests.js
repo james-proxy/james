@@ -39,11 +39,11 @@ RequestsContainer.propTypes = {
   clearContextRequest: func.isRequired
 };
 
+
 import { setContextRequest } from '../actions/requests.js';
-import proxy from '../proxy.js';
 
 const mapStateToProps = (store) => ({
-  requestData: proxy.getRequestData(store.requests.filter),
+  requestData: store.requests.data,
   contextMenuRequest: store.requests.context
 });
 
