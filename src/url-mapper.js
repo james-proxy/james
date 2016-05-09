@@ -4,18 +4,12 @@ const app = remote.require('app');
 
 import UrlMapper from './service/url-mapper.js';
 
-import { syncUrlMappings } from './actions/url-mappings.js';
-
 const db = new Datastore({
   filename: app.getPath('userData') + '/data.nedb',
   autoload: true
 });
 
-export default (store) => {
-  const handleUpdate = () => {
-    // store.dispatch(syncUrlMappings(urlMapper.mappings()));
-  };
-
+export default (handleUpdate) => {
   const urlMapper = new UrlMapper(db, handleUpdate);
   return urlMapper;
 };

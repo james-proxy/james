@@ -55,7 +55,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   setUrlMapping: (...args) => dispatch(setUrlMapping(...args)),
   toggleUrlMapping: (url) => dispatch(toggleUrlMapping(url)),
-  removeUrlMapping: (url) => dispatch(removeUrlMapping(urL))
-})
+  removeUrlMapping: (url) => dispatch(removeUrlMapping(url))
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(UrlMappings);

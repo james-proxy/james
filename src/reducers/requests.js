@@ -19,7 +19,10 @@ export default function requests(state = initialState, action) {
     });
 
   case actions.SET_ACTIVE_REQUEST:
-    const nextActive = state.active !== action.requestId ? action.requestId : null;
+    let nextActive = action.request;
+    if (state.active !== null && nextActive !== null && state.active.id === nextActive.id) {
+      nextActive = null;
+    }
     return Object.assign({}, state, {
       active: nextActive
     });

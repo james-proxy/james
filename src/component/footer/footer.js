@@ -55,7 +55,7 @@ const mapDispatchToProps = (dispatch) => ({
   toggleCaching: () => { dispatch(toggleCaching()); },
   toggleThrottle: () => { dispatch(toggleThrottling()); },
   setThrottleRate: rate => { dispatch(setThrottleRate(rate)); },
-  clearRequests: () => { dispatch(clearRequests()) }
+  clearRequests: () => { dispatch(clearRequests()); }
 });
 
 // export default Footer;

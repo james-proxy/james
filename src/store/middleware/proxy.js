@@ -13,27 +13,30 @@ const middleware = proxy => store => next => action => {
   const { proxy: state } = store.getState();
 
   switch (action.type) {
-    case actions.TOGGLE_CACHING:
-      proxy._isCachingEnabled = state.cachingEnabled
-      break;
+  case actions.TOGGLE_CACHING:
+    proxy._isCachingEnabled = state.cachingEnabled;
+    break;
 
-    case actions.TOGGLE_THROTTLING:
-      if(state.throttleEnabled) {
-        proxy.slow(state.throttleRate);
-      } else {
-        proxy.disableThrottling();
-      }
-      break;
+  case actions.TOGGLE_THROTTLING:
+    if (state.throttleEnabled) {
+      proxy.slow(state.throttleRate);
+    } else {
+      proxy.disableThrottling();
+    }
+    break;
 
-    case actions.SET_THROTTLE_RATE:
-      if (state.throttleEnabled) {
-        proxy.slow(state.throttleRate);
-      }
-      break;
+  case actions.SET_THROTTLE_RATE:
+    if (state.throttleEnabled) {
+      proxy.slow(state.throttleRate);
+    }
+    break;
 
-    case actions.CLEAR_REQUESTS:
-      proxy.clear();
-      break;
+  case actions.CLEAR_REQUESTS:
+    proxy.clear();
+    break;
+
+  default:
+    return result;
   }
 
   return result;

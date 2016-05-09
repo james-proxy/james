@@ -25,4 +25,4 @@ export default (proxy, urlMapper, history) => {
 
 
   return store;
-}
+};

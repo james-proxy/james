@@ -4,11 +4,9 @@ import remote from 'remote';
 const fs = remote.require('fs');
 
 import config from './config.js';
-// import constants from './constants.js';
+import constants from './constants.js';
 
 import Proxy from './service/proxy.js';
-// import store from './store/index.js';
-// import { updateProxyStatus } from './actions/proxy.js';
 
 export default (urlMapper, cb) => {
   const createHoxy = () => {
@@ -18,16 +16,14 @@ export default (urlMapper, cb) => {
       const cert = fs.readFileSync('./root-ca.crt.pem');
       opts.certAuthority = {key, cert};
     } catch (e) {
-      cb(e);
-      // store.dispatch(updateProxyStatus(constants.PROXY_STATUS_NO_HTTPS));
+      cb(constants.PROXY_STATUS_NO_HTTPS);
     }
 
     const hoxyServer = hoxy.createServer(opts);
     hoxyServer.on('error', (event) => {
       console.warn('hoxy error: ', event); // eslint-disable-line
       if (event.code === 'EADDRINUSE') {
-        cb(event);
-        // store.dispatch(updateProxyStatus(constants.PROXY_STATUS_ERROR_ADDRESS_IN_USE));
+        cb(constants.PROXY_STATUS_ERROR_ADDRESS_IN_USE);
       }
     });
 
@@ -39,4 +35,4 @@ export default (urlMapper, cb) => {
   const proxy = new Proxy(handleUpdate, config, urlMapper, createHoxy);
 
   return proxy;
-}
+};

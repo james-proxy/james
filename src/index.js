@@ -16,6 +16,8 @@ import setupUrlMapper from './url-mapper.js';
 
 import { init } from './actions/app.js';
 import { syncRequests } from './actions/requests.js';
+import { updateProxyStatus } from './actions/proxy.js';
+import { syncUrlMappings } from './actions/url-mappings.js';
 
 import AppContainer from './containers/app.js';
 import Home from './containers/home.js';
@@ -26,25 +28,26 @@ ravenInit();
 createMenu();
 setupShortcuts();
 
-const urlMapper = setupUrlMapper();
-const proxy = setupProxy(urlMapper, (err, hasData) => {
-  if (err) {
-    // TODO: store isn't defined if there's an err right away
-    return;
+// use setTimeout to work around store not being setup initially
+const wait = cb => (...args) => setTimeout(() => cb(...args));
+
+const urlMapper = setupUrlMapper(wait(() => {
+  store.dispatch(syncUrlMappings());
+}));
+
+const proxy = setupProxy(urlMapper, wait((errStatus, hasData) => {
+  if (errStatus) {
+    store.dispatch(updateProxyStatus(errStatus));
   }
-  console.log(err, hasData, !!store)
-  if (hasData && store) {
+  if (hasData) {
     store.dispatch(syncRequests());
   }
-});
+}));
 
 const store = setupStore(proxy, urlMapper, hashHistory);
 const storeHistory = syncHistoryWithStore(hashHistory, store);
 
-store.dispatch(init({
-  config,
-  mappings: urlMapper.mappings()
-}));
+store.dispatch(init({ config }));
 
 const domNode = document.querySelector('#app');
 

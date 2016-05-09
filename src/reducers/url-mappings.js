@@ -1,5 +1,4 @@
 import * as actions from '../actions/url-mappings.js';
-import INIT from '../actions/app.js';
 
 const initialState = {
   mappings: [],
@@ -8,7 +7,6 @@ const initialState = {
 
 export default function urlMappings(state = initialState, action) {
   switch (action.type) {
-  case INIT:
   case actions.SYNC_URL_MAPPINGS: {
     return Object.assign({}, state, {
       mappings: action.mappings,

@@ -13,17 +13,17 @@ export function setRequestFilter(filter = '') {
   };
 }
 
-export function setActiveRequest(requestId = null) {
+export function setActiveRequest(request = null) {
   return {
     type: SET_ACTIVE_REQUEST,
-    requestId
+    request
   };
 }
 
-export function setContextRequest(requestId = null) {
+export function setContextRequest(request = null) {
   return {
     type: SET_CONTEXT_REQUEST,
-    requestId
+    request
   };
 }
 
