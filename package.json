@@ -1,7 +1,7 @@
 {
   "name": "james",
   "version": "1.4.5",
-  "description": "",
+  "description": "HTTP/HTTPS proxy built in Electron and ReactJS",
   "main": "electron-app.js",
   "scripts": {
     "build": "gulp",
@@ -39,6 +39,7 @@
     "babel-preset-react": "^6.3.13",
     "browserify": "^13.0.0",
     "del": "^2.2.0",
+    "electron-builder": "^3.17.1",
     "electron-connect": "^0.4.0",
     "electron-localshortcut": "^0.6.0",
     "electron-packager": "7.0.1",
@@ -75,5 +76,16 @@
     "plugins": [
       "transform-object-rest-spread"
     ]
+  },
+  "build": {
+    "app-bundle-id": "com.jamesproxy.james",
+    "app-category-type": "public.app-category.productivity",
+    "productName": "James",
+    "osx": {
+      "icon": "resource/compile/icon.icns"
+    },
+    "win": {
+
+    }
   }
 }
