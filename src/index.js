@@ -20,7 +20,7 @@ import DevTools from './dev-tools.js';
 import constants from './constants.js';
 
 import {remote} from 'electron';
-const {app, fs} = remote
+const {app, fs} = remote;
 
 ravenInit();
 createMenu();
