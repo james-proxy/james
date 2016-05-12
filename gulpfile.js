@@ -45,7 +45,7 @@ gulp.task('resources', () => {
   return es.merge([
     gulp.src('node_modules/font-awesome/fonts/**').pipe(gulp.dest('build/fonts')),
     gulp.src('package.json').pipe(gulp.dest('build')),
-    gulp.src('resource/**')
+    gulp.src('resource-runtime/**')
       .pipe(changed('build'))
       .pipe(gulp.dest('build'))
   ]);
@@ -56,7 +56,7 @@ gulp.task('package-resources', ['default'], () => {
     gulp.src('node_modules/font-awesome/fonts/**').pipe(gulp.dest('package/fonts')),
     gulp.src('build/james.css').pipe(gulp.dest('package')),
     gulp.src('package.json').pipe(gulp.dest('package')),
-    gulp.src('resource/**')
+    gulp.src('resource-runtime/**')
       .pipe(gulpif('*.html', useref()))
       .pipe(gulp.dest('package'))
   ]);
@@ -101,7 +101,7 @@ gulp.task('package', ['package-resources', 'package-render', 'package-main'], (d
   const electronVersion = require('electron-prebuilt/package.json').version;
   console.log(`Packaging James v${appVersion}...`);
 
-  electron({
+  /*electron({
     all: true,
     dir: 'package',
     platform: 'all',
@@ -111,13 +111,13 @@ gulp.task('package', ['package-resources', 'package-render', 'package-main'], (d
     'app-version': appVersion,
     version: electronVersion,
     out: 'binaries'
-  }, (err) => done(err));
+  }, (err) => done(err));*/
 });
 
 gulp.task('watch', ['default'], () => {
   gulp.watch('src/**', ['js']);
   gulp.watch('style/**', ['css']);
-  gulp.watch('resource/**', ['resources']);
+  gulp.watch('resource-runtime/**', ['resources']);
 });
 
 gulp.task('livereload', ['default'], () => {
@@ -127,5 +127,5 @@ gulp.task('livereload', ['default'], () => {
 
   gulp.watch('src/**', ['js', reload]);
   gulp.watch('style/**', ['css', reload]);
-  gulp.watch('resource/**', ['resources', reload]);
+  gulp.watch('resource-runtime/**', ['resources', reload]);
 });

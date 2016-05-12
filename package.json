@@ -82,10 +82,20 @@
     "app-category-type": "public.app-category.productivity",
     "productName": "James",
     "osx": {
-      "icon": "resource/compile/icon.icns"
+      "icon": "resource-compile/icon.icns"
     },
     "win": {
-
-    }
+      "iconUrl": "https://github.com/mitchhentges/james/blob/electron-builder/resource-compile/icon.ico?raw=true"
+    },
+    "linux": {
+      "synopsis": "Web proxy"
+    },
+    "overwrite": true,
+    "app": "./package"
+  },
+  "directories": {
+    "buildResources": "build-resources",
+    "output": "binaries",
+    "app": "./package"
   }
 }
