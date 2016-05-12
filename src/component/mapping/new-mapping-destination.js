@@ -1,5 +1,5 @@
 import React from 'react';
-import remote from 'remote';
+import {remote} from 'electron';
 import createChooseFile from '../../service/choose-file.js';
 
 const {bool, string, func} = React.PropTypes;

@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import hoxy from 'hoxy';
-import remote from 'remote';
 import Datastore from 'nedb';
 import browserLauncher from 'james-browser-launcher';
 
@@ -20,8 +19,8 @@ import DevTools from './dev-tools.js';
 
 import constants from './constants.js';
 
-const app = remote.require('app');
-const fs = remote.require('fs');
+import {remote} from 'electron';
+const {app, fs} = remote
 
 ravenInit();
 createMenu();

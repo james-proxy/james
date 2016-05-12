@@ -1,5 +1,4 @@
-import remote from 'remote';
-const app = remote.require('app');
+const {app} = require('electron').remote;
 
 export default {
   'PROXY_STATUS_WORKING': 'working',
@@ -9,5 +8,5 @@ export default {
   'NEW_MAPPING_STEP_TARGET': 'target',
   'NEW_MAPPING_STEP_DESTINATION': 'destination',
   'DEV': process.env.NODE_ENV !== 'production',
-  'VERSION': app.getVersion()
+  'VERSION': '0.0.0'//app.getVersion()
 };
