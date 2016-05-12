@@ -1,7 +1,7 @@
 $fa-font-path: "fonts" !default;
 
 @import '../node_modules/font-awesome/scss/font-awesome';
-@import '../node_modules/materialize-css/sass/materialize';
+@import 'materialize-css/materialize';
 
 @import 'colors';
 @import 'fonts';
