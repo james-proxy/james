@@ -28,8 +28,6 @@ app.on('ready', () => {
     // when you should delete the corresponding element.
     mainWindow = null;
   });
-
-  mainWindow.openDevTools();
 });
 
 ipc.on('keyboard-listen', (event, {key}) => {
