@@ -78,7 +78,7 @@
     "productName": "James",
     "osx": {
       "icon": "icon.icns",
-      "background": "icon.png"
+      "background": "resource-compile/icon.png"
     },
     "win": {
       "iconUrl": "https://github.com/mitchhentges/james/blob/electron-builder/resource-compile/icon.ico?raw=true"
