@@ -77,7 +77,7 @@
     "app-category-type": "public.app-category.productivity",
     "productName": "James",
     "osx": {
-      "icon": "icon.icns",
+      "icon": "resource-compile/icon.icns",
       "background": "resource-compile/icon.png"
     },
     "win": {
