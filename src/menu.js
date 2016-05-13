@@ -1,7 +1,5 @@
-import remote from 'remote';
-import {shell} from 'electron';
-
-const Menu = remote.require('menu');
+import {shell, remote} from 'electron';
+const {Menu} = remote;
 
 function menuTempl() {
   const menu = [];

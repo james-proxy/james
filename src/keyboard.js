@@ -1,13 +1,13 @@
-const ipc = require('electron').ipcRenderer;
+import { ipcRenderer } from 'electron';
 
 export default class Keyboard {
   constructor() {
     this.actions = {};
-    ipc.on('keyboard-press', (event, arg) => this.actions[arg]());
+    ipcRenderer.on('keyboard-press', (event, arg) => this.actions[arg]());
   }
 
   register(key, action) {
     this.actions[key] = action;
-    ipc.send('keyboard-listen', {key});
+    ipcRenderer.send('keyboard-listen', {key});
   }
 }

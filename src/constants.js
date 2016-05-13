@@ -1,5 +1,5 @@
-import remote from 'remote';
-const app = remote.require('app');
+import { remote } from 'electron';
+const { app } = remote;
 
 export default {
   'PROXY_STATUS_WORKING': 'working',

@@ -1,5 +1,4 @@
-import { app, ipcMain as ipc } from 'electron'; // app controls application life.
-import BrowserWindow from 'browser-window'; // Module to create native browser window.
+import { BrowserWindow, app, ipcMain as ipc } from 'electron'; // app controls application life.
 import localShortcut from 'electron-localshortcut';
 
 // Keep a global reference of the window object, if you don't, the window will
