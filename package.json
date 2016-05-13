@@ -77,7 +77,8 @@
     "app-category-type": "public.app-category.productivity",
     "productName": "James",
     "osx": {
-      "icon": "icon.icns"
+      "icon": "icon.icns",
+      "background": "icon.png"
     },
     "win": {
       "iconUrl": "https://github.com/mitchhentges/james/blob/electron-builder/resource-compile/icon.ico?raw=true"
