@@ -89,7 +89,7 @@
   },
   "directories": {
     "buildResources": "resource-compile",
-    "output": "build",
+    "output": "binaries",
     "app": "./package"
   }
 }
