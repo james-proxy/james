@@ -84,12 +84,11 @@
     },
     "linux": {
       "synopsis": "Web proxy"
-    },
-    "overwrite": true
+    }
   },
   "directories": {
     "buildResources": "resource-compile",
-    "output": "builder-binaries",
+    "output": "build",
     "app": "./package"
   }
 }
