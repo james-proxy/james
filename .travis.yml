@@ -8,6 +8,8 @@ addons:
 script:
   - npm --depth Infinity update
   - npm run test-ci
+before_install:
+  - npm install --no-optional
 before_deploy:
   - npm run zip-binaries
 deploy:
