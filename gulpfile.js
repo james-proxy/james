@@ -44,7 +44,6 @@ gulp.task('css', () => {
 gulp.task('resources', () => {
   return es.merge([
     gulp.src('node_modules/font-awesome/fonts/**').pipe(gulp.dest('build/fonts')),
-    gulp.src('package.json').pipe(gulp.dest('build')),
     gulp.src('resource-runtime/**')
       .pipe(changed('build'))
       .pipe(gulp.dest('build'))
@@ -55,7 +54,6 @@ gulp.task('package-resources', ['default'], () => {
   return es.merge([
     gulp.src('node_modules/font-awesome/fonts/**').pipe(gulp.dest('package/fonts')),
     gulp.src('build/james.css').pipe(gulp.dest('package')),
-    gulp.src('package.json').pipe(gulp.dest('package')),
     gulp.src('resource-runtime/**')
       .pipe(gulpif('*.html', useref()))
       .pipe(gulp.dest('package'))

@@ -15,11 +15,6 @@
     "test-ci": "npm run lint && npm run test && npm run package"
   },
   "author": "Julian Hollmann <hollmann@uxebu.com>",
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/james-proxy/james.git"
-  },
   "dependencies": {
     "hoxy": "^3.2.0",
     "james-browser-launcher": "^1.2.1",
@@ -82,7 +77,7 @@
     "app-category-type": "public.app-category.productivity",
     "productName": "James",
     "osx": {
-      "icon": "resource-compile/icon.icns"
+      "icon": "icon.icns"
     },
     "win": {
       "iconUrl": "https://github.com/mitchhentges/james/blob/electron-builder/resource-compile/icon.ico?raw=true"
@@ -90,12 +85,11 @@
     "linux": {
       "synopsis": "Web proxy"
     },
-    "overwrite": true,
-    "app": "./package"
+    "overwrite": true
   },
   "directories": {
-    "buildResources": "build-resources",
-    "output": "binaries",
+    "buildResources": "resource-compile",
+    "output": "builder-binaries",
     "app": "./package"
   }
 }
