@@ -1,0 +1,93 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/usr/bin/node', '/usr/bin/npm', 'install', 'appdmg-tf' ]
+2 info using npm@3.9.0
+3 info using node@v6.1.0
+4 silly loadCurrentTree Starting
+5 silly install loadCurrentTree
+6 silly install readLocalPackageData
+7 silly fetchPackageMetaData appdmg-tf
+8 silly fetchNamedPackageData appdmg-tf
+9 silly mapToRegistry name appdmg-tf
+10 silly mapToRegistry using default registry
+11 silly mapToRegistry registry https://registry.npmjs.org/
+12 silly mapToRegistry data Result {
+12 silly mapToRegistry   raw: 'appdmg-tf',
+12 silly mapToRegistry   scope: null,
+12 silly mapToRegistry   name: 'appdmg-tf',
+12 silly mapToRegistry   rawSpec: '',
+12 silly mapToRegistry   spec: 'latest',
+12 silly mapToRegistry   type: 'tag' }
+13 silly mapToRegistry uri https://registry.npmjs.org/appdmg-tf
+14 verbose request uri https://registry.npmjs.org/appdmg-tf
+15 verbose request no auth needed
+16 info attempt registry request try #1 at 2:37:38 PM
+17 verbose request using bearer token for auth
+18 verbose request id eee19423f8202db0
+19 verbose etag "5DKNJD1T3RWXTDNPP4IVKJKQC"
+20 http request GET https://registry.npmjs.org/appdmg-tf
+21 http 304 https://registry.npmjs.org/appdmg-tf
+22 verbose headers { 'cache-control': 'max-age=300',
+22 verbose headers   'accept-ranges': 'bytes',
+22 verbose headers   date: 'Fri, 13 May 2016 12:37:31 GMT',
+22 verbose headers   via: '1.1 varnish',
+22 verbose headers   connection: 'keep-alive',
+22 verbose headers   'x-served-by': 'cache-fra1236-FRA',
+22 verbose headers   'x-cache': 'MISS',
+22 verbose headers   'x-cache-hits': '0',
+22 verbose headers   'x-timer': 'S1463143051.199587,VS0,VE184',
+22 verbose headers   vary: 'Accept-Encoding' }
+23 silly get cb [ 304,
+23 silly get   { 'cache-control': 'max-age=300',
+23 silly get     'accept-ranges': 'bytes',
+23 silly get     date: 'Fri, 13 May 2016 12:37:31 GMT',
+23 silly get     via: '1.1 varnish',
+23 silly get     connection: 'keep-alive',
+23 silly get     'x-served-by': 'cache-fra1236-FRA',
+23 silly get     'x-cache': 'MISS',
+23 silly get     'x-cache-hits': '0',
+23 silly get     'x-timer': 'S1463143051.199587,VS0,VE184',
+23 silly get     vary: 'Accept-Encoding' } ]
+24 verbose etag https://registry.npmjs.org/appdmg-tf from cache
+25 verbose get saving appdmg-tf to /home/mitch/.npm/registry.npmjs.org/appdmg-tf/.cache.json
+26 verbose correctMkdir /home/mitch/.npm correctMkdir not in flight; initializing
+27 silly install normalizeTree
+28 silly loadCurrentTree Finishing
+29 silly loadIdealTree Starting
+30 silly install loadIdealTree
+31 silly cloneCurrentTree Starting
+32 silly install cloneCurrentTreeToIdealTree
+33 silly cloneCurrentTree Finishing
+34 silly loadShrinkwrap Starting
+35 silly install loadShrinkwrap
+36 silly loadShrinkwrap Finishing
+37 silly loadAllDepsIntoIdealTree Starting
+38 silly install loadAllDepsIntoIdealTree
+39 silly rollbackFailedOptional Starting
+40 silly rollbackFailedOptional Finishing
+41 silly runTopLevelLifecycles Starting
+42 silly runTopLevelLifecycles Finishing
+43 silly install printInstalled
+44 verbose stack Error: Unsupported platform for appdmg-tf@0.3.11: wanted {"name":"appdmg-tf","version":"0.3.11","license":"MIT","author":{"name":"Linus Unnebäck","email":"linus@folkdatorn.se"},"bin":{"appdmg-tf":"bin/appdmg.js"},"main":"index.js","preferGlobal":true,"dependencies":{"async":"^1.4.2","ds-store":"~0.1.4","fs-temp":"^1.0.0","fs-xattr":"~0.1.11","image-size":"~0.4.0","minimist":"^1.1.3","repeat-string":"^1.5.2"},"engines":{"node":">=0.10.0"},"os":["darwin"],"repository":{"type":"git","url":"git+ssh://git@github.com/LinusU/node-appdmg.git"},"scripts":{"test":"standard && mocha -b"},"devDependencies":{"capture-window":"^0.1.3","looks-same":"^2.1.0","mocha":"^2.2.5","standard":"^6.0.5"},"gitHead":"8dd4b340776550165da2fce1432ac8ccd0a422ae","description":"Generate beautiful DMG-images for your OS X applications.","bugs":{"url":"https://github.com/LinusU/node-appdmg/issues"},"homepage":"https://github.com/LinusU/node-appdmg#readme","_id":"appdmg-tf@0.3.11","_shasum":"33f7e9361f6fb2241b579bc246b4b6334aae49f7","_from":"appdmg-tf","_npmVersion":"3.8.7","_nodeVersion":"6.0.0","_npmUser":{"name":"develar","email":"develar@gmail.com"},"dist":{"shasum":"33f7e9361f6fb2241b579bc246b4b6334aae49f7","tarball":"https://registry.npmjs.org/appdmg-tf/-/appdmg-tf-0.3.11.tgz"},"maintainers":[{"name":"develar","email":"develar@gmail.com"}],"_npmOperationalInternal":{"host":"packages-12-west.internal.npmjs.com","tmp":"tmp/appdmg-tf-0.3.11.tgz_1461828554738_0.9758019840810448"},"directories":{},"_resolved":"https://registry.npmjs.org/appdmg-tf/-/appdmg-tf-0.3.11.tgz","_requested":{"raw":"appdmg-tf","scope":null,"name":"appdmg-tf","rawSpec":"","spec":"latest","type":"tag"},"_spec":"appdmg-tf","_where":"/home/mitch/dev/james","_args":[["appdmg-tf","/home/mitch/dev/james"]],"readme":"ERROR: No README data found!"} (current: {"os":"linux","cpu":"x64"})
+44 verbose stack     at checkPlatform (/usr/lib/node_modules/npm/node_modules/npm-install-checks/index.js:45:14)
+44 verbose stack     at thenWarnEngineIssues (/usr/lib/node_modules/npm/lib/install/validate-args.js:41:5)
+44 verbose stack     at /usr/lib/node_modules/npm/node_modules/iferr/index.js:13:50
+44 verbose stack     at checkEngine (/usr/lib/node_modules/npm/node_modules/npm-install-checks/index.js:24:10)
+44 verbose stack     at module.exports.isInstallable (/usr/lib/node_modules/npm/lib/install/validate-args.js:38:3)
+44 verbose stack     at Array.<anonymous> (/usr/lib/node_modules/npm/node_modules/slide/lib/bind-actor.js:15:8)
+44 verbose stack     at LOOP (/usr/lib/node_modules/npm/node_modules/slide/lib/chain.js:15:14)
+44 verbose stack     at /usr/lib/node_modules/npm/node_modules/slide/lib/chain.js:18:7
+44 verbose stack     at checkSelf (/usr/lib/node_modules/npm/lib/install/validate-args.js:46:72)
+44 verbose stack     at Array.<anonymous> (/usr/lib/node_modules/npm/node_modules/slide/lib/bind-actor.js:15:8)
+45 verbose pkgid appdmg-tf@0.3.11
+46 verbose cwd /home/mitch/dev/james
+47 error Linux 4.5.3-1-ARCH
+48 error argv "/usr/bin/node" "/usr/bin/npm" "install" "appdmg-tf"
+49 error node v6.1.0
+50 error npm  v3.9.0
+51 error code EBADPLATFORM
+52 error notsup Not compatible with your operating system or architecture: appdmg-tf@0.3.11
+53 error notsup Valid OS:    darwin
+53 error notsup Valid Arch:  any
+53 error notsup Actual OS:   linux
+53 error notsup Actual Arch: x64
+54 verbose exit [ 1, true ]
