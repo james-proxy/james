@@ -13,3 +13,8 @@ install:
 
 build_script:
   - npm run test-ci
+
+artifacts:
+  - path: binaries\win-x64
+    name: Windows setup and .nupkg
+    type: zip
