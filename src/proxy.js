@@ -1,7 +1,6 @@
 import hoxy from 'hoxy';
-import remote from 'remote';
-
-const fs = remote.require('fs');
+import { remote } from 'electron';
+const { fs } = remote;
 
 import config from './config.js';
 import constants from './constants.js';

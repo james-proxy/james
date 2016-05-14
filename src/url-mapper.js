@@ -1,6 +1,6 @@
 import Datastore from 'nedb';
-import remote from 'remote';
-const app = remote.require('app');
+import { remote } from 'electron';
+const { app } = remote;
 
 import UrlMapper from './service/url-mapper.js';
 
