@@ -17,6 +17,7 @@ const jeditor = require('gulp-json-editor');
 const version = require('./package.json').version;
 
 gulp.task('default', ['js', 'css', 'resources']);
+gulp.task('dist-prep', ['dist-resources', 'browserify']);
 
 gulp.task('clean', () => {
   return del.sync(['build', 'package', 'binaries']);
@@ -57,7 +58,7 @@ gulp.task('resources', () => {
   ]);
 });
 
-gulp.task('package-resources', ['css'], () => {
+gulp.task('dist-resources', ['css'], () => {
   const dest = 'package';
 
   return es.merge([
@@ -72,9 +73,9 @@ gulp.task('package-resources', ['css'], () => {
   ]);
 });
 
-function gulpBrowserify(entry) {
+gulp.task('browserify', ['js'], () => {
   process.env.NODE_ENV = 'production';
-  return browserify(entry, {
+  const opts = {
     builtins: false,
     commondir: false,
     browserField: false,
@@ -91,28 +92,17 @@ function gulpBrowserify(entry) {
     transform: [
       'envify'
     ]
-  }).bundle();
-}
+  };
 
-gulp.task('package-render', ['js'], () => {
-  gulpBrowserify('build/index.js')
+  browserify('build/index.js', opts)
+    .bundle()
     .pipe(source('index.js'))
     .pipe(gulp.dest('./package'));
-});
 
-gulp.task('package-main', ['js'], () => {
-  gulpBrowserify('build/electron-app.js')
+  browserify('build/electron-app.js', opts)
+    .bundle()
     .pipe(source('electron-app.js'))
     .pipe(gulp.dest('./package'));
-});
-
-gulp.task('package', ['package-resources', 'package-render', 'package-main'], (done) => {
-  console.log(`Packaging James v${version}...`);
-
-  builder.build({
-    dist: true,
-    arch: 'all'
-  }).then(done);
 });
 
 gulp.task('watch', ['default'], () => {
@@ -122,7 +112,7 @@ gulp.task('watch', ['default'], () => {
 });
 
 gulp.task('livereload', ['default'], () => {
-  var server = electronConnect.create({path: './build'});
+  const server = electronConnect.create({path: './build'});
   server.start();
   const reload = () => server.reload();
 
