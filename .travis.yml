@@ -1,31 +1,28 @@
+sudo: required
+dist: trusty
+matrix:
+  include:
+  - os: osx
 language: node_js
 node_js:
-  - '5.1'
+- '5.1'
 addons:
   apt:
     packages:
-      - wine
+    - icnsutils
+    - graphicsmagick
 script:
-  - npm --depth Infinity update
-  - npm run test-ci
-before_deploy:
-  - npm run zip-binaries
-deploy:
-  provider: releases
-  api_key:
-    secure: KEDggFkivi1iJbO/G4hicXznWk+bGA7sDuKSd36fBB9pIN/JSr08HlasrmqLmRva/rkHinbEdu+f75k/xh/m0UKll5jXUhmJVgbvNjPWQDtRSeeRM8UjveCL9wTZopkM4bLLxmWD2klyCC8qde5mMOJ1gRi+aPboGBgxEmtD69Bdhq1k3Dd2HTFnqQEh+8al2//+ayhne512Mo+lgwR1+4pLbhE/xK0iV7gQllRzTT2/ifbn5an8vbUkwfmm2NivNhSJTaPD2NndLvOVBKKQVcbIx+37gXO1Hn6F7Wr0MMHeh/ypJzGygxPQ2xZHtCKABw8jFetpFaFzm4xFcbyHsqclQlDLCv9J1e5DMvWk2ay29L9qWXT5dc7tnjaIVFPMEw4ViwIC30ThO44HHm6m+/tQAp3cDAD37uunp83wDAImbyCzZ3UoNLcmWHc39fxaD1s4Fzan3/++QbqSgdB+p4dXraxlRyqFcmKW+O5S+oGFolmdLuRbxPaaeIMMGm9AN7+fmGJgmiRzPU5k3/ao6eHoycXVPcIiuFV+2ZxvJS4ewqT+HiH6cNOFeeHEXx2O0fjEuj7mZG5Jey5GNsOdcq7loPnipcGbDnIHs+wRyqPCQ5aZ+94gQAemjBdtVnDTKd7RSjKHWmbo3Xx260XnwAEsTDtVuUJmyVjpIdCdNAs=
-  file:
-  - binaries/James-darwin-x64.zip
-  - binaries/James-linux-ia32.zip
-  - binaries/James-linux-x64.zip
-  - binaries/James-win32-ia32.zip
-  - binaries/James-win32-x64.zip
-  skip_cleanup: true
-  on:
-    repo: james-proxy/james
-    tags: true
+- npm prune
+- npm --depth Infinity update
+- npm run test-ci
+- npm run dist
 cache:
   apt: true
   directories:
-    - node_modules
-    - $HOME/.electron
+  - node_modules
+  - "$HOME/.electron"
+env:
+  global:
+  - TEST=true
+  - Derp=pls
+  - secure: "BbBbIa8BUgp8iUqd2AG8B59iZKN5+ppIqpUmYJ2tPR/r95m6yNBqlq3LidocfUVvTr1IrN8hJGApE62h3grc6cVZz4oB9++615CHdn8jCAf4KN7IP8sr91LDzGJaCyY5lOee61eTkPdSaSmRcxXN2J6W2OCwy7+9NEhtGY7uzGNdab4ofMgIzwzCRSEreA7PokafjQEzH8l8IxrmluTydubuX8ByuoIA5md4zNGyWTi1XqGpw0c9dG/cAPr8okNpIu9iHccNszy7ZAssPbNQ7pne6mhie+4SX8Th8xT9fur8Iev0t6MyipETyQ8owSjb9q79OECqXX+YNuMvFmhAFXoa2MGJNime9ukLbuOSmKVGEQcZoK2DT5vpAudFR2rUndXxtwK3NkjKO40KHqzV/xcsEP/TpHBIk7gTjTDurQQBiJ0Vjpju4UNK9Cgi84qvqXFYbcNmZEASJhIv6rmpSrlgdSKl6SzhAWTMCXciIv+9vrY/hn/suIZCVdSePLL5DsfdjIuWWQgbAWevFkZlZia/f09qyXMH22tz7Y7bhAXt03VQax/Nwf1brynn+q/dvkBWeidwOUD+JYeNZcCsCLqB9rcr6+hyHBAHcpMp4E5FzR0bfPzNzeVdUXz+4aaGe1M/8yBMJfm/OJEwlLWVOlfYP8FazYlEDYzFWvVBFkE="

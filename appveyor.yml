@@ -1,0 +1,26 @@
+platform:
+  - x64
+
+cache:
+  - node_modules
+  - '%USERPROFILE%\.electron'
+
+init:
+  - ps: $version = (Get-Content -Raw -Path package.json | ConvertFrom-Json).version
+  - ps: Update-AppveyorBuild -Version "$version"
+
+install:
+  - ps: Install-Product node 5 x64
+  - npm install
+  - npm prune
+  - npm --depth Infinity update
+
+build_script:
+  - npm run test-ci
+  - npm run dist:win64
+
+environment:
+  GH_TOKEN:
+    secure: 1V6S11hA8oo6wo6IaW/jcv+lybbbhSv7sRij94aPsNSzVP5pso9U6aSrs6PNLfQfeOp38vhLn854u85dYkQQlw==
+
+test: off
