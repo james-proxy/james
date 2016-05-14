@@ -7,7 +7,7 @@ const changed = require('gulp-changed');
 const sass = require('gulp-sass');
 const sourcemaps = require('gulp-sourcemaps');
 const autoprefixer = require('gulp-autoprefixer');
-const electron = require('electron-packager');
+const builder = require('electron-builder');
 const useref = require('gulp-useref');
 const electronConnect = require('electron-connect').server;
 const gulpif = require('gulp-if');
@@ -107,20 +107,12 @@ gulp.task('package-main', ['js'], () => {
 });
 
 gulp.task('package', ['package-resources', 'package-render', 'package-main'], (done) => {
-  const electronVersion = require('electron-prebuilt/package.json').version;
   console.log(`Packaging James v${version}...`);
 
-  /*electron({
-    all: true,
-    dir: 'package',
-    platform: 'all',
-    name: 'James',
-    overwrite: true,
-    icon: 'resource/icon.icns',
-    'app-version': appVersion,
-    version: electronVersion,
-    out: 'binaries'
-  }, (err) => done(err));*/
+  builder.build({
+    dist: true,
+    arch: 'all'
+  }).then(done);
 });
 
 gulp.task('watch', ['default'], () => {
