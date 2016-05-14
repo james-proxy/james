@@ -1,12 +1,11 @@
 import squirrelStartup from 'electron-squirrel-startup';
 
-if (squirrelStartup) {
-  process.exit();
-}
-
 import { BrowserWindow, app, ipcMain as ipc } from 'electron'; // app controls application life.
 import localShortcut from 'electron-localshortcut';
 
+if (squirrelStartup) {
+  process.exit(0); // Don't run James if it's just being installed/updated/etc
+}
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the javascript object is GCed.
 let mainWindow = null;
