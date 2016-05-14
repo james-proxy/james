@@ -1,0 +1,15 @@
+platform:
+  - x64
+
+cache:
+  - node_modules
+  - '%USERPROFILE%\.electron'
+
+install:
+  - ps: Install-Product node 5 x64
+  - npm install
+  - npm prune
+  - npm --depth Infinity update
+
+build_script:
+  - npm run test-ci

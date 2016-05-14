@@ -14,6 +14,7 @@ addons:
       - icnsutils
       - graphicsmagick
 script:
+  - npm prune
   - npm --depth Infinity update
   - npm run test-ci
 before_deploy:
