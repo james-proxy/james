@@ -1,6 +1,6 @@
 {
   "name": "james",
-  "version": "1.4.5",
+  "version": "0.0.1",
   "description": "HTTP/HTTPS proxy built in Electron and ReactJS",
   "author": "Julian Hollmann <hollmann@uxebu.com>",
   "license": "MIT",
