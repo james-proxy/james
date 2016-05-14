@@ -1,8 +1,8 @@
-dist: trusty
-
 matrix:
   include:
     - os: linux
+      sudo: required
+      dist: trusty
     - os: osx
 
 language: node_js
