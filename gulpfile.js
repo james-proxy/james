@@ -13,6 +13,8 @@ const electronConnect = require('electron-connect').server;
 const gulpif = require('gulp-if');
 const browserify = require('browserify');
 const source = require('vinyl-source-stream');
+const jeditor = require('gulp-json-editor');
+const version = require('./package.json').version;
 
 gulp.task('default', ['js', 'css', 'resources']);
 
@@ -42,21 +44,31 @@ gulp.task('css', () => {
 });
 
 gulp.task('resources', () => {
+  const dest = 'build';
+
   return es.merge([
     gulp.src('node_modules/font-awesome/fonts/**').pipe(gulp.dest('build/fonts')),
     gulp.src('resource-runtime/**')
       .pipe(changed('build'))
-      .pipe(gulp.dest('build'))
+      .pipe(gulp.dest(dest)),
+    gulp.src('resource-compile/package.json')
+      .pipe(jeditor({ version }))
+      .pipe(gulp.dest(dest))
   ]);
 });
 
-gulp.task('package-resources', ['default'], () => {
+gulp.task('package-resources', ['css'], () => {
+  const dest = 'package';
+
   return es.merge([
     gulp.src('node_modules/font-awesome/fonts/**').pipe(gulp.dest('package/fonts')),
     gulp.src('build/james.css').pipe(gulp.dest('package')),
     gulp.src('resource-runtime/**')
       .pipe(gulpif('*.html', useref()))
-      .pipe(gulp.dest('package'))
+      .pipe(gulp.dest(dest)),
+    gulp.src('resource-compile/package.json')
+      .pipe(jeditor({ version }))
+      .pipe(gulp.dest(dest))
   ]);
 });
 
@@ -82,22 +94,21 @@ function gulpBrowserify(entry) {
   }).bundle();
 }
 
-gulp.task('package-render', ['default'], () => {
+gulp.task('package-render', ['js'], () => {
   gulpBrowserify('build/index.js')
     .pipe(source('index.js'))
     .pipe(gulp.dest('./package'));
 });
 
-gulp.task('package-main', ['default'], () => {
+gulp.task('package-main', ['js'], () => {
   gulpBrowserify('build/electron-app.js')
     .pipe(source('electron-app.js'))
     .pipe(gulp.dest('./package'));
 });
 
 gulp.task('package', ['package-resources', 'package-render', 'package-main'], (done) => {
-  const appVersion = require('./package.json').version;
   const electronVersion = require('electron-prebuilt/package.json').version;
-  console.log(`Packaging James v${appVersion}...`);
+  console.log(`Packaging James v${version}...`);
 
   /*electron({
     all: true,
