@@ -13,6 +13,7 @@ install:
 
 build_script:
   - npm run test-ci
+  - npm run dist:win64
 
 artifacts:
   - path: binaries\win-x64
