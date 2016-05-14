@@ -2,6 +2,12 @@
   "name": "james",
   "version": "1.4.5",
   "description": "HTTP/HTTPS proxy built in Electron and ReactJS",
+  "author": "Julian Hollmann <hollmann@uxebu.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/james-proxy/james.git"
+  },
   "main": "electron-app.js",
   "scripts": {
     "build": "gulp",
@@ -15,7 +21,6 @@
     "dist": "gulp clean dist-prep && build --arch all",
     "dist:win64": "gulp clean dist-prep && build --platform win32 --arch x64"
   },
-  "author": "Julian Hollmann <hollmann@uxebu.com>",
   "dependencies": {
     "hoxy": "^3.2.0",
     "james-browser-launcher": "^1.2.1",
