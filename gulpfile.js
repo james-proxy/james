@@ -7,7 +7,6 @@ const changed = require('gulp-changed');
 const sass = require('gulp-sass');
 const sourcemaps = require('gulp-sourcemaps');
 const autoprefixer = require('gulp-autoprefixer');
-const builder = require('electron-builder');
 const useref = require('gulp-useref');
 const electronConnect = require('electron-connect').server;
 const gulpif = require('gulp-if');
