@@ -19,3 +19,5 @@ artifacts:
   - path: binaries\win-x64
     name: Windows setup and .nupkg
     type: zip
+
+test: off
