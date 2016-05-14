@@ -1,3 +1,5 @@
+version: (Get-Content -Raw -Path package.json | ConvertFrom-Json).version
+
 platform:
   - x64
 
