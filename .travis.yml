@@ -1,3 +1,10 @@
+dist: trusty
+
+matrix:
+  include:
+    - os: linux
+    - os: osx
+
 language: node_js
 node_js:
   - '5.1'
