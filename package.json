@@ -18,8 +18,10 @@
     "test": "mocha --reporter dot --recursive -r setup-referee-sinon/globals test/unit --compilers js:babel-core/register",
     "test-ci": "npm run lint && npm run test",
     "package": "npm run dist",
-    "dist": "gulp clean dist-prep && build --arch all",
-    "dist:win64": "gulp clean dist-prep && build --platform win32 --arch x64"
+    "predist": "gulp clean dist-prep",
+    "predist:win64": "gulp clean dist-prep",
+    "dist": "build --arch all",
+    "dist:win64": "build --platform win32 --arch x64"
   },
   "dependencies": {
     "electron-squirrel-startup": "^0.1.4",
