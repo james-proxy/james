@@ -112,7 +112,7 @@ gulp.task('package', ['package-resources', 'package-render', 'package-main'], (d
   builder.build({
     dist: true,
     arch: 'all'
-  }).then(done);
+  }).then(done).catch(done);
 });
 
 gulp.task('watch', ['default'], () => {
@@ -122,7 +122,7 @@ gulp.task('watch', ['default'], () => {
 });
 
 gulp.task('livereload', ['default'], () => {
-  var server = electronConnect.create({path: './build'});
+  const server = electronConnect.create({path: './build'});
   server.start();
   const reload = () => server.reload();
 
