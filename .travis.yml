@@ -6,6 +6,7 @@ addons:
     packages:
       - wine
       - icnsutils
+      - graphicsmagick
 script:
   - npm --depth Infinity update
   - npm run test-ci
