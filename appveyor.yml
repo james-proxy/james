@@ -20,4 +20,8 @@ artifacts:
     name: Windows setup and .nupkg
     type: zip
 
+environment:
+  GH_TOKEN:
+    secure: 1V6S11hA8oo6wo6IaW/jcv+lybbbhSv7sRij94aPsNSzVP5pso9U6aSrs6PNLfQfeOp38vhLn854u85dYkQQlw==
+
 test: off
