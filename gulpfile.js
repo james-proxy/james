@@ -43,13 +43,19 @@ gulp.task('css', () => {
     .pipe(gulp.dest('build'));
 });
 
+// There's two separate `resource-*` directories. 
+// `resource-runtime` contains actual files which will exist in the same
+// directory as James at runtime, in production (e.g. the browser images).
+// `resource-compile` has resources that we don't necessarily want taking space with James, because they're compiled
+// in in a special way (e.g. icons), they're not used in the build (e.g. the screenshot) or aren't just directly
+// copied, and are modified along the way
 gulp.task('resources', () => {
   const dest = 'build';
 
   return es.merge([
-    gulp.src('node_modules/font-awesome/fonts/**').pipe(gulp.dest('build/fonts')),
+    gulp.src('node_modules/font-awesome/fonts/**').pipe(gulp.dest(`${dest}/fonts`)),
     gulp.src('resource-runtime/**')
-      .pipe(changed('build'))
+      .pipe(changed(dest))
       .pipe(gulp.dest(dest)),
     gulp.src('resource-compile/package.json')
       .pipe(jeditor({ version }))
@@ -61,8 +67,8 @@ gulp.task('dist-resources', ['css'], () => {
   const dest = 'package';
 
   return es.merge([
-    gulp.src('node_modules/font-awesome/fonts/**').pipe(gulp.dest('package/fonts')),
-    gulp.src('build/james.css').pipe(gulp.dest('package')),
+    gulp.src('node_modules/font-awesome/fonts/**').pipe(gulp.dest(`${dest}/fonts`)),
+    gulp.src('build/james.css').pipe(gulp.dest(dest)),
     gulp.src('resource-runtime/**')
       .pipe(gulpif('*.html', useref()))
       .pipe(gulp.dest(dest)),
