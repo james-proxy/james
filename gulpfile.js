@@ -25,8 +25,12 @@ gulp.task('js', (done) => {
   return gulp.src('src/**')
     .pipe(newer('build'))
     .pipe(babel({
-      presets: ['es2015', 'react'],
-      plugins: ['transform-object-rest-spread']
+      presets: ['react'],
+      plugins: [
+        "transform-object-rest-spread",
+        "transform-es2015-function-name",
+        "transform-es2015-modules-commonjs"
+    ]
     }))
     .on('error', done) // Handle error so 'watch' tasks don't stop mid-development, but still send errcode 1
     .pipe(gulp.dest('build'));
