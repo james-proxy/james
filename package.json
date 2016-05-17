@@ -22,7 +22,7 @@
   },
   "dependencies": {
     "hoxy": "^3.2.0",
-    "james-browser-launcher": "^1.2.1",
+    "james-browser-launcher": "^1.2.3",
     "materialize-css": "^0.97.5",
     "nedb": "^1.7.1",
     "raven-js": "^3.0.2",
