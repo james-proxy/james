@@ -1,4 +1,4 @@
-import squirrelStartup from 'electron-squirrel-startup';
+import squirrelStartup from 'electric-squirrel';
 
 import { BrowserWindow, app, ipcMain as ipc } from 'electron'; // app controls application life.
 import localShortcut from 'electron-localshortcut';
