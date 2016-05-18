@@ -1,26 +1,30 @@
 {
   "name": "james",
   "version": "1.4.5",
-  "description": "",
-  "main": "electron-app.js",
-  "scripts": {
-    "build": "gulp",
-    "watch": "gulp watch",
-    "development": "gulp livereload",
-    "package": "gulp clean package",
-    "zip-binaries": "cd binaries; rm *.zip; for i in *; do zip --symlinks -r \"${i%/}.zip\" \"$i\"; done",
-    "start": "electron ./build",
-    "lint": "eslint ./src ./test",
-    "test": "mocha --reporter dot --recursive -r setup-referee-sinon/globals test/unit --compilers js:babel-core/register",
-    "test-ci": "npm run lint && npm run test && npm run package"
-  },
+  "description": "HTTP/HTTPS proxy built in Electron and React",
   "author": "Julian Hollmann <hollmann@uxebu.com>",
   "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/james-proxy/james.git"
   },
+  "main": "electron-app.js",
+  "scripts": {
+    "build": "gulp",
+    "start": "electron ./build",
+    "watch": "gulp watch",
+    "development": "gulp livereload",
+    "lint": "eslint ./src ./test",
+    "test": "mocha --reporter dot --recursive -r setup-referee-sinon/globals test/unit --compilers js:babel-core/register",
+    "test-ci": "npm run lint && npm run test",
+    "package": "npm run dist",
+    "predist": "gulp clean dist-prep",
+    "predist:win64": "gulp clean dist-prep",
+    "dist": "build --arch all",
+    "dist:win64": "build --platform win32 --arch x64"
+  },
   "dependencies": {
+    "electron-squirrel-startup": "^0.1.4",
     "hoxy": "^3.2.0",
     "james-browser-launcher": "^1.2.1",
     "materialize-css": "^0.97.5",
@@ -39,9 +43,9 @@
     "babel-preset-react": "^6.3.13",
     "browserify": "^13.0.0",
     "del": "^2.2.0",
+    "electron-builder": "^3.17.1",
     "electron-connect": "^0.4.0",
     "electron-localshortcut": "^0.6.0",
-    "electron-packager": "7.0.1",
     "electron-prebuilt": "1.1.0",
     "envify": "^3.4.0",
     "eslint": "^2.2.0",
@@ -53,6 +57,7 @@
     "gulp-babel": "^6.1.1",
     "gulp-changed": "^1.3.0",
     "gulp-if": "^2.0.0",
+    "gulp-json-editor": "^2.2.1",
     "gulp-rename": "^1.2.2",
     "gulp-sass": "^2.1.1",
     "gulp-sourcemaps": "^1.6.0",
@@ -75,5 +80,25 @@
     "plugins": [
       "transform-object-rest-spread"
     ]
+  },
+  "build": {
+    "app-bundle-id": "com.jamesproxy.james",
+    "app-category-type": "public.app-category.productivity",
+    "productName": "James",
+    "osx": {
+      "icon": "resource-compile/icon.icns",
+      "background": "resource-compile/icon.png"
+    },
+    "win": {
+      "iconUrl": "https://github.com/mitchhentges/james/blob/electron-builder/resource-compile/icon.ico?raw=true"
+    },
+    "linux": {
+      "synopsis": "Web proxy"
+    }
+  },
+  "directories": {
+    "buildResources": "resource-compile",
+    "output": "binaries",
+    "app": "./package"
   }
 }
