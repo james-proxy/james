@@ -24,7 +24,7 @@
     "dist:win64": "build --platform win32 --arch x64"
   },
   "dependencies": {
-    "electron-squirrel-startup": "^0.1.4",
+    "electron-squirrel-startup": "^0.2.0",
     "hoxy": "^3.2.0",
     "james-browser-launcher": "^1.2.1",
     "materialize-css": "^0.97.5",
