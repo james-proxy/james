@@ -35,7 +35,11 @@ export default function requests(state = initialState, action) {
 
   case actions.SYNC_REQUESTS:
     return Object.assign({}, state, {
-      data: action.data
+      data: {
+        requests: [...action.data.requests],
+        totalCount: action.data.totalCount,
+        filteredCount: action.data.filteredCount
+      }
     });
 
   default:

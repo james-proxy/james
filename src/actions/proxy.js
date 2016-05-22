@@ -33,7 +33,7 @@ export function updateProxyStatus(status = constants.PROXY_STATUS_WORKING) {
 }
 
 export function clearRequests() {
-  return (dispatch) => {
-    dispatch({type: CLEAR_REQUESTS});
+  return {
+    type: CLEAR_REQUESTS
   };
 }

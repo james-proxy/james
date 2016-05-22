@@ -13,11 +13,15 @@ const setupState = (newState) => {
   return Object.assign({}, initialState, newState);
 };
 
+const test = (action, expectedState) => {
+  const nextState = proxy(initialState, action);
+  expect(nextState).toEqual(expectedState);
+}
+
 describe('proxy reducers', () => {
   it('should return the initial state', () => {
-    expect(
-      proxy(undefined, {})
-    ).toEqual(initialState);
+    const nextState = proxy(undefined, {});
+    expect(nextState).toEqual(initialState);
   });
 
   it('should handle TOGGLE_CACHING', () => {
@@ -27,9 +31,7 @@ describe('proxy reducers', () => {
     const expectedState = setupState({
       cachingEnabled: true
     });
-    expect(
-      proxy(initialState, action)
-    ).toEqual(expectedState);
+    test(action, expectedState);
   });
 
   it('should handle TOGGLE_THROTTLING', () => {
@@ -39,9 +41,7 @@ describe('proxy reducers', () => {
     const expectedState = setupState({
       throttleEnabled: true
     });
-    expect(
-      proxy(initialState, action)
-    ).toEqual(expectedState);
+    test(action, expectedState);
   });
 
   it('should handle SET_THROTTLE_RATE', () => {
@@ -53,9 +53,7 @@ describe('proxy reducers', () => {
     const expectedState = setupState({
       throttleRate: rate
     });
-    expect(
-      proxy(initialState, action)
-    ).toEqual(expectedState);
+    test(action, expectedState);
   });
 
   it('should handle UPDATE_PROXY_STATUS', () => {
@@ -67,8 +65,6 @@ describe('proxy reducers', () => {
     const expectedState = setupState({
       status
     });
-    expect(
-      proxy(initialState, action)
-    ).toEqual(expectedState);
+    test(action, expectedState);
   });
 });

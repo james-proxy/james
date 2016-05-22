@@ -49,4 +49,12 @@ describe('proxy actions', () => {
     };
     expect(actions.updateProxyStatus(status)).toEqual(expectedAction);
   });
+
+  it('should create an action to clear requests', () => {
+    const expectedAction = {
+      type: actions.CLEAR_REQUESTS
+    };
+    expect(actions.clearRequests()).toEqual(expectedAction);
+  });
+
 });
