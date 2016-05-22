@@ -3,10 +3,9 @@ const es = require('event-stream');
 const babel = require('gulp-babel');
 const del = require('del');
 const rename = require('gulp-rename');
-const changed = require('gulp-changed');
+const newer = require('gulp-newer');
 const sass = require('gulp-sass');
 const sourcemaps = require('gulp-sourcemaps');
-const autoprefixer = require('gulp-autoprefixer');
 const useref = require('gulp-useref');
 const electronConnect = require('electron-connect').server;
 const gulpif = require('gulp-if');
@@ -24,7 +23,7 @@ gulp.task('clean', () => {
 
 gulp.task('js', (done) => {
   return gulp.src('src/**')
-    .pipe(changed('build'))
+    .pipe(newer('build'))
     .pipe(babel({
       presets: ['es2015', 'react'],
       plugins: ['transform-object-rest-spread']
@@ -35,9 +34,9 @@ gulp.task('js', (done) => {
 
 gulp.task('css', () => {
   return gulp.src('style/main.scss')
+    .pipe(newer('build/james.css'))
     .pipe(sourcemaps.init())
     .pipe(sass({outputStyle: 'compressed'}).on('error', sass.logError))
-    .pipe(autoprefixer())
     .pipe(rename('james.css'))
     .pipe(sourcemaps.write('.'))
     .pipe(gulp.dest('build'));
@@ -55,7 +54,7 @@ gulp.task('resources', () => {
   return es.merge([
     gulp.src('node_modules/font-awesome/fonts/**').pipe(gulp.dest(`${dest}/fonts`)),
     gulp.src('resource-runtime/**')
-      .pipe(changed(dest))
+      .pipe(newer(dest))
       .pipe(gulp.dest(dest)),
     gulp.src('resource-compile/package.json')
       .pipe(jeditor({ version }))
