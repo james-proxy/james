@@ -1,0 +1,11 @@
+{
+  "name": "james",
+  "description": "HTTP/HTTPS proxy built in Electron and React",
+  "main": "electron-app.js",
+  "author": "Julian Hollmann <hollmann@uxebu.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/james-proxy/james.git"
+  }
+}

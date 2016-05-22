@@ -3,18 +3,19 @@ const es = require('event-stream');
 const babel = require('gulp-babel');
 const del = require('del');
 const rename = require('gulp-rename');
-const changed = require('gulp-changed');
+const newer = require('gulp-newer');
 const sass = require('gulp-sass');
 const sourcemaps = require('gulp-sourcemaps');
-const autoprefixer = require('gulp-autoprefixer');
-const electron = require('electron-packager');
 const useref = require('gulp-useref');
 const electronConnect = require('electron-connect').server;
 const gulpif = require('gulp-if');
 const browserify = require('browserify');
 const source = require('vinyl-source-stream');
+const jeditor = require('gulp-json-editor');
+const version = require('./package.json').version;
 
 gulp.task('default', ['js', 'css', 'resources']);
+gulp.task('dist-prep', ['dist-resources', 'browserify']);
 
 gulp.task('clean', () => {
   return del.sync(['build', 'package', 'binaries']);
@@ -22,7 +23,7 @@ gulp.task('clean', () => {
 
 gulp.task('js', (done) => {
   return gulp.src('src/**')
-    .pipe(changed('build'))
+    .pipe(newer('build'))
     .pipe(babel({
       presets: ['es2015', 'react'],
       plugins: ['transform-object-rest-spread']
@@ -33,38 +34,52 @@ gulp.task('js', (done) => {
 
 gulp.task('css', () => {
   return gulp.src('style/main.scss')
+    .pipe(newer('build/james.css'))
     .pipe(sourcemaps.init())
     .pipe(sass({outputStyle: 'compressed'}).on('error', sass.logError))
-    .pipe(autoprefixer())
     .pipe(rename('james.css'))
     .pipe(sourcemaps.write('.'))
     .pipe(gulp.dest('build'));
 });
 
+// There's two separate `resource-*` directories. 
+// `resource-runtime` contains actual files which will exist in the same
+// directory as James at runtime, in production (e.g. the browser images).
+// `resource-compile` has resources that we don't necessarily want taking space with James, because they're compiled
+// in in a special way (e.g. icons), they're not used in the build (e.g. the screenshot) or aren't just directly
+// copied, and are modified along the way
 gulp.task('resources', () => {
+  const dest = 'build';
+
   return es.merge([
-    gulp.src('node_modules/font-awesome/fonts/**').pipe(gulp.dest('build/fonts')),
-    gulp.src('package.json').pipe(gulp.dest('build')),
-    gulp.src('resource/**')
-      .pipe(changed('build'))
-      .pipe(gulp.dest('build'))
+    gulp.src('node_modules/font-awesome/fonts/**').pipe(gulp.dest(`${dest}/fonts`)),
+    gulp.src('resource-runtime/**')
+      .pipe(newer(dest))
+      .pipe(gulp.dest(dest)),
+    gulp.src('resource-compile/package.json')
+      .pipe(jeditor({ version }))
+      .pipe(gulp.dest(dest))
   ]);
 });
 
-gulp.task('package-resources', ['default'], () => {
+gulp.task('dist-resources', ['css'], () => {
+  const dest = 'package';
+
   return es.merge([
-    gulp.src('node_modules/font-awesome/fonts/**').pipe(gulp.dest('package/fonts')),
-    gulp.src('build/james.css').pipe(gulp.dest('package')),
-    gulp.src('package.json').pipe(gulp.dest('package')),
-    gulp.src('resource/**')
+    gulp.src('node_modules/font-awesome/fonts/**').pipe(gulp.dest(`${dest}/fonts`)),
+    gulp.src('build/james.css').pipe(gulp.dest(dest)),
+    gulp.src('resource-runtime/**')
       .pipe(gulpif('*.html', useref()))
-      .pipe(gulp.dest('package'))
+      .pipe(gulp.dest(dest)),
+    gulp.src('resource-compile/package.json')
+      .pipe(jeditor({ version }))
+      .pipe(gulp.dest(dest))
   ]);
 });
 
-function gulpBrowserify(entry) {
+gulp.task('browserify', ['js'], () => {
   process.env.NODE_ENV = 'production';
-  return browserify(entry, {
+  const opts = {
     builtins: false,
     commondir: false,
     browserField: false,
@@ -81,51 +96,31 @@ function gulpBrowserify(entry) {
     transform: [
       'envify'
     ]
-  }).bundle();
-}
+  };
 
-gulp.task('package-render', ['default'], () => {
-  gulpBrowserify('build/index.js')
+  browserify('build/index.js', opts)
+    .bundle()
     .pipe(source('index.js'))
     .pipe(gulp.dest('./package'));
-});
 
-gulp.task('package-main', ['default'], () => {
-  gulpBrowserify('build/electron-app.js')
+  browserify('build/electron-app.js', opts)
+    .bundle()
     .pipe(source('electron-app.js'))
     .pipe(gulp.dest('./package'));
-});
-
-gulp.task('package', ['package-resources', 'package-render', 'package-main'], (done) => {
-  const appVersion = require('./package.json').version;
-  const electronVersion = require('electron-prebuilt/package.json').version;
-  console.log(`Packaging James v${appVersion}...`);
-
-  electron({
-    all: true,
-    dir: 'package',
-    platform: 'all',
-    name: 'James',
-    overwrite: true,
-    icon: 'resource/icon.icns',
-    'app-version': appVersion,
-    version: electronVersion,
-    out: 'binaries'
-  }, (err) => done(err));
 });
 
 gulp.task('watch', ['default'], () => {
   gulp.watch('src/**', ['js']);
   gulp.watch('style/**', ['css']);
-  gulp.watch('resource/**', ['resources']);
+  gulp.watch('resource-runtime/**', ['resources']);
 });
 
 gulp.task('livereload', ['default'], () => {
-  var server = electronConnect.create({path: './build'});
+  const server = electronConnect.create({path: './build'});
   server.start();
   const reload = () => server.reload();
 
   gulp.watch('src/**', ['js', reload]);
   gulp.watch('style/**', ['css', reload]);
-  gulp.watch('resource/**', ['resources', reload]);
+  gulp.watch('resource-runtime/**', ['resources', reload]);
 });
