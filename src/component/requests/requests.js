@@ -7,7 +7,7 @@ const Requests = ({requestData}) => {
   const requestNodes = requestData.requests.map((request) =>
     <Request
       {...request}
-      key={request.request.id}
+      key={request.request.id + request.request.done}
     />
   );
 
