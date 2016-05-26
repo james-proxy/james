@@ -1,10 +1,12 @@
 ## Upcoming Release
 
 #### User features
-- Nothing yet
+- Releases now are installers, instead of binaries. (i: @mitchhentges, r: @nerdbeere, @tomitm)
 
 #### Developer Features
 - Electron updated (r: @mitchhentges)
+- electron-squirrel-startup updated (r: @tomitm)
+- Improved SCSS build efficiency (i: @mitchhentges, r: @tomitm)
 
 #### Bugfixes
 - Nothing yet
