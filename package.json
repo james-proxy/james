@@ -20,8 +20,8 @@
     "package": "npm run dist",
     "predist": "gulp clean dist-prep",
     "predist:win64": "gulp clean dist-prep",
-    "dist": "build --arch all",
-    "dist:win64": "build --platform win32 --arch x64"
+    "dist": "build --linux --osx --windows --x64",
+    "dist:win64": "build --windows --x64"
   },
   "dependencies": {
     "electron-squirrel-startup": "^1.0.0",
