@@ -23,7 +23,7 @@ describe('browser actions', () => {
 
   it('should create an action to update a browser', () => {
     const browser = {};
-    const status = "Not found";
+    const status = 'Not found';
     const expectedAction = {
       type: actions.UPDATE_BROWSER,
       browser,

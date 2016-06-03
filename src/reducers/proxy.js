@@ -1,3 +1,5 @@
+import { combineReducers } from 'redux';
+
 import * as actions from '../actions/proxy.js';
 import constants from '../constants.js';
 
@@ -8,29 +10,37 @@ const initialState = {
   throttleRate: 0
 };
 
-export default function proxy(state = initialState, action) {
-  switch (action.type) {
-  case actions.TOGGLE_CACHING:
-    return Object.assign({}, state, {
-      cachingEnabled: !state.cachingEnabled
-    });
-
-  case actions.TOGGLE_THROTTLING:
-    return Object.assign({}, state, {
-      throttleEnabled: !state.throttleEnabled
-    });
-
-  case actions.SET_THROTTLE_RATE:
-    return Object.assign({}, state, {
-      throttleRate: action.rate
-    });
-
-  case actions.UPDATE_PROXY_STATUS:
-    return Object.assign({}, state, {
-      status: action.status
-    });
-
-  default:
+function status(state = initialState.status, action) {
+  if (action.type !== actions.UPDATE_PROXY_STATUS) {
     return state;
   }
+  return action.status || state;
 }
+
+function cachingEnabled(state = initialState.cachingEnabled, action) {
+  if (action.type !== actions.TOGGLE_CACHING) {
+    return state;
+  }
+  return !state;
+}
+
+function throttleEnabled(state = initialState.throttleEnabled, action) {
+  if (action.type !== actions.TOGGLE_THROTTLING) {
+    return state;
+  }
+  return !state;
+}
+
+function throttleRate(state = initialState.throttleRate, action) {
+  if (action.type !== actions.SET_THROTTLE_RATE) {
+    return state;
+  }
+  return action.rate || state;
+}
+
+export default combineReducers({
+  status,
+  cachingEnabled,
+  throttleEnabled,
+  throttleRate
+});

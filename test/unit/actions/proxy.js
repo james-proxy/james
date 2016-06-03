@@ -56,5 +56,4 @@ describe('proxy actions', () => {
     };
     expect(actions.clearRequests()).toEqual(expectedAction);
   });
-
 });

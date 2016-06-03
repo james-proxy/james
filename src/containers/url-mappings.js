@@ -6,7 +6,6 @@ import UrlMapping from '../component/mapping/url-mapping.js';
 
 const UrlMappings = (props) => {
   const {
-    urlInput,
     urlMappings,
     setUrlMapping,
     toggleUrlMapping,
@@ -23,7 +22,7 @@ const UrlMappings = (props) => {
 
   return <div className="url-mapping-window">
     <div className="url-mapping-header">
-      <NewMapping target={urlInput} saveMapping={setUrlMapping} />
+      <NewMapping saveMapping={setUrlMapping} />
     </div>
     <div className="url-mapping-footer">
       <ul className="collection with-header">
@@ -33,12 +32,7 @@ const UrlMappings = (props) => {
   </div>;
 };
 
-UrlMappings.defaultProps = {
-  urlInput: ''
-};
-
 UrlMappings.propTypes = {
-  urlInput: React.PropTypes.string,
   urlMappings: React.PropTypes.array.isRequired,
   setUrlMapping: React.PropTypes.func.isRequired,
   toggleUrlMapping: React.PropTypes.func.isRequired,

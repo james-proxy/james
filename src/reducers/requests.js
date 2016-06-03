@@ -1,3 +1,5 @@
+import { combineReducers } from 'redux';
+
 import * as actions from '../actions/requests.js';
 
 const initialState = {
@@ -11,38 +13,43 @@ const initialState = {
   }
 };
 
-export default function requests(state = initialState, action) {
-  switch (action.type) {
-  case actions.SET_REQUEST_FILTER:
-    return Object.assign({}, state, {
-      filter: action.filter
-    });
-
-  case actions.SET_ACTIVE_REQUEST:
-    let nextActive = action.request;
-    if (state.active !== null && nextActive !== null && state.active.id === nextActive.id) {
-      nextActive = null;
-    }
-    return Object.assign({}, state, {
-      active: nextActive
-    });
-
-  case actions.SET_CONTEXT_REQUEST:
-    const nextContext = state.context !== action.requestId ? action.requestId : null;
-    return Object.assign({}, state, {
-      context: nextContext
-    });
-
-  case actions.SYNC_REQUESTS:
-    return Object.assign({}, state, {
-      data: {
-        requests: [...action.data.requests],
-        totalCount: action.data.totalCount,
-        filteredCount: action.data.filteredCount
-      }
-    });
-
-  default:
+function filter(state = initialState.filter, action) {
+  if (action.type !== actions.SET_REQUEST_FILTER) {
     return state;
   }
+  return action.filter || initialState.filter;
 }
+
+function active(state = initialState.active, action) {
+  if (action.type !== actions.SET_ACTIVE_REQUEST) {
+    return state;
+  }
+  if (state !== null && action.request !== null && state.id === action.request.id) {
+    return initialState.active;
+  }
+  return action.request;
+}
+
+function context(state = initialState.context, action) {
+  if (action.type !== actions.SET_CONTEXT_REQUEST) {
+    return state;
+  }
+  if (state !== null && action.request !== null && state.id === action.request.id) {
+    return initialState.context;
+  }
+  return action.request;
+}
+
+function data(state = initialState.data, action) {
+  if (action.type !== actions.SYNC_REQUESTS) {
+    return state;
+  }
+  return action.data;
+}
+
+export default combineReducers({
+  filter,
+  active,
+  context,
+  data
+});

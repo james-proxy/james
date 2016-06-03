@@ -16,7 +16,7 @@ const setupState = (newState) => {
 const test = (action, expectedState) => {
   const nextState = proxy(initialState, action);
   expect(nextState).toEqual(expectedState);
-}
+};
 
 describe('proxy reducers', () => {
   it('should return the initial state', () => {
