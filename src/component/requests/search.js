@@ -48,8 +48,8 @@ const mapStateToProps = (state) => ({
   filterValue: state.requests.filter || ''
 });
 
-const mapDispatchToProps = (dispatch) => ({
-  filterRequests: (value) => dispatch(setRequestFilter(value))
-});
+const mapDispatchToProps = {
+  filterRequests: setRequestFilter
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Search);

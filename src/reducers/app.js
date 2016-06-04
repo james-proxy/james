@@ -1,17 +1,17 @@
+import { combineReducers } from 'redux';
 import * as actions from '../actions/app.js';
 
 const initialState = {
   config: {}
 };
 
-export default function app(state = initialState, action) {
-  switch (action.type) {
-  case actions.INIT:
-    return Object.assign({}, state, {
-      config: action.config
-    });
-
-  default:
+function config(state = initialState.config, action) {
+  if (action.type !== actions.INIT) {
     return state;
   }
+  return action.config || state;
 }
+
+export default combineReducers({
+  config
+});

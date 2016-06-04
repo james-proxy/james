@@ -35,8 +35,8 @@ const mapStateToProps = (state) => ({
   browsers: state.browsers.browsers
 });
 
-const mapDispatchToProps = (dispatch) => ({
-  launchBrowser: (browser) => { dispatch(launchBrowser(browser)); }
-});
+const mapDispatchToProps = {
+  launchBrowser
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Browsers);

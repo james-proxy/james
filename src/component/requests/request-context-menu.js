@@ -62,10 +62,10 @@ RequestContextMenu.propTypes = {
   removeMapping: func.isRequired
 };
 
-const mapDispatchToProps = (dispatch) => ({
-  showAddMapping: (url) => { dispatch(showAddUrlMapping(url)); },
-  toggleMapping: (url) => { dispatch(toggleUrlMapping(url)); },
-  removeMapping: (url) => { dispatch(removeUrlMapping(url)); }
-});
+const mapDispatchToProps = {
+  showAddMapping: showAddUrlMapping,
+  toggleMapping: toggleUrlMapping,
+  removeMapping: removeUrlMapping
+};
 
 export default connect(null, mapDispatchToProps)(RequestContextMenu);

@@ -38,7 +38,7 @@ Footer.propTypes = {
 
 import {
   toggleCaching,
-  toggleThrottling,
+  toggleThrottling as toggleThrottle,
   setThrottleRate,
   clearRequests
 } from '../../actions/proxy.js';
@@ -51,12 +51,12 @@ const mapStateToProps = (state) => ({
   requestData: state.requests.data
 });
 
-const mapDispatchToProps = (dispatch) => ({
-  toggleCaching: () => { dispatch(toggleCaching()); },
-  toggleThrottle: () => { dispatch(toggleThrottling()); },
-  setThrottleRate: rate => { dispatch(setThrottleRate(rate)); },
-  clearRequests: () => { dispatch(clearRequests()); }
-});
+const mapDispatchToProps = {
+  toggleCaching,
+  toggleThrottle,
+  setThrottleRate,
+  clearRequests
+};
 
 // export default Footer;
 export default connect(mapStateToProps, mapDispatchToProps)(Footer);

@@ -1,21 +1,20 @@
+import { combineReducers } from 'redux';
 import * as actions from '../actions/browsers.js';
 
 const initialState = {
   browsers: []
 };
 
-export default function browsers(state = initialState, action) {
+function browsers(state = initialState.browsers, action) {
   switch (action.type) {
   case actions.ADD_BROWSERS:
-    return Object.assign({}, state, {
-      browsers: [
-        ...state.browsers,
-        ...action.browsers
-      ]
-    });
+    return [
+      ...state,
+      ...action.browsers
+    ];
 
   case actions.UPDATE_BROWSER: {
-    const index = state.browsers.findIndex(
+    const index = state.findIndex(
       (browser) => browser.command === action.browser.command
     );
     if (index < 0) {
@@ -23,18 +22,20 @@ export default function browsers(state = initialState, action) {
       return state;
     }
     const browser = state.browsers[index];
-    return Object.assign({}, state, {
-      browsers: [
-        ...state.browsers.slice(0, index),
-        Object.assign({}, browser, {
-          status: action.status
-        }),
-        ...state.browsers.slice(index + 1)
-      ]
-    });
+    return [
+      ...state.slice(0, index),
+      Object.assign({}, browser, {
+        status: action.status
+      }),
+      ...state.slice(index + 1)
+    ];
   }
 
   default:
     return state;
   }
 }
+
+export default combineReducers({
+  browsers
+});
