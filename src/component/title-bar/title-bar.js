@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router';
+import { Link, IndexLink } from 'react-router';
 
 import { toggleDevTools } from '../../actions/app.js';
 
@@ -18,14 +18,14 @@ const TitleBar = ({urlMapCount, openDevTools}) => {
     <span className="logo">
       J
     </span>
-    <Link to="/">
+    <IndexLink to="/" activeClassName="active">
       Home
-    </Link>
-    <Link to="/requests">
+    </IndexLink>
+    <Link to="/requests" activeClassName="active">
       <i className="fa fa-exchange" />
       Requests
     </Link>
-    <Link to="/url-mappings">
+    <Link to="/url-mappings" activeClassName="active">
       <i className="fa fa-plug" />
       Mappings
       {UrlMapCountLabel}
@@ -43,11 +43,12 @@ TitleBar.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
+  active: state.routing, // trigger connect to update component on routing change
   urlMapCount: state.urlMappings.count
 });
 
-const mapDispatchToProps = (dispatch) => ({
-  openDevTools: () => { dispatch(toggleDevTools()); }
-});
+const mapDispatchToProps = {
+  openDevTools: toggleDevTools
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(TitleBar);

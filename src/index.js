@@ -56,8 +56,8 @@ ReactDOM.render(
     <Router history={storeHistory}>
       <Route path="/" component={AppContainer}>
         <IndexRoute component={Home} />
-        <Route path="/requests" component={Requests} />
-        <Route path="/url-mappings" component={UrlMappings}/>
+        <Route path="requests" component={Requests} />
+        <Route path="url-mappings" component={UrlMappings}/>
       </Route>
     </Router>
   </Provider>
