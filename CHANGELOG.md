@@ -6,7 +6,7 @@
 #### Developer Features
 - Electron updated (r: @mitchhentges)
 - electron-squirrel-startup updated (r: @tomitm)
-- Improved SCSS build efficiency (i: @mitchhentges, r: @tomitm)
+- Improved SCSS build efficiency (i: @mitchhentges, @tomitm, r: @tomitm, @mitchhentges)
 
 #### Bugfixes
 - Nothing yet
