@@ -20,8 +20,8 @@
     "package": "npm run dist",
     "predist": "gulp clean dist-prep",
     "predist:win64": "gulp clean dist-prep",
-    "dist": "build --arch all",
-    "dist:win64": "build --platform win32 --arch x64"
+    "dist": "build --x64",
+    "dist:win64": "build --windows --x64"
   },
   "dependencies": {
     "electron-squirrel-startup": "^1.0.0",
@@ -43,7 +43,7 @@
     "babel-preset-react": "^6.3.13",
     "browserify": "^13.0.0",
     "del": "^2.2.0",
-    "electron-builder": "^3.17.1",
+    "electron-builder": "^4.2.0",
     "electron-connect": "^0.4.0",
     "electron-localshortcut": "^0.6.0",
     "electron-prebuilt": "1.2.1",
