@@ -13,7 +13,7 @@ export default (proxy, urlMapper, history) => {
   const loggerMiddleware = createLogger();
   const routingMiddleware = routerMiddleware(history);
 
-  let middleware = [
+  const middleware = [
     thunkMiddleware,
     urlMapperMiddleware(urlMapper),
     proxyMiddleware(proxy),

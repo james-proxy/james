@@ -1,4 +1,10 @@
+import configureStore from 'redux-mock-store';
+import thunk from 'redux-thunk';
+
 import * as actions from '../../../src/actions/requests.js';
+
+const middlewares = [thunk];
+const mockStore = configureStore(middlewares);
 
 const request = {
   request: {},
@@ -7,7 +13,24 @@ const request = {
 };
 
 describe('request actions', () => {
-  // TODO: setRequestFilter
+  it('should create actions to set the request filter and then sync requests', () => {
+    const initialState = {};
+    const store = mockStore(initialState);
+
+    const filter = 'foo';
+    const expectedActions = [
+      {
+        type: actions.SET_REQUEST_FILTER,
+        filter
+      },
+      {
+        type: actions.SYNC_REQUESTS
+      }
+    ];
+
+    store.dispatch(actions.setRequestFilter(filter));
+    expect(store.getActions()).toEqual(expectedActions);
+  });
 
   it('should create an action to clear the active request', () => {
     const expectedAction = {

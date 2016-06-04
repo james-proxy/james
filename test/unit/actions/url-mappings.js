@@ -1,10 +1,34 @@
+import configureStore from 'redux-mock-store';
+import thunk from 'redux-thunk';
+import { push } from 'react-router-redux';
+
 import * as actions from '../../../src/actions/url-mappings.js';
+import constants from '../../../src/constants.js';
+
+const middlewares = [thunk];
+const mockStore = configureStore(middlewares);
 
 const url = 'https://github.com/james-proxy/james';
 const newUrl = 'https://www.github.com/james-proxy/james';
 
 describe('url mapper actions', () => {
-  // TODO: showAddUrlMapping
+  it('should create an action to show add url mapping', () => {
+    const initialState = {};
+    const store = mockStore(initialState);
+
+    const expectedActions = [
+      push({pathname: '/url-mappings'}),
+      {
+        type: actions.NEW_MAPPING_UPDATE,
+        mapping: {
+          target: url
+        }
+      }
+    ];
+
+    store.dispatch(actions.showAddUrlMapping(url));
+    expect(store.getActions()).toEqual(expectedActions);
+  });
 
   it('should create an action to set an url mapping', () => {
     const expectedAction = {
@@ -70,5 +94,41 @@ describe('url mapper actions', () => {
       type: actions.SYNC_URL_MAPPINGS
     };
     expect(actions.syncUrlMappings()).toEqual(expectedAction);
+  });
+
+  it('should create an action to update new mapping state', () => {
+    const mapping = {
+      target: 'foo'
+    };
+    const expectedAction = {
+      type: actions.NEW_MAPPING_UPDATE,
+      mapping
+    };
+    expect(actions.updateNewMapping(mapping)).toEqual(expectedAction);
+  });
+
+  it('should create an action to advance the new mapping state (url)', () => {
+    const expectedAction = {
+      type: actions.NEW_MAPPING_NEXT,
+      step: constants.NEW_MAPPING_STEP_DESTINATION,
+      isLocal: false
+    };
+    expect(actions.nextNewMapping(false)).toEqual(expectedAction);
+  });
+
+  it('should create an action to advance the new mapping state (file)', () => {
+    const expectedAction = {
+      type: actions.NEW_MAPPING_NEXT,
+      step: constants.NEW_MAPPING_STEP_DESTINATION,
+      isLocal: true
+    };
+    expect(actions.nextNewMapping(true)).toEqual(expectedAction);
+  });
+
+  it('should create an action to reset new mapping state', () => {
+    const expectedAction = {
+      type: actions.NEW_MAPPING_RESET
+    };
+    expect(actions.resetNewMapping()).toEqual(expectedAction);
   });
 });

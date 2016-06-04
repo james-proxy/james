@@ -70,6 +70,7 @@
     "gulp-useref": "^3.0.5",
     "mocha": "^2.3.4",
     "node-sass": "3.7.0",
+    "redux-mock-store": "^1.0.4",
     "referee": "^1.2.0",
     "referee-sinon": "^1.0.3",
     "rimraf": "^2.5.0",
