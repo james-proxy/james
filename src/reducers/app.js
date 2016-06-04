@@ -15,3 +15,11 @@ function config(state = initialState.config, action) {
 export default combineReducers({
   config
 });
+
+export function getProxyPort(state) {
+  return state.app.config.proxyPort;
+}
+
+export function getLabels(state) {
+  return state.app.config.labels;
+}

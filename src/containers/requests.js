@@ -41,10 +41,10 @@ RequestsContainer.propTypes = {
 
 
 import { setContextRequest } from '../actions/requests.js';
+import { getRequestData } from '../reducers/requests.js';
 
-const mapStateToProps = (store) => ({
-  requestData: store.requests.data,
-  contextMenuRequest: store.requests.context
+const mapStateToProps = (state) => ({
+  requestData: getRequestData(state)
 });
 
 const mapDispatchToProps = (dispatch) => ({

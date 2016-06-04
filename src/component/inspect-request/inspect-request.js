@@ -40,9 +40,10 @@ InspectRequest.propTypes = {
 };
 
 import { setActiveRequest } from '../../actions/requests.js';
+import { getActiveRequest } from '../../reducers/requests.js';
 
 const mapStateToProps = (state) => ({
-  request: state.requests.active
+  request: getActiveRequest(state)
 });
 
 const mapDispatchToProps = (dispatch) => ({

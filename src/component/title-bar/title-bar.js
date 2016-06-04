@@ -2,8 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link, IndexLink } from 'react-router';
 
-import { toggleDevTools } from '../../actions/app.js';
-
 const {func, number} = React.PropTypes;
 
 const TitleBar = ({urlMapCount, openDevTools}) => {
@@ -42,9 +40,12 @@ TitleBar.propTypes = {
   urlMapCount: number.isRequired
 };
 
+import { toggleDevTools } from '../../actions/app.js';
+import { getMappingCount } from '../../reducers/url-mappings.js';
+
 const mapStateToProps = (state) => ({
   active: state.routing, // trigger connect to update component on routing change
-  urlMapCount: state.urlMappings.count
+  urlMapCount: getMappingCount(state)
 });
 
 const mapDispatchToProps = {

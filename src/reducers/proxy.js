@@ -44,3 +44,7 @@ export default combineReducers({
   throttleEnabled,
   throttleRate
 });
+
+export function getProxyState(state) {
+  return state.proxy;
+}

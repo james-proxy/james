@@ -16,8 +16,10 @@ Home.propTypes = {
   port: React.PropTypes.number.isRequired
 };
 
+import { getProxyPort } from '../reducers/app.js';
+
 const mapStateToProps = (state) => ({
-  port: state.app.config.proxyPort
+  port: getProxyPort(state)
 });
 
 export default connect(mapStateToProps)(Home);

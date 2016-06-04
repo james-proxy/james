@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import * as actions from '../../actions/url-mappings.js';
-
 import constants from '../../constants.js';
 import NewMappingTarget from './new-mapping-target.js';
 import NewMappingDestination from './new-mapping-destination.js';
@@ -108,14 +106,17 @@ NewMapping.propTypes = {
   mapping: object
 };
 
+import { updateNewMapping, nextNewMapping, resetNewMapping } from '../../actions/url-mappings.js';
+import { getNewMapping } from '../../reducers/url-mappings.js';
+
 const mapStateToProps = (state) => ({
-  mapping: state.urlMappings.newMapping
+  mapping: getNewMapping(state)
 });
 
 const mapDispatchToProps = {
-  update: actions.updateNewMapping,
-  next: actions.nextNewMapping,
-  reset: actions.resetNewMapping
+  update: updateNewMapping,
+  next: nextNewMapping,
+  reset: resetNewMapping
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(NewMapping);

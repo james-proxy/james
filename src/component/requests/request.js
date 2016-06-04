@@ -77,11 +77,13 @@ Request.propTypes = {
 };
 
 import { setActiveRequest, setContextRequest } from '../../actions/requests.js';
+import { isActiveRequest, isContextRequest } from '../../reducers/requests.js';
+import { getLabels } from '../../reducers/app.js';
 
 const mapStateToProps = (state, {request}) => ({
-  isActive: state.requests.active && state.requests.active.id === request.id,
-  isContextMenu: state.requests.context && state.requests.context === request.id,
-  labels: state.app.config.labels
+  isActive: isActiveRequest(state, request),
+  isContextMenu: isContextRequest(state, request),
+  labels: getLabels(state)
 });
 
 const mapDispatchToProps = (dispatch, {request, response}) => ({

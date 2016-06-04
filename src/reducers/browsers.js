@@ -39,3 +39,7 @@ function browsers(state = initialState.browsers, action) {
 export default combineReducers({
   browsers
 });
+
+export function getBrowsers(state) {
+  return state.browsers.browsers;
+}

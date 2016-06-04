@@ -43,9 +43,10 @@ Search.propTypes = {
 
 
 import { setRequestFilter } from '../../actions/requests.js';
+import { getRequestFilter } from '../../reducers/requests.js';
 
 const mapStateToProps = (state) => ({
-  filterValue: state.requests.filter || ''
+  filterValue: getRequestFilter(state) || ''
 });
 
 const mapDispatchToProps = {

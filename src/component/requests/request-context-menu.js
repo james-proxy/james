@@ -1,12 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import {
-  showAddUrlMapping,
-  toggleUrlMapping,
-  removeUrlMapping
-} from '../../actions/url-mappings.js';
-
 import ContextMenu from '../context-menu/context-menu.js';
 
 const {object, func} = React.PropTypes;
@@ -61,6 +55,12 @@ RequestContextMenu.propTypes = {
   toggleMapping: func.isRequired,
   removeMapping: func.isRequired
 };
+
+import {
+  showAddUrlMapping,
+  toggleUrlMapping,
+  removeUrlMapping
+} from '../../actions/url-mappings.js';
 
 const mapDispatchToProps = {
   showAddMapping: showAddUrlMapping,

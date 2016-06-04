@@ -59,3 +59,15 @@ export default combineReducers({
   count,
   newMapping
 });
+
+export function getMappings(state) {
+  return state.urlMappings.mappings;
+}
+
+export function getMappingCount(state) {
+  return state.urlMappings.count;
+}
+
+export function getNewMapping(state) {
+  return state.urlMappings.newMapping;
+}

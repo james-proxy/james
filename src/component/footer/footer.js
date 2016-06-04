@@ -42,14 +42,25 @@ import {
   setThrottleRate,
   clearRequests
 } from '../../actions/proxy.js';
+import { getProxyState } from '../../reducers/proxy.js';
+import { getRequestData } from '../../reducers/requests.js';
 
-const mapStateToProps = (state) => ({
-  cachingEnabled: state.proxy.cachingEnabled,
-  throttleEnabled: state.proxy.throttleEnabled,
-  throttleRate: state.proxy.throttleRate,
-  proxyStatus: state.proxy.status,
-  requestData: state.requests.data
-});
+const mapStateToProps = (state) => {
+  const {
+    status,
+    cachingEnabled,
+    throttleEnabled,
+    throttleRate
+  } = getProxyState(state);
+
+  return {
+    proxyStatus: status,
+    cachingEnabled,
+    throttleEnabled,
+    throttleRate,
+    requestData: getRequestData(state)
+  };
+}
 
 const mapDispatchToProps = {
   toggleCaching,

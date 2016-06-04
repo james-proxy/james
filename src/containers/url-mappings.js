@@ -41,9 +41,10 @@ UrlMappings.propTypes = {
 
 
 import { setUrlMapping, toggleUrlMapping, removeUrlMapping } from '../actions/url-mappings.js';
+import { getMappings } from '../reducers/url-mappings.js';
 
 const mapStateToProps = (state) => ({
-  urlMappings: state.urlMappings.mappings
+  urlMappings: getMappings(state)
 });
 
 const mapDispatchToProps = {
