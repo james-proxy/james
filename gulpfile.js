@@ -34,7 +34,7 @@ gulp.task('js', (done) => {
 
 gulp.task('css', () => {
   return gulp.src('style/main.scss')
-    .pipe(newer('build/james.css'))
+    .pipe(newer({dest: 'build/james.css', extra: ['style/**/*.scss']}))
     .pipe(sourcemaps.init())
     .pipe(sass({outputStyle: 'compressed'}).on('error', sass.logError))
     .pipe(rename('james.css'))
@@ -42,7 +42,7 @@ gulp.task('css', () => {
     .pipe(gulp.dest('build'));
 });
 
-// There's two separate `resource-*` directories. 
+// There's two separate `resource-*` directories.
 // `resource-runtime` contains actual files which will exist in the same
 // directory as James at runtime, in production (e.g. the browser images).
 // `resource-compile` has resources that we don't necessarily want taking space with James, because they're compiled
