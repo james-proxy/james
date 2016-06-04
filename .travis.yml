@@ -11,6 +11,8 @@ addons:
     packages:
     - icnsutils
     - graphicsmagick
+before_script:
+- export DISPLAY=:99.0; sh -e /etc/init.d/xvfb start || true
 script:
 - npm prune
 - npm --depth Infinity update

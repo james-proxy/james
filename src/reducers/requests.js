@@ -63,13 +63,13 @@ export function getActiveRequest(state) {
 }
 
 export function isActiveRequest(state, request) {
-  const { active } = state.requests;
-  return active && request && active.id === request.id;
+  const { active: activeRequest } = state.requests;
+  return activeRequest && request && activeRequest.id === request.id;
 }
 
 export function isContextRequest(state, request) {
-  const { context } = state.requests;
-  return context && request && context === request.id;
+  const { context: contextRequest } = state.requests;
+  return contextRequest && request && contextRequest === request.id;
 }
 
 export function getRequestData(state) {

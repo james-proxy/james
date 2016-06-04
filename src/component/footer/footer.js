@@ -60,7 +60,7 @@ const mapStateToProps = (state) => {
     throttleRate,
     requestData: getRequestData(state)
   };
-}
+};
 
 const mapDispatchToProps = {
   toggleCaching,
