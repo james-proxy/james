@@ -27,8 +27,6 @@ class Request extends React.Component {
       handleContextMenu
     } = this.props;
 
-    this.done = request.done;
-
     let took = <i className="fa fa-gear fa-spin" />;
     if (request.took) {
       took = request.took + 'ms';
@@ -70,6 +68,7 @@ Request.propTypes = {
   labels: array.isRequired,
   request: object.isRequired,
   response: object.isRequired,
+  done: bool,
   isActive: bool,
   isContextMenu: bool,
   handleClick: func.isRequired,
@@ -77,14 +76,6 @@ Request.propTypes = {
 };
 
 import { setActiveRequest, setContextRequest } from '../../actions/requests.js';
-import { isActiveRequest, isContextRequest } from '../../reducers/requests.js';
-import { getLabels } from '../../reducers/app.js';
-
-const mapStateToProps = (state, {request}) => ({
-  isActive: isActiveRequest(state, request),
-  isContextMenu: isContextRequest(state, request),
-  labels: getLabels(state)
-});
 
 const mapDispatchToProps = (dispatch, {request, response}) => ({
   handleClick: () => {
@@ -96,4 +87,4 @@ const mapDispatchToProps = (dispatch, {request, response}) => ({
   }
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Request);
+export default connect(null, mapDispatchToProps)(Request);

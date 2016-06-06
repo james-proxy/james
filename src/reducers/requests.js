@@ -54,6 +54,10 @@ export default combineReducers({
   data
 });
 
+export function hasRequests(state) {
+  return state.requests.data.totalCount > 0;
+}
+
 export function getRequestFilter(state) {
   return state.requests.filter;
 }
@@ -63,12 +67,16 @@ export function getActiveRequest(state) {
 }
 
 export function isActiveRequest(state, request) {
-  const { active: activeRequest } = state.requests;
+  const activeRequest = getActiveRequest(state);
   return activeRequest && request && activeRequest.id === request.id;
 }
 
+export function getContextRequest(state) {
+  return state.requests.context;
+}
+
 export function isContextRequest(state, request) {
-  const { context: contextRequest } = state.requests;
+  const contextRequest = getContextRequest(state);
   return contextRequest && request && contextRequest === request.id;
 }
 

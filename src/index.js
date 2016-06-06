@@ -25,8 +25,6 @@ import Requests from './containers/requests.js';
 import UrlMappings from './containers/url-mappings.js';
 
 ravenInit();
-createMenu();
-setupShortcuts();
 
 // use setTimeout to work around store not being setup initially
 const wait = cb => (...args) => setTimeout(() => cb(...args));
@@ -47,6 +45,8 @@ const proxy = setupProxy(urlMapper, wait((errStatus, hasData) => {
 const store = setupStore(proxy, urlMapper, hashHistory);
 const storeHistory = syncHistoryWithStore(hashHistory, store);
 
+createMenu();
+setupShortcuts(store);
 store.dispatch(init({ config }));
 
 const domNode = document.querySelector('#app');

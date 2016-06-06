@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
 const {func, bool, number} = React.PropTypes;
 
@@ -30,4 +31,25 @@ Throttle.propTypes = {
   throttleRate: number
 };
 
-export default Throttle;
+
+import {
+  toggleThrottling as toggleThrottle,
+  setThrottleRate
+} from '../../actions/proxy.js';
+import { getProxyState } from '../../reducers/proxy.js';
+
+const mapStateToProps = (state) => {
+  const { throttleEnabled, throttleRate } = getProxyState(state);
+
+  return {
+    throttleEnabled,
+    throttleRate
+  };
+};
+
+const mapDispatchToProps = {
+  toggleThrottle,
+  setThrottleRate
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Throttle);

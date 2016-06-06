@@ -6,14 +6,9 @@ import Search from '../component/requests/search.js';
 import Requests from '../component/requests/requests.js';
 import InspectRequest from '../component/inspect-request/inspect-request.js';
 
-const {func, object} = React.PropTypes;
+const {func, bool} = React.PropTypes;
 
-const RequestsContainer = (props) => {
-  const {
-    requestData,
-    clearContextRequest
-  } = props;
-
+const RequestsContainer = ({hasRequests, clearContextRequest}) => {
   const handleClick = (evt) => {
     if (evt.target.matches('.request *')) return;
     clearContextRequest();
@@ -21,12 +16,12 @@ const RequestsContainer = (props) => {
 
   let output = <NoRequests />;
 
-  if (requestData.totalCount > 0) {
+  if (hasRequests) {
     output = <span onClick={handleClick} onContextMenu={handleClick}>
       <div className="header">
         <Search />
       </div>
-      <Requests requestData={requestData} />
+      <Requests />
       <InspectRequest />
     </span>;
   }
@@ -35,16 +30,16 @@ const RequestsContainer = (props) => {
 };
 
 RequestsContainer.propTypes = {
-  requestData: object.isRequired,
+  hasRequests: bool.isRequired,
   clearContextRequest: func.isRequired
 };
 
 
 import { setContextRequest } from '../actions/requests.js';
-import { getRequestData } from '../reducers/requests.js';
+import { hasRequests } from '../reducers/requests.js';
 
 const mapStateToProps = (state) => ({
-  requestData: getRequestData(state)
+  hasRequests: hasRequests(state)
 });
 
 const mapDispatchToProps = (dispatch) => ({

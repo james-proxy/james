@@ -1,10 +1,9 @@
 import Keyboard from './service/keyboard.js';
-import store from './store/index.js';
 
 import { toggleDevTools } from './actions/app.js';
 import { showAddUrlMapping } from './actions/url-mappings.js';
 
-export default () => {
+export default (store) => {
   const keyboard = new Keyboard();
   const toggleTools = () => store.dispatch(toggleDevTools());
   const openUrlMappings = () => { store.dispatch(showAddUrlMapping());};

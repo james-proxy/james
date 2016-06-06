@@ -5,6 +5,14 @@ const middleware = proxy => store => next => action => {
   if (action.type === SYNC_REQUESTS) {
     const {requests: state} = store.getState();
     action.data = proxy.getRequestData(state.filter);
+    // action.data = Object.assign({}, proxy.getRequestData(state.filter));
+    //
+    // action.data.requests = action.data.requests.map((request) => {
+    //   // request.request.fullUrl = request.request.fullUrl();
+    //   request.request = Object.assign({}, request.request, request.request._data);
+    //   request.response = Object.assign({}, request.response, request.response._data);
+    //   return request;
+    // });
     return next(action);
   }
 
