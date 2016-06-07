@@ -9,5 +9,6 @@ export default {
   'NEW_MAPPING_STEP_TARGET': 'target',
   'NEW_MAPPING_STEP_DESTINATION': 'destination',
   'DEV': process.env.NODE_ENV !== 'production',
-  'VERSION': app.getVersion()
+  'VERSION': app.getVersion(),
+  'USER_DATA': app.getPath('userData')
 };

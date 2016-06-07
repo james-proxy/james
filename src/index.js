@@ -20,9 +20,7 @@ import DevTools from './dev-tools.js';
 import constants from './constants.js';
 
 import {remote} from 'electron';
-const {app} = remote;
 const fs = remote.require('fs');
-const userDataPath = app.getPath('userData');
 
 ravenInit();
 createMenu();
@@ -31,7 +29,7 @@ createMenu();
 import UrlMappingWindow from './component/mapping/url-mapping-window.js';
 
 const db = new Datastore({
-  filename: `${userDataPath}/data.nedb`,
+  filename: `${constants.USER_DATA}/data.nedb`,
   autoload: true
 });
 
@@ -58,8 +56,8 @@ const urlMapper = new UrlMapper(db, function() {
 const createHoxy = () => {
   const opts = {};
   try {
-    const key = fs.readFileSync(`${userDataPath}/root-ca.key.pem`);
-    const cert = fs.readFileSync(`${userDataPath}/root-ca.crt.pem`);
+    const key = fs.readFileSync(`${constants.USER_DATA}/root-ca.key.pem`);
+    const cert = fs.readFileSync(`${constants.USER_DATA}/root-ca.crt.pem`);
     opts.certAuthority = {key, cert};
   } catch (e) {
     data.proxyReason = e.message;
