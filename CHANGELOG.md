@@ -9,7 +9,9 @@
 - Improved SCSS build efficiency (i: @mitchhentges, @tomitm, r: @tomitm, @mitchhentges)
 
 #### Bugfixes
-- Nothing yet
+- Make HTTPS great again (i: @mitchhentges, r: @tomitm)
+  - Fix HTTPS requests not working due to exception when loading certificates
+  - Certificates are now loaded from the user config directory due to installer change - [see wiki for details](https://github.com/james-proxy/james/wiki)
 
 ### 1.4.5
 
