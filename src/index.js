@@ -20,7 +20,8 @@ import DevTools from './dev-tools.js';
 import constants from './constants.js';
 
 import {remote} from 'electron';
-const {app, fs} = remote;
+const {app} = remote;
+const fs = remote.require('fs');
 
 ravenInit();
 createMenu();
@@ -42,6 +43,7 @@ const data = {
   cachingEnabled: false,
   throttle: {enabled: false, rate: 0}, // rate is in kBps
   proxyStatus: 'working',
+  proxyReason: undefined,
   proxyWindow: undefined
 };
 
@@ -59,6 +61,7 @@ const createHoxy = () => {
     const cert = fs.readFileSync('./root-ca.crt.pem');
     opts.certAuthority = {key, cert};
   } catch (e) {
+    data.proxyReason = e.message.split('\n')[0];
     data.proxyStatus = constants.PROXY_STATUS_NO_HTTPS;
   }
 
@@ -192,6 +195,7 @@ function render() {
         toggleThrottle={toggleThrottle}
         onRateChange={throttleRateChange}
         proxyStatus={data.proxyStatus}
+        proxyReason={data.proxyReason}
         proxyWindow={data.proxyWindow}
         enabled={enabled}
         rate={rate} />
