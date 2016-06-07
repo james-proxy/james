@@ -44,7 +44,7 @@ You can also use multiple wildcards in the same URL.
  
 ## HTTPs Support
 
-To enable HTTPs support follow the [instructions in our wiki](https://github.com/james-proxy/james/wiki/Configuring-James-for-HTTPS)
+To enable HTTPs support follow the [instructions in our wiki](https://github.com/james-proxy/james/wiki)
 
 ## Other useful NPM Commands
 
