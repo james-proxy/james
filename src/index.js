@@ -21,6 +21,7 @@ import constants from './constants.js';
 
 import {remote} from 'electron';
 const {app, fs} = remote;
+const userDataPath = app.getPath('userData');
 
 ravenInit();
 createMenu();
@@ -29,7 +30,7 @@ createMenu();
 import UrlMappingWindow from './component/mapping/url-mapping-window.js';
 
 const db = new Datastore({
-  filename: app.getPath('userData') + '/data.nedb',
+  filename: `${userDataPath}/data.nedb`,
   autoload: true
 });
 
@@ -55,8 +56,8 @@ const urlMapper = new UrlMapper(db, function() {
 const createHoxy = () => {
   const opts = {};
   try {
-    const key = fs.readFileSync('./root-ca.key.pem');
-    const cert = fs.readFileSync('./root-ca.crt.pem');
+    const key = fs.readFileSync(`${userDataPath}/root-ca.key.pem`);
+    const cert = fs.readFileSync(`${userDataPath}/root-ca.crt.pem`);
     opts.certAuthority = {key, cert};
   } catch (e) {
     data.proxyStatus = constants.PROXY_STATUS_NO_HTTPS;
