@@ -61,7 +61,7 @@ const createHoxy = () => {
     const cert = fs.readFileSync('./root-ca.crt.pem');
     opts.certAuthority = {key, cert};
   } catch (e) {
-    data.proxyReason = e.message;
+    data.proxyReason = e.message.split('\n')[0];
     data.proxyStatus = constants.PROXY_STATUS_NO_HTTPS;
   }
 
