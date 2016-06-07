@@ -1,6 +1,17 @@
 ## Upcoming Release
 
 #### User features
+- Nothing yet
+
+#### Developer Features
+- Nothing yet
+
+#### Bugfixes
+- Nothing yet
+
+## 1.5.0
+
+#### User features
 - Releases now are installers, instead of binaries. (i: @mitchhentges, r: @nerdbeere, @tomitm)
 
 #### Developer Features
