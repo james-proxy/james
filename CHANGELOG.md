@@ -4,7 +4,7 @@
 - Nothing yet
 
 #### Developer Features
-- Nothing yet
+- Electron updated
 
 #### Bugfixes
 - Nothing yet
