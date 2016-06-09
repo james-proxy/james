@@ -4,7 +4,8 @@
 - Nothing yet
 
 #### Developer Features
-- Electron updated
+- Electron updated (r: @mitchhentges)
+- Electron-builder updated (r: @mitchhentges)
 
 #### Bugfixes
 - Nothing yet
