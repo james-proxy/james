@@ -5,6 +5,7 @@ import constants from '../constants.js';
 
 const initialState = {
   status: constants.PROXY_STATUS_WORKING,
+  statusReason: null,
   cachingEnabled: false,
   throttleEnabled: false,
   throttleRate: 0
@@ -15,6 +16,13 @@ function status(state = initialState.status, action) {
     return state;
   }
   return action.status || state;
+}
+
+function statusReason(state = initialState.statusReason, action) {
+  if (action.type !== actions.UPDATE_PROXY_STATUS) {
+    return state;
+  }
+  return action.reason || state;
 }
 
 function cachingEnabled(state = initialState.cachingEnabled, action) {
@@ -40,6 +48,7 @@ function throttleRate(state = initialState.throttleRate, action) {
 
 export default combineReducers({
   status,
+  statusReason,
   cachingEnabled,
   throttleEnabled,
   throttleRate

@@ -25,12 +25,13 @@ const getMessage = (status) => {
   return messageMap[status];
 };
 
-const ProxyStatus = ({proxyStatus}) => {
+const ProxyStatus = ({proxyStatus, proxyReason}) => {
   const icon = 'fa ' + iconMap[proxyStatus];
   const message = 'Proxy: ' + getMessage(proxyStatus);
+  const title = proxyReason;
   const classes = ['proxy-status', proxyStatus];
 
-  return <div className={classes.join(' ')} title={message}>
+  return <div className={classes.join(' ')} title={title}>
     <i className={icon} />
     <span className="message">{message}</span>
   </div>;
@@ -43,6 +44,7 @@ ProxyStatus.propTypes = {
     constants.PROXY_STATUS_ERROR_ADDRESS_IN_USE,
     constants.PROXY_STATUS_ERROR_GENERIC
   ]).isRequired,
+  proxyReason: string,
   proxyMessage: string
 };
 
@@ -50,10 +52,11 @@ ProxyStatus.propTypes = {
 import { getProxyState } from '../../reducers/proxy.js';
 
 const mapStateToProps = (state) => {
-  const { status } = getProxyState(state);
+  const { status, statusReason } = getProxyState(state);
 
   return {
-    proxyStatus: status
+    proxyStatus: status,
+    proxyReason: statusReason
   };
 };
 

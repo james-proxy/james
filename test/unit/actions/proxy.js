@@ -36,18 +36,22 @@ describe('proxy actions', () => {
   it('should create an action to update proxy status (default)', () => {
     const expectedAction = {
       type: actions.UPDATE_PROXY_STATUS,
-      status: constants.PROXY_STATUS_WORKING
+      status: constants.PROXY_STATUS_WORKING,
+      reason: undefined
     };
     expect(actions.updateProxyStatus()).toEqual(expectedAction);
   });
 
   it('should create an action to update proxy status to no-https', () => {
     const status = constants.PROXY_STATUS_NO_HTTPS;
+    const reason = 'testing';
+
     const expectedAction = {
       type: actions.UPDATE_PROXY_STATUS,
-      status
+      status,
+      reason
     };
-    expect(actions.updateProxyStatus(status)).toEqual(expectedAction);
+    expect(actions.updateProxyStatus({status, reason})).toEqual(expectedAction);
   });
 
   it('should create an action to clear requests', () => {

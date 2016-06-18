@@ -1,6 +1,18 @@
 ## Upcoming Release
 
 #### User features
+- Nothing yet
+
+#### Developer Features
+- Electron updated (r: @mitchhentges)
+- Electron-builder updated (r: @mitchhentges)
+
+#### Bugfixes
+- Nothing yet
+
+## 1.5.0
+
+#### User features
 - Releases now are installers, instead of binaries. (i: @mitchhentges, r: @nerdbeere, @tomitm)
 
 #### Developer Features
@@ -9,7 +21,9 @@
 - Improved SCSS build efficiency (i: @mitchhentges, @tomitm, r: @tomitm, @mitchhentges)
 
 #### Bugfixes
-- Nothing yet
+- Make HTTPS great again (i: @mitchhentges, r: @tomitm)
+  - Fix HTTPS requests not working due to exception when loading certificates
+  - Certificates are now loaded from the user config directory due to installer change - [see wiki for details](https://github.com/james-proxy/james/wiki)
 
 ### 1.4.5
 

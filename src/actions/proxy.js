@@ -25,10 +25,11 @@ export function setThrottleRate(rate = 0) {
   };
 }
 
-export function updateProxyStatus(status = constants.PROXY_STATUS_WORKING) {
+export function updateProxyStatus({status = constants.PROXY_STATUS_WORKING, reason} = {}) {
   return {
     type: UPDATE_PROXY_STATUS,
-    status
+    status,
+    reason
   };
 }
 
