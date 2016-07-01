@@ -48,7 +48,7 @@
     "electron-localshortcut": "^0.6.0",
     "electron-prebuilt": "1.2.5",
     "envify": "^3.4.0",
-    "eslint": "^2.2.0",
+    "eslint": "^2.10.1",
     "eslint-plugin-react": "^5.0.1",
     "event-stream": "^3.3.2",
     "font-awesome": "^4.5.0",
