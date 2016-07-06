@@ -46,7 +46,7 @@
     "electron-builder": "^5.0.2",
     "electron-connect": "^0.4.0",
     "electron-localshortcut": "^0.6.0",
-    "electron-prebuilt": "1.2.5",
+    "electron-prebuilt": "1.2.6",
     "envify": "^3.4.0",
     "eslint": "^3.0.0",
     "eslint-plugin-react": "^5.0.1",
