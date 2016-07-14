@@ -5,7 +5,7 @@ export default {
 
   ],
   sentry: {
-    dsn: 'efe270d1329547fa9856935a2c535cba',
-    host: 'sentry.fuzzlesoft.ca/6'
+    dsn: '617ec0238f4a44ac97b9953b2ee0b67c',
+    host: 'sentry.fuzzlesoft.ca/4'
   }
 };
