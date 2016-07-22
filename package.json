@@ -65,7 +65,7 @@
     "node-sass": "3.8.0",
     "referee": "^1.2.0",
     "referee-sinon": "^1.0.3",
-    "rimraf": "^2.5.0",
+    "rimraf": "^2.5.4",
     "setup-referee-sinon": "^0.3.0",
     "sinon": "^1.17.2",
     "sinon-as-promised": "^4.0.0",
