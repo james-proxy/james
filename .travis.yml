@@ -19,7 +19,6 @@ script:
 cache:
   apt: true
   directories:
-  - node_modules
   - "$HOME/.electron"
 env:
   global:
