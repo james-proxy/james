@@ -118,9 +118,9 @@ gulp.task('watch', ['default'], () => {
 gulp.task('livereload', ['default'], () => {
   const server = electronConnect.create({path: './build'});
   server.start();
-  const reload = () => server.reload();
+  const restart = () => server.restart();
 
-  gulp.watch('src/**', ['js', reload]);
-  gulp.watch('style/**', ['css', reload]);
-  gulp.watch('resource-runtime/**', ['resources', reload]);
+  gulp.watch('src/**', ['js', restart]);
+  gulp.watch('style/**', ['css', restart]);
+  gulp.watch('resource-runtime/**', ['resources', restart]);
 });

@@ -1,5 +1,5 @@
-import { remote } from 'electron';
-const { app } = remote;
+import { remote, app as mainApp } from 'electron';
+const app = remote ? remote.app : mainApp;
 
 export default {
   'PROXY_STATUS_WORKING': 'working',

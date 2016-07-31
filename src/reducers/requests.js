@@ -44,7 +44,7 @@ function data(state = initialState.data, action) {
   if (action.type !== actions.SYNC_REQUESTS) {
     return state;
   }
-  return action.data;
+  return action.requestData;
 }
 
 export default combineReducers({

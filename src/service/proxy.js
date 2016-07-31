@@ -91,10 +91,50 @@ export default class Proxy {
   }
 
   getRequestData(filter) {
-    const filteredRequests = !filter ? this._requests : this._requests
+    // TODO: hacky workaround for getters not being enumerable and not ipc-friendly
+    const setupRequest = (request) => {
+      // const props = ['protocol', 'hostname', 'port', 'method', 'url', 'query', 'headers', 'params'];
+      // const properties = {};
+      // props.forEach((prop) => {properties[prop] = {enumerable: true};});
+      // Object.defineProperties(request, props);
+      return Object.assign({}, request, {
+        protocol: request.protocol,
+        hostname: request.hostname,
+        port: request.port,
+        method: request.method,
+        url: request.url,
+        query: request.query,
+        headers: request.headers,
+        params: request.params,
+        fullUrl: typeof request.fullUrl === 'function' ? request.fullUrl() : request.fullUrl,
+        _data: null
+      });
+    };
+
+    let filteredRequests = !filter ? this._requests : this._requests
       .filter((request) => {
         return request.request.fullUrl().includes(filter) || request.request.original.fullUrl.includes(filter);
       });
+      
+    filteredRequests = filteredRequests.map(({request, response}) => {
+      // convert getters into objects JSON.stringify can correctly work with
+      const container = {
+        id: request.id
+      };
+
+      const original = setupRequest(request.original);
+      container.request = setupRequest(request);
+      container.request.original = original; // TODO: awkward..
+
+      container.response = Object.assign({}, response, {
+        statusCode: response.statusCode,
+        headers: response.headers,
+        params: response.params,
+        _data: null
+      });
+
+      return container;
+    });
 
     return {
       requests: filteredRequests,

@@ -27,8 +27,9 @@ export function setContextRequest(request = null) {
   };
 }
 
-export function syncRequests() {
+export function syncRequests({requestData}) {
   return {
-    type: SYNC_REQUESTS
+    type: SYNC_REQUESTS,
+    requestData
   };
 }

@@ -9,14 +9,14 @@ import proxyMiddleware from './middleware/proxy.js';
 import rootReducer from '../reducers/root.js';
 import constants from '../constants.js';
 
-export default (proxy, urlMapper, history) => {
+export default (history) => {
   const loggerMiddleware = createLogger();
   const routingMiddleware = routerMiddleware(history);
 
   const middleware = [
     thunkMiddleware,
-    urlMapperMiddleware(urlMapper),
-    proxyMiddleware(proxy),
+    urlMapperMiddleware,
+    proxyMiddleware,
     routingMiddleware
   ];
 

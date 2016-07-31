@@ -1,3 +1,5 @@
+import { ipcRenderer as ipc } from 'electron';
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 
@@ -11,8 +13,6 @@ import ravenInit from './service/raven.js';
 import createMenu from './menu.js';
 import setupShortcuts from './shortcuts.js';
 import setupStore from './store/index.js';
-import setupProxy from './proxy.js';
-import setupUrlMapper from './url-mapper.js';
 
 import { init } from './actions/app.js';
 import { syncRequests } from './actions/requests.js';
@@ -26,24 +26,20 @@ import UrlMappings from './containers/url-mappings.js';
 
 ravenInit();
 
-// use setTimeout to work around store not being setup initially
-const wait = cb => (...args) => setTimeout(() => cb(...args));
-
-const urlMapper = setupUrlMapper(wait(() => {
-  store.dispatch(syncUrlMappings());
-}));
-
-const proxy = setupProxy(urlMapper, wait((errStatus, hasData) => {
-  if (errStatus) {
-    store.dispatch(updateProxyStatus(errStatus));
-  }
-  if (hasData) {
-    store.dispatch(syncRequests());
-  }
-}));
-
-const store = setupStore(proxy, urlMapper, hashHistory);
+const store = setupStore(hashHistory);
 const storeHistory = syncHistoryWithStore(hashHistory, store);
+
+ipc.on('proxy-status', (evt, payload) => {
+  store.dispatch(updateProxyStatus(payload));
+});
+
+ipc.on('proxy-sync', (evt, payload) => {
+  store.dispatch(syncRequests(payload));
+});
+
+ipc.on('mapper-sync', (evt, payload) => {
+  store.dispatch(syncUrlMappings(payload));
+});
 
 createMenu();
 setupShortcuts(store);

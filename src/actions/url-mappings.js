@@ -53,9 +53,10 @@ export function toggleUrlMapping(url) {
   };
 }
 
-export function syncUrlMappings() {
+export function syncUrlMappings({mappings}) {
   return {
-    type: SYNC_URL_MAPPINGS
+    type: SYNC_URL_MAPPINGS,
+    mappings
   };
 }
 
