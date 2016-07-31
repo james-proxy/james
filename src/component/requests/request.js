@@ -1,5 +1,4 @@
 import React from 'react';
-import { connect } from 'react-redux';
 
 import FullUrl from './full-url.js';
 import RequestContextMenu from './request-context-menu.js';
@@ -27,6 +26,9 @@ class Request extends React.Component {
       handleContextMenu
     } = this.props;
 
+    const _handleClick = () => handleClick({request, response});
+    const _handleContextMenu = () => handleClick({request});
+
     let took = <i className="fa fa-gear fa-spin" />;
     if (request.took) {
       took = request.took + 'ms';
@@ -48,7 +50,7 @@ class Request extends React.Component {
 
     return <div className={requestClasses.join(' ')}>
       { contextMenuNode }
-      <div className="request-inner" onClick={handleClick} onContextMenu={handleContextMenu}>
+      <div className="request-inner" onClick={_handleClick} onContextMenu={_handleContextMenu}>
         <span className="method property">{request.method}</span>
           <span className="time property">
             {took}
@@ -75,16 +77,4 @@ Request.propTypes = {
   handleContextMenu: func.isRequired
 };
 
-import { setActiveRequest, setContextRequest } from '../../actions/requests.js';
-
-const mapDispatchToProps = (dispatch, {request, response}) => ({
-  handleClick: () => {
-    dispatch(setActiveRequest({request, response, id: request.id}));
-    dispatch(setContextRequest(null));
-  },
-  handleContextMenu: () => {
-    dispatch(setContextRequest(request.id));
-  }
-});
-
-export default connect(null, mapDispatchToProps)(Request);
+export default Request;

@@ -3,7 +3,7 @@ import { findDOMNode } from 'react-dom';
 import { connect } from 'react-redux';
 import Request from './request.js';
 
-const {object, array} = React.PropTypes;
+const {object, array, func} = React.PropTypes;
 
 class Requests extends Component {
   componentWillUpdate() {
@@ -20,7 +20,7 @@ class Requests extends Component {
   }
 
   render() {
-    const {requestData, activeRequest, contextRequest, labels} = this.props;
+    const {requestData, activeRequest, contextRequest, labels, handleClick, handleContextMenu} = this.props;
 
     const requestNodes = requestData.requests.map(({request, response}) => {
       const isActive = activeRequest && activeRequest.id === request.id || false;
@@ -34,6 +34,8 @@ class Requests extends Component {
         isContextMenu={isContextMenu}
         labels={labels}
         key={request.id}
+        handleClick={handleClick}
+        handleContextMenu={handleContextMenu}
       />;
     });
 
@@ -47,9 +49,12 @@ Requests.propTypes = {
   requestData: object.isRequired,
   activeRequest: object,
   contextRequest: object,
-  labels: array.isRequired
+  labels: array.isRequired,
+  handleClick: func.isRequired,
+  handleContextMenu: func.isRequired
 };
 
+import { setActiveRequest, setContextRequest } from '../../actions/requests.js';
 import { getRequestData, getActiveRequest, getContextRequest } from '../../reducers/requests.js';
 import { getLabels } from '../../reducers/app.js';
 
@@ -60,4 +65,14 @@ const mapStateToProps = (state) => ({
   contextRequest: getContextRequest(state)
 });
 
-export default connect(mapStateToProps)(Requests);
+const mapDispatchToProps = (dispatch) => ({
+  handleClick: ({request, response}) => {
+    dispatch(setActiveRequest({request, response, id: request.id}));
+    dispatch(setContextRequest(null));
+  },
+  handleContextMenu: ({request}) => {
+    dispatch(setContextRequest(request.id));
+  }
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Requests);

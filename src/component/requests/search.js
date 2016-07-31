@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 const {func, string} = React.PropTypes;
 
-export default class Search extends React.Component {
+export class Search extends React.Component {
 
   constructor(props) {
     super(props);
