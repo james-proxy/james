@@ -73,6 +73,38 @@ app.on('ready', () => {
     });
   });
 
+  ipc.on('proxy-cache-toggle', ({enabled}) => {
+    proxy.setCaching(enabled);
+  });
+
+  ipc.on('proxy-throttle', ({enabled, rate}) => {
+    if (enabled) {
+      proxy.proxy.slow(rate);
+    } else {
+      proxy.proxy.disableThrottling();
+    }
+  });
+  
+  ipc.on('proxy-filter', ({filter}) => {
+    proxy.setFilter(filter);
+  });
+
+  ipc.on('proxy-clear', () => {
+    proxy.proxy.clear();
+  });
+
+  ipc.on('mappings-set', ({url, newUrl, isLocal, isActive}) => {
+    urlMapper.urlMapper.set(url, newUrl, isLocal, isActive);
+  });
+
+  ipc.on('mappings-toggle', ({url}) => {
+    urlMapper.urlMapper.toggleActiveState(url);
+  });
+
+  ipc.on('mappings-remove', ({url}) => {
+    urlMapper.urlMapper.remove(url);
+  });
+
   // Emitted when the window is closed.
   mainWindow.on('closed', function() {
     // Dereference the window object, usually you would store windows

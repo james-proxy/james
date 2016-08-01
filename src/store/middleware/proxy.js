@@ -1,11 +1,12 @@
 import { ipcRenderer as ipc } from 'electron';
 
 import * as actions from '../../actions/proxy.js';
+import * as requestActions from '../../actions/requests.js';
 
 const middleware = store => next => action => {
   // let the reducers decide the state, then apply it to the proxy
   const result = next(action);
-  const { proxy: state } = store.getState();
+  const { proxy: state, requests: requestState } = store.getState();
 
   switch (action.type) {
   case actions.TOGGLE_CACHING:
@@ -13,14 +14,17 @@ const middleware = store => next => action => {
     break;
 
   case actions.TOGGLE_THROTTLING:
-    ipc.send('proxy-throttle-toggle', {
+  case actions.SET_THROTTLE_RATE:
+    ipc.send('proxy-throttle', {
       enabled: state.throttleEnabled,
       rate: state.throttleRate
     });
     break;
 
-  case actions.SET_THROTTLE_RATE:
-    ipc.send('proxy-throttle-rate', {rate: state.throttleRate});
+  case requestActions.SET_REQUEST_FILTER:
+    ipc.send('proxy-filter', {
+      filter: requestState.filter
+    });
     break;
 
   case actions.CLEAR_REQUESTS:
