@@ -1,21 +1,8 @@
-import browserLauncher from 'james-browser-launcher';
-
 import openBrowser from '../service/open-browser.js';
 import {push} from 'react-router-redux';
 
 export const ADD_BROWSERS = 'ADD_BROWSERS';
 export const UPDATE_BROWSER = 'UPDATE_BROWSER';
-
-export function detectBrowsers() {
-  return (dispatch) => {
-    return new Promise((resolve) => {
-      browserLauncher.detect(function(available) {
-        dispatch(addBrowsers(available));
-        resolve();
-      });
-    });
-  };
-}
 
 export function launchBrowser(browser) {
   return (dispatch) => {

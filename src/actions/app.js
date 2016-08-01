@@ -2,8 +2,6 @@ import { push } from 'react-router-redux';
 import DevTools from '../service/dev-tools.js';
 import constants from '../constants.js';
 
-import { detectBrowsers } from './browsers.js';
-
 const devTools = new DevTools();
 
 export const INIT = 'INIT';
@@ -16,7 +14,6 @@ export function init(data) {
       ...data
     });
     dispatch(push('/'));
-    dispatch(detectBrowsers());
 
     if (constants.DEV) {
       dispatch(toggleDevTools());

@@ -18,6 +18,7 @@ import { init } from './actions/app.js';
 import { syncRequests } from './actions/requests.js';
 import { updateProxyStatus } from './actions/proxy.js';
 import { syncUrlMappings } from './actions/url-mappings.js';
+import { addBrowsers } from './actions/browsers.js';
 
 import AppContainer from './containers/app.js';
 import Home from './containers/home.js';
@@ -39,6 +40,10 @@ ipc.on('proxy-sync', (evt, payload) => {
 
 ipc.on('mapper-sync', (evt, payload) => {
   store.dispatch(syncUrlMappings(payload));
+});
+
+ipc.on('browsers-sync', (evt, payload) => {
+  store.dispatch(addBrowsers(payload));
 });
 
 createMenu();

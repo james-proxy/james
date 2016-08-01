@@ -1,6 +1,7 @@
 import { app, BrowserWindow, ipcMain as ipc } from 'electron';
 import squirrelStartup from 'electron-squirrel-startup';
 import localShortcut from 'electron-localshortcut';
+import browserLauncher from 'james-browser-launcher';
 
 import constants from './constants.js';
 import config from './config.js';
@@ -51,7 +52,14 @@ app.on('ready', () => {
 
   mainWindow.webContents.on('did-finish-load', () => {
     console.log('did-finish-load');
-    mainWindow.show();
+
+    mainWindow.webContents.send('mapper-sync', {
+      mappings: urlMapper.urlMapper.mappings()
+    });
+
+    browserLauncher.detect((available) => {
+      mainWindow.webContents.send('browsers-sync', available);
+    });
 
     proxy.on('status', ({status, reason}) => {
       mainWindow.webContents.send('proxy-status', {
@@ -71,6 +79,8 @@ app.on('ready', () => {
         mappings
       });
     });
+    
+    mainWindow.show();
   });
 
   ipc.on('proxy-cache-toggle', ({enabled}) => {
