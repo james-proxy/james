@@ -90,10 +90,12 @@ describe('url mapper actions', () => {
   });
 
   it('should create an action to sync url mappings', () => {
+    const mappings = [];
     const expectedAction = {
-      type: actions.SYNC_URL_MAPPINGS
+      type: actions.SYNC_URL_MAPPINGS,
+      mappings
     };
-    expect(actions.syncUrlMappings()).toEqual(expectedAction);
+    expect(actions.syncUrlMappings({mappings})).toEqual(expectedAction);
   });
 
   it('should create an action to update new mapping state', () => {

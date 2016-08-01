@@ -1,10 +1,4 @@
-import configureStore from 'redux-mock-store';
-import thunk from 'redux-thunk';
-
 import * as actions from '../../../src/actions/requests.js';
-
-const middlewares = [thunk];
-const mockStore = configureStore(middlewares);
 
 const request = {
   request: {},
@@ -13,23 +7,14 @@ const request = {
 };
 
 describe('request actions', () => {
-  it('should create actions to set the request filter and then sync requests', () => {
-    const initialState = {};
-    const store = mockStore(initialState);
-
+  it('should create actions to set the request filter', () => {
     const filter = 'foo';
-    const expectedActions = [
-      {
-        type: actions.SET_REQUEST_FILTER,
-        filter
-      },
-      {
-        type: actions.SYNC_REQUESTS
-      }
-    ];
+    const expectedAction = {
+      type: actions.SET_REQUEST_FILTER,
+      filter
+    };
 
-    store.dispatch(actions.setRequestFilter(filter));
-    expect(store.getActions()).toEqual(expectedActions);
+    expect(actions.setRequestFilter(filter)).toEqual(expectedAction);
   });
 
   it('should create an action to clear the active request', () => {
@@ -65,9 +50,11 @@ describe('request actions', () => {
   });
 
   it('should create an action to sync url mappings', () => {
+    const requestData = {};
     const expectedAction = {
-      type: actions.SYNC_REQUESTS
+      type: actions.SYNC_REQUESTS,
+      requestData
     };
-    expect(actions.syncRequests()).toEqual(expectedAction);
+    expect(actions.syncRequests({requestData})).toEqual(expectedAction);
   });
 });
