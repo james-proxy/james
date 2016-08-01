@@ -2,6 +2,7 @@ import { remote, app as mainApp } from 'electron';
 const app = remote ? remote.app : mainApp;
 
 export default {
+  'PROXY_STATUS_STARTING': 'starting',
   'PROXY_STATUS_WORKING': 'working',
   'PROXY_STATUS_NO_HTTPS': 'no_https',
   'PROXY_STATUS_ERROR_GENERIC': 'generic_error',

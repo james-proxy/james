@@ -4,7 +4,7 @@ import * as actions from '../actions/proxy.js';
 import constants from '../constants.js';
 
 const initialState = {
-  status: constants.PROXY_STATUS_WORKING,
+  status: constants.PROXY_STATUS_STARTING,
   statusReason: null,
   cachingEnabled: false,
   throttleEnabled: false,

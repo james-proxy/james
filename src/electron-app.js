@@ -15,8 +15,15 @@ if (squirrelStartup) {
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the javascript object is GCed.
 let mainWindow = null;
-let urlMapper = null;
-let proxy = null;
+
+console.log('Loading URL mappings...'); // eslint-disable-line no-console
+const urlMapper = createUrlMapper({
+  filename: `${constants.USER_DATA}/data.nedb`,
+  autoload: true
+});
+
+console.log('Starting proxy...'); // eslint-disable-line no-console
+const proxy = createProxy(config, urlMapper.urlMapper);
 
 // Quit when all windows are closed.
 app.on('window-all-closed', () => app.quit());
@@ -32,22 +39,10 @@ app.on('ready', () => {
     show: false
   });
 
-  console.log('Loading URL mappings...'); // eslint-disable-line no-console
-  urlMapper = createUrlMapper({
-    filename: `${constants.USER_DATA}/data.nedb`,
-    autoload: true
-  });
-
-  console.log('Starting proxy...'); // eslint-disable-line no-console
-  proxy = createProxy(config, urlMapper.urlMapper);
-
-  proxy.on('status', ({status}) => {
-    console.log('root-proxy-status', status);
-  });
-
   mainWindow.loadURL('file://' + __dirname + '/index.html');
 
   mainWindow.webContents.on('did-finish-load', () => {
+    mainWindow.webContents.send('proxy-status', proxy.status);
     mainWindow.webContents.send('mapper-sync', {
       mappings: urlMapper.urlMapper.mappings()
     });

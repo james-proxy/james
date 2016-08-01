@@ -1,5 +1,5 @@
 import hoxy from 'hoxy';
-import { fs } from 'electron';
+import fs from 'fs';
 import EventEmitter from 'events';
 
 import constants from '../constants.js';
@@ -10,9 +10,12 @@ class ProxyHandler extends EventEmitter {
   constructor(config, urlMapper) {
     super();
     this.config = config;
+    this.hoxy = undefined;
     this.filter = undefined;
+    this.status = undefined;
     this.cachingEnabled = false;
 
+    this.onStatusChange_({status: constants.PROXY_STATUS_STARTING});
     this.proxy = new Proxy(
       this.onUpdate_.bind(this),
       config,
@@ -30,33 +33,44 @@ class ProxyHandler extends EventEmitter {
       opts.certAuthority = {key, cert};
     } catch (e) {
       const [reason] = e.message.split('\n');
-      this.emit('status', {
+      console.log('failed to read', reason);
+      this.onStatusChange_({
         status: constants.PROXY_STATUS_NO_HTTPS,
+        error: true,
         reason
       });
     }
 
-    const hoxyServer = hoxy.createServer(opts);
-    hoxyServer.log('error warn info debug');
-    hoxyServer.on('error', (event) => {
+    this.hoxy = hoxy.createServer(opts);
+    this.hoxy.log('error warn info debug');
+    this.hoxy.on('error', (event) => {
       if (event.code === 'ENOTFOUND') return;
       console.warn('hoxy error: ', event.code, event); // eslint-disable-line
 
       if (event.code === 'EADDRINUSE') {
-        this.emit('status', {
+        this.onStatusChange_({
           status: constants.PROXY_STATUS_ERROR_ADDRESS_IN_USE,
+          error: true,
           reason
         });
       }
     });
 
-    return hoxyServer.listen(this.config.proxyPort);
+    return this.hoxy.listen(this.config.proxyPort, () => {
+      if (this.status.error) return;
+      this.onStatusChange_({status: constants.PROXY_STATUS_WORKING});
+    });
   }
 
   onUpdate_() {
     this.emit('update', {
       requestData: this.proxy.getRequestData(this.filter)
     });
+  }
+
+  onStatusChange_(status) {
+    this.status = status;
+    this.emit('status', status);
   }
 
   setCaching(caching) {
