@@ -28,20 +28,17 @@ app.on('ready', () => {
   mainWindow = new BrowserWindow({
     width: 1024,
     height: 768,
+    autoHideMenuBar: true,
     show: false
   });
 
-  console.log('creating mapper');
+  console.log('Loading URL mappings...'); // eslint-disable-line no-console
   urlMapper = createUrlMapper({
     filename: `${constants.USER_DATA}/data.nedb`,
     autoload: true
   });
 
-  urlMapper.on('status', ({status}) => {
-    console.log('root-mapper-status', status);
-  });
-
-  console.log('creating proxy');
+  console.log('Starting proxy...'); // eslint-disable-line no-console
   proxy = createProxy(config, urlMapper.urlMapper);
 
   proxy.on('status', ({status}) => {
@@ -51,8 +48,6 @@ app.on('ready', () => {
   mainWindow.loadURL('file://' + __dirname + '/index.html');
 
   mainWindow.webContents.on('did-finish-load', () => {
-    console.log('did-finish-load');
-
     mainWindow.webContents.send('mapper-sync', {
       mappings: urlMapper.urlMapper.mappings()
     });

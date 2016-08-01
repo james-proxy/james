@@ -12,7 +12,7 @@ class Request extends React.Component {
     return this.props.request.id !== nextProps.request.id ||
       this.props.isActive !== nextProps.isActive ||
       this.props.isContextMenu !== nextProps.isContextMenu ||
-      this.done !== nextProps.request.done;
+      this.props.request.done !== nextProps.request.done;
   }
 
   render() {

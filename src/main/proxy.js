@@ -54,7 +54,6 @@ class ProxyHandler extends EventEmitter {
   }
 
   onUpdate_() {
-    console.log('__proxy-update');
     this.emit('update', {
       requestData: this.proxy.getRequestData(this.filter)
     });

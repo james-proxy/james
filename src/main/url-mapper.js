@@ -15,7 +15,6 @@ class UrlMapperHandler extends EventEmitter {
   }
 
   onUpdate_() {
-    console.log('__mapper-update');
     this.emit('update', {
       mappings: this.urlMapper.mappings()
     });
