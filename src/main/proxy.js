@@ -33,7 +33,6 @@ class ProxyHandler extends EventEmitter {
       opts.certAuthority = {key, cert};
     } catch (e) {
       const [reason] = e.message.split('\n');
-      console.log('failed to read', reason);
       this.onStatusChange_({
         status: constants.PROXY_STATUS_NO_HTTPS,
         error: true,
