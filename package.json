@@ -39,7 +39,7 @@
     "redux-logger": "^2.6.1",
     "redux-thunk": "^2.0.1",
     "tmp": "0.0.28",
-    "uniqid": "^3.0.0"
+    "uniqid": "^4.0.0"
   },
   "devDependencies": {
     "babel-core": "^6.4.5",
@@ -53,7 +53,7 @@
     "electron-connect": "^0.4.0",
     "electron-localshortcut": "^0.6.0",
     "electron-mocha": "^2.2.0",
-    "electron-prebuilt": "1.2.7",
+    "electron-prebuilt": "1.3.1",
     "envify": "^3.4.0",
     "eslint": "^3.0.0",
     "eslint-plugin-react": "^5.0.1",
