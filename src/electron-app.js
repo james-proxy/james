@@ -73,11 +73,11 @@ app.on('ready', () => {
     mainWindow.show();
   });
 
-  ipc.on('proxy-cache-toggle', ({enabled}) => {
+  ipc.on('proxy-cache-toggle', (evt, {enabled}) => {
     proxy.setCaching(enabled);
   });
 
-  ipc.on('proxy-throttle', ({enabled, rate}) => {
+  ipc.on('proxy-throttle', (evt, {enabled, rate}) => {
     if (enabled) {
       proxy.proxy.slow(rate);
     } else {
@@ -85,7 +85,7 @@ app.on('ready', () => {
     }
   });
   
-  ipc.on('proxy-filter', ({filter}) => {
+  ipc.on('proxy-filter', (evt, {filter}) => {
     proxy.setFilter(filter);
   });
 
@@ -93,15 +93,15 @@ app.on('ready', () => {
     proxy.proxy.clear();
   });
 
-  ipc.on('mappings-set', ({url, newUrl, isLocal, isActive}) => {
+  ipc.on('mappings-set', (evt, {url, newUrl, isLocal, isActive}) => {
     urlMapper.urlMapper.set(url, newUrl, isLocal, isActive);
   });
 
-  ipc.on('mappings-toggle', ({url}) => {
+  ipc.on('mappings-toggle', (evt, {url}) => {
     urlMapper.urlMapper.toggleActiveState(url);
   });
 
-  ipc.on('mappings-remove', ({url}) => {
+  ipc.on('mappings-remove', (evt, {url}) => {
     urlMapper.urlMapper.remove(url);
   });
 
