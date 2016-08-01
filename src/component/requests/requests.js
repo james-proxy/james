@@ -24,7 +24,7 @@ class Requests extends Component {
 
     const requestNodes = requestData.requests.map(({request, response}) => {
       const isActive = activeRequest && activeRequest.id === request.id || false;
-      const isContextMenu = contextRequest && contextRequest === request.id || false;
+      const isContextMenu = contextRequest && contextRequest.id === request.id || false;
 
       return <Request
         request={request}
@@ -71,7 +71,7 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(setContextRequest(null));
   },
   handleContextMenu: ({request}) => {
-    dispatch(setContextRequest(request.id));
+    dispatch(setContextRequest(request));
   }
 });
 

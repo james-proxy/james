@@ -27,7 +27,7 @@ class Request extends React.Component {
     } = this.props;
 
     const _handleClick = () => handleClick({request, response});
-    const _handleContextMenu = () => handleClick({request});
+    const _handleContextMenu = () => handleContextMenu({request});
 
     let took = <i className="fa fa-gear fa-spin" />;
     if (request.took) {
@@ -41,11 +41,7 @@ class Request extends React.Component {
 
     let contextMenuNode = null;
     if (isContextMenu) {
-      const contextMenuProps = {
-        request,
-        handleContextMenu
-      };
-      contextMenuNode = <RequestContextMenu {...contextMenuProps} />;
+      contextMenuNode = <RequestContextMenu request={request} handleContextMenu={_handleContextMenu} />;
     }
 
     return <div className={requestClasses.join(' ')}>

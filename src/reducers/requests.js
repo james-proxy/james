@@ -77,7 +77,7 @@ export function getContextRequest(state) {
 
 export function isContextRequest(state, request) {
   const contextRequest = getContextRequest(state);
-  return contextRequest && request && contextRequest === request.id;
+  return contextRequest && request && contextRequest.id === request.id;
 }
 
 export function getRequestData(state) {
