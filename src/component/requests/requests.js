@@ -1,48 +1,30 @@
-import React, { Component } from 'react';
-import { findDOMNode } from 'react-dom';
+import React from 'react';
 import { connect } from 'react-redux';
 import Request from './request.js';
 
 const {object, array, func} = React.PropTypes;
 
-class Requests extends Component {
-  componentWillUpdate() {
-    // remember scroll position for when list changes
-    const node = findDOMNode(this);
-    this.scrollHeight = node.scrollHeight;
-    this.scrollTop = node.scrollTop;
-  }
+const Requests = ({requestData, activeRequest, contextRequest, labels, handleClick, handleContextMenu}) => {
+  const requestNodes = requestData.requests.map(({request, response}) => {
+    const isActive = activeRequest && activeRequest.id === request.id || false;
+    const isContextMenu = contextRequest && contextRequest.id === request.id || false;
 
-  componentDidUpdate() {
-    // restore scroll position after list changes
-    const node = findDOMNode(this);
-    node.scrollTop = this.scrollTop + (node.scrollHeight - this.scrollHeight);
-  }
+    return <Request
+      request={request}
+      response={response}
+      done={request.done}
+      isActive={isActive}
+      isContextMenu={isContextMenu}
+      labels={labels}
+      key={request.id}
+      handleClick={handleClick}
+      handleContextMenu={handleContextMenu}
+    />;
+  });
 
-  render() {
-    const {requestData, activeRequest, contextRequest, labels, handleClick, handleContextMenu} = this.props;
-
-    const requestNodes = requestData.requests.map(({request, response}) => {
-      const isActive = activeRequest && activeRequest.id === request.id || false;
-      const isContextMenu = contextRequest && contextRequest.id === request.id || false;
-
-      return <Request
-        request={request}
-        response={response}
-        done={request.done}
-        isActive={isActive}
-        isContextMenu={isContextMenu}
-        labels={labels}
-        key={request.id}
-        handleClick={handleClick}
-        handleContextMenu={handleContextMenu}
-      />;
-    });
-
-    return <div className="requests">
-      {requestNodes}
-    </div>;
-  }
+  return <div className="requests">
+    {requestNodes}
+  </div>;
 }
 
 Requests.propTypes = {
