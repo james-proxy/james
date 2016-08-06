@@ -91,55 +91,41 @@ export default class Proxy {
   }
 
   getRequestData(filter) {
-    // TODO: hacky workaround for getters not being enumerable and not ipc-friendly
-    const setupRequest = (request) => {
-      // const props = ['protocol', 'hostname', 'port', 'method', 'url', 'query', 'headers', 'params'];
-      // const properties = {};
-      // props.forEach((prop) => {properties[prop] = {enumerable: true};});
-      // Object.defineProperties(request, props);
-      return Object.assign({}, request, {
-        protocol: request.protocol,
-        hostname: request.hostname,
-        port: request.port,
-        method: request.method,
-        url: request.url,
+    // converts request into an IPC-friendly Object
+    // (ES6 class getters used in Hoxy are not enumerable)
+    const convertRequest = (request) => {
+      return Object.assign({}, request, request._data, {
         query: request.query,
-        headers: request.headers,
         params: request.params,
         fullUrl: typeof request.fullUrl === 'function' ? request.fullUrl() : request.fullUrl,
         _data: null
       });
     };
 
-    let filteredRequests = !filter ? this._requests : this._requests
-      .filter((request) => {
-        return request.request.fullUrl().includes(filter) || request.request.original.fullUrl.includes(filter);
-      });
-      
-    filteredRequests = filteredRequests.map(({request, response}) => {
-      // convert getters into objects JSON.stringify can correctly work with
+    const matchesFilter = (request) =>
+      request.fullUrl().includes(filter) || request.original.fullUrl.includes(filter)
+
+    const requests = this._requests.reduce((results, {request, response}) => {
+      if (filter && !matchesFilter(request)) return results;
+
       const container = {
         id: request.id
       };
-
-      const original = setupRequest(request.original);
-      container.request = setupRequest(request);
-      container.request.original = original; // TODO: awkward..
-
-      container.response = Object.assign({}, response, {
-        statusCode: response.statusCode,
-        headers: response.headers,
+      container.request = convertRequest(request);
+      container.request.original = convertRequest(request.original);
+      container.response = Object.assign({}, response, response._data, {
         params: response.params,
         _data: null
       });
 
-      return container;
-    });
+      results.push(container);
+      return results;
+    }, []);
 
     return {
-      requests: filteredRequests,
+      requests,
       totalCount: this._requests.length,
-      filteredCount: filteredRequests.length
+      filteredCount: requests.length
     };
   }
 
