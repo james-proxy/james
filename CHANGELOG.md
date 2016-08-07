@@ -1,7 +1,7 @@
 ## Upcoming Release
 
 #### User features
-- Nothing yet
+- Hide phantomjs from browser list, as it's not launchable (i: @mitchhentges, r: @tomitm)
 
 #### Developer Features
 - Electron updated (r: @mitchhentges)
