@@ -114,7 +114,7 @@ const proxy = new Proxy(() => {
 }, config, urlMapper, createHoxy, isCachingEnabled);
 
 browserLauncher.detect(function(available) {
-  data.browsers = available;
+  data.browsers = available.filter((browser) => browser.type !== 'phantomjs');
   render();
 });
 
