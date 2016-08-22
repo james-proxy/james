@@ -5,10 +5,11 @@ import ReactDOM from 'react-dom';
 import throttle from 'lodash.throttle';
 
 import { Provider } from 'react-redux';
-import { Router, Route, IndexRoute, hashHistory } from 'react-router';
+import { Router, hashHistory } from 'react-router';
 import { syncHistoryWithStore } from 'react-router-redux';
 
 import config from './config.js';
+import routes from './routes.js';
 
 import ravenInit from './service/raven.js';
 import setupShortcuts from './service/shortcuts.js';
@@ -19,11 +20,6 @@ import { syncRequests } from './actions/requests.js';
 import { updateProxyStatus } from './actions/proxy.js';
 import { syncUrlMappings } from './actions/url-mappings.js';
 import { addBrowsers } from './actions/browsers.js';
-
-import AppContainer from './containers/app.js';
-import Home from './containers/home.js';
-import Requests from './containers/requests.js';
-import UrlMappings from './containers/url-mappings.js';
 
 ravenInit();
 
@@ -52,16 +48,8 @@ ipc.on('browsers-sync', (evt, payload) => {
 setupShortcuts(store);
 store.dispatch(init({ config }));
 
-const domNode = document.querySelector('#app');
-
 ReactDOM.render(
   <Provider store={store}>
-    <Router history={storeHistory}>
-      <Route path="/" component={AppContainer}>
-        <IndexRoute component={Home} />
-        <Route path="requests" component={Requests} />
-        <Route path="url-mappings" component={UrlMappings}/>
-      </Route>
-    </Router>
+    <Router history={storeHistory} routes={routes} />
   </Provider>
-, domNode);
+, document.getElementById('app'));
