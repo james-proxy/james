@@ -48,7 +48,8 @@ app.on('ready', () => {
     });
 
     browserLauncher.detect((available) => {
-      mainWindow.webContents.send('browsers-sync', available);
+      mainWindow.webContents.send('browsers-sync',
+        available.filter(browser => browser.type !== 'phantomjs'));
     });
 
     proxy.on('status', ({status, reason}) => {
