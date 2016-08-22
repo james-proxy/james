@@ -11,7 +11,6 @@ import { syncHistoryWithStore } from 'react-router-redux';
 import config from './config.js';
 
 import ravenInit from './service/raven.js';
-import createMenu from './menu.js';
 import setupShortcuts from './shortcuts.js';
 import setupStore from './store/index.js';
 
@@ -50,7 +49,6 @@ ipc.on('browsers-sync', (evt, payload) => {
   store.dispatch(addBrowsers(payload));
 });
 
-createMenu();
 setupShortcuts(store);
 store.dispatch(init({ config }));
 

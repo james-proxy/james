@@ -1,5 +1,4 @@
-import {shell, remote} from 'electron';
-const {Menu} = remote;
+import { shell, Menu } from 'electron';
 
 function menuTempl() {
   const menu = [];

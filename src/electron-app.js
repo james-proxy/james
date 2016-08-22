@@ -6,6 +6,7 @@ import browserLauncher from 'james-browser-launcher';
 import constants from './constants.js';
 import config from './config.js';
 
+import createMenu from './main/menu.js';
 import createUrlMapper from './main/url-mapper.js';
 import createProxy from './main/proxy.js';
 
@@ -15,6 +16,7 @@ if (squirrelStartup) {
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the javascript object is GCed.
 let mainWindow = null;
+createMenu();
 
 console.log('Loading URL mappings...'); // eslint-disable-line no-console
 const urlMapper = createUrlMapper({
