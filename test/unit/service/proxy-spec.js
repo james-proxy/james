@@ -126,8 +126,7 @@ describe('Proxy', function() {
         generateRequest();
         const filter = 'url1';
         const requestData = proxy.getRequestData(filter);
-        // note(tomitm): fullUrl is a string when return by getRequestData so that it's safe for IPC.
-        expect(requestData.requests[0].request.fullUrl).toEqual('url1');
+        expect(requestData.requests[0].request.fullUrl()).toEqual('url1');
       });
 
       it('shows the correct totalCount even when requests are filtered', function() {

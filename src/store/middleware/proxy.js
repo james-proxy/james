@@ -4,6 +4,16 @@ import * as actions from '../../actions/proxy.js';
 import * as requestActions from '../../actions/requests.js';
 
 const middleware = store => next => action => {
+  // grab full data from main process before reducers
+  switch (action.type) {
+  case requestActions.SET_ACTIVE_REQUEST:
+    if (!action.request || !action.request.id) break;
+    action.request = ipc.sendSync('proxy-get-request', {id: action.request.id});
+    break;
+  default:
+    break;
+  }
+
   // let the reducers decide the state, then apply it to the proxy
   const result = next(action);
   const { proxy: state, requests: requestState } = store.getState();

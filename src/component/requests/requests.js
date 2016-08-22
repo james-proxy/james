@@ -25,7 +25,7 @@ const Requests = ({requestData, activeRequest, contextRequest, labels, handleCli
   return <div className="requests">
     {requestNodes}
   </div>;
-}
+};
 
 Requests.propTypes = {
   requestData: object.isRequired,

@@ -73,6 +73,11 @@ app.on('ready', () => {
     mainWindow.show();
   });
 
+  ipc.on('proxy-get-request', (evt, {id}) => {
+    const request = proxy.getRequest(id);
+    evt.returnValue = request; // note: not async
+  });
+
   ipc.on('proxy-cache-toggle', (evt, {enabled}) => {
     proxy.setCaching(enabled);
   });

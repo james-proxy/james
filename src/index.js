@@ -2,6 +2,7 @@ import { ipcRenderer as ipc } from 'electron';
 
 import React from 'react';
 import ReactDOM from 'react-dom';
+import throttle from 'lodash.throttle';
 
 import { Provider } from 'react-redux';
 import { Router, Route, IndexRoute, hashHistory } from 'react-router';
@@ -30,12 +31,15 @@ ravenInit();
 const store = setupStore(hashHistory);
 const storeHistory = syncHistoryWithStore(hashHistory, store);
 
+const onProxySync = throttle((evt, payload) => {
+  // note: full responses are not included to minimize GC
+  store.dispatch(syncRequests(payload));
+}, 300);
+
+ipc.on('proxy-sync', onProxySync);
+
 ipc.on('proxy-status', (evt, payload) => {
   store.dispatch(updateProxyStatus(payload));
-});
-
-ipc.on('proxy-sync', (evt, payload) => {
-  store.dispatch(syncRequests(payload));
 });
 
 ipc.on('mapper-sync', (evt, payload) => {

@@ -61,9 +61,71 @@ class ProxyHandler extends EventEmitter {
     });
   }
 
+  convertRequest_(request) {
+    return Object.assign({}, request, request._data, {
+      // getters aren't enumerable
+      query: request.query,
+      params: request.params,
+      // functions don't serialize, convert to result
+      fullUrl: typeof request.fullUrl === 'function' ? request.fullUrl() : request.fullUrl,
+      // strip internal properties
+      _data: null,
+      _events: null,
+      source: null,
+      slow: null
+    });
+  }
+
+  convertResponse_(response) {
+    return Object.assign({}, response, response._data, {
+      // getters aren't enumerable
+      params: response.params,
+      // strip internal properties
+      _data: null,
+      _events: null,
+      source: null,
+      slow: null
+    });
+  }
+
+  sanitizeRequest_(includeResponse = false) {
+    // converts request into an IPC-friendly Object
+    // (ES6 class getters used in Hoxy are not enumerable)
+    return ({request, response}) => {
+      const container = {
+        id: request.id
+      };
+      container.request = this.convertRequest_(request);
+      container.request.original = this.convertRequest_(request.original);
+
+      if (includeResponse) {
+        container.response = this.convertResponse_(response);
+      } else {
+        // reduce GC by not sending the full response until needed for request details
+        container.response = {
+          statusCode: response.statusCode
+        };
+      }
+      return container;
+    };
+  }
+
+  getRequestData() {
+    const requestData = this.proxy.getRequestData(this.filter);
+    requestData.requests = requestData.requests
+      .map(this.sanitizeRequest_());
+    return requestData;
+  }
+
+  getRequest(id) {
+    const found = this.proxy._requests.find(({request}) => request.id === id);
+    if (!found) return;
+    return this.sanitizeRequest_(true)(found);
+  }
+
   onUpdate_() {
     this.emit('update', {
-      requestData: this.proxy.getRequestData(this.filter)
+      requestData: this.getRequestData()
     });
   }
 

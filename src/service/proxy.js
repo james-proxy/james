@@ -91,36 +91,10 @@ export default class Proxy {
   }
 
   getRequestData(filter) {
-    // converts request into an IPC-friendly Object
-    // (ES6 class getters used in Hoxy are not enumerable)
-    const convertRequest = (request) => {
-      return Object.assign({}, request, request._data, {
-        query: request.query,
-        params: request.params,
-        fullUrl: typeof request.fullUrl === 'function' ? request.fullUrl() : request.fullUrl,
-        _data: null
-      });
-    };
-
     const matchesFilter = (request) =>
-      request.fullUrl().includes(filter) || request.original.fullUrl.includes(filter)
+      request.fullUrl().includes(filter) || request.original.fullUrl.includes(filter);
 
-    const requests = this._requests.reduce((results, {request, response}) => {
-      if (filter && !matchesFilter(request)) return results;
-
-      const container = {
-        id: request.id
-      };
-      container.request = convertRequest(request);
-      container.request.original = convertRequest(request.original);
-      container.response = Object.assign({}, response, response._data, {
-        params: response.params,
-        _data: null
-      });
-
-      results.push(container);
-      return results;
-    }, []);
+    const requests = !filter ? this._requests : this._requests.filter(({request}) => matchesFilter(request));
 
     return {
       requests,
