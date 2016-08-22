@@ -2,13 +2,14 @@ import { app, BrowserWindow, ipcMain as ipc } from 'electron';
 import squirrelStartup from 'electron-squirrel-startup';
 import localShortcut from 'electron-localshortcut';
 import browserLauncher from 'james-browser-launcher';
+import path from 'path';
 
-import constants from './constants.js';
-import config from './config.js';
+import constants from '../constants.js';
+import config from '../config.js';
 
-import createMenu from './main/menu.js';
-import createUrlMapper from './main/url-mapper.js';
-import createProxy from './main/proxy.js';
+import createMenu from './menu.js';
+import createUrlMapper from './url-mapper.js';
+import createProxy from './proxy.js';
 
 if (squirrelStartup) {
   process.exit(0); // Don't run James if it's just being installed/updated/etc
@@ -41,7 +42,8 @@ app.on('ready', () => {
     show: false
   });
 
-  mainWindow.loadURL('file://' + __dirname + '/index.html');
+  const index = path.join(__dirname, '..', 'index.html');
+  mainWindow.loadURL(`file://${index}`);
 
   mainWindow.webContents.on('did-finish-load', () => {
     mainWindow.webContents.send('proxy-status', proxy.status);

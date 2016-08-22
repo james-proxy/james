@@ -11,7 +11,7 @@ import { syncHistoryWithStore } from 'react-router-redux';
 import config from './config.js';
 
 import ravenInit from './service/raven.js';
-import setupShortcuts from './shortcuts.js';
+import setupShortcuts from './service/shortcuts.js';
 import setupStore from './store/index.js';
 
 import { init } from './actions/app.js';

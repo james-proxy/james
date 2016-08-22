@@ -1,7 +1,7 @@
-import Keyboard from './service/keyboard.js';
+import Keyboard from './keyboard.js';
 
-import { toggleDevTools } from './actions/app.js';
-import { showAddUrlMapping } from './actions/url-mappings.js';
+import { toggleDevTools } from '../actions/app.js';
+import { showAddUrlMapping } from '../actions/url-mappings.js';
 
 export default (store) => {
   const keyboard = new Keyboard();

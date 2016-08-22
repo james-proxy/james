@@ -8,7 +8,7 @@
     "type": "git",
     "url": "https://github.com/james-proxy/james.git"
   },
-  "main": "electron-app.js",
+  "main": "main/index.js",
   "scripts": {
     "build": "gulp",
     "start": "electron ./build",

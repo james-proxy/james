@@ -103,9 +103,9 @@ gulp.task('browserify', ['js'], () => {
     .pipe(source('index.js'))
     .pipe(gulp.dest('./package'));
 
-  browserify('build/electron-app.js', opts)
+  browserify('build/main/index.js', opts)
     .bundle()
-    .pipe(source('electron-app.js'))
+    .pipe(source('main/index.js'))
     .pipe(gulp.dest('./package'));
 });
 
