@@ -61,5 +61,3 @@ export default class RequestDetails extends React.Component {
 RequestDetails.propTypes = {
   request: object.isRequired
 };
-
-export default RequestDetails;
