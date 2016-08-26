@@ -8,7 +8,7 @@ cache:
   - '%USERPROFILE%\.electron'
 
 install:
-  - ps: Install-Product node 5 x64
+  - ps: Install-Product node 6.2 x64
   - npm install
   - npm prune
   - npm --depth Infinity update
