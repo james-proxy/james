@@ -15,6 +15,8 @@ const initialState = {
   }
 };
 
+// reducers
+
 function mappings(state = initialState.mappings, action) {
   switch (action.type) {
   case actions.SYNC_URL_MAPPINGS:
@@ -59,6 +61,8 @@ export default combineReducers({
   count,
   newMapping
 });
+
+// selectors
 
 export function getMappings(state) {
   return state.urlMappings.mappings;

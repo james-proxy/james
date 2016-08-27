@@ -26,11 +26,8 @@ export default (history) => {
     middleware.push(loggerMiddleware);
   }
 
-  const store = createStore(
+  return createStore(
     rootReducer,
     applyMiddleware(...middleware)
   );
-
-
-  return store;
 };

@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 
 import Browsers from '../component/home/browsers.js';
 
-const Home = ({port}) =>
+const HomeContainer = ({port}) =>
   <div className="setup-instructions">
     <div className="setup-instructions-wrapper">
       <h2>Proxy started on localhost:{port}</h2>
@@ -12,8 +12,8 @@ const Home = ({port}) =>
     </div>
   </div>;
 
-Home.propTypes = {
-  port: React.PropTypes.number.isRequired
+HomeContainer.propTypes = {
+  port: PropTypes.number.isRequired
 };
 
 import { getProxyPort } from '../reducers/app.js';
@@ -22,4 +22,4 @@ const mapStateToProps = (state) => ({
   port: getProxyPort(state)
 });
 
-export default connect(mapStateToProps)(Home);
+export default connect(mapStateToProps)(HomeContainer);

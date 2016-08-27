@@ -13,7 +13,8 @@ export function init(data) {
       type: INIT,
       ...data
     });
-    dispatch(push('/'));
+
+    dispatch(navigateToHome());
 
     if (constants.DEV) {
       dispatch(toggleDevTools());
@@ -22,7 +23,20 @@ export function init(data) {
 }
 
 export function toggleDevTools() {
-  return () => {
+  return (dispatch) => {
+    dispatch({type: TOGGLE_DEVTOOLS});
     devTools.toggle();
   };
+}
+
+export function navigateToHome() {
+  return push('/');
+}
+
+export function navigateToRequests() {
+  return push('/requests');
+}
+
+export function navigateToUrlMappings() {
+  return push('/url-mappings');
 }

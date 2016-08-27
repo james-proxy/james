@@ -13,6 +13,8 @@ const initialState = {
   }
 };
 
+// reducers
+
 function filter(state = initialState.filter, action) {
   if (action.type !== actions.SET_REQUEST_FILTER) {
     return state;
@@ -53,6 +55,8 @@ export default combineReducers({
   context,
   data
 });
+
+// selectors
 
 export function hasRequests(state) {
   return state.requests.data.totalCount > 0;

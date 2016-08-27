@@ -5,6 +5,8 @@ const initialState = {
   browsers: []
 };
 
+// reducers
+
 function browsers(state = initialState.browsers, action) {
   switch (action.type) {
   case actions.ADD_BROWSERS:
@@ -13,7 +15,7 @@ function browsers(state = initialState.browsers, action) {
       ...action.browsers
     ];
 
-  case actions.UPDATE_BROWSER: {
+  case actions.DISABLE_BROWSER: {
     const index = state.findIndex(
       (browser) => browser.command === action.browser.command
     );
@@ -39,6 +41,8 @@ function browsers(state = initialState.browsers, action) {
 export default combineReducers({
   browsers
 });
+
+// selectors
 
 export function getBrowsers(state) {
   return state.browsers.browsers;

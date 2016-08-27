@@ -11,6 +11,8 @@ const initialState = {
   throttleRate: 0
 };
 
+// reducers
+
 function status(state = initialState.status, action) {
   if (action.type !== actions.UPDATE_PROXY_STATUS) {
     return state;
@@ -53,6 +55,8 @@ export default combineReducers({
   throttleEnabled,
   throttleRate
 });
+
+// selectors
 
 export function getProxyState(state) {
   return state.proxy;

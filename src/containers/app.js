@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 
 import TitleBar from '../component/title-bar/title-bar.js';
 import Footer from '../component/footer/footer.js';
@@ -14,7 +14,7 @@ const AppContainer = ({children}) => {
 };
 
 AppContainer.propTypes = {
-  children: React.PropTypes.node
+  children: PropTypes.node
 };
 
 export default AppContainer;

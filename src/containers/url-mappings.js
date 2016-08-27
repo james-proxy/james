@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 
 import NewMapping from '../component/mapping/new-mapping.js';
 import UrlMapping from '../component/mapping/url-mapping.js';
 
-const UrlMappings = (props) => {
+const UrlMappingsContainer = (props) => {
   const {
     urlMappings,
     setUrlMapping,
@@ -32,11 +32,11 @@ const UrlMappings = (props) => {
   </div>;
 };
 
-UrlMappings.propTypes = {
-  urlMappings: React.PropTypes.array.isRequired,
-  setUrlMapping: React.PropTypes.func.isRequired,
-  toggleUrlMapping: React.PropTypes.func.isRequired,
-  removeUrlMapping: React.PropTypes.func.isRequired
+UrlMappingsContainer.propTypes = {
+  urlMappings: PropTypes.array.isRequired,
+  setUrlMapping: PropTypes.func.isRequired,
+  toggleUrlMapping: PropTypes.func.isRequired,
+  removeUrlMapping: PropTypes.func.isRequired
 };
 
 
@@ -53,4 +53,4 @@ const mapDispatchToProps = {
   removeUrlMapping
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(UrlMappings);
+export default connect(mapStateToProps, mapDispatchToProps)(UrlMappingsContainer);

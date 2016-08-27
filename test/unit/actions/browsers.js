@@ -25,10 +25,10 @@ describe('browser actions', () => {
     const browser = {};
     const status = 'Not found';
     const expectedAction = {
-      type: actions.UPDATE_BROWSER,
+      type: actions.DISABLE_BROWSER,
       browser,
       status
     };
-    expect(actions.updateBrowser(browser, status)).toEqual(expectedAction);
+    expect(actions.disableBrowser(browser, status)).toEqual(expectedAction);
   });
 });

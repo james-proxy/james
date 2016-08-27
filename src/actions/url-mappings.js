@@ -1,4 +1,4 @@
-import { push } from 'react-router-redux';
+import { navigateToUrlMappings } from './app.js';
 
 import constants from '../constants.js';
 
@@ -14,9 +14,7 @@ export const NEW_MAPPING_RESET = 'NEW_MAPPING_RESET';
 
 export function showAddUrlMapping(url) {
   return (dispatch) => {
-    dispatch(push({
-      pathname: '/url-mappings'
-    }));
+    dispatch(navigateToUrlMappings());
     dispatch(updateNewMapping({
       target: url
     }));

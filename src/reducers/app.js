@@ -5,6 +5,8 @@ const initialState = {
   config: {}
 };
 
+// reducers
+
 function config(state = initialState.config, action) {
   if (action.type !== actions.INIT) {
     return state;
@@ -15,6 +17,8 @@ function config(state = initialState.config, action) {
 export default combineReducers({
   config
 });
+
+// selectors
 
 export function getProxyPort(state) {
   return state.app.config.proxyPort;

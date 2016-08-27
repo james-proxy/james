@@ -1,8 +1,8 @@
 import openBrowser from '../service/open-browser.js';
-import {push} from 'react-router-redux';
+import { navigateToRequests } from './app.js';
 
 export const ADD_BROWSERS = 'ADD_BROWSERS';
-export const UPDATE_BROWSER = 'UPDATE_BROWSER';
+export const DISABLE_BROWSER = 'DISABLE_BROWSER';
 
 export function launchBrowser(browser) {
   return (dispatch) => {
@@ -11,8 +11,8 @@ export function launchBrowser(browser) {
       version: browser.version
     };
     return openBrowser(options)
-      .then(() => { dispatch(push('/requests')); })
-      .catch((err) => { dispatch(updateBrowser(browser, err)); });
+      .then(() => { dispatch(navigateToRequests()); })
+      .catch((err) => { dispatch(disableBrowser(browser, err)); });
   };
 }
 
@@ -23,9 +23,9 @@ export function addBrowsers(browsers = []) {
   };
 }
 
-export function updateBrowser(browser, status) {
+export function disableBrowser(browser, status) {
   return {
-    type: UPDATE_BROWSER,
+    type: DISABLE_BROWSER,
     browser,
     status
   };

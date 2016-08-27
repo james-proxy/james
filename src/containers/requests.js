@@ -1,12 +1,10 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 
 import NoRequests from '../component/requests/no-requests.js';
 import Search from '../component/requests/search.js';
 import Requests from '../component/requests/requests.js';
 import InspectRequest from '../component/inspect-request/inspect-request.js';
-
-const {func, bool} = React.PropTypes;
 
 const RequestsContainer = ({hasRequests, clearContextRequest}) => {
   const handleClick = (evt) => {
@@ -30,8 +28,8 @@ const RequestsContainer = ({hasRequests, clearContextRequest}) => {
 };
 
 RequestsContainer.propTypes = {
-  hasRequests: bool.isRequired,
-  clearContextRequest: func.isRequired
+  hasRequests: PropTypes.bool.isRequired,
+  clearContextRequest: PropTypes.func.isRequired
 };
 
 

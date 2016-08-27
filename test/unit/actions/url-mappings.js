@@ -17,7 +17,7 @@ describe('url mapper actions', () => {
     const store = mockStore(initialState);
 
     const expectedActions = [
-      push({pathname: '/url-mappings'}),
+      push('/url-mappings'),
       {
         type: actions.NEW_MAPPING_UPDATE,
         mapping: {
