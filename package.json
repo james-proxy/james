@@ -84,7 +84,10 @@
     "app-bundle-id": "com.jamesproxy.james",
     "app-category-type": "public.app-category.productivity",
     "productName": "James",
-    "osx": {
+    "mac": {
+      "icon": "resource-compile/icon.icns"
+    },
+    "dmg": {
       "icon": "resource-compile/icon.icns",
       "background": "resource-compile/icon.png"
     },
