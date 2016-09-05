@@ -50,7 +50,7 @@
     "babel-preset-react": "^6.3.13",
     "browserify": "^13.0.0",
     "del": "^2.2.0",
-    "electron-builder": "^5.0.2",
+    "electron-builder": "^6.3.0",
     "electron-connect": "^0.4.0",
     "electron-localshortcut": "^0.6.0",
     "electron-mocha": "^2.2.0",
@@ -93,7 +93,10 @@
     "app-bundle-id": "com.jamesproxy.james",
     "app-category-type": "public.app-category.productivity",
     "productName": "James",
-    "osx": {
+    "mac": {
+      "icon": "resource-compile/icon.icns"
+    },
+    "dmg": {
       "icon": "resource-compile/icon.icns",
       "background": "resource-compile/icon.png"
     },
