@@ -1,8 +1,9 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
-const {func} = React.PropTypes;
+const {func, string} = React.PropTypes;
 
-export default class Search extends React.Component {
+export class Search extends React.Component {
 
   constructor(props) {
     super(props);
@@ -30,11 +31,26 @@ export default class Search extends React.Component {
   render() {
     return <div className="search">
       <input type="text" placeholder="Search"
-             onChange={this._handleOnChange.bind(this)}/>
+              onChange={this._handleOnChange.bind(this)} />
     </div>;
   }
 }
 
 Search.propTypes = {
+  filterValue: string,
   filterRequests: func.isRequired
 };
+
+
+import { setRequestFilter } from '../../actions/requests.js';
+import { getRequestFilter } from '../../reducers/requests.js';
+
+const mapStateToProps = (state) => ({
+  filterValue: getRequestFilter(state) || ''
+});
+
+const mapDispatchToProps = {
+  filterRequests: setRequestFilter
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Search);

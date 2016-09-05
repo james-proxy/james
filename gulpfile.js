@@ -103,9 +103,9 @@ gulp.task('browserify', ['js'], () => {
     .pipe(source('index.js'))
     .pipe(gulp.dest('./package'));
 
-  browserify('build/electron-app.js', opts)
+  browserify('build/main/index.js', opts)
     .bundle()
-    .pipe(source('electron-app.js'))
+    .pipe(source('main/index.js'))
     .pipe(gulp.dest('./package'));
 });
 
@@ -118,9 +118,9 @@ gulp.task('watch', ['default'], () => {
 gulp.task('livereload', ['default'], () => {
   const server = electronConnect.create({path: './build'});
   server.start();
-  const reload = () => server.reload();
+  const restart = () => server.restart();
 
-  gulp.watch('src/**', ['js', reload]);
-  gulp.watch('style/**', ['css', reload]);
-  gulp.watch('resource-runtime/**', ['resources', reload]);
+  gulp.watch('src/**', ['js', restart]);
+  gulp.watch('style/**', ['css', restart]);
+  gulp.watch('resource-runtime/**', ['resources', restart]);
 });

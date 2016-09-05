@@ -1,29 +1,16 @@
-import React from 'react';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 import constants from '../../constants.js';
 import NewMappingTarget from './new-mapping-target.js';
 import NewMappingDestination from './new-mapping-destination.js';
 
-const {func, string} = React.PropTypes;
+const {func, object} = React.PropTypes;
 
-const initialState = Object.freeze({
-  step: constants.NEW_MAPPING_STEP_TARGET,
-  target: undefined,
-  destination: undefined,
-  isLocal: undefined,
-  valid: undefined
-});
-
-export default class NewMapping extends React.Component {
+class NewMapping extends Component {
 
   constructor(props) {
     super(props);
-    this.state = Object.assign({}, initialState);
-
-    // prefill from external source (e.g., request context menu)
-    if (props.target) {
-      this.state.target = props.target;
-    }
 
     this.validate = this.validate.bind(this);
     this.updateTarget = this.updateTarget.bind(this);
@@ -36,50 +23,52 @@ export default class NewMapping extends React.Component {
 
   validate() {
     let valid = true;
-    if (this.state.step === constants.NEW_MAPPING_STEP_TARGET) {
-      valid = !!this.state.target;
-    } else if (this.state.step === constants.NEW_MAPPING_STEP_DESTINATION) {
-      valid = !!this.state.destination;
+    const { step, target, destination } = this.props.mapping;
+
+    if (step === constants.NEW_MAPPING_STEP_TARGET) {
+      valid = !!target;
+    } else if (step === constants.NEW_MAPPING_STEP_DESTINATION) {
+      valid = !!destination;
     }
-    this.setState({valid: valid});
+    // this.setState({valid: valid});
     return valid;
   }
 
   updateTarget(value) {
-    this.setState({target: value});
+    this.props.update({target: value});
   }
 
   updateDestination(value) {
-    this.setState({destination: value});
+    this.props.update({destination: value});
   }
 
   createUrl() {
     if (!this.validate()) { return; }
-    this.setState({step: constants.NEW_MAPPING_STEP_DESTINATION, isLocal: false, valid: null});
+    this.props.next(false);
   }
 
   createFile() {
     if (!this.validate()) { return; }
-    this.setState({step: constants.NEW_MAPPING_STEP_DESTINATION, isLocal: true, valid: null});
+    this.props.next(true);
   }
 
   finish() {
     if (!this.validate()) { return; }
     const {saveMapping} = this.props;
-    const {target, destination, isLocal} = this.state;
+    const {target, destination, isLocal} = this.props.mapping;
 
     saveMapping(target, destination, isLocal);
     this.reset();
   }
 
   reset() {
-    this.setState(Object.assign({}, initialState));
+    this.props.reset();
   }
 
   render() {
     let form;
     let submit = () => {};
-    const {step, target, destination, isLocal} = this.state;
+    const {step, target, destination, isLocal} = this.props.mapping;
 
     if (step === constants.NEW_MAPPING_STEP_TARGET) {
       submit = this.createUrl;
@@ -111,5 +100,23 @@ export default class NewMapping extends React.Component {
 
 NewMapping.propTypes = {
   saveMapping: func.isRequired,
-  target: string
+  update: func.isRequired,
+  next: func.isRequired,
+  reset: func.isRequired,
+  mapping: object
 };
+
+import { updateNewMapping, nextNewMapping, resetNewMapping } from '../../actions/url-mappings.js';
+import { getNewMapping } from '../../reducers/url-mappings.js';
+
+const mapStateToProps = (state) => ({
+  mapping: getNewMapping(state)
+});
+
+const mapDispatchToProps = {
+  update: updateNewMapping,
+  next: nextNewMapping,
+  reset: resetNewMapping
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(NewMapping);

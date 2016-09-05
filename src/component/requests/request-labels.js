@@ -5,7 +5,7 @@ const {object, array} = React.PropTypes;
 const RequestLabels = (props) => {
   const {request, labels} = props;
 
-  const url = request.fullUrl();
+  const url = request.fullUrl;
   const labelNodes = [];
 
   if (request.isMappedUrl) {

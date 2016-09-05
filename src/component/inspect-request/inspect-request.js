@@ -1,34 +1,53 @@
 import React from 'react';
+import { connect } from 'react-redux';
+
 import Toolbar from './toolbar.js';
 import RequestDetails from './request-details.js';
 
 const {func, object} = React.PropTypes;
 
 const InspectRequest = (props) => {
-  const {request, setActiveRequest} = props;
+  const {request, clearActiveRequest} = props;
 
   const actions = [
     {
       description: 'close',
       icon: 'fa-close',
-      onClick: () => { setActiveRequest(null); }
+      onClick: () => { clearActiveRequest(); }
     }
   ];
 
-  return <div className="inspect-request">
-    <Toolbar actions={actions} />
-    <div className="box-header">
-      <div className="title">
-        {request.request.hostname}
+  let node = null;
+
+  if (request) {
+    node = <div className="inspect-request">
+      <Toolbar actions={actions} />
+      <div className="box-header">
+        <div className="title">
+          {request.request.hostname}
+        </div>
       </div>
-    </div>
-    <RequestDetails request={request} />
-  </div>;
+      <RequestDetails request={request} />
+    </div>;
+  }
+
+  return node;
 };
 
 InspectRequest.propTypes = {
-  request: object.isRequired,
-  setActiveRequest: func.isRequired
+  request: object,
+  clearActiveRequest: func.isRequired
 };
 
-export default InspectRequest;
+import { setActiveRequest } from '../../actions/requests.js';
+import { getActiveRequest } from '../../reducers/requests.js';
+
+const mapStateToProps = (state) => ({
+  request: getActiveRequest(state)
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  clearActiveRequest: () => dispatch(setActiveRequest(null))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(InspectRequest);

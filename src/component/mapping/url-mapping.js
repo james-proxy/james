@@ -32,10 +32,10 @@ const UrlMapping = (props) => {
       <span className="col text-ellipsis new-url">
         {mapping.newUrl}
       </span>
-      <a href="#!" className="secondary-content" onClick={toggleIsActive}>
+      <a className="secondary-content" onClick={toggleIsActive}>
         <i className={'fa fa-toggle-' + isActiveClass} />
       </a>
-      <a href="#!" className="secondary-content" onClick={removeMapping}>
+      <a className="secondary-content" onClick={removeMapping}>
         <i className="fa fa-remove" />
       </a>
     </div>

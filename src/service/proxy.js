@@ -2,12 +2,12 @@ import uniqid from 'uniqid';
 
 export default class Proxy {
 
-  constructor(update, config, urlMapper, createHoxy, isCachingEnabled) {
+  constructor(update, config, urlMapper, createHoxy) {
     this._requests = [];
     this._urlMapper = urlMapper;
     this._config = config;
     this._update = update;
-    this._isCachingEnabled = isCachingEnabled;
+    this._isCachingEnabled = false;
 
     this._proxy = createHoxy();
     this._proxy.intercept('response-sent', this._onResponseSent.bind(this));
@@ -23,7 +23,7 @@ export default class Proxy {
   }
 
   _onInterceptResponse(request, response) {
-    if (!this._isCachingEnabled()) {
+    if (!this._isCachingEnabled) {
       delete response.headers['if-modified-since'];
       delete response.headers['if-none-match'];
       delete response.headers['last-modified'];
@@ -81,25 +81,31 @@ export default class Proxy {
 
       this._update();
     } catch (e) {
-      console.log(e); // eslint-disable-line
+      console.error(e); // eslint-disable-line
     }
   }
 
+  getRequestById(id) {
+    if (!id) return null;
+    return this._requests.find((request) => request.request.id === id);
+  }
+
   getRequestData(filter) {
-    const filteredRequests = !filter ? this._requests : this._requests
-      .filter((request) => {
-        return request.request.fullUrl().includes(filter) || request.request.original.fullUrl.includes(filter);
-      });
+    const matchesFilter = (request) =>
+      request.fullUrl().includes(filter) || request.original.fullUrl.includes(filter);
+
+    const requests = !filter ? this._requests : this._requests.filter(({request}) => matchesFilter(request));
 
     return {
-      requests: filteredRequests,
+      requests,
       totalCount: this._requests.length,
-      filteredCount: filteredRequests.length
+      filteredCount: requests.length
     };
   }
 
   clear() {
     this._requests = [];
+    this._update();
   }
 
   /**
@@ -118,5 +124,3 @@ export default class Proxy {
     this._proxy.slow({});
   }
 }
-
-

@@ -1,15 +1,7 @@
 .url-mapping-window {
 
   .url-mapping-header {
-    height: 220px;
-    padding-left: 10px;
-    padding-right: 10px;
-
-    .window-close-button {
-      position: absolute;
-      right: 10px;
-      top: 10px;
-    }
+    padding: 10px;
   }
 
   .url-mapping-footer {
@@ -63,7 +55,6 @@
   border: 1px solid $lightgray-dark;
   border-radius: 2px;
   padding: 10px;
-  margin-bottom: 10px;
 
   h1 {
     margin: 0;

@@ -1,11 +1,11 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
-const {func} = React.PropTypes;
+const {bool, func} = React.PropTypes;
 
-const CacheButton = ({isCachingEnabled, toggleCaching}) => {
-  const enabled = isCachingEnabled();
-  const icon = enabled ? 'fa fa-circle' : 'fa fa-circle-o';
-  const message = enabled ? 'Caching enabled' : 'Caching disabled';
+const CacheButton = ({cachingEnabled, toggleCaching}) => {
+  const icon = cachingEnabled ? 'fa fa-circle' : 'fa fa-circle-o';
+  const message = cachingEnabled ? 'Caching enabled' : 'Caching disabled';
 
   return <div className="cache-button">
     <button title="Toggle caching" onClick={toggleCaching}>
@@ -16,8 +16,23 @@ const CacheButton = ({isCachingEnabled, toggleCaching}) => {
 };
 
 CacheButton.propTypes = {
-  isCachingEnabled: func.isRequired,
+  cachingEnabled: bool.isRequired,
   toggleCaching: func.isRequired
 };
 
-export default CacheButton;
+
+import { toggleCaching } from '../../actions/proxy.js';
+import { getProxyState } from '../../reducers/proxy.js';
+
+const mapStateToProps = (state) => {
+  const { cachingEnabled } = getProxyState(state);
+  return {
+    cachingEnabled
+  };
+};
+
+const mapDispatchToProps = {
+  toggleCaching
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(CacheButton);

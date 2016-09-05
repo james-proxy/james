@@ -1,64 +1,60 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import Request from './request.js';
 
-const {func, string, object} = React.PropTypes;
+const {object, array, func} = React.PropTypes;
 
-export default class Requests extends React.Component {
+const Requests = ({requestData, activeRequest, contextRequest, labels, handleClick, handleContextMenu}) => {
+  const requestNodes = requestData.requests.map(({request, response}) => {
+    const isActive = activeRequest && activeRequest.id === request.id || false;
+    const isContextMenu = contextRequest && contextRequest.id === request.id || false;
 
-  render() {
-    const {
-      isActiveRequest,
-      setActiveRequest,
-      isContextMenuRequest,
-      setContextMenuRequest,
-      toggleWindow,
-      config,
-      requestData,
-      removeUrlMapping,
-      toggleUrlMappingActiveState
-    } = this.props;
+    return <Request
+      request={request}
+      response={response}
+      done={request.done}
+      isActive={isActive}
+      isContextMenu={isContextMenu}
+      labels={labels}
+      key={request.id}
+      handleClick={handleClick}
+      handleContextMenu={handleContextMenu}
+    />;
+  });
 
-    const requestNodes = requestData.requests.map((request) => {
-      const isActive = isActiveRequest(request);
-      const isContextMenu = isContextMenuRequest(request);
-
-      const handleClick = () => {
-        setContextMenuRequest(null);
-        setActiveRequest(request);
-      };
-
-      const handleContextMenu = () => {
-        setContextMenuRequest(request);
-      };
-
-      return <Request
-        {...request}
-        isActive={isActive}
-        isContextMenu={isContextMenu}
-        config={config}
-        toggleWindow={toggleWindow}
-        handleClick={handleClick}
-        handleContextMenu={handleContextMenu}
-        key={request.request.id}
-        removeUrlMapping={removeUrlMapping}
-        toggleUrlMappingActiveState={toggleUrlMappingActiveState} />;
-    });
-
-    return <div className="requests">
-      {requestNodes}
-    </div>;
-  }
-}
+  return <div className="requests">
+    {requestNodes}
+  </div>;
+};
 
 Requests.propTypes = {
   requestData: object.isRequired,
-  toggleWindow: func.isRequired,
-  filter: string,
-  isActiveRequest: func.isRequired,
-  setActiveRequest: func.isRequired,
-  isContextMenuRequest: func.isRequired,
-  setContextMenuRequest: func.isRequired,
-  config: object.isRequired,
-  removeUrlMapping: func.isRequired,
-  toggleUrlMappingActiveState: func.isRequired
+  activeRequest: object,
+  contextRequest: object,
+  labels: array.isRequired,
+  handleClick: func.isRequired,
+  handleContextMenu: func.isRequired
 };
+
+import { setActiveRequest, setContextRequest } from '../../actions/requests.js';
+import { getRequestData, getActiveRequest, getContextRequest } from '../../reducers/requests.js';
+import { getLabels } from '../../reducers/app.js';
+
+const mapStateToProps = (state) => ({
+  requestData: getRequestData(state),
+  labels: getLabels(state),
+  activeRequest: getActiveRequest(state),
+  contextRequest: getContextRequest(state)
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  handleClick: ({request, response}) => {
+    dispatch(setActiveRequest({request, response, id: request.id}));
+    dispatch(setContextRequest(null));
+  },
+  handleContextMenu: ({request}) => {
+    dispatch(setContextRequest(request));
+  }
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Requests);

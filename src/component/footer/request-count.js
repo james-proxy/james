@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
 const {object, func} = React.PropTypes;
 
@@ -17,4 +18,16 @@ RequestCount.propTypes = {
   clearRequests: func.isRequired
 };
 
-export default RequestCount;
+
+import { clearRequests } from '../../actions/proxy.js';
+import { getRequestData } from '../../reducers/requests.js';
+
+const mapStateToProps = (state) => ({
+  requestData: getRequestData(state)
+});
+
+const mapDispatchToProps = {
+  clearRequests
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(RequestCount);
