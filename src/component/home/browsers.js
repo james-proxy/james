@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 
-import Browser from './Browser.js';
+import Browser from './browser.js';
 
 const byNameThenVersion = (a, b) => {
   if (a.name < b.name) return -1;
