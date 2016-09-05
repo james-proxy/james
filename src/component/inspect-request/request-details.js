@@ -4,7 +4,7 @@ import FullUrl from '../requests/full-url.js';
 
 const {object} = React.PropTypes;
 
-export class RequestDetails extends React.Component {
+export default class RequestDetails extends React.Component {
 
   constructor(props) {
     super(props);
