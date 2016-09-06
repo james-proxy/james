@@ -90,10 +90,13 @@
     ]
   },
   "build": {
-    "app-bundle-id": "com.jamesproxy.james",
-    "app-category-type": "public.app-category.productivity",
+    "app-id": "com.jamesproxy.james",
+    "category": "public.app-category.productivity",
     "productName": "James",
-    "osx": {
+    "mac": {
+      "icon": "resource-compile/icon.icns"
+    },
+    "dmg": {
       "icon": "resource-compile/icon.icns",
       "background": "resource-compile/icon.png"
     },
@@ -101,6 +104,7 @@
       "iconUrl": "https://github.com/mitchhentges/james/blob/electron-builder/resource-compile/icon.ico?raw=true"
     },
     "linux": {
+      "target": ["AppImage", "deb"],
       "synopsis": "Web proxy"
     }
   },
