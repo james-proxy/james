@@ -70,7 +70,7 @@
     "gulp-sourcemaps": "^1.6.0",
     "gulp-useref": "^3.0.5",
     "mocha": "^3.0.1",
-    "node-sass": "3.8.0",
+    "node-sass": "3.9.2",
     "redux-mock-store": "^1.0.4",
     "referee": "^1.2.0",
     "referee-sinon": "^1.0.3",
