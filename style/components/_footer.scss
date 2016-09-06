@@ -58,6 +58,23 @@
       color: $grapefruit-dark;
     }
   }
+
+  .update-status {
+    display: inline;
+    float: right;
+
+    &.ok {
+      display: none;
+    }
+
+    &.ready i {
+      color: $grass-dark;
+    }
+
+    &.error i {
+      color: $grapefruit-dark;
+    }
+  }
 }
 
 .footer > * {

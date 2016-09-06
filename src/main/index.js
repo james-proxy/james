@@ -7,6 +7,7 @@ import path from 'path';
 import constants from '../constants.js';
 import config from '../config.js';
 
+import AutoUpdater from './auto-updater.js';
 import createMenu from './menu.js';
 import createUrlMapper from './url-mapper.js';
 import createProxy from './proxy.js';
@@ -14,6 +15,13 @@ import createProxy from './proxy.js';
 if (squirrelStartup) {
   process.exit(0); // Don't run James if it's just being installed/updated/etc
 }
+
+const updater = new AutoUpdater({
+  repo: 'james-proxy/james',
+  currentVersion: constants.VERSION,
+  prod: !constants.DEV
+});
+
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the javascript object is GCed.
 let mainWindow = null;
@@ -46,6 +54,8 @@ app.on('ready', () => {
   mainWindow.loadURL(`file://${index}`);
 
   mainWindow.webContents.on('did-finish-load', () => {
+    updater.check();
+
     mainWindow.webContents.send('proxy-status', proxy.status);
     mainWindow.webContents.send('mapper-sync', {
       mappings: urlMapper.urlMapper.mappings()
@@ -74,8 +84,37 @@ app.on('ready', () => {
         mappings
       });
     });
+
+    updater.on('finished-check', (err, available) => {
+      let status = available ? constants.UPDATE_AVAILABLE : constants.UPDATE_OK;
+      if (err) {
+        status = constants.UPDATE_ERROR;
+      }
+      mainWindow.webContents.send('updater-status', {
+        status,
+        info: err
+      });
+    });
+
+    updater.on('downloading', () => {
+      mainWindow.webContents.send('updater-status', {
+        status: constants.UPDATE_DOWNLOADING
+      });
+    });
+
+    updater.on('downloaded', (info) => {
+      mainWindow.webContents.send('updater-status', {
+        status: constants.UPDATE_READY,
+        info
+      });
+    });
     
     mainWindow.show();
+  });
+
+  // Emitted when the window is closed.
+  mainWindow.on('closed', function() {
+    mainWindow = null;
   });
 
   ipc.on('proxy-get-request', (evt, {id}) => {
@@ -113,14 +152,6 @@ app.on('ready', () => {
 
   ipc.on('mappings-remove', (evt, {url}) => {
     urlMapper.urlMapper.remove(url);
-  });
-
-  // Emitted when the window is closed.
-  mainWindow.on('closed', function() {
-    // Dereference the window object, usually you would store windows
-    // in an array if your app supports multi windows, this is the time
-    // when you should delete the corresponding element.
-    mainWindow = null;
   });
 });
 

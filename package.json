@@ -24,6 +24,7 @@
     "dist:win64": "build --windows --x64"
   },
   "dependencies": {
+    "electron-gh-releases": "^2.0.4",
     "electron-squirrel-startup": "^1.0.0",
     "hoxy": "^3.2.0",
     "james-browser-launcher": "^1.2.1",
@@ -101,10 +102,14 @@
       "background": "resource-compile/icon.png"
     },
     "win": {
-      "iconUrl": "https://github.com/mitchhentges/james/blob/electron-builder/resource-compile/icon.ico?raw=true"
+      "iconUrl": "https://github.com/james-proxy/james/blob/master/resource-compile/icon.ico?raw=true",
+      "remoteReleases": false
     },
     "linux": {
-      "target": ["AppImage", "deb"],
+      "target": [
+        "AppImage",
+        "deb"
+      ],
       "synopsis": "Web proxy"
     }
   },
