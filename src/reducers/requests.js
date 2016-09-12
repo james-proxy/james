@@ -1,11 +1,12 @@
 import { combineReducers } from 'redux';
-
+import constants from '../constants.js';
 import * as actions from '../actions/requests.js';
 
 const initialState = {
   filter: null,
   active: null,
   context: null,
+  tab: constants.REQUEST_DETAILS_TAB_HEADERS,
   data: {
     requests: [],
     totalCount: 0,
@@ -42,6 +43,17 @@ function context(state = initialState.context, action) {
   return action.request;
 }
 
+function tab(state = initialState.tab, action) {
+  if (action.type === actions.SET_ACTIVE_DETAILS_TAB) {
+    return action.tab;
+  }
+  // when changing requests, reset back to initial tab
+  if (action.type === actions.SET_ACTIVE_REQUEST) {
+    return initialState.tab;
+  }
+  return state;
+}
+
 function data(state = initialState.data, action) {
   if (action.type !== actions.SYNC_REQUESTS) {
     return state;
@@ -53,6 +65,7 @@ export default combineReducers({
   filter,
   active,
   context,
+  tab,
   data
 });
 
@@ -82,6 +95,10 @@ export function getContextRequest(state) {
 export function isContextRequest(state, request) {
   const contextRequest = getContextRequest(state);
   return contextRequest && request && contextRequest.id === request.id;
+}
+
+export function getActiveDetailsTab(state) {
+  return state.requests.tab;
 }
 
 export function getRequestData(state) {

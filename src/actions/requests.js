@@ -1,6 +1,7 @@
 export const SET_REQUEST_FILTER = 'SET_REQUEST_FILTER';
 export const SET_ACTIVE_REQUEST = 'SET_ACTIVE_REQUEST';
 export const SET_CONTEXT_REQUEST = 'SET_CONTEXT_REQUEST';
+export const SET_ACTIVE_DETAILS_TAB = 'SET_ACTIVE_DETAILS_TAB';
 export const SYNC_REQUESTS = 'SYNC_REQUESTS';
 
 export function setRequestFilter(filter = '') {
@@ -21,6 +22,13 @@ export function setContextRequest(request = null) {
   return {
     type: SET_CONTEXT_REQUEST,
     request
+  };
+}
+
+export function setActiveDetailsTab(tab = 'headers') {
+  return {
+    type: SET_ACTIVE_DETAILS_TAB,
+    tab
   };
 }
 

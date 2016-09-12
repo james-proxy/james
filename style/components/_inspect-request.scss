@@ -60,6 +60,34 @@
     }
   }
 
+  .box-tabs {
+    $tab-height: 32px;
+    margin: 0;
+    padding: 0;
+    height: $tab-height;
+    font-size: 12.5px;
+    color: rgba($white, .6);
+    background: $darkgray-dark;
+
+    li {
+      display: inline-block;
+      list-style-type: none;
+      height: $tab-height;
+      line-height: $tab-height;
+      padding: 0 12px;
+      cursor: pointer;
+
+      &:hover {
+        color: $white;
+      }
+
+      &.active {
+        color: $white;
+        border-bottom: 3px solid $grapefruit-light;
+      }
+    }
+  }
+
   .box-body {
     overflow-y: scroll;
     /* max-height set via component */

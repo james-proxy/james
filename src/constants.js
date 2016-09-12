@@ -9,6 +9,8 @@ export default {
   'PROXY_STATUS_ERROR_ADDRESS_IN_USE': 'error_address_in_use',
   'NEW_MAPPING_STEP_TARGET': 'target',
   'NEW_MAPPING_STEP_DESTINATION': 'destination',
+  'REQUEST_DETAILS_TAB_HEADERS': 'headers',
+  'REQUEST_DETAILS_TAB_RESPONSE': 'response',
   'DEV': process.env.NODE_ENV !== 'production',
   'VERSION': app.getVersion(),
   'USER_DATA': app.getPath('userData')
