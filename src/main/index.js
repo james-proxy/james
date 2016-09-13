@@ -19,7 +19,7 @@ if (squirrelStartup) {
 const updater = new AutoUpdater({
   repo: 'james-proxy/james',
   currentVersion: constants.VERSION,
-  prod: !constants.DEV
+  enabled: !constants.DEV
 });
 
 // Keep a global reference of the window object, if you don't, the window will

@@ -5,7 +5,7 @@ import EventEmitter from 'events';
 export default class AutoUpdater extends EventEmitter {
   constructor(options) {
     super();
-    this.shouldCheck = options.prod;
+    this.enabled = options.enabled;
     this.updater = new GithubReleases(options);
     this.downloading = false;
     this.available = false;
@@ -15,7 +15,7 @@ export default class AutoUpdater extends EventEmitter {
   }
 
   check() {
-    if (!this.shouldCheck) {
+    if (!this.enabled) {
       console.log('[updater] Update checking disabled.');
       return;
     }
