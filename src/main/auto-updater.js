@@ -30,14 +30,14 @@ export default class AutoUpdater extends EventEmitter {
   onCheckCompleted(err, available) {
     this.available = available;
     this.emit('finished-check', err, available);
+    console.log('[updater] Finished checking for updates', available);
 
     if (err) {
       console.log('[updater] Error when checking for updates:', err);
       return;
     }
-    console.log('[updater] Finished checking for updates', available);
     if (available) {
-      // automatically download update when available
+      // automatically download update when available and no error
       this.download();
     }
   }

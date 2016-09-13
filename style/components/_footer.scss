@@ -67,6 +67,12 @@
       display: none;
     }
 
+    &.available,
+    &.downloading,
+    &.ready {
+      cursor: pointer;
+    }
+
     &.ready i {
       color: $grass-dark;
     }

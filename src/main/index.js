@@ -87,9 +87,12 @@ app.on('ready', () => {
 
     updater.on('finished-check', (err, available) => {
       let status = available ? constants.UPDATE_AVAILABLE : constants.UPDATE_OK;
-      if (err) {
+
+      // linux auto-updates are unsupported, but availability notice is still supported
+      if (err && err.message !== 'This platform is not supported.') {
         status = constants.UPDATE_ERROR;
       }
+
       mainWindow.webContents.send('updater-status', {
         status,
         info: err
