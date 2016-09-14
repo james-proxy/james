@@ -5,8 +5,10 @@ import EventEmitter from 'events';
 export default class AutoUpdater extends EventEmitter {
   constructor(options) {
     super();
-    this.enabled = options.enabled;
     this.updater = new GithubReleases(options);
+    this.enabled = options.enabled;
+    this.skipDownload = false;
+
     this.downloading = false;
     this.available = false;
     this.pending = false;
@@ -29,14 +31,26 @@ export default class AutoUpdater extends EventEmitter {
 
   onCheckCompleted(err, available) {
     this.available = available;
-    this.emit('finished-check', err, available);
-    console.log('[updater] Finished checking for updates', available);
+
+    if (err && err.message === 'This platform is not supported.') {
+      // linux auto-updates are unsupported, but availability notice is still supported
+      err = null;
+      this.skipDownload = true;
+    } else if (err && err.message === 'There is no newer version.') {
+      // this should have never been an error, yet here we are
+      err = null;
+      this.available = false;
+    }
+
+    this.emit('finished-check', err, this.available);
+    console.log('[updater] Finished checking for updates', this.available);
 
     if (err) {
       console.log('[updater] Error when checking for updates:', err);
       return;
     }
-    if (available) {
+
+    if (this.available && !this.skipDownload) {
       // automatically download update when available and no error
       this.download();
     }

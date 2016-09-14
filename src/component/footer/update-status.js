@@ -47,8 +47,8 @@ const UpdateStatus = ({status, info}) => {
 
   if (status === constants.UPDATE_READY && info) {
     title = `Restart and install James ${info.releaseName}`;
-  } else if ( status === constants.UPDATE_ERROR && info instanceof Error) {
-    title = info.message;
+  } else if ( status === constants.UPDATE_ERROR && info) {
+    title = info;
   }
 
   return <div className={classes} title={title} onClick={onClick}>
