@@ -11,8 +11,9 @@
   - Raven tracks actions and sends them as breadcrumbs in error reports
   - [More details in pull request](https://github.com/james-proxy/james/pull/183)
 - Electron updated (r: @mitchhentges, @tomitm)
-- Electron-builder updated (r: @mitchhentges)
+- electron-builder updated (r: @mitchhentges)
 - node-sass updated (r: @tomitm)
+- electron-connect updated (r: @tomitm)
 
 #### Bugfixes
 - Hide phantomjs from browser list, as it's not launchable (i: @mitchhentges, r: @tomitm)
