@@ -1,14 +1,21 @@
 ## Upcoming Release
 
 #### User features
-- Hide phantomjs from browser list, as it's not launchable (i: @mitchhentges, r: @tomitm)
+- Launch multiple browsers without clearing requests each time (i: @tomitm, r: @mitchhentges)
+- Include AppImage as a Linux build target (i: @tomitm, r: @mitchhentges)
 
 #### Developer Features
-- Electron updated (r: @mitchhentges)
+- Redux (i: @tomitm, r: @mitchhentges)
+  - `Proxy`, `UrlMapper` now run in main process, to minimize blocking renderer
+  - React Router replaces `windowFactory`
+  - Raven tracks actions and sends them as breadcrumbs in error reports
+  - [More details in pull request](https://github.com/james-proxy/james/pull/183)
+- Electron updated (r: @mitchhentges, @tomitm)
 - Electron-builder updated (r: @mitchhentges)
+- node-sass updated (r: @tomitm)
 
 #### Bugfixes
-- Nothing yet
+- Hide phantomjs from browser list, as it's not launchable (i: @mitchhentges, r: @tomitm)
 
 ## 1.5.0
 
