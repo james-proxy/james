@@ -39,7 +39,7 @@
     "redux": "^3.5.2",
     "redux-logger": "^2.6.1",
     "redux-thunk": "^2.0.1",
-    "tmp": "0.0.28",
+    "tmp": "0.0.29",
     "uniqid": "^4.0.0"
   },
   "devDependencies": {
