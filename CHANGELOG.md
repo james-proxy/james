@@ -17,6 +17,7 @@
 
 #### Bugfixes
 - Hide phantomjs from browser list, as it's not launchable (i: @mitchhentges, r: @tomitm)
+- Remove tmp dependency (#292) (i: @mitchhentges, r: @nerdbeere)
 
 ## 1.5.0
 
