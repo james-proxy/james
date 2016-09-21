@@ -49,7 +49,7 @@
     "babel-preset-react": "^6.3.13",
     "browserify": "^13.0.0",
     "del": "^2.2.0",
-    "electron-builder": "^6.4.1",
+    "electron-builder": "^7.3.0",
     "electron-connect": "^0.6.0",
     "electron-localshortcut": "^0.6.0",
     "electron-mocha": "^3.0.6",
