@@ -89,7 +89,7 @@
     ]
   },
   "build": {
-    "app-id": "com.jamesproxy.james",
+    "appId": "com.jamesproxy.james",
     "category": "public.app-category.productivity",
     "productName": "James",
     "mac": {
