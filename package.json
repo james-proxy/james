@@ -31,7 +31,7 @@
     "materialize-css": "^0.97.5",
     "nedb": "^1.7.1",
     "raven-js": "^3.0.2",
-    "react": "^15.0.0",
+    "react": "^15.3.1",
     "react-dom": "^15.0.0",
     "react-redux": "^4.4.5",
     "react-router": "^2.4.0",
