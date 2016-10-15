@@ -2,7 +2,7 @@
   "name": "james",
   "description": "HTTP/HTTPS proxy built in Electron and React",
   "main": "main/index.js",
-  "author": "James Proxy <hollmann@uxebu.com>",
+  "author": "Julian Hollmann <hollmann@uxebu.com>",
   "license": "MIT",
   "repository": {
     "type": "git",
