@@ -66,7 +66,7 @@
     "gulp-newer": "^1.2.0",
     "gulp-rename": "^1.2.2",
     "gulp-sass": "^2.1.1",
-    "gulp-sourcemaps": "^1.6.0",
+    "gulp-sourcemaps": "^2.2.0",
     "gulp-useref": "^3.0.5",
     "mocha": "^3.0.1",
     "node-sass": "3.10.1",
