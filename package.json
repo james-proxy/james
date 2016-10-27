@@ -51,7 +51,7 @@
     "del": "^2.2.0",
     "electron-builder": "^7.13.0",
     "electron-connect": "^0.6.0",
-    "electron-localshortcut": "^0.6.0",
+    "electron-localshortcut": "^1.0.0",
     "electron-mocha": "^3.0.6",
     "electron-prebuilt": "1.4.3",
     "envify": "^3.4.0",
