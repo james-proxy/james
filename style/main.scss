@@ -1,7 +1,9 @@
-$fa-font-path: "fonts" !default;
+$fa-font-path: "~font-awesome/fonts/" !default;
+$roboto-font-path: "~materialize-css/fonts/roboto/" !default;
+$lato-font-path: '~fonts/';
 
-@import '../node_modules/font-awesome/scss/font-awesome';
-@import '../node_modules/materialize-css/sass/materialize';
+@import '~font-awesome/scss/font-awesome';
+@import '~materialize-css/sass/materialize';
 
 @import 'colors';
 @import 'fonts';

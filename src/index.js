@@ -21,6 +21,8 @@ import { updateProxyStatus } from './actions/proxy.js';
 import { syncUrlMappings } from './actions/url-mappings.js';
 import { addBrowsers } from './actions/browsers.js';
 
+import '../style/main.scss';
+
 ravenInit();
 
 const store = setupStore(hashHistory);

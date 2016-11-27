@@ -42,8 +42,9 @@ app.on('ready', () => {
     show: false
   });
 
-  const index = path.join(__dirname, '..', 'index.html');
+  const index = path.join(__dirname, 'index.html');
   mainWindow.loadURL(`file://${index}`);
+  mainWindow.webContents.openDevTools();
 
   mainWindow.webContents.on('did-finish-load', () => {
     mainWindow.webContents.send('proxy-status', proxy.status);

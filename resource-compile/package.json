@@ -1,7 +1,7 @@
 {
   "name": "james",
   "description": "HTTP/HTTPS proxy built in Electron and React",
-  "main": "main/index.js",
+  "main": "main.js",
   "author": "Julian Hollmann <hollmann@uxebu.com>",
   "license": "MIT",
   "repository": {
