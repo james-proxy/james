@@ -1,4 +1,6 @@
 const path = require('path');
+const webpack = require('webpack');
+const CommonsChunkPlugin = require('webpack').optimize.CommonsChunkPlugin;
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 const renderer = {
@@ -36,8 +38,6 @@ const renderer = {
   }
 };
 
-// TODO: set process.env.NODE_ENV = production for prod builds (webpack.DefinePlugin)
-
 const main = {
   entry: {
     'main': './src/main/index.js'
@@ -58,7 +58,33 @@ const main = {
   }
 };
 
-module.exports = [
-  renderer,
-  main
-];
+function productionize(config, options = {}, uglify = true) {
+  if (!options.production) return config;
+  if (!config.plugins) config.plugins = [];
+
+  config.plugins.push(
+    new webpack.DefinePlugin({
+      'process.env.NODE_ENV': JSON.stringify('production')
+    }),
+    new webpack.LoaderOptionsPlugin({
+      minimize: true,
+      debug: false
+    })
+  )
+  if (uglify) {
+    // note: uglify + es6 don't get along, so skip main
+    config.plugins.push(new webpack.optimize.UglifyJsPlugin({
+        compress: { warnings: false }
+      })
+    );
+  }
+
+  return config;
+}
+
+module.exports = function (options) {
+  return [
+    productionize(renderer, options),
+    productionize(main, options, false)
+  ]
+}

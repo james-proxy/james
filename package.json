@@ -21,7 +21,7 @@
     "test": "electron-mocha --renderer --reporter dot --recursive -r setup-referee-sinon/globals test/unit --compilers js:babel-core/register",
     "test-ci": "npm run lint && npm run test",
     "prepackage": "npm run clean",
-    "package": "webpack --env.env=prod",
+    "package": "webpack --env.production",
     "predist": "npm run package",
     "dist": "build --x64",
     "predist:win64": "npm run package",
