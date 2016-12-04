@@ -4,9 +4,10 @@ const CommonsChunkPlugin = require('webpack').optimize.CommonsChunkPlugin;
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 const renderer = {
-  entry: {
-    'index': './src/index.js'
-  },
+  entry: [
+    // 'webpack-dev-server/client?http://localhost:8080',
+    './src/index.js'
+  ],
   module: {
     rules: [
       { test: /\.js$/, exclude: /node_modules/, loader: 'babel-loader' },
@@ -28,12 +29,11 @@ const renderer = {
   plugins: [
     new CopyWebpackPlugin([
       { from: 'resource-runtime', ignore: ['fonts/**'] }, // fonts are handled by file-loader
-      { from: 'resource-compile/package.json' } // TODO: set version
     ])
   ],
   target: 'electron-renderer',
   output: {
-    filename: '[name].js',
+    filename: 'index.js',
     path: path.resolve(__dirname, 'dist')
   }
 };
@@ -47,6 +47,11 @@ const main = {
       { test: /\.json$/, loader: 'json-loader' }
     ]
   },
+  plugins: [
+    new CopyWebpackPlugin([
+      { from: 'resource-compile/package.json' } // TODO: set version
+    ])
+  ],
   node: {
     __dirname: false,
     __filename: false

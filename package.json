@@ -13,9 +13,9 @@
     "prebuild": "npm run clean",
     "build": "webpack",
     "clean": "rimraf dist/",
-    "start": "electron ./dist",
-    "watch": "webpack --watch",
-    "dev": "npm run watch",
+    "prestart": "npm run clean",
+    "start": "node server.js",
+    "dev": "npm run start",
     "development": "npm run dev",
     "lint": "eslint ./src ./test",
     "test": "electron-mocha --renderer --reporter dot --recursive -r setup-referee-sinon/globals test/unit --compilers js:babel-core/register",
@@ -75,7 +75,8 @@
     "sinon-as-promised": "^4.0.0",
     "style-loader": "^0.13.1",
     "url-loader": "^0.5.7",
-    "webpack": "^2.1.0-beta.27"
+    "webpack": "^2.1.0-beta.27",
+    "webpack-dev-server": "^2.1.0-beta.12"
   },
   "babel": {
     "presets": [

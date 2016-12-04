@@ -42,8 +42,11 @@ app.on('ready', () => {
     show: false
   });
 
-  const index = path.join(__dirname, 'index.html');
-  mainWindow.loadURL(`file://${index}`);
+  let rendererURL = `file://${path.join(__dirname, 'index.html')}`;
+  if (constants.DEV) {
+    rendererURL = 'http://localhost:8080/index.html';
+  }
+  mainWindow.loadURL(rendererURL);
   mainWindow.webContents.openDevTools();
 
   mainWindow.webContents.on('did-finish-load', () => {
