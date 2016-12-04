@@ -49,7 +49,7 @@ const main = {
   },
   plugins: [
     new CopyWebpackPlugin([
-      { from: 'resource-compile/package.json' } // TODO: set version
+      { from: 'resource-compile/package.json', transform: setVersion }
     ])
   ],
   node: {
@@ -62,6 +62,13 @@ const main = {
     path: path.resolve(__dirname, 'dist')
   }
 };
+
+function setVersion(buffer) {
+  // comes in as a buffer, must return as buffer or string
+  var package = JSON.parse(buffer.toString('utf-8'));
+  package.version = require('./package.json').version;
+  return JSON.stringify(package, null, '  '); // printy-print, 2-spaces
+}
 
 function productionize(config, options = {}, uglify = true) {
   if (!options.production) return config;
