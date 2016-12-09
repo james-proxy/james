@@ -85,6 +85,7 @@ function productionize(config, options = {}, uglify = true) {
   )
   if (uglify) {
     // note: uglify + es6 don't get along, so skip main
+    // TODO: look at using babili instead
     config.plugins.push(new webpack.optimize.UglifyJsPlugin({
         compress: { warnings: false }
       })
@@ -96,7 +97,7 @@ function productionize(config, options = {}, uglify = true) {
 
 module.exports = function (options) {
   return [
-    productionize(renderer, options),
+    productionize(renderer, options, false),
     productionize(main, options, false)
   ]
 }
