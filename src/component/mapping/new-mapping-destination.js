@@ -22,7 +22,7 @@ const NewMappingDestination = (props) => {
 
   let input;
   if (isLocal) {
-    input = <button  className="input-file btn waves-effect waves-light" onClick={selectFile}>Choose file</button>;
+    input = <button autoFocus className="input-file btn waves-effect waves-light" onClick={selectFile}>Choose file</button>;
   } else {
     input = <input autoFocus type="text" value={destination} onChange={onChange} placeholder="http(s)://" />;
   }
