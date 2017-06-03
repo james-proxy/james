@@ -22,16 +22,9 @@ const NewMappingDestination = (props) => {
 
   let input;
   if (isLocal) {
-    input = {
-      className: 'input-file',
-      disabled: 'disabled',
-      placeholder: 'Choose file',
-      onClick: selectFile
-    };
+    input = <button autoFocus className="input-file btn waves-effect waves-light" onClick={selectFile}>Choose file</button>;
   } else {
-    input = {
-      placeholder: 'http(s)://'
-    };
+    input = <input autoFocus type="text" value={destination} onChange={onChange} placeholder="http(s)://" />;
   }
 
   const type = isLocal ? 'file' : 'URL';
@@ -39,7 +32,9 @@ const NewMappingDestination = (props) => {
   return <div className="mapping-destination">
     <h1>Enter destination</h1>
     <div className="description">James will respond with this {type} instead.</div>
-    <input type="text" autoFocus value={destination} onChange={onChange} {...input} />
+    <div>
+      {input}
+    </div>
     <button className="btn waves-effect waves-light" onClick={create}>Create</button>
     <button className="btn-flat waves-effect waves-light" onClick={cancel}>Cancel</button>
   </div>;
