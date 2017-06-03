@@ -18,6 +18,7 @@
 #### Bugfixes
 - Hide phantomjs from browser list, as it's not launchable (i: @mitchhentges, r: @tomitm)
 - Remove tmp dependency (#292) (i: @mitchhentges, r: @nerdbeere)
+- Change the file input to a button (fixes #329) (i: @nerdbeere, r: @mitchhentges)
 
 ## 1.5.0
 
