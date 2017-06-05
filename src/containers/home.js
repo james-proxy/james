@@ -9,6 +9,11 @@ const HomeContainer = ({port}) =>
       <h2>Proxy started on localhost:{port}</h2>
       <h3>Launch a browser, using James as a proxy</h3>
       <Browsers />
+      <p className="hint-text">
+        <i className="fa fa-info-circle" />
+        In some browsers the automatic proxy setup does not work correctly.
+        In that case you have to do it manually.
+        </p>
     </div>
   </div>;
 
