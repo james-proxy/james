@@ -53,7 +53,7 @@
     "electron-connect": "^0.6.0",
     "electron-localshortcut": "^0.6.0",
     "electron-mocha": "^3.0.6",
-    "electron-prebuilt": "1.4.3",
+    "electron-prebuilt": "1.4.6",
     "envify": "^3.4.0",
     "eslint": "^3.0.0",
     "eslint-plugin-react": "^6.1.0",
