@@ -17,7 +17,6 @@ if (squirrelStartup) {
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the javascript object is GCed.
 let mainWindow = null;
-createMenu();
 
 console.log('Loading URL mappings...'); // eslint-disable-line no-console
 const urlMapper = createUrlMapper({
@@ -35,6 +34,7 @@ app.on('window-all-closed', () => app.quit());
 // initialization and ready for creating browser windows.
 app.on('ready', () => {
   // Create the browser window.
+  createMenu();
   mainWindow = new BrowserWindow({
     width: 1024,
     height: 768,
