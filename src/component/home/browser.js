@@ -37,7 +37,7 @@ const Browser = ({browser, launchBrowser}) => {
     className += ' no-version';
   }
 
-  const src = `./images/${browser.type}_128x128.png`;
+  const src = require(`../../../resource-runtime/images/${browser.type}_128x128.png`);
   return <a className={className} onClick={launch}>
     <img className="browser-icon" src={src} alt={browserName} title={title} />
     <div className="browser-info">

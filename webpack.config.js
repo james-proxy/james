@@ -1,6 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const CommonsChunkPlugin = require('webpack').optimize.CommonsChunkPlugin;
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 const renderer = {
@@ -13,6 +14,7 @@ const renderer = {
       { test: /\.js$/, exclude: /node_modules/, loader: 'babel-loader' },
       { test: /\.json$/, loader: 'json-loader' },
       { test: /\.scss$/, loaders: ['style-loader', 'css-loader', 'sass-loader'] },
+      { test: /\.png$/, loader: 'file-loader', options: { name: 'images/[name].[ext]' }},
       { test: /\.woff(\?v=\d+\.\d+\.\d+)?$/, loader: 'file-loader', options: { name: 'fonts/[name].[ext]' }},
       { test: /\.woff2(\?v=\d+\.\d+\.\d+)?$/, loader: 'file-loader', options: { name: 'fonts/[name].[ext]' }},
       { test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/, loader: 'file-loader', options: { name: 'fonts/[name].[ext]' }},
@@ -27,9 +29,10 @@ const renderer = {
     ]
   },
   plugins: [
-    new CopyWebpackPlugin([
-      { from: 'resource-runtime', ignore: ['fonts/**'] }, // fonts are handled by file-loader
-    ])
+    new HtmlWebpackPlugin({
+      title: 'James Proxy',
+      template: 'resource-runtime/index.html'
+    })
   ],
   target: 'electron-renderer',
   output: {

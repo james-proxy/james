@@ -2,7 +2,7 @@ var webpack = require('webpack');
 var WebpackDevServer = require('webpack-dev-server');
 var [renderer, main] = require('./webpack.config.js')();
 
-var electron = require('electron-prebuilt');
+var electron = require('electron');
 var proc = require('child_process');
 var child;
 
