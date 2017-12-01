@@ -2,14 +2,12 @@ import { ipcRenderer as ipc } from 'electron';
 
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
+import { ConnectedRouter as Router } from 'react-router-redux';
+import createHistory from 'history/createBrowserHistory';
 import throttle from 'lodash.throttle';
 
-import { Provider } from 'react-redux';
-import { Router, hashHistory } from 'react-router';
-import { syncHistoryWithStore } from 'react-router-redux';
-
 import config from './config.js';
-import routes from './routes.js';
 
 import ravenInit from './service/raven.js';
 import setupShortcuts from './service/shortcuts.js';
@@ -21,12 +19,14 @@ import { updateProxyStatus } from './actions/proxy.js';
 import { syncUrlMappings } from './actions/url-mappings.js';
 import { addBrowsers } from './actions/browsers.js';
 
+import App from './containers/app';
+
 import '../style/main.scss';
 
 ravenInit();
 
-const store = setupStore(hashHistory);
-const storeHistory = syncHistoryWithStore(hashHistory, store);
+const history = createHistory();
+const store = setupStore(history);
 
 const onProxySync = throttle((evt, payload) => {
   // note: full responses are not included to minimize GC
@@ -52,6 +52,8 @@ store.dispatch(init({ config }));
 
 ReactDOM.render(
   <Provider store={store}>
-    <Router history={storeHistory} routes={routes} />
+    <Router history={history}>
+      <App />
+    </Router>
   </Provider>
 , document.getElementById('app'));

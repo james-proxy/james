@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Link, IndexLink } from 'react-router';
+import { NavLink } from 'react-router-dom';
 
 const TitleBar = ({urlMapCount, openDevTools}) => {
   let UrlMapCountLabel;
@@ -15,18 +15,18 @@ const TitleBar = ({urlMapCount, openDevTools}) => {
     <span className="logo">
       J
     </span>
-    <IndexLink to="/" activeClassName="active">
+    <NavLink to="/" exact activeClassName="active">
       Home
-    </IndexLink>
-    <Link to="/requests" activeClassName="active">
+    </NavLink>
+    <NavLink to="/requests" exact activeClassName="active">
       <i className="fa fa-exchange" />
       Requests
-    </Link>
-    <Link to="/url-mappings" activeClassName="active">
+    </NavLink>
+    <NavLink to="/url-mappings" exact activeClassName="active">
       <i className="fa fa-plug" />
       Mappings
       {UrlMapCountLabel}
-    </Link>
+    </NavLink>
     <a className="right" onClick={openDevTools}>
       <i className=" fa fa-cog" />
       Developer
