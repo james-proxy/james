@@ -30,25 +30,4 @@ Throttle.propTypes = {
   throttleRate: PropTypes.number
 };
 
-
-import {
-  toggleThrottling as toggleThrottle,
-  setThrottleRate
-} from '../../actions/proxy.js';
-import { getProxyState } from '../../reducers/proxy.js';
-
-const mapStateToProps = (state) => {
-  const { throttleEnabled, throttleRate } = getProxyState(state);
-
-  return {
-    throttleEnabled,
-    throttleRate
-  };
-};
-
-const mapDispatchToProps = {
-  toggleThrottle,
-  setThrottleRate
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Throttle);
+export default Throttle;

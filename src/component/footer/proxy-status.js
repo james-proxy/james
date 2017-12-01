@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 
 import constants from '../../constants.js';
 
@@ -51,16 +50,4 @@ ProxyStatus.propTypes = {
   proxyMessage: PropTypes.string
 };
 
-
-import { getProxyState } from '../../reducers/proxy.js';
-
-const mapStateToProps = (state) => {
-  const { status, statusReason } = getProxyState(state);
-
-  return {
-    proxyStatus: status,
-    proxyReason: statusReason
-  };
-};
-
-export default connect(mapStateToProps)(ProxyStatus);
+export default ProxyStatus;
