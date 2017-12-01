@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 
 import Browser from './browser.js';
@@ -24,8 +25,8 @@ const Browsers = ({browsers, launchBrowser}) => {
 };
 
 Browsers.propTypes = {
-  browsers: React.PropTypes.array,
-  launchBrowser: React.PropTypes.func.isRequired
+  browsers: PropTypes.array,
+  launchBrowser: PropTypes.func.isRequired
 };
 
 

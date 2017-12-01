@@ -1,8 +1,8 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {remote} from 'electron';
-import createChooseFile from '../../service/choose-file.js';
 
-const {bool, string, func} = React.PropTypes;
+import createChooseFile from '../../service/choose-file.js';
 
 const NewMappingDestination = (props) => {
   const {isLocal, destination, update, create, cancel} = props;
@@ -41,11 +41,11 @@ const NewMappingDestination = (props) => {
 };
 
 NewMappingDestination.propTypes = {
-  isLocal: bool,
-  destination: string,
-  update: func.isRequired,
-  create: func.isRequired,
-  cancel: func.isRequired
+  isLocal: PropTypes.bool,
+  destination: PropTypes.string,
+  update: PropTypes.func.isRequired,
+  create: PropTypes.func.isRequired,
+  cancel: PropTypes.func.isRequired
 };
 
 NewMappingDestination.defaultProps = {

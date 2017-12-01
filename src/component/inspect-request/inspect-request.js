@@ -1,10 +1,9 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import Toolbar from './toolbar.js';
 import RequestDetails from './request-details.js';
-
-const {func, object} = React.PropTypes;
 
 const InspectRequest = (props) => {
   const {request, clearActiveRequest} = props;
@@ -35,8 +34,8 @@ const InspectRequest = (props) => {
 };
 
 InspectRequest.propTypes = {
-  request: object,
-  clearActiveRequest: func.isRequired
+  request: PropTypes.object,
+  clearActiveRequest: PropTypes.func.isRequired
 };
 
 import { setActiveRequest } from '../../actions/requests.js';

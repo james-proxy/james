@@ -1,8 +1,8 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+
 import RequestMetadata from './request-metadata.js';
 import FullUrl from '../requests/full-url.js';
-
-const {object} = React.PropTypes;
 
 export default class RequestDetails extends React.Component {
 
@@ -59,5 +59,5 @@ export default class RequestDetails extends React.Component {
 }
 
 RequestDetails.propTypes = {
-  request: object.isRequired
+  request: PropTypes.object.isRequired
 };

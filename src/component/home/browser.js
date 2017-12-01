@@ -1,6 +1,5 @@
 import React from 'react';
-
-const {object, func} = React.PropTypes;
+import PropTypes from 'prop-types';
 
 /**
  * For each browser, attempts to assign it a more user-friendly name. On Linux/OSX, this is possible via a
@@ -48,8 +47,8 @@ const Browser = ({browser, launchBrowser}) => {
 };
 
 Browser.propTypes = {
-  browser: object.isRequired,
-  launchBrowser: func.isRequired
+  browser: PropTypes.object.isRequired,
+  launchBrowser: PropTypes.func.isRequired
 };
 
 export default Browser;

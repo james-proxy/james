@@ -1,7 +1,7 @@
 import React from 'react';
-import ContextMenuItem from './context-menu-item.js';
+import PropTypes from 'prop-types';
 
-const {array} = React.PropTypes;
+import ContextMenuItem from './context-menu-item.js';
 
 const ContextMenu = (props) => {
   const {items} = props;
@@ -16,7 +16,7 @@ const ContextMenu = (props) => {
 };
 
 ContextMenu.propTypes = {
-  items: array.isRequired
+  items: PropTypes.array.isRequired
 };
 
 export default ContextMenu;

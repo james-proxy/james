@@ -1,9 +1,8 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import ContextMenu from '../context-menu/context-menu.js';
-
-const {object, func} = React.PropTypes;
 
 const RequestContextMenu = (props) => {
   const {
@@ -49,11 +48,11 @@ const RequestContextMenu = (props) => {
 };
 
 RequestContextMenu.propTypes = {
-  request: object.isRequired,
-  handleContextMenu: func.isRequired,
-  showAddMapping: func.isRequired,
-  toggleMapping: func.isRequired,
-  removeMapping: func.isRequired
+  request: PropTypes.object.isRequired,
+  handleContextMenu: PropTypes.func.isRequired,
+  showAddMapping: PropTypes.func.isRequired,
+  toggleMapping: PropTypes.func.isRequired,
+  removeMapping: PropTypes.func.isRequired
 };
 
 import {

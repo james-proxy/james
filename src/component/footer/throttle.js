@@ -1,7 +1,6 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-
-const {func, bool, number} = React.PropTypes;
 
 const Throttle = (props) => {
   const {throttleRate, throttleEnabled, setThrottleRate, toggleThrottle} = props;
@@ -25,10 +24,10 @@ const Throttle = (props) => {
 };
 
 Throttle.propTypes = {
-  toggleThrottle: func.isRequired,
-  setThrottleRate: func.isRequired,
-  throttleEnabled: bool,
-  throttleRate: number
+  toggleThrottle: PropTypes.func.isRequired,
+  setThrottleRate: PropTypes.func.isRequired,
+  throttleEnabled: PropTypes.bool,
+  throttleRate: PropTypes.number
 };
 
 

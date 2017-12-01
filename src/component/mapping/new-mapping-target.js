@@ -1,6 +1,5 @@
 import React from 'react';
-
-const {string, func} = React.PropTypes;
+import PropTypes from 'prop-types';
 
 const NewMappingTarget = (props) => {
   const {target, update, createUrl, createFile} = props;
@@ -21,10 +20,10 @@ const NewMappingTarget = (props) => {
 };
 
 NewMappingTarget.propTypes = {
-  target: string,
-  update: func.isRequired,
-  createUrl: func.isRequired,
-  createFile: func.isRequired
+  target: PropTypes.string,
+  update: PropTypes.func.isRequired,
+  createUrl: PropTypes.func.isRequired,
+  createFile: PropTypes.func.isRequired
 };
 
 NewMappingTarget.defaultProps = {

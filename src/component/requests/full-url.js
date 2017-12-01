@@ -1,6 +1,5 @@
 import React from 'react';
-
-const {object, bool} = React.PropTypes;
+import PropTypes from 'prop-types';
 
 const _shorten = (str, maxLength) => {
   if (str.length > maxLength) {
@@ -32,8 +31,8 @@ const FullUrl = (props) => {
 };
 
 FullUrl.propTypes = {
-  isShortened: bool,
-  request: object.isRequired
+  isShortened: PropTypes.bool,
+  request: PropTypes.object.isRequired
 };
 
 export default FullUrl;

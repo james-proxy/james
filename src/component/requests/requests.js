@@ -1,8 +1,8 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import Request from './request.js';
 
-const {object, array, func} = React.PropTypes;
+import Request from './request.js';
 
 const Requests = ({requestData, activeRequest, contextRequest, labels, handleClick, handleContextMenu}) => {
   const requestNodes = requestData.requests.map(({request, response}) => {
@@ -28,12 +28,12 @@ const Requests = ({requestData, activeRequest, contextRequest, labels, handleCli
 };
 
 Requests.propTypes = {
-  requestData: object.isRequired,
-  activeRequest: object,
-  contextRequest: object,
-  labels: array.isRequired,
-  handleClick: func.isRequired,
-  handleContextMenu: func.isRequired
+  requestData: PropTypes.object.isRequired,
+  activeRequest: PropTypes.object,
+  contextRequest: PropTypes.object,
+  labels: PropTypes.array.isRequired,
+  handleClick: PropTypes.func.isRequired,
+  handleContextMenu: PropTypes.func.isRequired
 };
 
 import { setActiveRequest, setContextRequest } from '../../actions/requests.js';

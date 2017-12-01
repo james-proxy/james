@@ -1,6 +1,5 @@
 import React from 'react';
-
-const {array} = React.PropTypes;
+import PropTypes from 'prop-types';
 
 const Toolbar = (props) => {
   const {actions} = props;
@@ -19,7 +18,7 @@ const Toolbar = (props) => {
 };
 
 Toolbar.propTypes = {
-  actions: array
+  actions: PropTypes.array
 };
 
 export default Toolbar;

@@ -1,6 +1,5 @@
 import React from 'react';
-
-const {object, array} = React.PropTypes;
+import PropTypes from 'prop-types';
 
 const RequestLabels = (props) => {
   const {request, labels} = props;
@@ -37,8 +36,8 @@ const RequestLabels = (props) => {
 };
 
 RequestLabels.propTypes = {
-  request: object.isRequired,
-  labels: array.isRequired
+  request: PropTypes.object.isRequired,
+  labels: PropTypes.array.isRequired
 };
 
 export default RequestLabels;

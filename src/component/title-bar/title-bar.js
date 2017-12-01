@@ -1,8 +1,7 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link, IndexLink } from 'react-router';
-
-const {func, number} = React.PropTypes;
 
 const TitleBar = ({urlMapCount, openDevTools}) => {
   let UrlMapCountLabel;
@@ -36,8 +35,8 @@ const TitleBar = ({urlMapCount, openDevTools}) => {
 };
 
 TitleBar.propTypes = {
-  openDevTools: func.isRequired,
-  urlMapCount: number.isRequired
+  openDevTools: PropTypes.func.isRequired,
+  urlMapCount: PropTypes.number.isRequired
 };
 
 import { toggleDevTools } from '../../actions/app.js';

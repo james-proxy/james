@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 
 import TitleBar from '../component/title-bar/title-bar.js';
 import Footer from '../component/footer/footer.js';

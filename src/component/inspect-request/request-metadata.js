@@ -1,6 +1,6 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
-const {object} = React.PropTypes;
 
 const RequestMetadata = (props) => {
   const {metadata} = props;
@@ -15,7 +15,7 @@ const RequestMetadata = (props) => {
 };
 
 RequestMetadata.propTypes = {
-  metadata: object.isRequired
+  metadata: PropTypes.object.isRequired
 };
 
 export default RequestMetadata;

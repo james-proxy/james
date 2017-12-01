@@ -1,6 +1,5 @@
 import React from 'react';
-
-const {func, string} = React.PropTypes;
+import PropTypes from 'prop-types';
 
 const ContextMenuItem = (props) => {
   const {onClick, icon, title} = props;
@@ -12,9 +11,9 @@ const ContextMenuItem = (props) => {
 };
 
 ContextMenuItem.propTypes = {
-  onClick: func.isRequired,
-  icon: string.isRequired,
-  title: string.isRequired
+  onClick: PropTypes.func.isRequired,
+  icon: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired
 };
 
 export default ContextMenuItem;

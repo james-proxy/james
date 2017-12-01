@@ -1,7 +1,6 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-
-const {func, string} = React.PropTypes;
 
 export class Search extends React.Component {
 
@@ -37,8 +36,8 @@ export class Search extends React.Component {
 }
 
 Search.propTypes = {
-  filterValue: string,
-  filterRequests: func.isRequired
+  filterValue: PropTypes.string,
+  filterRequests: PropTypes.func.isRequired
 };
 
 

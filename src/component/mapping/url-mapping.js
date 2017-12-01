@@ -1,5 +1,5 @@
 import React from 'react';
-const {object, func} = React.PropTypes;
+import PropTypes from 'prop-types';
 
 const UrlMapping = (props) => {
   const {
@@ -43,9 +43,9 @@ const UrlMapping = (props) => {
 };
 
 UrlMapping.propTypes = {
-  mapping: object.isRequired,
-  toggleActive: func.isRequired,
-  remove: func.isRequired
+  mapping: PropTypes.object.isRequired,
+  toggleActive: PropTypes.func.isRequired,
+  remove: PropTypes.func.isRequired
 };
 
 export default UrlMapping;

@@ -1,9 +1,9 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import constants from '../../constants.js';
 
-const {string, oneOf} = React.PropTypes;
 const iconMap = {
   [constants.PROXY_STATUS_STARTING]: 'fa-hourglass-half',
   [constants.PROXY_STATUS_WORKING]: 'fa-check',
@@ -40,15 +40,15 @@ const ProxyStatus = ({proxyStatus, proxyReason}) => {
 };
 
 ProxyStatus.propTypes = {
-  proxyStatus: oneOf([
+  proxyStatus: PropTypes.oneOf([
     constants.PROXY_STATUS_STARTING,
     constants.PROXY_STATUS_WORKING,
     constants.PROXY_STATUS_NO_HTTPS,
     constants.PROXY_STATUS_ERROR_ADDRESS_IN_USE,
     constants.PROXY_STATUS_ERROR_GENERIC
   ]).isRequired,
-  proxyReason: string,
-  proxyMessage: string
+  proxyReason: PropTypes.string,
+  proxyMessage: PropTypes.string
 };
 
 

@@ -1,7 +1,6 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-
-const {bool, func} = React.PropTypes;
 
 const CacheButton = ({cachingEnabled, toggleCaching}) => {
   const icon = cachingEnabled ? 'fa fa-circle' : 'fa fa-circle-o';
@@ -16,8 +15,8 @@ const CacheButton = ({cachingEnabled, toggleCaching}) => {
 };
 
 CacheButton.propTypes = {
-  cachingEnabled: bool.isRequired,
-  toggleCaching: func.isRequired
+  cachingEnabled: PropTypes.bool.isRequired,
+  toggleCaching: PropTypes.func.isRequired
 };
 
 

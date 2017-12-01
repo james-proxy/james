@@ -1,10 +1,9 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import FullUrl from './full-url.js';
 import RequestContextMenu from './request-context-menu.js';
 import RequestLabels from './request-labels.js';
-
-const {func, array, object, bool} = React.PropTypes;
 
 class Request extends React.Component {
 
@@ -63,14 +62,14 @@ class Request extends React.Component {
 }
 
 Request.propTypes = {
-  labels: array.isRequired,
-  request: object.isRequired,
-  response: object.isRequired,
-  done: bool,
-  isActive: bool,
-  isContextMenu: bool,
-  handleClick: func.isRequired,
-  handleContextMenu: func.isRequired
+  labels: PropTypes.array.isRequired,
+  request: PropTypes.object.isRequired,
+  response: PropTypes.object.isRequired,
+  done: PropTypes.bool,
+  isActive: PropTypes.bool,
+  isContextMenu: PropTypes.bool,
+  handleClick: PropTypes.func.isRequired,
+  handleContextMenu: PropTypes.func.isRequired
 };
 
 export default Request;

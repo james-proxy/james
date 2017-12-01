@@ -1,7 +1,6 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-
-const {object, func} = React.PropTypes;
 
 const RequestCount = ({requestData, clearRequests}) => {
   const {filteredCount, totalCount} = requestData;
@@ -14,8 +13,8 @@ const RequestCount = ({requestData, clearRequests}) => {
 };
 
 RequestCount.propTypes = {
-  requestData: object.isRequired,
-  clearRequests: func.isRequired
+  requestData: PropTypes.object.isRequired,
+  clearRequests: PropTypes.func.isRequired
 };
 
 

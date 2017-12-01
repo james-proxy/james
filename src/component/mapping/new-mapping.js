@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import constants from '../../constants.js';
 import NewMappingTarget from './new-mapping-target.js';
 import NewMappingDestination from './new-mapping-destination.js';
-
-const {func, object} = React.PropTypes;
 
 class NewMapping extends Component {
 
@@ -99,11 +98,11 @@ class NewMapping extends Component {
 }
 
 NewMapping.propTypes = {
-  saveMapping: func.isRequired,
-  update: func.isRequired,
-  next: func.isRequired,
-  reset: func.isRequired,
-  mapping: object
+  saveMapping: PropTypes.func.isRequired,
+  update: PropTypes.func.isRequired,
+  next: PropTypes.func.isRequired,
+  reset: PropTypes.func.isRequired,
+  mapping: PropTypes.object
 };
 
 import { updateNewMapping, nextNewMapping, resetNewMapping } from '../../actions/url-mappings.js';
