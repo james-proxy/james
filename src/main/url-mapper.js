@@ -1,7 +1,7 @@
 import Datastore from 'nedb';
 import EventEmitter from 'events';
 
-import UrlMapper from '../service/url-mapper.js';
+import UrlMapper from 'common/service/url-mapper.js';
 
 class UrlMapperHandler extends EventEmitter {
   constructor(config) {

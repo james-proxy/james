@@ -10,19 +10,18 @@
   },
   "main": "main/index.js",
   "scripts": {
+    "postinstall": "npm run build:dll",
     "prebuild": "npm run clean",
-    "build": "webpack",
-    "clean": "rimraf dist/",
-    "prestart": "npm run clean",
-    "start": "node server.js",
+    "build": "electron-webpack",
+    "build:dll": "electron-webpack dll",
+    "clean": "rimraf dist/ binaries/",
+    "start": "electron-webpack dev",
     "dev": "npm run start",
     "development": "npm run dev",
     "lint": "eslint ./src ./test",
     "test": "electron-mocha --renderer --reporter dot --recursive -r setup-referee-sinon/globals test/unit --compilers js:babel-core/register",
     "test-ci": "npm run lint && npm run test",
-    "prepackage": "npm run clean",
-    "package": "webpack --env.production",
-    "predist": "npm run package",
+    "predist": "npm run build",
     "dist": "build --x64",
     "predist:win64": "npm run package",
     "dist:win64": "build --windows --x64"
@@ -47,26 +46,19 @@
     "redux": "^3.5.2",
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.0.1",
+    "source-map-support": "^0.5.0",
     "uniqid": "^4.0.0"
   },
   "devDependencies": {
-    "babel-core": "^6.20.0",
-    "babel-eslint": "^8.0.2",
-    "babel-loader": "^7.1.2",
-    "babel-plugin-syntax-dynamic-import": "^6.18.0",
-    "babel-plugin-transform-object-rest-spread": "^6.20.2",
-    "babel-preset-env": "^1.6.1",
-    "babel-preset-react": "^6.16.0",
-    "copy-webpack-plugin": "^4.0.1",
-    "css-loader": "^0.28.7",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-preset-react": "^6.24.1",
     "electron": "1.7.9",
     "electron-builder": "^19.46.9",
     "electron-localshortcut": "^2.0.2",
     "electron-mocha": "^5.0.0",
+    "electron-webpack": "^1.11.0",
     "eslint": "^4.12.0",
     "eslint-plugin-react": "^7.5.1",
-    "file-loader": "^1.1.5",
-    "html-webpack-plugin": "^2.30.1",
     "mocha": "^4.0.1",
     "node-sass": "4.7.2",
     "redux-mock-store": "^1.0.4",
@@ -77,42 +69,42 @@
     "setup-referee-sinon": "^0.3.0",
     "sinon": "^4.1.2",
     "sinon-as-promised": "^4.0.0",
-    "style-loader": "^0.19.0",
-    "url-loader": "^0.6.2",
-    "webpack": "3.8.1",
-    "webpack-dev-server": "2.9.5"
+    "webpack": "^3.9.1",
+    "webpack-sources": "^1.0.1"
   },
-  "babel": {
-    "presets": [
-      "react",
-      [
-        "env",
-        {
-          "targets": {
-            "electron": "1.7.9"
-          },
-          "modules": false
-        }
+  "electronWebpack": {
+    "title": "James Proxy",
+    "renderer": {
+      "dll": [
+        "react",
+        "react-dom",
+        "react-router-dom",
+        "react-loadable",
+        "redux",
+        "redux-thunk",
+        "redux-logger",
+        "react-router-redux",
+        "raven-js",
+        "history",
+        "font-awesome",
+        "materialize-css",
+        "source-map-support"
       ]
-    ],
-    "plugins": [
-      "transform-object-rest-spread",
-      "syntax-dynamic-import"
-    ]
+    }
   },
   "build": {
     "appId": "com.jamesproxy.james",
-    "category": "public.app-category.productivity",
     "productName": "James",
     "mac": {
-      "icon": "resource-compile/icon.icns"
+      "category": "public.app-category.productivity",
+      "icon": "resources/icon.icns"
     },
     "dmg": {
-      "icon": "resource-compile/icon.icns",
-      "background": "resource-compile/icon.png"
+      "icon": "resources/icon.icns",
+      "background": "resources/icon.png"
     },
     "win": {
-      "iconUrl": "https://github.com/mitchhentges/james/blob/electron-builder/resource-compile/icon.ico?raw=true"
+      "icon": "resources/icon.ico"
     },
     "linux": {
       "target": [
@@ -120,11 +112,10 @@
         "deb"
       ],
       "synopsis": "Web proxy"
+    },
+    "directories": {
+      "buildResources": "resources",
+      "output": "binaries"
     }
-  },
-  "directories": {
-    "buildResources": "resource-compile",
-    "output": "binaries",
-    "app": "./dist"
   }
 }

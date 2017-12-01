@@ -4,8 +4,8 @@ import localShortcut from 'electron-localshortcut';
 import browserLauncher from 'james-browser-launcher';
 import path from 'path';
 
-import constants from '../constants.js';
-import config from '../config.js';
+import constants from 'common/constants.js';
+import config from 'common/config.js';
 
 import createMenu from './menu.js';
 import createUrlMapper from './url-mapper.js';
@@ -42,12 +42,14 @@ app.on('ready', () => {
     show: false
   });
 
-  let rendererURL = `file://${path.join(__dirname, 'index.html')}`;
+  let rendererURL = `file://${__dirname}/index.html`;
   if (constants.DEV) {
-    rendererURL = 'http://localhost:8080/index.html';
+    rendererURL = `http://localhost:${process.env.ELECTRON_WEBPACK_WDS_PORT}`;
   }
   mainWindow.loadURL(rendererURL);
-  mainWindow.webContents.openDevTools();
+  if (constants.DEV) {
+    mainWindow.webContents.openDevTools();
+  }
 
   mainWindow.webContents.on('did-finish-load', () => {
     mainWindow.webContents.send('proxy-status', proxy.status);
