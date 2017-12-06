@@ -20,6 +20,7 @@
 - Remove tmp dependency (#292) (i: @mitchhentges, r: @nerdbeere)
 - Change the file input to a button (fixes #329) (i: @nerdbeere, r: @mitchhentges)
 - Use version 1.3.0 of james-browser-launcher (#331) (i: @nerdbeere, r: @mitchhentges)
+- Update gulp-sass to latest version to support node 8 (#340) (i: @mitchhentges, r: @nerdbeere)
 
 ## 1.5.0
 
