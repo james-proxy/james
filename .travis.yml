@@ -5,7 +5,7 @@ matrix:
   - os: osx
 language: node_js
 node_js:
-- '5.1'
+- 6
 addons:
   apt:
     packages:
