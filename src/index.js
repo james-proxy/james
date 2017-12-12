@@ -15,7 +15,7 @@ import ravenInit from './service/raven.js';
 import setupShortcuts from './service/shortcuts.js';
 import setupStore from './store/index.js';
 
-import { init } from './actions/app.js';
+import { init, updateUpdaterStatus } from './actions/app.js';
 import { syncRequests } from './actions/requests.js';
 import { updateProxyStatus } from './actions/proxy.js';
 import { syncUrlMappings } from './actions/url-mappings.js';
@@ -43,6 +43,10 @@ ipc.on('mapper-sync', (evt, payload) => {
 
 ipc.on('browsers-sync', (evt, payload) => {
   store.dispatch(addBrowsers(payload));
+});
+
+ipc.on('updater-status', (evt, payload) => {
+  store.dispatch(updateUpdaterStatus(payload));
 });
 
 setupShortcuts(store);

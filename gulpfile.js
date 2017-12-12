@@ -109,6 +109,18 @@ gulp.task('browserify', ['js'], () => {
     .pipe(gulp.dest('./package'));
 });
 
+// npm version will update package.json version prior to running this task
+// see https://docs.npmjs.com/cli/version
+gulp.task('version', () => {
+  return gulp.src('auto_updater.json')
+    .pipe(jeditor({
+      name: `v${version}`,
+      pub_date: new Date().toISOString(),
+      url: `https://github.com/james-proxy/james/releases/download/v${version}/james-${version}-mac.zip`
+    }))
+    .pipe(gulp.dest('.'));
+});
+
 gulp.task('watch', ['default'], () => {
   gulp.watch('src/**', ['js']);
   gulp.watch('style/**', ['css']);
