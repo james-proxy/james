@@ -18,7 +18,7 @@ import setupShortcuts from 'common/service/shortcuts.js';
 
 import setupStore from './store/index.js';
 
-import { init } from 'common/actions/app.js';
+import { init, setUpdaterStatus } from 'common/actions/app.js';
 import { syncRequests } from 'common/actions/requests.js';
 import { updateProxyStatus } from 'common/actions/proxy.js';
 import { syncUrlMappings } from 'common/actions/url-mappings.js';
@@ -50,6 +50,10 @@ ipc.on('mapper-sync', (evt, payload) => {
 
 ipc.on('browsers-sync', (evt, payload) => {
   store.dispatch(addBrowsers(payload));
+});
+
+ipc.on('updater-status', (evt, payload) => {
+  store.dispatch(setUpdaterStatus(payload));
 });
 
 setupShortcuts(store);

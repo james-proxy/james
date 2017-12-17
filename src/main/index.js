@@ -1,5 +1,4 @@
 import { app, BrowserWindow, ipcMain as ipc } from 'electron';
-import squirrelStartup from 'electron-squirrel-startup';
 import localShortcut from 'electron-localshortcut';
 import browserLauncher from 'james-browser-launcher';
 import path from 'path';
@@ -10,10 +9,8 @@ import config from 'common/config.js';
 import createMenu from './menu.js';
 import createUrlMapper from './url-mapper.js';
 import createProxy from './proxy.js';
+import autoUpdater from './auto-update.js';
 
-if (squirrelStartup) {
-  process.exit(0); // Don't run James if it's just being installed/updated/etc
-}
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the javascript object is GCed.
 let mainWindow = null;
@@ -82,6 +79,7 @@ app.on('ready', () => {
     });
     
     mainWindow.show();
+    autoUpdater(mainWindow, !constants.DEV);
   });
 
   ipc.on('proxy-get-request', (evt, {id}) => {

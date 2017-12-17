@@ -7,6 +7,7 @@ const devTools = new DevTools();
 
 export const INIT = 'INIT';
 export const TOGGLE_DEVTOOLS = 'TOGGLE_DEVTOOLS';
+export const SET_UPDATER_STATUS = 'SET_UPDATER_STATUS';
 
 export function init(data) {
   return (dispatch) => {
@@ -27,6 +28,14 @@ export function toggleDevTools() {
   return (dispatch) => {
     dispatch({type: TOGGLE_DEVTOOLS});
     devTools.toggle();
+  };
+}
+
+export function setUpdaterStatus({status, info}) {
+  return {
+    type: SET_UPDATER_STATUS,
+    status,
+    info
   };
 }
 

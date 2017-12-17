@@ -5,6 +5,7 @@ import CacheButton from './cache.js';
 import Throttle from './throttle.js';
 import RequestCount from './request-count.js';
 import ProxyStatus from './proxy-status.js';
+import UpdateStatus from './update-status';
 
 import {
   toggleCaching,
@@ -13,6 +14,7 @@ import {
   clearRequests
 } from 'common/actions/proxy.js';
 
+import { getUpdateStatus } from '../../reducers/app.js';
 import { getRequestData } from '../../reducers/requests.js';
 import { getProxyState } from '../../reducers/proxy.js';
 
@@ -36,10 +38,15 @@ const Footer = props =>
       proxyStatus={props.proxyStatus}
       proxyReason={props.proxyReason}
     />
+    <UpdateStatus
+      status={props.updateStatus}
+      info={props.updateInfo}
+    />
   </div>;
 
 const mapStateToProps = (state) => {
   const proxy = getProxyState(state);
+  const update = getUpdateStatus(state);
 
   return {
     cachingEnabled: proxy.cachingEnabled,
@@ -47,7 +54,9 @@ const mapStateToProps = (state) => {
     throttleRate: proxy.throttleRate,
     requestData: getRequestData(state),
     proxyStatus: proxy.status,
-    proxyReason: proxy.statusReason
+    proxyReason: proxy.statusReason,
+    updateStatus: update.status,
+    updateInfo: update.info
   };
 };
 

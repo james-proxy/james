@@ -27,7 +27,7 @@
     "dist:win64": "build --windows --x64"
   },
   "dependencies": {
-    "electron-squirrel-startup": "^1.0.0",
+    "electron-updater": "^2.17.6",
     "font-awesome": "^4.5.0",
     "history": "^4.7.2",
     "hoxy": "^3.2.0",
@@ -116,6 +116,7 @@
     "directories": {
       "buildResources": "resources",
       "output": "binaries"
-    }
+    },
+    "publish": "github"
   }
 }
