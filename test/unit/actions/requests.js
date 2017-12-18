@@ -1,4 +1,4 @@
-import * as actions from '../../../src/actions/requests.js';
+import * as actions from '../../../src/common/actions/requests.js';
 
 const request = {
   request: {},

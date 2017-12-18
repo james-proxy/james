@@ -1,4 +1,4 @@
-import Proxy from '../../../src/service/proxy.js';
+import Proxy from '../../../src/common/service/proxy.js';
 
 describe('Proxy', function() {
   const update = () => {

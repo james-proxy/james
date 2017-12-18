@@ -3,7 +3,9 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 
-const TitleBar = ({urlMapCount, openDevTools}) => {
+import { toggleDevTools } from 'common/service/dev-tools.js';
+
+const TitleBar = ({ urlMapCount }) => {
   let UrlMapCountLabel;
   if (urlMapCount > 0) {
     UrlMapCountLabel = <span className="label default">
@@ -27,7 +29,7 @@ const TitleBar = ({urlMapCount, openDevTools}) => {
       Mappings
       {UrlMapCountLabel}
     </NavLink>
-    <a className="right" onClick={openDevTools}>
+    <a className="right" onClick={toggleDevTools}>
       <i className=" fa fa-cog" />
       Developer
     </a>
@@ -39,7 +41,6 @@ TitleBar.propTypes = {
   urlMapCount: PropTypes.number.isRequired
 };
 
-import { toggleDevTools } from 'common/actions/app.js';
 import { getMappingCount } from '../../reducers/url-mappings.js';
 
 const mapStateToProps = (state) => ({
@@ -47,8 +48,4 @@ const mapStateToProps = (state) => ({
   urlMapCount: getMappingCount(state)
 });
 
-const mapDispatchToProps = {
-  openDevTools: toggleDevTools
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(TitleBar);
+export default connect(mapStateToProps)(TitleBar);

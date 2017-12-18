@@ -3,6 +3,7 @@ import fs from 'fs';
 import EventEmitter from 'events';
 
 import constants from 'common/constants.js';
+import appConfig from 'common/config.js';
 
 import Proxy from 'common/service/proxy.js';
 
@@ -28,8 +29,8 @@ class ProxyHandler extends EventEmitter {
   createHoxy() {
     const opts = {};
     try {
-      const key = fs.readFileSync(`${constants.USER_DATA}/root-ca.key.pem`);
-      const cert = fs.readFileSync(`${constants.USER_DATA}/root-ca.crt.pem`);
+      const key = fs.readFileSync(`${appConfig.userData}/root-ca.key.pem`);
+      const cert = fs.readFileSync(`${appConfig.userData}/root-ca.crt.pem`);
       opts.certAuthority = {key, cert};
     } catch (e) {
       const [reason] = e.message.split('\n');

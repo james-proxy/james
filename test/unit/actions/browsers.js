@@ -1,4 +1,4 @@
-import * as actions from '../../../src/actions/browsers.js';
+import * as actions from '../../../src/common/actions/browsers.js';
 
 const browsers = [{}];
 

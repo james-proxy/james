@@ -9,6 +9,6 @@ export default function init() {
   }
 
   Raven.config('https://' + config.sentry.dsn + '@' + config.sentry.host, {
-    release: constants.VERSION
+    release: config.version
   }).install();
 }

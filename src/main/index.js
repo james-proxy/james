@@ -17,7 +17,7 @@ let mainWindow = null;
 
 console.log('Loading URL mappings...'); // eslint-disable-line no-console
 const urlMapper = createUrlMapper({
-  filename: `${constants.USER_DATA}/data.nedb`,
+  filename: `${config.userData}/data.nedb`,
   autoload: true
 });
 

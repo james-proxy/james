@@ -1,12 +1,17 @@
 import Keyboard from './keyboard.js';
 
-import { toggleDevTools } from '../actions/app.js';
-import { showAddUrlMapping } from '../actions/url-mappings.js';
+import { toggleDevTools } from './dev-tools.js';
+import { showAddUrlMapping } from 'common/actions/url-mappings.js';
 
 export default (store) => {
   const keyboard = new Keyboard();
-  const toggleTools = () => store.dispatch(toggleDevTools());
-  const openUrlMappings = () => { store.dispatch(showAddUrlMapping());};
+
+  const toggleTools = () => {
+    toggleDevTools();
+  }
+  const openUrlMappings = () => {
+    store.dispatch(showAddUrlMapping());
+  };
 
   keyboard.register('F12', toggleTools);
   keyboard.register('Ctrl+Shift+I', toggleTools);

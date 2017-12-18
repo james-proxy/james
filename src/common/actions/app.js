@@ -1,12 +1,8 @@
 import { push } from 'react-router-redux';
 
-import DevTools from 'common/service/dev-tools.js';
 import constants from 'common/constants.js';
 
-const devTools = new DevTools();
-
 export const INIT = 'INIT';
-export const TOGGLE_DEVTOOLS = 'TOGGLE_DEVTOOLS';
 export const SET_UPDATER_STATUS = 'SET_UPDATER_STATUS';
 
 export function init(data) {
@@ -17,17 +13,6 @@ export function init(data) {
     });
 
     dispatch(navigateToHome());
-
-    if (constants.DEV) {
-      dispatch(toggleDevTools());
-    }
-  };
-}
-
-export function toggleDevTools() {
-  return (dispatch) => {
-    dispatch({type: TOGGLE_DEVTOOLS});
-    devTools.toggle();
   };
 }
 

@@ -1,10 +1,5 @@
-import { remote, app as mainApp } from 'electron';
-const app = remote ? remote.app : mainApp;
-
 export default {
   'DEV': process.env.NODE_ENV !== 'production',
-  'VERSION': app.getVersion(),
-  'USER_DATA': app.getPath('userData'),
 
   'UPDATE_OK': 'ok',
   'UPDATE_CHECKING': 'checking',

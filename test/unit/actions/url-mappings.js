@@ -2,8 +2,8 @@ import configureStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import { push } from 'react-router-redux';
 
-import * as actions from '../../../src/actions/url-mappings.js';
-import constants from '../../../src/constants.js';
+import * as actions from '../../../src/common/actions/url-mappings.js';
+import constants from '../../../src/common/constants.js';
 
 const middlewares = [thunk];
 const mockStore = configureStore(middlewares);
