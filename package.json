@@ -23,7 +23,7 @@
     "test-ci": "npm run lint && npm run test",
     "predist": "npm run build",
     "dist": "build --x64",
-    "predist:win64": "npm run package",
+    "predist:win64": "npm run build",
     "dist:win64": "build --windows --x64"
   },
   "dependencies": {

@@ -9,11 +9,9 @@ cache:
 
 install:
   - ps: Install-Product node 8 x64
-  - npm prune
   - npm install
 
 build_script:
-  - npm run test-ci
   - npm run dist:win64
 
 environment:
