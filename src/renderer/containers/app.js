@@ -5,7 +5,7 @@ import Loadable from 'react-loadable';
 import TitleBar from '../component/title-bar/title-bar.js';
 import Footer from '../component/footer/footer.js';
 
-const AsyncRoute = container => Loadable({
+const loadRoute = container => Loadable({ // eslint-disable-line new-cap
   loader: () => import(`./${container}.js`),
   loading: () => null
 });
@@ -14,12 +14,12 @@ const AppContainer = () => {
   return <Fragment>
     <TitleBar />
     <div className="main-content">
-      <Route exact path="/" component={AsyncRoute('home')} />
-      <Route path="/requests" component={AsyncRoute('requests')} />
-      <Route path="/url-mappings" component={AsyncRoute('url-mappings')} />
+      <Route exact path="/" component={loadRoute('home')} />
+      <Route path="/requests" component={loadRoute('requests')} />
+      <Route path="/url-mappings" component={loadRoute('url-mappings')} />
     </div>
     <Footer />
-  </Fragment>
+  </Fragment>;
 };
 
 export default AppContainer;

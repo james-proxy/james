@@ -5,7 +5,7 @@ matrix:
   - os: osx
 language: node_js
 node_js:
-- '5.1'
+- 8
 addons:
   apt:
     packages:
@@ -25,6 +25,7 @@ install:
 - npm --depth Infinity update
 script:
 - npm run test-ci
+- npm run build:dll
 - npm run dist
 cache:
   apt: true

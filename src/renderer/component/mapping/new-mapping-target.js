@@ -10,10 +10,10 @@ const NewMappingTarget = (props) => {
     <h1>Create new URL Mapping</h1>
     <div className="description">URL mappings allow James to intercept a request and respond with a URL or file of your choice.</div>
     <input type="text"
-            autoFocus
-            placeholder="Enter target URL to map"
-            value={target}
-            onChange={onChange} />
+      autoFocus
+      placeholder="Enter target URL to map"
+      value={target}
+      onChange={onChange} />
     <button className="btn waves-effect waves-light" onClick={createUrl}>URL to URL</button>
     <button className="btn waves-effect waves-light" onClick={createFile}>URL to File</button>
   </div>;

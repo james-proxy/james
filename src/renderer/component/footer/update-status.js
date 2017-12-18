@@ -3,7 +3,6 @@ const { app } = remote;
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 
 import constants from 'common/constants.js';
 
@@ -23,7 +22,7 @@ const statusMap = {
   [constants.UPDATE_CHECKING]: () => ({
     title: 'Checking for updates...'
   }),
-  [constants.UPDATE_AVAILABLE]: info => ({
+  [constants.UPDATE_AVAILABLE]: () => ({
     message: 'An update is available!',
     title: 'Show changelog',
     onClick: openChangelog
@@ -44,7 +43,7 @@ const statusMap = {
   })
 };
 
-const UpdateStatus = ({status, info}) => {
+const UpdateStatus = ({status}) => {
   const icon = 'fa fa-cloud-upload';
   const classes = `update-status ${status}`;
   const { message, title, onClick } = statusMap[status];

@@ -1,7 +1,7 @@
 import constants from 'common/constants.js';
 
 if (!constants.DEV) { // fix for loading async bundles (see electron-userland/electron-webpack#70)
-  __webpack_public_path__ = `file:///${process.resourcesPath}/app.asar/`;
+  __webpack_public_path__ = `file:///${process.resourcesPath}/app.asar/`;  // eslint-disable-line camelcase
 }
 
 import { ipcRenderer as ipc } from 'electron';
@@ -65,4 +65,4 @@ ReactDOM.render(
       <App />
     </Router>
   </Provider>
-, document.getElementById('app'));
+  , document.getElementById('app'));

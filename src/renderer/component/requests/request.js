@@ -6,7 +6,6 @@ import RequestContextMenu from './request-context-menu.js';
 import RequestLabels from './request-labels.js';
 
 class Request extends React.Component {
-
   shouldComponentUpdate(nextProps) {
     return this.props.request.id !== nextProps.request.id ||
       this.props.isActive !== nextProps.isActive ||
@@ -47,12 +46,12 @@ class Request extends React.Component {
       { contextMenuNode }
       <div className="request-inner" onClick={_handleClick} onContextMenu={_handleContextMenu}>
         <span className="method property">{request.method}</span>
-          <span className="time property">
-            {took}
-          </span>
-          <span className="status-code property">
-            {response.statusCode}
-          </span>
+        <span className="time property">
+          {took}
+        </span>
+        <span className="status-code property">
+          {response.statusCode}
+        </span>
         <FullUrl request={request} />
         <RequestLabels request={request} labels={labels} />
         <span className="fade-out" />

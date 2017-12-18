@@ -15,7 +15,7 @@ const HomeContainer = ({port}) =>
         <i className="fa fa-info-circle" />
         In some browsers the automatic proxy setup does not work correctly.
         In that case you have to do it manually.
-        </p>
+      </p>
     </div>
   </div>;
 

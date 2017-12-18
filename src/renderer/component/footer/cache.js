@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 
 const CacheButton = ({cachingEnabled, toggleCaching}) => {
   const icon = cachingEnabled ? 'fa fa-circle' : 'fa fa-circle-o';

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import CacheButton from './cache.js';
@@ -7,6 +8,7 @@ import RequestCount from './request-count.js';
 import ProxyStatus from './proxy-status.js';
 import UpdateStatus from './update-status';
 
+import constants from 'common/constants.js';
 import {
   toggleCaching,
   toggleThrottling as toggleThrottle,
@@ -43,6 +45,35 @@ const Footer = props =>
       info={props.updateInfo}
     />
   </div>;
+
+Footer.propTypes = {
+  cachingEnabled: PropTypes.bool.isRequired,
+  toggleCaching: PropTypes.func.isRequired,
+  proxyStatus: PropTypes.oneOf([
+    constants.PROXY_STATUS_STARTING,
+    constants.PROXY_STATUS_WORKING,
+    constants.PROXY_STATUS_NO_HTTPS,
+    constants.PROXY_STATUS_ERROR_ADDRESS_IN_USE,
+    constants.PROXY_STATUS_ERROR_GENERIC
+  ]).isRequired,
+  proxyReason: PropTypes.string,
+  proxyMessage: PropTypes.string,
+  requestData: PropTypes.object.isRequired,
+  clearRequests: PropTypes.func.isRequired,
+  toggleThrottle: PropTypes.func.isRequired,
+  setThrottleRate: PropTypes.func.isRequired,
+  throttleEnabled: PropTypes.bool,
+  throttleRate: PropTypes.number,
+  updateStatus: PropTypes.oneOf([
+    constants.UPDATE_OK,
+    constants.UPDATE_CHECKING,
+    constants.UPDATE_AVAILABLE,
+    constants.UPDATE_DOWNLOADING,
+    constants.UPDATE_READY,
+    constants.UPDATE_ERROR
+  ]),
+  updateInfo: PropTypes.object
+};
 
 const mapStateToProps = (state) => {
   const proxy = getProxyState(state);

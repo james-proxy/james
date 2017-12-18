@@ -15,10 +15,10 @@ const UrlMappingsContainer = (props) => {
 
   const urlMappingNodes = urlMappings.map((mapping, index) => {
     return <UrlMapping key={index}
-              mapping={mapping}
-              toggleActive={toggleUrlMapping}
-              remove={removeUrlMapping}
-            />;
+      mapping={mapping}
+      toggleActive={toggleUrlMapping}
+      remove={removeUrlMapping}
+    />;
   });
 
   return <div className="url-mapping-window">

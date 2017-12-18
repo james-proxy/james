@@ -8,7 +8,7 @@ export default (store) => {
 
   const toggleTools = () => {
     toggleDevTools();
-  }
+  };
   const openUrlMappings = () => {
     store.dispatch(showAddUrlMapping());
   };

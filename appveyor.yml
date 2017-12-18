@@ -8,13 +8,14 @@ cache:
   - '%USERPROFILE%\.electron'
 
 install:
-  - ps: Install-Product node 5 x64
+  - ps: Install-Product node 8 x64
   - npm install
   - npm prune
   - npm --depth Infinity update
 
 build_script:
   - npm run test-ci
+  - npm run build:dll
   - npm run dist:win64
 
 environment:

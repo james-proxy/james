@@ -1,7 +1,6 @@
 import { app, BrowserWindow, ipcMain as ipc } from 'electron';
 import localShortcut from 'electron-localshortcut';
 import browserLauncher from 'james-browser-launcher';
-import path from 'path';
 
 import constants from 'common/constants.js';
 import config from 'common/config.js';

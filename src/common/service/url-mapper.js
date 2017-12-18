@@ -1,5 +1,4 @@
 export default class UrlMapper {
-
   static prepare(url) {
     const protocolRegex = /[a-zA-Z0-9]*?:\/\//; // http://, https://, etc
     return (url.endsWith('/') ? url.substring(0, url.length - 1) : url)
@@ -162,5 +161,4 @@ export default class UrlMapper {
     delete this._map[url];
     delete this._wildcards[url];
   }
-
 }

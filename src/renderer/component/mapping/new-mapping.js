@@ -8,7 +8,6 @@ import NewMappingTarget from './new-mapping-target.js';
 import NewMappingDestination from './new-mapping-destination.js';
 
 class NewMapping extends Component {
-
   constructor(props) {
     super(props);
 
@@ -73,20 +72,20 @@ class NewMapping extends Component {
     if (step === constants.NEW_MAPPING_STEP_TARGET) {
       submit = this.createUrl;
       form = <NewMappingTarget
-                target={target}
-                update={this.updateTarget}
-                createUrl={this.createUrl}
-                createFile={this.createFile}
-              />;
+        target={target}
+        update={this.updateTarget}
+        createUrl={this.createUrl}
+        createFile={this.createFile}
+      />;
     } else if (step === constants.NEW_MAPPING_STEP_DESTINATION) {
       submit = this.finish;
       form = <NewMappingDestination
-                isLocal={isLocal}
-                destination={destination}
-                update={this.updateDestination}
-                create={this.finish}
-                cancel={this.reset}
-              />;
+        isLocal={isLocal}
+        destination={destination}
+        update={this.updateDestination}
+        create={this.finish}
+        cancel={this.reset}
+      />;
     }
 
     const onSubmit = (event) => {

@@ -5,7 +5,6 @@ import RequestMetadata from './request-metadata.js';
 import FullUrl from '../requests/full-url.js';
 
 export default class RequestDetails extends React.Component {
-
   constructor(props) {
     super(props);
     this._onResize = this._onResize.bind(this);

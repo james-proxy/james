@@ -1,7 +1,5 @@
 import { push } from 'react-router-redux';
 
-import constants from 'common/constants.js';
-
 export const INIT = 'INIT';
 export const SET_UPDATER_STATUS = 'SET_UPDATER_STATUS';
 

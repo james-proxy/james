@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 export class Search extends React.Component {
-
   constructor(props) {
     super(props);
 
@@ -30,7 +29,7 @@ export class Search extends React.Component {
   render() {
     return <div className="search">
       <input type="text" placeholder="Search"
-              onChange={this._handleOnChange.bind(this)} />
+        onChange={this._handleOnChange.bind(this)} />
     </div>;
   }
 }
