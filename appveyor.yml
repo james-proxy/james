@@ -9,13 +9,11 @@ cache:
 
 install:
   - ps: Install-Product node 8 x64
-  - npm install
   - npm prune
-  - npm --depth Infinity update
+  - npm install
 
 build_script:
   - npm run test-ci
-  - npm run build:dll
   - npm run dist:win64
 
 environment:

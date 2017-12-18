@@ -23,10 +23,9 @@ before_install:
   fi
 install:
 - npm prune
-- npm --depth Infinity update
+- npm install
 script:
 - npm run test-ci
-- npm run build:dll
 - npm run dist
 cache:
   apt: true
