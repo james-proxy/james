@@ -1,6 +1,8 @@
-import proxy from '../../../src/renderer/reducers/proxy.js';
-import * as actions from '../../../src/common/actions/proxy.js';
-import constants from '../../../src/common/constants.js';
+import assert from 'assert';
+
+import proxy from 'renderer/reducers/proxy.js';
+import * as actions from 'common/actions/proxy.js';
+import constants from 'common/constants.js';
 
 const initialState = {
   status: constants.PROXY_STATUS_STARTING,
@@ -16,13 +18,13 @@ const setupState = (newState) => {
 
 const test = (action, expectedState) => {
   const nextState = proxy(initialState, action);
-  expect(nextState).toEqual(expectedState);
+  assert.deepEqual(nextState, expectedState);
 };
 
 describe('proxy reducers', () => {
   it('should return the initial state', () => {
     const nextState = proxy(undefined, {});
-    expect(nextState).toEqual(initialState);
+    assert.deepEqual(nextState, initialState);
   });
 
   it('should handle TOGGLE_CACHING', () => {

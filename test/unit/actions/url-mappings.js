@@ -1,9 +1,10 @@
+import assert from 'assert';
 import configureStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import { push } from 'react-router-redux';
 
-import * as actions from '../../../src/common/actions/url-mappings.js';
-import constants from '../../../src/common/constants.js';
+import * as actions from 'common/actions/url-mappings.js';
+import constants from 'common/constants.js';
 
 const middlewares = [thunk];
 const mockStore = configureStore(middlewares);
@@ -27,7 +28,7 @@ describe('url mapper actions', () => {
     ];
 
     store.dispatch(actions.showAddUrlMapping(url));
-    expect(store.getActions()).toEqual(expectedActions);
+    assert.deepEqual(store.getActions(), expectedActions);
   });
 
   it('should create an action to set an url mapping', () => {
@@ -40,7 +41,7 @@ describe('url mapper actions', () => {
         isActive: true
       }
     };
-    expect(actions.setUrlMapping(url, newUrl)).toEqual(expectedAction);
+    assert.deepEqual(actions.setUrlMapping(url, newUrl), expectedAction);
   });
 
   it('should create an action to set a local url mapping', () => {
@@ -53,7 +54,7 @@ describe('url mapper actions', () => {
         isActive: true
       }
     };
-    expect(actions.setUrlMapping(url, newUrl, true)).toEqual(expectedAction);
+    assert.deepEqual(actions.setUrlMapping(url, newUrl, true), expectedAction);
   });
 
   it('should create an action to set an inactive url mapping', () => {
@@ -66,7 +67,7 @@ describe('url mapper actions', () => {
         isActive: false
       }
     };
-    expect(actions.setUrlMapping(url, newUrl, undefined, false)).toEqual(expectedAction);
+    assert.deepEqual(actions.setUrlMapping(url, newUrl, undefined, false), expectedAction);
   });
 
   it('should create an action to remove an url mapping', () => {
@@ -76,7 +77,7 @@ describe('url mapper actions', () => {
         url
       }
     };
-    expect(actions.removeUrlMapping(url)).toEqual(expectedAction);
+    assert.deepEqual(actions.removeUrlMapping(url), expectedAction);
   });
 
   it('should create an action to toggle an url mapping', () => {
@@ -86,7 +87,7 @@ describe('url mapper actions', () => {
         url
       }
     };
-    expect(actions.toggleUrlMapping(url)).toEqual(expectedAction);
+    assert.deepEqual(actions.toggleUrlMapping(url), expectedAction);
   });
 
   it('should create an action to sync url mappings', () => {
@@ -95,7 +96,7 @@ describe('url mapper actions', () => {
       type: actions.SYNC_URL_MAPPINGS,
       mappings
     };
-    expect(actions.syncUrlMappings({mappings})).toEqual(expectedAction);
+    assert.deepEqual(actions.syncUrlMappings({mappings}), expectedAction);
   });
 
   it('should create an action to update new mapping state', () => {
@@ -106,7 +107,7 @@ describe('url mapper actions', () => {
       type: actions.NEW_MAPPING_UPDATE,
       mapping
     };
-    expect(actions.updateNewMapping(mapping)).toEqual(expectedAction);
+    assert.deepEqual(actions.updateNewMapping(mapping), expectedAction);
   });
 
   it('should create an action to advance the new mapping state (url)', () => {
@@ -115,7 +116,7 @@ describe('url mapper actions', () => {
       step: constants.NEW_MAPPING_STEP_DESTINATION,
       isLocal: false
     };
-    expect(actions.nextNewMapping(false)).toEqual(expectedAction);
+    assert.deepEqual(actions.nextNewMapping(false), expectedAction);
   });
 
   it('should create an action to advance the new mapping state (file)', () => {
@@ -124,13 +125,13 @@ describe('url mapper actions', () => {
       step: constants.NEW_MAPPING_STEP_DESTINATION,
       isLocal: true
     };
-    expect(actions.nextNewMapping(true)).toEqual(expectedAction);
+    assert.deepEqual(actions.nextNewMapping(true), expectedAction);
   });
 
   it('should create an action to reset new mapping state', () => {
     const expectedAction = {
       type: actions.NEW_MAPPING_RESET
     };
-    expect(actions.resetNewMapping()).toEqual(expectedAction);
+    assert.deepEqual(actions.resetNewMapping(), expectedAction);
   });
 });

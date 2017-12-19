@@ -1,4 +1,6 @@
-import * as actions from '../../../src/common/actions/requests.js';
+import assert from 'assert';
+
+import * as actions from 'common/actions/requests.js';
 
 const request = {
   request: {},
@@ -14,7 +16,7 @@ describe('request actions', () => {
       filter
     };
 
-    expect(actions.setRequestFilter(filter)).toEqual(expectedAction);
+    assert.deepEqual(actions.setRequestFilter(filter), expectedAction);
   });
 
   it('should create an action to clear the active request', () => {
@@ -22,7 +24,7 @@ describe('request actions', () => {
       type: actions.SET_ACTIVE_REQUEST,
       request: null
     };
-    expect(actions.setActiveRequest()).toEqual(expectedAction);
+    assert.deepEqual(actions.setActiveRequest(), expectedAction);
   });
 
   it('should create an action to set the active request', () => {
@@ -30,7 +32,7 @@ describe('request actions', () => {
       type: actions.SET_ACTIVE_REQUEST,
       request
     };
-    expect(actions.setActiveRequest(request)).toEqual(expectedAction);
+    assert.deepEqual(actions.setActiveRequest(request), expectedAction);
   });
 
   it('should create an action to clear the active context', () => {
@@ -38,7 +40,7 @@ describe('request actions', () => {
       type: actions.SET_CONTEXT_REQUEST,
       request: null
     };
-    expect(actions.setContextRequest()).toEqual(expectedAction);
+    assert.deepEqual(actions.setContextRequest(), expectedAction);
   });
 
   it('should create an action to set the active context', () => {
@@ -46,7 +48,7 @@ describe('request actions', () => {
       type: actions.SET_CONTEXT_REQUEST,
       request
     };
-    expect(actions.setContextRequest(request)).toEqual(expectedAction);
+    assert.deepEqual(actions.setContextRequest(request), expectedAction);
   });
 
   it('should create an action to sync url mappings', () => {
@@ -55,6 +57,6 @@ describe('request actions', () => {
       type: actions.SYNC_REQUESTS,
       requestData
     };
-    expect(actions.syncRequests({requestData})).toEqual(expectedAction);
+    assert.deepEqual(actions.syncRequests({requestData}), expectedAction);
   });
 });

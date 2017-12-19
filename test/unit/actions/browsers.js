@@ -1,4 +1,6 @@
-import * as actions from '../../../src/common/actions/browsers.js';
+import assert from 'assert';
+
+import * as actions from 'common/actions/browsers.js';
 
 const browsers = [{}];
 
@@ -10,7 +12,7 @@ describe('browser actions', () => {
       type: actions.ADD_BROWSERS,
       browsers: []
     };
-    expect(actions.addBrowsers()).toEqual(expectedAction);
+    assert.deepEqual(actions.addBrowsers(), expectedAction);
   });
 
   it('should create an action to add browsers', () => {
@@ -18,7 +20,7 @@ describe('browser actions', () => {
       type: actions.ADD_BROWSERS,
       browsers
     };
-    expect(actions.addBrowsers(browsers)).toEqual(expectedAction);
+    assert.deepEqual(actions.addBrowsers(browsers), expectedAction);
   });
 
   it('should create an action to update a browser', () => {
@@ -29,6 +31,6 @@ describe('browser actions', () => {
       browser,
       status
     };
-    expect(actions.disableBrowser(browser, status)).toEqual(expectedAction);
+    assert.deepEqual(actions.disableBrowser(browser, status), expectedAction);
   });
 });
