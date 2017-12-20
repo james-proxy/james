@@ -14,8 +14,4 @@ install:
 build_script:
   - npm run dist:win64
 
-environment:
-  GH_TOKEN:
-      secure: HnT2ViVK97gtyZrlPH1C9zM/m3YErp8kY9FtO7wUhcoLG8TZiR1oLiBx+27eCWrX
-
 test: off
