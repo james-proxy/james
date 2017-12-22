@@ -1,4 +1,5 @@
 import { autoUpdater } from 'electron-updater';
+import Raven from 'raven';
 
 import constants from 'common/constants.js';
 
@@ -13,7 +14,7 @@ export default (win, enabled) => {
   autoUpdater.checkForUpdates();
 
   const updateStatus = (status, info) => {
-    console.log(status, info);  // eslint-disable-line no-console
+    console.log('[update status]', status, info);  // eslint-disable-line no-console
     win.webContents.send('updater-status', {
       status,
       info
@@ -41,6 +42,7 @@ export default (win, enabled) => {
   });
   
   autoUpdater.on('error', (err) => {
-    updateStatus(constants.UPDATE_ERROR, err);
+    updateStatus(constants.UPDATE_ERROR, err.message);
+    Raven.captureException(err);
   });
 };

@@ -37,7 +37,6 @@ const TitleBar = ({ urlMapCount }) => {
 };
 
 TitleBar.propTypes = {
-  openDevTools: PropTypes.func.isRequired,
   urlMapCount: PropTypes.number.isRequired
 };
 

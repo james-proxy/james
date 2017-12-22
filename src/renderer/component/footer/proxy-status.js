@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import constants from 'common/constants.js';
+import { ProxyStatus as ProxyStatusTypes } from 'common/prop-types.js';
 
 const iconMap = {
   [constants.PROXY_STATUS_STARTING]: 'fa-hourglass-half',
@@ -39,13 +40,7 @@ const ProxyStatus = ({proxyStatus, proxyReason}) => {
 };
 
 ProxyStatus.propTypes = {
-  proxyStatus: PropTypes.oneOf([
-    constants.PROXY_STATUS_STARTING,
-    constants.PROXY_STATUS_WORKING,
-    constants.PROXY_STATUS_NO_HTTPS,
-    constants.PROXY_STATUS_ERROR_ADDRESS_IN_USE,
-    constants.PROXY_STATUS_ERROR_GENERIC
-  ]).isRequired,
+  proxyStatus: ProxyStatusTypes.isRequired,
   proxyReason: PropTypes.string,
   proxyMessage: PropTypes.string
 };

@@ -8,7 +8,10 @@ import RequestCount from './request-count.js';
 import ProxyStatus from './proxy-status.js';
 import UpdateStatus from './update-status';
 
-import constants from 'common/constants.js';
+import { 
+  ProxyStatus as ProxyStatusTypes,
+  UpdateStatus as UpdateStatusTypes
+} from 'common/prop-types';
 import {
   toggleCaching,
   toggleThrottling as toggleThrottle,
@@ -49,13 +52,7 @@ const Footer = props =>
 Footer.propTypes = {
   cachingEnabled: PropTypes.bool.isRequired,
   toggleCaching: PropTypes.func.isRequired,
-  proxyStatus: PropTypes.oneOf([
-    constants.PROXY_STATUS_STARTING,
-    constants.PROXY_STATUS_WORKING,
-    constants.PROXY_STATUS_NO_HTTPS,
-    constants.PROXY_STATUS_ERROR_ADDRESS_IN_USE,
-    constants.PROXY_STATUS_ERROR_GENERIC
-  ]).isRequired,
+  proxyStatus: ProxyStatusTypes.isRequired,
   proxyReason: PropTypes.string,
   proxyMessage: PropTypes.string,
   requestData: PropTypes.object.isRequired,
@@ -64,15 +61,8 @@ Footer.propTypes = {
   setThrottleRate: PropTypes.func.isRequired,
   throttleEnabled: PropTypes.bool,
   throttleRate: PropTypes.number,
-  updateStatus: PropTypes.oneOf([
-    constants.UPDATE_OK,
-    constants.UPDATE_CHECKING,
-    constants.UPDATE_AVAILABLE,
-    constants.UPDATE_DOWNLOADING,
-    constants.UPDATE_READY,
-    constants.UPDATE_ERROR
-  ]),
-  updateInfo: PropTypes.object
+  updateStatus: UpdateStatusTypes,
+  updateInfo: PropTypes.any
 };
 
 const mapStateToProps = (state) => {

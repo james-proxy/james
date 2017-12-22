@@ -11,6 +11,7 @@ import { Provider } from 'react-redux';
 import { ConnectedRouter as Router } from 'react-router-redux';
 import createHistory from 'history/createBrowserHistory';
 import throttle from 'lodash.throttle';
+import Raven from 'raven-js';
 
 import config from 'common/config.js';
 import ravenInit from 'common/service/raven.js';
@@ -28,7 +29,7 @@ import App from './containers/app';
 
 import './resources/style/main.scss';
 
-ravenInit();
+ravenInit(Raven);
 
 const history = createHistory();
 const store = setupStore(history);

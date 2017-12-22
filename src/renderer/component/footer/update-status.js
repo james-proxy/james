@@ -5,11 +5,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import constants from 'common/constants.js';
+import { UpdateStatus as UpdateStatusTypes } from 'common/prop-types';
 
-const openChangelog = (e) => {
+const launchURL = (e, url) => {
   e.preventDefault();
-  shell.openExternal('https://github.com/james-proxy/james/blob/master/CHANGELOG.md');
+  shell.openExternal(url);
 };
+
+const openChangelog = e => launchURL(e, 'https://github.com/james-proxy/james/blob/master/CHANGELOG.md');
+const openIssues = e => launchURL(e, 'https://github.com/james-proxy/james/issues');
 
 const restart = (e) => {
   e.preventDefault();
@@ -22,13 +26,13 @@ const statusMap = {
   [constants.UPDATE_CHECKING]: () => ({
     title: 'Checking for updates...'
   }),
-  [constants.UPDATE_AVAILABLE]: () => ({
-    message: 'An update is available!',
+  [constants.UPDATE_AVAILABLE]: info => ({
+    message: `James ${info.version} is available!`,
     title: 'Show changelog',
     onClick: openChangelog
   }),
   [constants.UPDATE_DOWNLOADING]: progress => ({
-    message: `Downloading update... ${progress.percent}%`,
+    message: `Downloading update (${progress.percent.toFixed(0)}%)`,
     title: 'Show changelog',
     onClick: openChangelog
   }),
@@ -39,14 +43,15 @@ const statusMap = {
   }),
   [constants.UPDATE_ERROR]: err => ({
     message: 'Unable to update',
-    title: err
+    title: err,
+    onClick: openIssues
   })
 };
 
-const UpdateStatus = ({status}) => {
+const UpdateStatus = ({status, info}) => {
   const icon = 'fa fa-cloud-upload';
   const classes = `update-status ${status}`;
-  const { message, title, onClick } = statusMap[status];
+  const { message, title, onClick } = statusMap[status](info);
 
   return <div className={classes} title={title} onClick={onClick}>
     <i className={icon} />
@@ -55,15 +60,8 @@ const UpdateStatus = ({status}) => {
 };
 
 UpdateStatus.propTypes = {
-  status: PropTypes.oneOf([
-    constants.UPDATE_OK,
-    constants.UPDATE_CHECKING,
-    constants.UPDATE_AVAILABLE,
-    constants.UPDATE_DOWNLOADING,
-    constants.UPDATE_READY,
-    constants.UPDATE_ERROR
-  ]),
-  info: PropTypes.object
+  status: UpdateStatusTypes,
+  info: PropTypes.any
 };
 
 export default UpdateStatus;

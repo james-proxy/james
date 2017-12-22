@@ -11,7 +11,8 @@ install:
   - ps: Install-Product node 8 x64
   - npm install
 
+test_script:
+  - npm run test-ci
+
 build_script:
   - npm run dist:win64
-
-test: off
