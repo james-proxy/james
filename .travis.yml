@@ -3,6 +3,7 @@ dist: trusty
 matrix:
   include:
   - os: linux
+    sudo: false
   - os: osx
     osx_image: xcode9
 language: node_js
