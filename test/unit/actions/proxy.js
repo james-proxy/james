@@ -1,19 +1,21 @@
-import * as actions from '../../../src/actions/proxy.js';
-import constants from '../../../src/constants.js';
+import assert from 'assert';
+
+import * as actions from 'common/actions/proxy.js';
+import constants from 'common/constants.js';
 
 describe('proxy actions', () => {
   it('should create an action to toggle caching', () => {
     const expectedAction = {
       type: actions.TOGGLE_CACHING
     };
-    expect(actions.toggleCaching()).toEqual(expectedAction);
+    assert.deepEqual(actions.toggleCaching(), expectedAction);
   });
 
   it('should create an action to toggle throttling', () => {
     const expectedAction = {
       type: actions.TOGGLE_THROTTLING
     };
-    expect(actions.toggleThrottling()).toEqual(expectedAction);
+    assert.deepEqual(actions.toggleThrottling(), expectedAction);
   });
 
   it('should create an action to set throttle rate (default)', () => {
@@ -21,7 +23,7 @@ describe('proxy actions', () => {
       type: actions.SET_THROTTLE_RATE,
       rate: 0
     };
-    expect(actions.setThrottleRate()).toEqual(expectedAction);
+    assert.deepEqual(actions.setThrottleRate(), expectedAction);
   });
 
   it('should create an action to set throttle rate to 10', () => {
@@ -30,7 +32,7 @@ describe('proxy actions', () => {
       type: actions.SET_THROTTLE_RATE,
       rate
     };
-    expect(actions.setThrottleRate(rate)).toEqual(expectedAction);
+    assert.deepEqual(actions.setThrottleRate(rate), expectedAction);
   });
 
   it('should create an action to update proxy status (default)', () => {
@@ -39,7 +41,7 @@ describe('proxy actions', () => {
       status: constants.PROXY_STATUS_WORKING,
       reason: undefined
     };
-    expect(actions.updateProxyStatus()).toEqual(expectedAction);
+    assert.deepEqual(actions.updateProxyStatus(), expectedAction);
   });
 
   it('should create an action to update proxy status to no-https', () => {
@@ -51,13 +53,13 @@ describe('proxy actions', () => {
       status,
       reason
     };
-    expect(actions.updateProxyStatus({status, reason})).toEqual(expectedAction);
+    assert.deepEqual(actions.updateProxyStatus({status, reason}), expectedAction);
   });
 
   it('should create an action to clear requests', () => {
     const expectedAction = {
       type: actions.CLEAR_REQUESTS
     };
-    expect(actions.clearRequests()).toEqual(expectedAction);
+    assert.deepEqual(actions.clearRequests(), expectedAction);
   });
 });

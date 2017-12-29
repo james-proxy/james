@@ -1,4 +1,7 @@
-import Proxy from '../../../src/service/proxy.js';
+import assert from 'assert';
+import sinon from 'sinon';
+
+import Proxy from 'common/service/proxy.js';
 
 describe('Proxy', function() {
   const update = () => {
@@ -89,12 +92,12 @@ describe('Proxy', function() {
   describe('getRequestData', function() {
     it('has no requests on startup', function() {
       const requestData = proxy.getRequestData();
-
-      expect(requestData).toEqual({
+      const expectedRequestData = {
         requests: [],
         totalCount: 0,
         filteredCount: 0
-      });
+      };
+      assert.deepEqual(requestData, expectedRequestData);
     });
 
     describe('after intercepted requests', function() {
@@ -104,12 +107,12 @@ describe('Proxy', function() {
 
       it('returns a totalCount value of 1', function() {
         const requestData = proxy.getRequestData();
-        expect(requestData.totalCount).toEqual(1);
+        assert(requestData.totalCount === 1);
       });
 
       it('returns a filteredCount value of 1', function() {
         const requestData = proxy.getRequestData();
-        expect(requestData.totalCount).toEqual(1);
+        assert(requestData.totalCount === 1);
       });
 
       it('returns a totalCount value of 20 after intercepting 20 requests', function() {
@@ -119,28 +122,28 @@ describe('Proxy', function() {
         }
 
         const requestData = proxy.getRequestData();
-        expect(requestData.totalCount).toEqual(20);
+        assert(requestData.totalCount === 20);
       });
 
       it('filters by url and returns an array only with matching requests', function() {
         generateRequest();
         const filter = 'url1';
         const requestData = proxy.getRequestData(filter);
-        expect(requestData.requests[0].request.fullUrl()).toEqual('url1');
+        assert(requestData.requests[0].request.fullUrl() === 'url1');
       });
 
       it('shows the correct totalCount even when requests are filtered', function() {
         generateRequest();
         const filter = 'url1';
         const requestData = proxy.getRequestData(filter);
-        expect(requestData.totalCount).toEqual(2);
+        assert(requestData.totalCount === 2);
       });
 
       it('shows the correct filteredCount when requests are filtered', function() {
         generateRequest();
         const filter = 'url1';
         const requestData = proxy.getRequestData(filter);
-        expect(requestData.filteredCount).toEqual(1);
+        assert(requestData.filteredCount === 1);
       });
     });
   });
@@ -157,7 +160,7 @@ describe('Proxy', function() {
 
       const request = generateRequest();
 
-      expect(request.fullUrl).toHaveBeenCalledWith('mappedUrl');
+      assert(request.fullUrl.calledWith('mappedUrl'));
     });
 
     it('maps requests to local files', function() {
@@ -171,52 +174,52 @@ describe('Proxy', function() {
 
       generateRequest();
 
-      expect(cycle.serve).toHaveBeenCalledWith({
+      assert(cycle.serve.calledWith({
         path: '/local/path'
-      });
+      }));
     });
   });
 
   describe('hoxy integration', function() {
     it('registers a callback to intercept requests', function() {
-      expect(hoxyInstanceMock.intercept).toHaveBeenCalledWith('request');
+      assert(hoxyInstanceMock.intercept.calledWith('request'));
     });
     it('registers a callback to intercept responses', function() {
-      expect(hoxyInstanceMock.intercept).toHaveBeenCalledWith('response-sent');
+      assert(hoxyInstanceMock.intercept.calledWith('response-sent'));
     });
     it('registers a callback to intercept responses', function() {
-      expect(hoxyInstanceMock.intercept).toHaveBeenCalledWith('response');
+      assert(hoxyInstanceMock.intercept.calledWith('response'));
     });
   });
 
   describe('caching', function() {
     it('removes the header `if-modified-since`', function() {
       const response = generateRequest();
-      expect(response.headers['if-modified-since']).toBe(undefined);
+      assert(response.headers['if-modified-since'] === undefined);
     });
     it('removes the header `if-none-match`', function() {
       const response = generateRequest();
-      expect(response.headers['if-none-match']).toBe(undefined);
+      assert(response.headers['if-none-match'] === undefined);
     });
     it('removes the header `etag`', function() {
       const response = generateRequest();
-      expect(response.headers.etag).toBe(undefined);
+      assert(response.headers.etag === undefined);
     });
     it('removes the header `last-modified`', function() {
       const response = generateRequest();
-      expect(response.headers['last-modified']).toBe(undefined);
+      assert(response.headers['last-modified'] === undefined);
     });
     it('changes the header `pragma` to `no-cache`', function() {
       const response = generateRequest();
-      expect(response.headers.pragma).toBe('no-cache');
+      assert(response.headers.pragma === 'no-cache');
     });
     it('changes the header `cache-control` to `no-cache`', function() {
       const response = generateRequest();
-      expect(response.headers['cache-control']).toBe('no-cache');
+      assert(response.headers['cache-control'] === 'no-cache');
     });
     it('changes the header `expires` to `0`', function() {
       const response = generateRequest();
-      expect(response.headers.expires).toBe('0');
+      assert(response.headers.expires === '0');
     });
   });
 
@@ -224,12 +227,12 @@ describe('Proxy', function() {
     it('removes all requests', function() {
       generateRequest();
       proxy.clear();
-      expect(proxy.getRequestData().requests.length).toBe(0);
+      assert(proxy.getRequestData().requests.length === 0);
     });
     it('returns the correct totalCount after clearing', function() {
       generateRequest();
       proxy.clear();
-      expect(proxy.getRequestData().totalCount).toBe(0);
+      assert(proxy.getRequestData().totalCount === 0);
     });
   });
 });

@@ -5,27 +5,18 @@
 James is an HTTP Proxy and Monitor that enables developers to view and intercept requests made from the browser.
 It is an open-source alternative to the popular developer tool [Charles](http://www.charlesproxy.com/)
 
-James is build with [hoxy](https://github.com/greim/hoxy), [electron](https://github.com/atom/electron) and [react](https://facebook.github.io/react/index.html)
+James is built with [hoxy](https://github.com/greim/hoxy), [electron](https://github.com/atom/electron) and [react](https://reactjs.org/)
 
-![](resource-compile/screenshot-1.png)
+![](resources/screenshot-1.png)
 
 ## Installing
 Download the correct version for your OS and run
 
 [![All platforms download](https://img.shields.io/badge/download-any_platform-green.svg)](https://github.com/james-proxy/james/releases/latest)
 
-## Running in a development environment
+## Features
 
-The electron instance will automatically reload whenever a change is made
-
- 1. Clone the repository
- 2. `npm install`
- 3. `npm run build`
- 4. `npm start`
-
-## URL Mapping
-
-### Wildcard support
+### Wildcard URL Mappings
 
 To use wildcards in the "url to map" field, put a "*" between two adjacent slashes. For example:
 ```
@@ -42,33 +33,40 @@ Requests which will **not** be redirected:
 
 You can also use multiple wildcards in the same URL.
  
-## HTTPs Support
+### HTTPS Proxying
 
-To enable HTTPs support follow the [instructions in our wiki](https://github.com/james-proxy/james/wiki)
-
-## Other useful NPM Commands
-
-- `npm run build`: Completely builds the app
-- `npm run watch`: Watches JS, SASS and resource files, transpiling/copying them automatically. Lints sources on-change
-- `npm run lint`: Checks all JS code against defined code styling rules
-- `npm run test`: Runs all tests
-- `npm run package`: Creates a standalone app bundle for all operating systems
-
-## Communication
-
-We're using [Matrix](http://matrix.org/) for communication, and you can use the
-[Vector.im client to join the room.](https://vector.im/beta/#/room/#james:matrix.org)
-(If it doesn't load when you click "join", refresh the page).
+To enable HTTPS support follow the [instructions in our wiki](https://github.com/james-proxy/james/wiki)
 
 ## Contributing
 
 Feel free to open pull requests and issues!
 If you need inspiration, take a look in the issue section.
 
+### Setting up a development environment
+
+The electron instance will automatically reload whenever a change is made
+
+ 1. Clone the repository
+ 2. `npm install`
+ 3. `npm start`
+
+### Other useful npm commands
+
+- `npm test`: Runs all tests
+- `npm run build`: Completely builds the app (no watch)
+- `npm run lint`: Checks all JS code against defined code styling rules
+- `npm run dist`: Creates a standalone app bundle for all operating systems
+
 ### Guidelines
 - Make sure that no tests are failing
 - Always add tests for new features
 - Make sure that there are no linting errors in your code (use `npm run lint`)
+
+### Communication
+
+We're using [Matrix](https://matrix.org/) for communication, and you can use the
+[Vector.im client to join the room.](https://vector.im/beta/#/room/#james:matrix.org)
+(If it doesn't load when you click "join", refresh the page).
 
 ### Contributors
 - @davidneat

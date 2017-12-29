@@ -1,5 +1,4 @@
-build
-package
+dist
 node_modules
 binaries
 npm-debug.log

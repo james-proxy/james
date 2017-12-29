@@ -10,96 +10,101 @@
   },
   "main": "main/index.js",
   "scripts": {
-    "build": "gulp",
-    "start": "electron ./build",
-    "watch": "gulp watch",
-    "development": "gulp livereload",
+    "postinstall": "npm run build:dll",
+    "prebuild": "npm run clean",
+    "build": "electron-webpack",
+    "build:dll": "electron-webpack dll",
+    "clean": "rimraf dist/ binaries/",
+    "start": "electron-webpack dev",
+    "dev": "npm start",
+    "development": "npm start",
     "lint": "eslint ./src ./test",
-    "test": "electron-mocha --renderer --reporter dot --recursive -r setup-referee-sinon/globals test/unit --compilers js:babel-core/register",
+    "test": "mocha-webpack --reporter dot --webpack-config webpack.test.config.js --recursive test/unit",
     "test-ci": "npm run lint && npm run test",
-    "package": "npm run dist",
-    "predist": "gulp clean dist-prep",
-    "predist:win64": "gulp clean dist-prep",
+    "predist": "npm run build",
     "dist": "build --x64",
+    "predist:win64": "npm run build",
     "dist:win64": "build --windows --x64"
   },
   "dependencies": {
-    "electron-squirrel-startup": "^1.0.0",
+    "electron-updater": "^2.17.6",
+    "font-awesome": "^4.5.0",
+    "history": "^4.7.2",
     "hoxy": "^3.2.0",
     "james-browser-launcher": "^1.3.0",
     "lodash.throttle": "^4.1.0",
     "materialize-css": "^0.97.5",
     "nedb": "^1.7.1",
-    "raven-js": "^3.0.2",
-    "react": "^15.0.0",
-    "react-dom": "^15.0.0",
-    "react-redux": "^4.4.5",
-    "react-router": "^2.4.0",
-    "react-router-redux": "^4.0.4",
+    "prop-types": "^15.6.0",
+    "raven": "^2.3.0",
+    "raven-js": "^3.21.0",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
+    "react-loadable": "^5.3.1",
+    "react-redux": "^5.0.6",
+    "react-router-dom": "^4.2.2",
+    "react-router-redux": "^5.0.0-alpha.8",
     "redux": "^3.5.2",
-    "redux-logger": "^2.6.1",
+    "redux-logger": "^3.0.6",
     "redux-thunk": "^2.0.1",
+    "source-map-support": "^0.5.0",
     "uniqid": "^4.0.0"
   },
   "devDependencies": {
-    "babel-core": "^6.4.5",
-    "babel-eslint": "^7.0.0",
-    "babel-plugin-transform-object-rest-spread": "^6.3.13",
-    "babel-preset-es2015": "^6.6.0",
-    "babel-preset-react": "^6.3.13",
-    "browserify": "^13.0.0",
-    "del": "^2.2.0",
-    "electron-builder": "^7.13.0",
-    "electron-connect": "^0.6.0",
-    "electron-localshortcut": "^0.6.0",
-    "electron-mocha": "^3.0.6",
-    "electron-prebuilt": "1.4.3",
-    "envify": "^3.4.0",
-    "eslint": "^3.0.0",
-    "eslint-plugin-react": "^6.1.0",
-    "event-stream": "^3.3.2",
-    "font-awesome": "^4.5.0",
-    "gulp": "^3.9.0",
-    "gulp-babel": "^6.1.1",
-    "gulp-if": "^2.0.0",
-    "gulp-json-editor": "^2.2.1",
-    "gulp-newer": "^1.2.0",
-    "gulp-rename": "^1.2.2",
-    "gulp-sass": "^3.1.0",
-    "gulp-sourcemaps": "^1.6.0",
-    "gulp-useref": "^3.0.5",
-    "mocha": "^3.0.1",
+    "babel-eslint": "^8.0.3",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-preset-power-assert": "^1.0.0",
+    "babel-preset-react": "^6.24.1",
+    "electron": "^1.7.10",
+    "electron-builder": "^19.49.0",
+    "electron-localshortcut": "^2.0.2",
+    "electron-webpack": "^1.11.0",
+    "eslint": "^4.13.1",
+    "eslint-plugin-react": "^7.5.1",
+    "mocha": "^4.0.1",
+    "mocha-webpack": "^1.0.1",
+    "node-sass": "4.7.2",
+    "power-assert": "^1.4.4",
     "redux-mock-store": "^1.0.4",
-    "referee": "^1.2.0",
-    "referee-sinon": "^1.0.3",
-    "rimraf": "^2.5.0",
-    "setup-referee-sinon": "^0.3.0",
-    "sinon": "^1.17.2",
-    "sinon-as-promised": "^4.0.0",
-    "vinyl-source-stream": "^1.1.0"
+    "rimraf": "^2.6.2",
+    "sass-loader": "^6.0.6",
+    "sinon": "^4.1.3",
+    "webpack": "^3.10.0",
+    "webpack-sources": "^1.0.1"
   },
-  "babel": {
-    "presets": [
-      "react",
-      "es2015"
-    ],
-    "plugins": [
-      "transform-object-rest-spread"
-    ]
+  "electronWebpack": {
+    "title": "James Proxy",
+    "renderer": {
+      "dll": [
+        "react",
+        "react-dom",
+        "react-router-dom",
+        "react-loadable",
+        "redux",
+        "redux-thunk",
+        "redux-logger",
+        "react-router-redux",
+        "raven-js",
+        "history",
+        "font-awesome",
+        "materialize-css",
+        "source-map-support"
+      ]
+    }
   },
   "build": {
     "appId": "com.jamesproxy.james",
-    "category": "public.app-category.productivity",
     "productName": "James",
     "mac": {
-      "icon": "resource-compile/icon.icns"
+      "category": "public.app-category.productivity",
+      "icon": "resources/icon.icns"
     },
     "dmg": {
-      "icon": "resource-compile/icon.icns",
-      "background": "resource-compile/icon.png"
+      "icon": "resources/icon.icns",
+      "background": "resources/icon.png"
     },
     "win": {
-      "iconUrl": "https://github.com/mitchhentges/james/blob/electron-builder/resource-compile/icon.ico?raw=true"
+      "icon": "resources/icon.ico"
     },
     "linux": {
       "target": [
@@ -107,11 +112,11 @@
         "deb"
       ],
       "synopsis": "Web proxy"
-    }
-  },
-  "directories": {
-    "buildResources": "resource-compile",
-    "output": "binaries",
-    "app": "./package"
+    },
+    "directories": {
+      "buildResources": "resources",
+      "output": "binaries"
+    },
+    "publish": "github"
   }
 }
