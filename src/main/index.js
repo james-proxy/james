@@ -48,7 +48,7 @@ Raven.context(() => {
     }
     mainWindow.loadURL(rendererURL);
     if (constants.DEV) {
-      mainWindow.webContents.openDevTools();
+      mainWindow.webContents.openDevTools({mode: 'detach'});
     }
 
     mainWindow.webContents.on('did-finish-load', () => {
