@@ -39,13 +39,13 @@ const Footer = props =>
       requestData={props.requestData}
       clearRequests={props.clearRequests}
     />
-    <ProxyStatus
-      proxyStatus={props.proxyStatus}
-      proxyReason={props.proxyReason}
-    />
     <UpdateStatus
       status={props.updateStatus}
       info={props.updateInfo}
+    />
+    <ProxyStatus
+      proxyStatus={props.proxyStatus}
+      proxyReason={props.proxyReason}
     />
   </div>;
 
