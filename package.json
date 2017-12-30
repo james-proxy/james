@@ -108,8 +108,7 @@
     },
     "linux": {
       "target": [
-        "AppImage",
-        "deb"
+        "AppImage"
       ],
       "category": "WebDevelopment",
       "synopsis": "Web proxy"
