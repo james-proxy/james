@@ -50,8 +50,7 @@ class ProxyHandler extends EventEmitter {
       if (event.code === 'EADDRINUSE') {
         this.onStatusChange_({
           status: constants.PROXY_STATUS_ERROR_ADDRESS_IN_USE,
-          error: true,
-          reason
+          error: true
         });
       }
     });

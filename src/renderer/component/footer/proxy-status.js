@@ -21,9 +21,7 @@ const messageMap = {
 };
 
 const getMessage = (status) => {
-  if (!messageMap[status]) {
-    return label;
-  }
+  if (!messageMap[status]) return status;
   return messageMap[status];
 };
 
