@@ -111,6 +111,7 @@
         "AppImage",
         "deb"
       ],
+      "category": "WebDevelopment",
       "synopsis": "Web proxy"
     },
     "directories": {
