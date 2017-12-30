@@ -27,7 +27,7 @@
     "dist:win64": "build --windows --x64"
   },
   "dependencies": {
-    "electron-updater": "^2.17.6",
+    "electron-updater": "2.16.3",
     "font-awesome": "^4.5.0",
     "history": "^4.7.2",
     "hoxy": "^3.2.0",
@@ -51,17 +51,17 @@
     "uniqid": "^4.0.0"
   },
   "devDependencies": {
-    "babel-eslint": "^8.0.3",
+    "babel-eslint": "^8.1.2",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-preset-power-assert": "^1.0.0",
     "babel-preset-react": "^6.24.1",
     "electron": "^1.7.10",
-    "electron-builder": "^19.49.0",
+    "electron-builder": "^19.49.4",
     "electron-localshortcut": "^2.0.2",
     "electron-webpack": "^1.11.0",
-    "eslint": "^4.13.1",
+    "eslint": "^4.14.0",
     "eslint-plugin-react": "^7.5.1",
-    "mocha": "^4.0.1",
+    "mocha": "^4.1.0",
     "mocha-webpack": "^1.0.1",
     "node-sass": "4.7.2",
     "power-assert": "^1.4.4",
