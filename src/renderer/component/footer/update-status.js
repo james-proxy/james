@@ -45,9 +45,10 @@ const statusMap = {
     title: 'Show changelog',
     onClick: openChangelog
   }),
-  [constants.UPDATE_READY]: () => ({
+  [constants.UPDATE_READY]: info => ({
     message: 'Restart to update!',
-    icon: 'fa-cloud-upload'
+    icon: 'fa-cloud-upload',
+    title: `James ${info.version} is ready to launch`
   }),
   [constants.UPDATE_ERROR]: err => ({
     message: 'Unable to update',
