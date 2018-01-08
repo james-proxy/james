@@ -45,11 +45,9 @@ const statusMap = {
     title: 'Show changelog',
     onClick: openChangelog
   }),
-  [constants.UPDATE_READY]: info => ({
+  [constants.UPDATE_READY]: () => ({
     message: 'Restart to update!',
-    icon: 'fa-cloud-upload',
-    title: `Restart and install James ${info.version}`,
-    onClick: restart
+    icon: 'fa-cloud-upload'
   }),
   [constants.UPDATE_ERROR]: err => ({
     message: 'Unable to update',
@@ -60,8 +58,8 @@ const statusMap = {
 };
 
 const UpdateStatus = ({status, info}) => {
-  const classes = `update-status ${status}`;
   const { message, icon, title, onClick } = statusMap[status](info);
+  const classes = `update-status ${onClick ? 'has-action' : ''}`;
 
   return <div className={classes} title={title} onClick={onClick}>
     <i className={`fa ${icon}`} />
