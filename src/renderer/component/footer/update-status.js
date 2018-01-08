@@ -1,5 +1,4 @@
-import { remote, shell } from 'electron';
-const { app } = remote;
+import { shell } from 'electron';
 
 import React from 'react';
 import PropTypes from 'prop-types';
@@ -15,12 +14,6 @@ const launchURL = (e, url) => {
 
 const openChangelog = e => launchURL(e, 'https://github.com/james-proxy/james/blob/master/CHANGELOG.md');
 const openIssues = e => launchURL(e, 'https://github.com/james-proxy/james/issues');
-
-const restart = (e) => {
-  e.preventDefault();
-  app.relaunch();
-  app.quit();
-};
 
 const statusMap = {
   [constants.UPDATE_OK]: () => ({
