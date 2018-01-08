@@ -59,7 +59,7 @@ const statusMap = {
 
 const UpdateStatus = ({status, info}) => {
   const { message, icon, title, onClick } = statusMap[status](info);
-  const classes = `update-status ${onClick ? 'has-action' : ''}`;
+  const classes = `update-status ${status} ${onClick ? 'has-action' : ''}`;
 
   return <div className={classes} title={title} onClick={onClick}>
     <i className={`fa ${icon}`} />
