@@ -1,5 +1,4 @@
-import { remote, shell } from 'electron';
-const { app } = remote;
+import { shell } from 'electron';
 
 import React from 'react';
 import PropTypes from 'prop-types';
@@ -15,12 +14,6 @@ const launchURL = (e, url) => {
 
 const openChangelog = e => launchURL(e, 'https://github.com/james-proxy/james/blob/master/CHANGELOG.md');
 const openIssues = e => launchURL(e, 'https://github.com/james-proxy/james/issues');
-
-const restart = (e) => {
-  e.preventDefault();
-  app.relaunch();
-  app.quit();
-};
 
 const statusMap = {
   [constants.UPDATE_OK]: () => ({
@@ -48,8 +41,7 @@ const statusMap = {
   [constants.UPDATE_READY]: info => ({
     message: 'Restart to update!',
     icon: 'fa-cloud-upload',
-    title: `Restart and install James ${info.version}`,
-    onClick: restart
+    title: `James ${info.version} is ready to launch`
   }),
   [constants.UPDATE_ERROR]: err => ({
     message: 'Unable to update',
@@ -60,8 +52,8 @@ const statusMap = {
 };
 
 const UpdateStatus = ({status, info}) => {
-  const classes = `update-status ${status}`;
   const { message, icon, title, onClick } = statusMap[status](info);
+  const classes = `update-status ${status} ${onClick ? 'has-action' : ''}`;
 
   return <div className={classes} title={title} onClick={onClick}>
     <i className={`fa ${icon}`} />

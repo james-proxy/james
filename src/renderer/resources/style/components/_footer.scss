@@ -63,9 +63,7 @@
      display: inline;
      float: right;
   
-     &.available,
-     &.downloading,
-     &.ready {
+     &.has-action {
        cursor: pointer;
      }
   
