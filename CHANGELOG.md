@@ -1,6 +1,17 @@
 ## Upcoming Release
 
 #### User features
+- Nothing yet
+
+#### Developer features
+- Nothing yet
+
+#### Bugfixes
+- Nothing yet
+
+# 2.0.0
+
+#### User features
 - Launch multiple browsers without clearing requests each time (i: @tomitm, r: @mitchhentges)
 - Include AppImage as a Linux build target (i: @tomitm, r: @mitchhentges)
 
