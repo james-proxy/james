@@ -14,6 +14,7 @@
 #### User features
 - Launch multiple browsers without clearing requests each time (i: @tomitm, r: @mitchhentges)
 - Include AppImage as a Linux build target (i: @tomitm, r: @mitchhentges)
+- Auto-updates! (i: @tomitm, r: @mitchhentges)
 
 #### Developer Features
 - Redux (i: @tomitm, r: @mitchhentges)
@@ -32,6 +33,7 @@
 - Change the file input to a button (fixes #329) (i: @nerdbeere, r: @mitchhentges)
 - Use version 1.3.0 of james-browser-launcher (#331) (i: @nerdbeere, r: @mitchhentges)
 - Update gulp-sass to latest version to support node 8 (#340) (i: @mitchhentges, r: @nerdbeere)
+- Fix "Choose file" button not being functional (i: @tomitm, r: @mitchhentges)
 
 ## 1.5.0
 
