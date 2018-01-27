@@ -1,7 +1,8 @@
 .throttle {
   display: inline;
 
-  input {
+  // need to provide [type="text"] for added specificity, otherwise materialize-css defaults are prioritized
+  input[type="text"] {
     width: 50px;
     height: inherit;
     margin: 0 5px;
@@ -10,7 +11,7 @@
     text-align: right;
   }
 
-  input:focus {
+  input[type="text"]:focus {
     margin-bottom: 0;
   }
 }
