@@ -10,8 +10,8 @@ export default class Proxy {
 
     this._proxy = createHoxy();
     this._proxy.intercept('response-sent', this._onResponseSent.bind(this));
-    this._proxy.intercept('request', this._onInterceptRequest.bind(this));
-    this._proxy.intercept('response', this._onInterceptResponse.bind(this));
+    this._proxy.intercept({phase: 'request', as: 'string'}, this._onInterceptRequest.bind(this));
+    this._proxy.intercept({phase: 'response', as: 'string'} , this._onInterceptResponse.bind(this));
   }
 
   _onResponseSent(req) {
@@ -32,6 +32,9 @@ export default class Proxy {
       response.headers.pragma = 'no-cache';
       response.headers['cache-control'] = 'no-cache';
     }
+    response.body = {
+      string: response.string
+    };
   }
 
   _onInterceptRequest(request, response, cycle) {
@@ -45,7 +48,11 @@ export default class Proxy {
       port: request.port,
       protocol: request.protocol,
       hostname: request.hostname,
+      string: request.string,
       url: request.url
+    };
+    request.body = {
+      string: request.string
     };
 
     const requestContainer = {
