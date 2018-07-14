@@ -11,7 +11,7 @@ export default class Proxy {
     this._proxy = createHoxy();
     this._proxy.intercept('response-sent', this._onResponseSent.bind(this));
     this._proxy.intercept({phase: 'request', as: 'string'}, this._onInterceptRequest.bind(this));
-    this._proxy.intercept({phase: 'response', as: 'string'} , this._onInterceptResponse.bind(this));
+    this._proxy.intercept({phase: 'response', as: 'string'}, this._onInterceptResponse.bind(this));
   }
 
   _onResponseSent(req) {
