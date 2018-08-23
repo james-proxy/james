@@ -12,6 +12,8 @@ export const NEW_MAPPING_UPDATE = 'NEW_MAPPING_UPDATE';
 export const NEW_MAPPING_NEXT = 'NEW_MAPPING_NEXT';
 export const NEW_MAPPING_RESET = 'NEW_MAPPING_RESET';
 
+export const SET_MAPPING_ERROR = 'SET_MAPPING_ERROR';
+
 export function showAddUrlMapping(url) {
   return (dispatch) => {
     dispatch(navigateToUrlMappings());
@@ -77,4 +79,11 @@ export function resetNewMapping() {
   return {
     type: NEW_MAPPING_RESET
   };
+}
+
+export function setNewMappingError(error) {
+    return {
+        type: SET_MAPPING_ERROR,
+        error: error,
+    };
 }

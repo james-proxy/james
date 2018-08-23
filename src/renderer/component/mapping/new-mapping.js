@@ -42,17 +42,26 @@ class NewMapping extends Component {
   }
 
   createUrl() {
-    if (!this.validate()) { return; }
+    if (!this.validate()) {
+        this.props.setError( 'Please enter a valid source URL.' );
+        return;
+    }
     this.props.next(false);
   }
 
   createFile() {
-    if (!this.validate()) { return; }
+    if (!this.validate()) {
+        this.props.setError( 'Please enter a valid source URL.' );
+        return;
+    }
     this.props.next(true);
   }
 
   finish() {
-    if (!this.validate()) { return; }
+    if (!this.validate()) {
+        this.props.setError( 'Please enter a valid destination URL.' );
+        return;
+    }
     const {saveMapping} = this.props;
     const {target, destination, isLocal} = this.props.mapping;
 
@@ -67,11 +76,12 @@ class NewMapping extends Component {
   render() {
     let form;
     let submit = () => {};
-    const {step, target, destination, isLocal} = this.props.mapping;
+    const {errors = [], step, target, destination, isLocal} = this.props.mapping;
 
     if (step === constants.NEW_MAPPING_STEP_TARGET) {
       submit = this.createUrl;
       form = <NewMappingTarget
+        errors={errors}
         target={target}
         update={this.updateTarget}
         createUrl={this.createUrl}
@@ -80,6 +90,7 @@ class NewMapping extends Component {
     } else if (step === constants.NEW_MAPPING_STEP_DESTINATION) {
       submit = this.finish;
       form = <NewMappingDestination
+        errors={errors}
         isLocal={isLocal}
         destination={destination}
         update={this.updateDestination}
@@ -105,7 +116,7 @@ NewMapping.propTypes = {
   mapping: PropTypes.object
 };
 
-import { updateNewMapping, nextNewMapping, resetNewMapping } from 'common/actions/url-mappings.js';
+import { updateNewMapping, nextNewMapping, resetNewMapping, setNewMappingError } from 'common/actions/url-mappings.js';
 import { getNewMapping } from '../../reducers/url-mappings.js';
 
 const mapStateToProps = (state) => ({
@@ -115,7 +126,8 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = {
   update: updateNewMapping,
   next: nextNewMapping,
-  reset: resetNewMapping
+  reset: resetNewMapping,
+  setError: setNewMappingError
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(NewMapping);
