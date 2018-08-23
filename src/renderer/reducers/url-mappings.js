@@ -13,7 +13,7 @@ const initialState = {
     destination: undefined,
     isLocal: undefined,
     valid: undefined,
-    errors: undefined,
+    errors: undefined
   }
 };
 

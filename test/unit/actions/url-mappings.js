@@ -136,11 +136,11 @@ describe('url mapper actions', () => {
   });
 
   it('should create an action to set the mapping-related errors', () => {
-     const msg = 'Whoops, something went wrong';
-     const expectedAction = {
-         type: actions.SET_MAPPING_ERROR,
-         error: msg
-     };
-     assert.deepEqual(actions.setNewMappingError(msg), expectedAction);
+    const msg = 'Whoops, something went wrong';
+    const expectedAction = {
+      type: actions.SET_MAPPING_ERROR,
+      error: msg
+    };
+    assert.deepEqual(actions.setNewMappingError(msg), expectedAction);
   });
 });

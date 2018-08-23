@@ -13,7 +13,7 @@ const initialState = {
     destination: undefined,
     isLocal: undefined,
     valid: undefined,
-    errors: undefined,
+    errors: undefined
   }
 };
 
@@ -35,16 +35,14 @@ describe('urlMappings reducers', () => {
   it('should handle SET_MAPPING_ERROR', () => {
     const action = {
       type: actions.SET_MAPPING_ERROR,
-      error: 'Foo',
+      error: 'Foo'
     };
     const expectedState = setupState({
       newMapping: {
-          ...initialState.newMapping,
-          errors: ['Foo']
+        ...initialState.newMapping,
+        errors: ['Foo']
       }
     });
     test(action, expectedState);
   });
-
-
 });

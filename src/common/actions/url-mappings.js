@@ -82,8 +82,8 @@ export function resetNewMapping() {
 }
 
 export function setNewMappingError(error) {
-    return {
-        type: SET_MAPPING_ERROR,
-        error: error,
-    };
+  return {
+    type: SET_MAPPING_ERROR,
+    error: error
+  };
 }

@@ -43,24 +43,24 @@ class NewMapping extends Component {
 
   createUrl() {
     if (!this.validate()) {
-        this.props.setError( 'Please enter a valid source URL.' );
-        return;
+      this.props.setError( 'Please enter a valid source URL.' );
+      return;
     }
     this.props.next(false);
   }
 
   createFile() {
     if (!this.validate()) {
-        this.props.setError( 'Please enter a valid source URL.' );
-        return;
+      this.props.setError( 'Please enter a valid source URL.' );
+      return;
     }
     this.props.next(true);
   }
 
   finish() {
     if (!this.validate()) {
-        this.props.setError( 'Please enter a valid destination URL.' );
-        return;
+      this.props.setError( 'Please enter a valid destination URL.' );
+      return;
     }
     const {saveMapping} = this.props;
     const {target, destination, isLocal} = this.props.mapping;
@@ -113,6 +113,7 @@ NewMapping.propTypes = {
   update: PropTypes.func.isRequired,
   next: PropTypes.func.isRequired,
   reset: PropTypes.func.isRequired,
+  setError: PropTypes.func.isRequired,
   mapping: PropTypes.object
 };
 
