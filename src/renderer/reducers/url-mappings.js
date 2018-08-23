@@ -12,7 +12,8 @@ const initialState = {
     target: undefined,
     destination: undefined,
     isLocal: undefined,
-    valid: undefined
+    valid: undefined,
+    errors: undefined,
   }
 };
 
