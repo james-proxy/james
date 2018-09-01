@@ -4,9 +4,7 @@ import PropTypes from 'prop-types';
 const Errors = props =>
   <div className="errors">
     <ul className="errors-list">
-      <li className="errors-list__item">
-        {props.errors.map(error => <p>{error}</p>)}
-      </li>
+      {props.errors.map(error => <li className="errors-list__item">{error}</li>)}
     </ul>
   </div>
 ;
