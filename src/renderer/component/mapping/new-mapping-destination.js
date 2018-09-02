@@ -33,7 +33,7 @@ const NewMappingDestination = (props) => {
 
   return <div className="mapping-destination">
     <h1>Enter destination</h1>
-    { errors.length ? <Errors errors={ errors }/> : '' }
+    <Errors errors={ errors }/>
     <div className="description">James will respond with this {type} instead.</div>
     <div>
       {input}

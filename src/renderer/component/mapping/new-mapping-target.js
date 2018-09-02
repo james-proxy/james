@@ -10,7 +10,7 @@ const NewMappingTarget = (props) => {
 
   return <div className="mapping-target">
     <h1>Create new URL Mapping</h1>
-    { errors.length ? <Errors errors={ errors }/> : '' }
+    <Errors errors={ errors }/>
     <div className="description">URL mappings allow James to intercept a request and respond with a URL or file of your choice.</div>
     <input type="text"
       autoFocus
