@@ -2,10 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {remote} from 'electron';
 
+import Errors from '../errors/errors.js';
+
 import createChooseFile from 'common/service/choose-file.js';
 
 const NewMappingDestination = (props) => {
-  const {isLocal, destination, update, create, cancel} = props;
+  const {isLocal, destination, update, create, cancel, errors = []} = props;
 
   const chooseFile = createChooseFile(remote.getCurrentWindow());
 
@@ -31,6 +33,7 @@ const NewMappingDestination = (props) => {
 
   return <div className="mapping-destination">
     <h1>Enter destination</h1>
+    <Errors errors={ errors }/>
     <div className="description">James will respond with this {type} instead.</div>
     <div>
       {input}
@@ -45,7 +48,8 @@ NewMappingDestination.propTypes = {
   destination: PropTypes.string,
   update: PropTypes.func.isRequired,
   create: PropTypes.func.isRequired,
-  cancel: PropTypes.func.isRequired
+  cancel: PropTypes.func.isRequired,
+  errors: PropTypes.array
 };
 
 NewMappingDestination.defaultProps = {

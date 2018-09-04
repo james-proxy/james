@@ -1,0 +1,17 @@
+.errors {
+    color: firebrick;
+    border: solid 1px firebrick;
+    background: rgba(red, 0.2);
+    margin: 10px 0;
+
+    .errors-list {
+        margin: 0;
+        padding: 10px;
+    }
+
+    .errors-list__item {
+        &:not(:last-child) {
+            margin-bottom: 10px;
+        }
+    }
+}

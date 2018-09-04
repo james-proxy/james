@@ -12,7 +12,8 @@ const initialState = {
     target: undefined,
     destination: undefined,
     isLocal: undefined,
-    valid: undefined
+    valid: undefined,
+    errors: undefined
   }
 };
 
@@ -46,11 +47,15 @@ function newMapping(state = initialState.newMapping, action) {
   case actions.NEW_MAPPING_NEXT:
     return Object.assign({}, state, {
       step: action.step,
-      isLocal: action.isLocal
+      isLocal: action.isLocal,
+      errors: []
     });
 
   case actions.NEW_MAPPING_RESET:
     return Object.assign({}, initialState.newMapping);
+
+  case actions.SET_MAPPING_ERROR:
+    return Object.assign({}, state, { errors: [action.error] } );
 
   default:
     return state;

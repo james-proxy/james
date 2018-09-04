@@ -13,7 +13,8 @@ $lato-font-path: '../fonts';
 @import 'components/requests';
 @import 'components/context-menu';
 @import 'components/inspect-request';
-@import 'components/windows/url-mapping';
+@import 'components/errors';
+@import 'components/windows/url-mapping';;
 
 body {
   font-family: 'Lato', sans-serif;
