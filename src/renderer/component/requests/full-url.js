@@ -9,7 +9,7 @@ const _shorten = (str, maxLength) => {
 };
 
 const FullUrl = (props) => {
-  const {request, isShortened} = props;
+  const {request, isShortened, title} = props;
   const original = request.original;
 
   let maxUrlLength = 1000;
@@ -22,17 +22,27 @@ const FullUrl = (props) => {
     port = <span className="port">:{original.port}</span>;
   }
 
-  return <div className="complete-url">
+  const urlContainer = <div className="complete-url">
     <span className="protocol">{original.protocol + '//'}</span>
     <span className="hostname">{original.hostname}</span>
     {port}
     <span className="url">{_shorten(original.url, maxUrlLength)}</span>
   </div>;
+
+  if (title) {
+    return <section>
+      <h3>{title}</h3>
+      {urlContainer}
+    </section>;
+  }
+
+  return urlContainer;
 };
 
 FullUrl.propTypes = {
   isShortened: PropTypes.bool,
-  request: PropTypes.object.isRequired
+  request: PropTypes.object.isRequired,
+  title: PropTypes.string
 };
 
 export default FullUrl;
