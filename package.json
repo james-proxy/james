@@ -31,7 +31,7 @@
     "font-awesome": "^4.5.0",
     "history": "^4.7.2",
     "joxy": "^3.2.1",
-    "james-browser-launcher": "^1.3.0",
+    "@james-proxy/james-browser-launcher": "^1.3.2",
     "lodash.throttle": "^4.1.0",
     "materialize-css": "^0.100.2",
     "nedb": "^1.7.1",
