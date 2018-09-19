@@ -1,7 +1,7 @@
 ## Upcoming Release
 
 #### User features
-- Nothing yet
+- Display request/response body (#377) (i: @nerdbeere, r: @mitchhentges)
 
 #### Developer features
 - Nothing yet
