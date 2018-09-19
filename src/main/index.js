@@ -1,6 +1,6 @@
 import { app, BrowserWindow, ipcMain as ipc } from 'electron';
 import localShortcut from 'electron-localshortcut';
-import browserLauncher from 'james-browser-launcher';
+import browserLauncher from '@james-proxy/james-browser-launcher';
 import Raven from 'raven';
 
 import constants from 'common/constants.js';
@@ -80,7 +80,7 @@ Raven.context(() => {
           mappings
         });
       });
-    
+
       mainWindow.show();
       autoUpdater(mainWindow, !constants.DEV);
     });
@@ -101,7 +101,7 @@ Raven.context(() => {
         proxy.proxy.disableThrottling();
       }
     });
-  
+
     ipc.on('proxy-filter', (evt, {filter}) => {
       proxy.setFilter(filter);
     });
