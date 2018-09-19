@@ -7,7 +7,7 @@
 - Nothing yet
 
 #### Bugfixes
-- Nothing yet
+- Use joxy instead of hoxy to fix app crashes (#376) (i: @nerdbeere, r: @mitchhentges)
 
 # 2.0.0
 
