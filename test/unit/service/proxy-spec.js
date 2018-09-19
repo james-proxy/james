@@ -29,14 +29,28 @@ describe('Proxy', function() {
     const callbacksResponseSent = [];
     const callbacksResponse = [];
 
-    const intercept = function(name, callback) {
-      if (name === 'request') {
-        callbacksRequest.push(callback);
-      } else if (name === 'response-sent') {
-        callbacksResponseSent.push(callback);
-      } else if (name === 'response') {
-        callbacksResponse.push(callback);
+    const intercept = function(nameOrObj, callback) {
+      if (typeof nameOrObj === 'string') {
+        if (nameOrObj === 'request') {
+          callbacksRequest.push(callback);
+        } else if (nameOrObj === 'response-sent') {
+          callbacksResponseSent.push(callback);
+        } else if (nameOrObj === 'response') {
+          callbacksResponse.push(callback);
+        }
+        return;
       }
+      if (typeof nameOrObj === 'object') {
+        if (nameOrObj.phase === 'request') {
+          callbacksRequest.push(callback);
+        } else if (nameOrObj.phase === 'response-sent') {
+          callbacksResponseSent.push(callback);
+        } else if (nameOrObj.phase === 'response') {
+          callbacksResponse.push(callback);
+        }
+        return;
+      }
+      throw new Error('Invalid type passed to intercept');
     };
     hoxyInstanceMock = {
       intercept: sinon.spy(intercept)
@@ -182,13 +196,13 @@ describe('Proxy', function() {
 
   describe('hoxy integration', function() {
     it('registers a callback to intercept requests', function() {
-      assert(hoxyInstanceMock.intercept.calledWith('request'));
+      assert(hoxyInstanceMock.intercept.calledWith({phase: 'request', as: 'string'}));
     });
     it('registers a callback to intercept responses', function() {
       assert(hoxyInstanceMock.intercept.calledWith('response-sent'));
     });
     it('registers a callback to intercept responses', function() {
-      assert(hoxyInstanceMock.intercept.calledWith('response'));
+      assert(hoxyInstanceMock.intercept.calledWith({phase: 'response', as: 'string'}));
     });
   });
 

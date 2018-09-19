@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import RequestMetadata from './request-metadata.js';
+import RequestBody from './request-body.js';
 import FullUrl from '../requests/full-url.js';
 
 export default class RequestDetails extends React.Component {
@@ -37,22 +38,12 @@ export default class RequestDetails extends React.Component {
     const bodyStyle = {maxHeight};
 
     return <div className="box-body" style={bodyStyle}>
-      <section>
-        Request URL:
-        <FullUrl request={request.request} />
-      </section>
-      <section>
-        Request Query Params:
-        <RequestMetadata metadata={request.request.query} />
-      </section>
-      <section>
-        Request Headers:
-        <RequestMetadata metadata={request.request.headers} />
-      </section>
-      <section>
-        Response Headers:
-        <RequestMetadata metadata={request.response.headers} />
-      </section>
+      <FullUrl request={request.request} title="Request URL" />
+      <RequestMetadata metadata={request.request.query} title="Request Query Params" />
+      <RequestMetadata metadata={request.request.headers} title="Request Headers" />
+      <RequestBody body={request.request.body} title="Request Body" />
+      <RequestMetadata metadata={request.response.headers} title="Response Headers" />
+      <RequestBody body={request.response.body} title="Response Body" />
     </div>;
   }
 }

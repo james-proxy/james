@@ -4,7 +4,7 @@
   right: 0;
   bottom: 0;
   z-index: 2;
-  background: rgba($lightgray-light, 0.9);
+  background: $lightgray-light;
 
   .toolbar {
     float: right;
@@ -67,6 +67,16 @@
 
   section {
     padding: 10px;
+
+    ul {
+      margin-top: 0;
+    }
+
+    h3 {
+      margin: 0;
+      margin-bottom: 10px;
+      font-size: 16px;
+    }
   }
 
   code,

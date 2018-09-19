@@ -2,19 +2,29 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const RequestMetadata = (props) => {
-  const {metadata} = props;
-  const metaNodes = Object.keys(metadata).map((key) => {
+  const { metadata, title } = props;
+  const keys = Object.keys(metadata);
+
+  if (keys.length === 0) {
+    return null;
+  }
+
+  const metaNodes = keys.map((key) => {
     return <li key={key}>
       <strong>{key}:&nbsp;</strong>
       {metadata[key]}
     </li>;
   });
 
-  return <ul className="request-metadata">{metaNodes}</ul>;
+  return <section>
+    <h3>{title}</h3>
+    <ul className="request-metadata">{metaNodes}</ul>
+  </section>;
 };
 
 RequestMetadata.propTypes = {
-  metadata: PropTypes.object.isRequired
+  metadata: PropTypes.object.isRequired,
+  title: PropTypes.string.isRequired
 };
 
 export default RequestMetadata;
