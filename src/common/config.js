@@ -12,7 +12,6 @@ export default {
   ],
   sentry: {
     dsn: '617ec0238f4a44ac97b9953b2ee0b67c',
-    secret: '175fb8a8051f43c2aa414908f0a91c08',
     host: 'sentry.fuzzlesoft.ca/4'
   }
 };

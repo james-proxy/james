@@ -1,5 +1,5 @@
 export default {
-  'DEV': true,
+  'DEV': process.env.NODE_ENV !== 'production',
 
   'UPDATE_OK': 'ok',
   'UPDATE_CHECKING': 'checking',
