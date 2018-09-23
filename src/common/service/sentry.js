@@ -27,17 +27,15 @@ function normalizeData(data) {
   return data;
 }
 
-function getDSN() {
-  const { dsn, secret, host } = config.sentry;
-  const auth = process.type === 'renderer' ? dsn : `${dsn}:${secret}`;
-  return `https://${auth}@${host}`;
-}
+export default function init(Sentry) {
+  if (config.DEV) {
+    return;
+  }
 
-export default function init(Raven) {
-  const enabled = !config.DEV;
-  Raven.config(enabled && getDSN(), {
-    release: config.version
-  }).install();
-
-  Raven.setDataCallback(normalizeData);
+  const { dsn, host } = config.sentry;
+  Sentry.init({
+    dsn: `https://${dsn}@${host}`,
+    release: config.version,
+    beforeSend: normalizeData
+  });
 }
