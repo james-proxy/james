@@ -8,6 +8,7 @@
 
 #### Bugfixes
 - Use version 3.3.1 of hoxy to fix app crashes (#376) (i: @nerdbeere, r: @mitchhentges)
+- Use version 1.3.2 of james-browser-launcher (i: @nerdbeere, r: @mitchhentges)
 
 # 2.0.0
 
