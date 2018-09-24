@@ -1,4 +1,4 @@
-import browserLauncher from 'james-browser-launcher';
+import browserLauncher from '@james-proxy/james-browser-launcher';
 
 const defaultOptions = {
   browser: 'firefox',
