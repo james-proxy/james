@@ -1,4 +1,4 @@
-import hoxy from '@james-proxy/joxy';
+import hoxy from 'hoxy';
 import fs from 'fs';
 import EventEmitter from 'events';
 
