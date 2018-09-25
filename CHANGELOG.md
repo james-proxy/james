@@ -7,7 +7,8 @@
 - Nothing yet
 
 #### Bugfixes
-- Use joxy instead of hoxy to fix app crashes (#376) (i: @nerdbeere, r: @mitchhentges)
+- Use version 3.3.1 of hoxy to fix app crashes (#376) (i: @nerdbeere, r: @mitchhentges)
+- Use version 1.3.2 of james-browser-launcher (i: @nerdbeere, r: @mitchhentges)
 
 # 2.0.0
 
@@ -150,9 +151,9 @@
 - Only run useref on html files (i: @mitchhentges, r: @nerdbeere)
 - Fix `package-browserify` (i: @mitchhentges, r: @nerdbeere)
 - Add `Installing` section to `README.md` that links to releases (i: kokarn, r: @mitchhentges)
-- Replace close shortcut to use 'Q' instead of 'W' (i: @mitchhentges, r: @davidneat) 
-- Support for Wildcards in URLs (i: @mitchhentges, r: @davidneat) 
-- Toolbar tab is now aligned properly (i: @mitchhentges, r: @davidneat) 
+- Replace close shortcut to use 'Q' instead of 'W' (i: @mitchhentges, r: @davidneat)
+- Support for Wildcards in URLs (i: @mitchhentges, r: @davidneat)
+- Toolbar tab is now aligned properly (i: @mitchhentges, r: @davidneat)
 - Requests in list no longer overlap to the right (i: @davidneat, r: @mitchhentges)
 - `npm run watch` no longer stops on babel-error (i: @mitchhentges, r: @nerdbeere)
 - Automatically reload Electron instance on-file-change (i: @mitchhentges, r: @nerdbeere)

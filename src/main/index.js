@@ -1,6 +1,6 @@
 import { app, BrowserWindow, ipcMain as ipc } from 'electron';
 import localShortcut from 'electron-localshortcut';
-import browserLauncher from 'james-browser-launcher';
+import browserLauncher from '@james-proxy/james-browser-launcher';
 import * as Sentry from '@sentry/node';
 
 import constants from 'common/constants.js';
