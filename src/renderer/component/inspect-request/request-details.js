@@ -38,12 +38,17 @@ export default class RequestDetails extends React.Component {
     const bodyStyle = {maxHeight};
 
     return <div className="box-body" style={bodyStyle}>
-      <FullUrl request={request.request} title="Request URL" />
-      <RequestMetadata metadata={request.request.query} title="Request Query Params" />
-      <RequestMetadata metadata={request.request.headers} title="Request Headers" />
-      <RequestBody body={request.request.body} title="Request Body" />
-      <RequestMetadata metadata={request.response.headers} title="Response Headers" />
-      <RequestBody body={request.response.body} title="Response Body" />
+      <FullUrl request={request.request} title="Request URL"/>
+      <RequestMetadata metadata={request.request.query} title="Request Query Params"/>
+      <RequestMetadata metadata={request.request.headers} title="Request Headers"/>
+      <RequestBody body={request.request.body} title="Request Body"/>
+      {request.response.body ?
+        [
+          <RequestMetadata metadata={request.response.headers} title="Response Headers"/>,
+          <RequestBody body={request.response.body} title="Response Body"/>
+        ]
+        : null
+      }
     </div>;
   }
 }
