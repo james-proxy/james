@@ -7,7 +7,7 @@ import constants from 'common/constants.js';
 
 import urlMapperMiddleware from './middleware/url-mapper.js';
 import proxyMiddleware from './middleware/proxy.js';
-import ravenMiddleware from './middleware/raven.js';
+import sentryMiddleware from './middleware/sentry.js';
 import rootReducer from '../reducers/root.js';
 
 export default (history) => {
@@ -15,7 +15,7 @@ export default (history) => {
   const routingMiddleware = routerMiddleware(history);
 
   const middleware = [
-    ravenMiddleware,
+    sentryMiddleware,
     thunkMiddleware,
     urlMapperMiddleware,
     proxyMiddleware,

@@ -1,5 +1,5 @@
 import { autoUpdater } from 'electron-updater';
-import Raven from 'raven';
+import * as Sentry from '@sentry/node';
 
 import constants from 'common/constants.js';
 
@@ -43,6 +43,6 @@ export default (win, enabled) => {
   
   autoUpdater.on('error', (err) => {
     updateStatus(constants.UPDATE_ERROR, err.message);
-    Raven.captureException(err);
+    Sentry.captureException(err);
   });
 };

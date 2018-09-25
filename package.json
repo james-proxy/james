@@ -27,6 +27,8 @@
     "dist:win64": "build --windows --x64"
   },
   "dependencies": {
+    "@sentry/browser": "^4.0.2",
+    "@sentry/node": "^4.0.1",
     "electron-updater": "^2.19.0",
     "font-awesome": "^4.5.0",
     "history": "^4.7.2",
@@ -35,9 +37,7 @@
     "lodash.throttle": "^4.1.0",
     "materialize-css": "^0.100.2",
     "nedb": "^1.7.1",
-    "prop-types": "^15.6.0",
-    "raven": "^2.4.0",
-    "raven-js": "^3.22.1",
+    "prop-types": "^15.6.2",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-loadable": "^5.3.1",
@@ -84,7 +84,6 @@
         "redux-thunk",
         "redux-logger",
         "react-router-redux",
-        "raven-js",
         "history",
         "font-awesome",
         "materialize-css",

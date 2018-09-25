@@ -11,10 +11,10 @@ import { Provider } from 'react-redux';
 import { ConnectedRouter as Router } from 'react-router-redux';
 import createHistory from 'history/createHashHistory';
 import throttle from 'lodash.throttle';
-import Raven from 'raven-js';
+import * as Sentry from '@sentry/browser';
 
 import config from 'common/config.js';
-import ravenInit from 'common/service/raven.js';
+import sentryInit from 'common/service/sentry.js';
 import setupShortcuts from 'common/service/shortcuts.js';
 
 import setupStore from './store/index.js';
@@ -29,7 +29,7 @@ import App from './containers/app';
 
 import './resources/style/main.scss';
 
-ravenInit(Raven);
+sentryInit(Sentry);
 
 const history = createHistory();
 const store = setupStore(history);

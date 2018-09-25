@@ -1,4 +1,4 @@
-import Raven from 'raven-js';
+import * as Sentry from '@sentry/browser';
 
 import constants from 'common/constants.js';
 
@@ -11,7 +11,7 @@ const middleware = () => next => action => {
   }
   try {
     if (action.type !== SYNC_REQUESTS && action.type !== SYNC_URL_MAPPINGS) {
-      Raven.captureBreadcrumb({
+      Sentry.addBreadcrumb({
         category: 'action',
         level: 'info',
         data: action
@@ -19,11 +19,7 @@ const middleware = () => next => action => {
     }
     return next(action);
   } catch (err) {
-    Raven.captureException(err, {
-      extra: {
-        action
-      }
-    });
+    Sentry.captureException(err);
   }
 };
 
