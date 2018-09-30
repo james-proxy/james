@@ -27,7 +27,6 @@
     "dist:win64": "build --windows --x64"
   },
   "dependencies": {
-    "@babel/preset-env": "^7.1.0",
     "@james-proxy/james-browser-launcher": "^1.3.2",
     "@sentry/browser": "^4.0.2",
     "@sentry/node": "^4.0.1",
@@ -52,17 +51,21 @@
     "uniqid": "^4.0.0"
   },
   "devDependencies": {
-    "babel-eslint": "^10.0.0",
-    "babel-preset-power-assert": "^3.0.0",
+    "@babel/core": "^7.1.2",
+    "@babel/plugin-syntax-dynamic-import": "^7.0.0",
+    "@babel/preset-env": "^7.1.0",
     "@babel/preset-react": "^7.0.0",
+    "babel-eslint": "^10.0.0",
+    "babel-loader": "^8.0.4",
+    "babel-preset-power-assert": "^3.0.0",
     "electron": "^2.0.10",
     "electron-builder": "^20.28.4",
     "electron-localshortcut": "^3.0.4",
     "electron-webpack": "^2.3.1",
     "eslint": "^4.16.0",
     "eslint-plugin-react": "^7.6.0",
-    "mocha": "^4.1.0",
-    "mocha-webpack": "^1.1.0",
+    "mocha": "^5.2.0",
+    "mocha-webpack": "^2.0.0-beta.0",
     "node-sass": "4.7.2",
     "power-assert": "^1.4.4",
     "redux-mock-store": "^1.4.0",
