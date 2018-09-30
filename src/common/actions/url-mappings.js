@@ -1,6 +1,6 @@
 import { navigateToUrlMappings } from './app.js';
 
-import constants from 'common/constants.js';
+import constants from '../constants.js';
 
 export const SET_URL_MAPPING = 'SET_URL_MAPPING';
 export const UPDATE_URL_MAPPING = 'UPDATE_URL_MAPPING';

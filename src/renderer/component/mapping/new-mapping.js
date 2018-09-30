@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import constants from 'common/constants.js';
+import constants from '../../../common/constants.js';
 
 import NewMappingTarget from './new-mapping-target.js';
 import NewMappingDestination from './new-mapping-destination.js';
@@ -117,7 +117,7 @@ NewMapping.propTypes = {
   mapping: PropTypes.object
 };
 
-import { updateNewMapping, nextNewMapping, resetNewMapping, setNewMappingError } from 'common/actions/url-mappings.js';
+import { updateNewMapping, nextNewMapping, resetNewMapping, setNewMappingError } from '../../../common/actions/url-mappings.js';
 import { getNewMapping } from '../../reducers/url-mappings.js';
 
 const mapStateToProps = (state) => ({

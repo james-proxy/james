@@ -1,4 +1,4 @@
-import constants from 'common/constants.js';
+import constants from '../common/constants.js';
 
 if (!constants.DEV) { // fix for loading async bundles (see electron-userland/electron-webpack#70)
   __webpack_public_path__ = `file:///${process.resourcesPath}/app.asar/`;  // eslint-disable-line camelcase
@@ -13,17 +13,17 @@ import createHistory from 'history/createHashHistory';
 import throttle from 'lodash.throttle';
 import * as Sentry from '@sentry/browser';
 
-import config from 'common/config.js';
-import sentryInit from 'common/service/sentry.js';
-import setupShortcuts from 'common/service/shortcuts.js';
+import config from '../common/config.js';
+import sentryInit from '../common/service/sentry.js';
+import setupShortcuts from '../common/service/shortcuts.js';
 
 import setupStore from './store/index.js';
 
-import { init, setUpdaterStatus } from 'common/actions/app.js';
-import { syncRequests } from 'common/actions/requests.js';
-import { updateProxyStatus } from 'common/actions/proxy.js';
-import { syncUrlMappings } from 'common/actions/url-mappings.js';
-import { addBrowsers } from 'common/actions/browsers.js';
+import { init, setUpdaterStatus } from '../common/actions/app.js';
+import { syncRequests } from '../common/actions/requests.js';
+import { updateProxyStatus } from '../common/actions/proxy.js';
+import { syncUrlMappings } from '../common/actions/url-mappings.js';
+import { addBrowsers } from '../common/actions/browsers.js';
 
 import App from './containers/app';
 

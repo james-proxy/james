@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import constants from 'common/constants.js';
-import { ProxyStatus as ProxyStatusTypes } from 'common/prop-types.js';
+import constants from '../../../common/constants.js';
+import { ProxyStatus as ProxyStatusTypes } from '../../../common/prop-types.js';
 
 const iconMap = {
   [constants.PROXY_STATUS_STARTING]: 'fa-hourglass-half',

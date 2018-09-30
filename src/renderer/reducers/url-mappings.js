@@ -1,8 +1,7 @@
 import { combineReducers } from 'redux';
 
-import constants from 'common/constants.js';
-
-import * as actions from 'common/actions/url-mappings.js';
+import constants from '../../common/constants.js';
+import * as actions from '../../common/actions/url-mappings.js';
 
 const initialState = {
   mappings: [],

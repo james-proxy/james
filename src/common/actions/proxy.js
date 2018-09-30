@@ -1,4 +1,4 @@
-import constants from 'common/constants.js';
+import constants from '../constants.js';
 
 export const TOGGLE_CACHING = 'TOGGLE_CACHING';
 export const TOGGLE_THROTTLING = 'TOGGLE_THROTTLING';

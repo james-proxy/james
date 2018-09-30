@@ -1,7 +1,7 @@
 import { ipcRenderer as ipc } from 'electron';
 
-import * as actions from 'common/actions/proxy.js';
-import * as requestActions from 'common/actions/requests.js';
+import * as actions from '../../../common/actions/proxy.js';
+import * as requestActions from '../../../common/actions/requests.js';
 
 const middleware = store => next => action => {
   // grab full data from main process before reducers

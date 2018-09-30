@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux';
 
-import constants from 'common/constants.js';
-import * as actions from 'common/actions/app.js';
+import constants from '../../common/constants.js';
+import * as actions from '../../common/actions/app.js';
 
 const initialState = {
   config: {},

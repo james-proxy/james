@@ -1,8 +1,8 @@
 import assert from 'assert';
 
-import * as actions from 'common/actions/url-mappings.js';
-import constants from 'common/constants.js';
-import urlMappings from 'renderer/reducers/url-mappings.js';
+import * as actions from '../../../src/common/actions/url-mappings.js';
+import constants from '../../../src/common/constants.js';
+import urlMappings from '../../../src/renderer/reducers/url-mappings.js';
 
 const initialState = {
   mappings: [],

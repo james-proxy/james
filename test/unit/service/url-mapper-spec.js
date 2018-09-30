@@ -1,7 +1,7 @@
 import assert from 'assert';
 import sinon from 'sinon';
 
-import UrlMapper from 'common/service/url-mapper.js';
+import UrlMapper from '../../../src/common/service/url-mapper.js';
 
 describe('url mapper', function() {
   const update = sinon.spy();

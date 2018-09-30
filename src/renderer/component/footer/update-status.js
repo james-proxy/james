@@ -3,9 +3,9 @@ import { shell } from 'electron';
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import constants from 'common/constants.js';
-import config from 'common/config.js';
-import { UpdateStatus as UpdateStatusTypes } from 'common/prop-types';
+import constants from '../../../common/constants.js';
+import config from '../../../common/config.js';
+import { UpdateStatus as UpdateStatusTypes } from '../../../common/prop-types';
 
 const launchURL = (e, url) => {
   e.preventDefault();

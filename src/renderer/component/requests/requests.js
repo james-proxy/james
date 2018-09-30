@@ -36,7 +36,7 @@ Requests.propTypes = {
   handleContextMenu: PropTypes.func.isRequired
 };
 
-import { setActiveRequest, setContextRequest } from 'common/actions/requests.js';
+import { setActiveRequest, setContextRequest } from '../../../common/actions/requests.js';
 import { getRequestData, getActiveRequest, getContextRequest } from '../../reducers/requests.js';
 import { getLabels } from '../../reducers/app.js';
 

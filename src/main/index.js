@@ -1,11 +1,11 @@
-import { app, BrowserWindow, ipcMain as ipc } from 'electron';
+import {app, BrowserWindow, ipcMain as ipc} from 'electron';
 import localShortcut from 'electron-localshortcut';
 import browserLauncher from '@james-proxy/james-browser-launcher';
 import * as Sentry from '@sentry/node';
 
-import constants from 'common/constants.js';
-import config from 'common/config.js';
-import sentryInit from 'common/service/sentry.js';
+import constants from '../common/constants.js';
+import config from '../common/config.js';
+import sentryInit from '../common/service/sentry.js';
 
 import createMenu from './menu.js';
 import createUrlMapper from './url-mapper.js';
@@ -85,8 +85,7 @@ app.on('ready', () => {
   });
 
   ipc.on('proxy-get-request', (evt, {id}) => {
-    const request = proxy.getRequest(id);
-    evt.returnValue = request; // note: not async
+    evt.returnValue = proxy.getRequest(id); // note: not async
   });
 
   ipc.on('proxy-cache-toggle', (evt, {enabled}) => {

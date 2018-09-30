@@ -59,7 +59,7 @@ import {
   showAddUrlMapping,
   toggleUrlMapping,
   removeUrlMapping
-} from 'common/actions/url-mappings.js';
+} from '../../../common/actions/url-mappings.js';
 
 const mapDispatchToProps = {
   showAddMapping: showAddUrlMapping,

@@ -34,7 +34,7 @@ RequestsContainer.propTypes = {
 };
 
 
-import { setContextRequest } from 'common/actions/requests.js';
+import { setContextRequest } from '../../common/actions/requests.js';
 import { hasRequests } from '../reducers/requests.js';
 
 const mapStateToProps = (state) => ({

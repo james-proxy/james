@@ -1,7 +1,7 @@
 import assert from 'assert';
 
-import * as actions from 'common/actions/proxy.js';
-import constants from 'common/constants.js';
+import * as actions from '../../../src/common/actions/proxy.js';
+import constants from '../../../src/common/constants.js';
 
 describe('proxy actions', () => {
   it('should create an action to toggle caching', () => {

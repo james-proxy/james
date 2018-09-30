@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux';
 
-import constants from 'common/constants.js';
+import constants from '../../common/constants.js';
 
-import * as actions from 'common/actions/proxy.js';
+import * as actions from '../../common/actions/proxy.js';
 
 const initialState = {
   status: constants.PROXY_STATUS_STARTING,

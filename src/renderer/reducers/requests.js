@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 
-import * as actions from 'common/actions/requests.js';
+import * as actions from '../../common/actions/requests.js';
 
 const initialState = {
   filter: null,

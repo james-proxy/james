@@ -40,7 +40,7 @@ Search.propTypes = {
 };
 
 
-import { setRequestFilter } from 'common/actions/requests.js';
+import { setRequestFilter } from '../../../common/actions/requests.js';
 import { getRequestFilter } from '../../reducers/requests.js';
 
 const mapStateToProps = (state) => ({

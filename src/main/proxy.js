@@ -2,10 +2,10 @@ import hoxy from 'hoxy';
 import fs from 'fs';
 import EventEmitter from 'events';
 
-import constants from 'common/constants.js';
-import appConfig from 'common/config.js';
+import constants from '../common/constants.js';
+import appConfig from '../common/config.js';
 
-import Proxy from 'common/service/proxy.js';
+import Proxy from '../common/service/proxy.js';
 
 class ProxyHandler extends EventEmitter {
   constructor(config, urlMapper) {

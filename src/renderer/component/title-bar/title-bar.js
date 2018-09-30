@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 
-import { toggleDevTools } from 'common/service/dev-tools.js';
+import { toggleDevTools } from '../../../common/service/dev-tools.js';
 
 import MappingCount from './mapping-count.js';
 
