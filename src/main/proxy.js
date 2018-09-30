@@ -11,7 +11,6 @@ class ProxyHandler extends EventEmitter {
   constructor(config, urlMapper) {
     super();
     this.config = config;
-    this.hoxy = undefined;
     this.filter = undefined;
     this.status = undefined;
     this.cachingEnabled = false;
@@ -41,9 +40,9 @@ class ProxyHandler extends EventEmitter {
       });
     }
 
-    this.hoxy = hoxy.createServer(opts);
-    this.hoxy.log('error warn info debug');
-    this.hoxy.on('error', (event) => {
+    const hoxyServer = hoxy.createServer(opts);
+    hoxyServer.log('error warn info debug');
+    hoxyServer.on('error', (event) => {
       if (event.code === 'ENOTFOUND') return;
       console.warn('hoxy error: ', event.code, event); // eslint-disable-line
 
@@ -55,7 +54,7 @@ class ProxyHandler extends EventEmitter {
       }
     });
 
-    return this.hoxy.listen(this.config.proxyPort, () => {
+    return hoxyServer.listen(this.config.proxyPort, () => {
       if (this.status.error) return;
       this.onStatusChange_({status: constants.PROXY_STATUS_WORKING});
     });
