@@ -5,8 +5,11 @@
 
   .request {
     position: relative; //absolutely-positioned context menu needs to be attached to request
-    border-bottom: 2px solid $lightgray-light;
-    padding: 2px 0;
+
+    .request-inner {
+      border-bottom: 2px solid $lightgray-light;
+      padding: 2px 0;
+    }
 
     .complete-url {
       width: calc(100% - 170px);
@@ -28,7 +31,10 @@
     &:hover {
       cursor: pointer;
       background-color: $lightgray-light;
-      border-bottom: 2px solid $lightgray-dark;
+
+      .request-inner {
+        border-bottom: 2px solid $lightgray-dark;
+      }
     }
 
     .property {
