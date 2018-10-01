@@ -1,4 +1,5 @@
 module.exports = {
+  mode: 'development',
   module: {
     rules: [
       {
@@ -9,19 +10,15 @@ module.exports = {
           options: {
             presets: [
               [
-                require('babel-preset-env'), {
+                require('@babel/preset-env'), {
                   modules: false,
                   targets: {
                     node: 'current'
                   }
                 }
               ],
-              require('babel-preset-react'),
+              require('@babel/preset-react'),
               require('babel-preset-power-assert')
-            ],
-            plugins: [
-              require('babel-plugin-syntax-dynamic-import'),
-              require('babel-plugin-transform-object-rest-spread')
             ]
           }
         }
