@@ -1,4 +1,5 @@
 import { combineReducers } from 'redux';
+import { createSelector } from 'reselect';
 
 import * as actions from '../../common/actions/requests.js';
 
@@ -6,11 +7,7 @@ const initialState = {
   filter: null,
   active: null,
   context: null,
-  data: {
-    requests: [],
-    totalCount: 0,
-    filteredCount: 0
-  }
+  data: []
 };
 
 // reducers
@@ -59,7 +56,7 @@ export default combineReducers({
 // selectors
 
 export function hasRequests(state) {
-  return state.requests.data.totalCount > 0;
+  return state.requests.data.length > 0;
 }
 
 export function getRequestFilter(state) {
@@ -70,20 +67,25 @@ export function getActiveRequest(state) {
   return state.requests.active;
 }
 
-export function isActiveRequest(state, request) {
-  const activeRequest = getActiveRequest(state);
-  return activeRequest && request && activeRequest.id === request.id;
-}
-
 export function getContextRequest(state) {
   return state.requests.context;
 }
 
-export function isContextRequest(state, request) {
-  const contextRequest = getContextRequest(state);
-  return contextRequest && request && contextRequest.id === request.id;
+export const getVisibleRequests = createSelector(
+  [getRequestFilter, state => state.requests.data],
+  (requestFilter, requests) => {
+    const matchesFilter = (request) =>
+      request.fullUrl.includes(requestFilter) || request.original.fullUrl.includes(requestFilter);
+
+    return !requestFilter
+      ? requests
+      : requests.filter(({request}) => matchesFilter(request));
+  });
+
+export function getTotalRequestCount(state) {
+  return state.requests.data.length;
 }
 
-export function getRequestData(state) {
-  return state.requests.data;
+export function getFilteredRequestCount(state) {
+  return getVisibleRequests(state).length;
 }

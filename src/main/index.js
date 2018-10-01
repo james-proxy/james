@@ -100,10 +100,6 @@ app.on('ready', () => {
     }
   });
 
-  ipc.on('proxy-filter', (evt, {filter}) => {
-    proxy.setFilter(filter);
-  });
-
   ipc.on('proxy-clear', () => {
     proxy.proxy.clear();
   });

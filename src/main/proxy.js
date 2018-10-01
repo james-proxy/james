@@ -11,7 +11,6 @@ class ProxyHandler extends EventEmitter {
   constructor(config, urlMapper) {
     super();
     this.config = config;
-    this.filter = undefined;
     this.status = undefined;
     this.cachingEnabled = false;
 
@@ -110,10 +109,7 @@ class ProxyHandler extends EventEmitter {
   }
 
   getRequestData() {
-    const requestData = this.proxy.getRequestData(this.filter);
-    requestData.requests = requestData.requests
-      .map(this.sanitizeRequest_());
-    return requestData;
+    return this.proxy.getRequests().map(this.sanitizeRequest_());
   }
 
   getRequest(id) {
@@ -139,11 +135,6 @@ class ProxyHandler extends EventEmitter {
 
   isCaching() {
     return this.isCaching;
-  }
-
-  setFilter(filter) {
-    this.filter = filter;
-    this.onUpdate_();
   }
 }
 

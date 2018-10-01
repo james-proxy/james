@@ -103,15 +103,10 @@ describe('Proxy', function() {
     proxy = new Proxy(update, config, urlMapper, createHoxy, isCachingEnabled);
   });
 
-  describe('getRequestData', function() {
+  describe('getRequests', function() {
     it('has no requests on startup', function() {
-      const requestData = proxy.getRequestData();
-      const expectedRequestData = {
-        requests: [],
-        totalCount: 0,
-        filteredCount: 0
-      };
-      assert.deepEqual(requestData, expectedRequestData);
+      const requests = proxy.getRequests();
+      assert.equal(requests.length, 0);
     });
 
     describe('after intercepted requests', function() {
@@ -119,45 +114,19 @@ describe('Proxy', function() {
         generateRequest();
       });
 
-      it('returns a totalCount value of 1', function() {
-        const requestData = proxy.getRequestData();
-        assert(requestData.totalCount === 1);
+      it('returns a list of 1 request', function() {
+        const requests = proxy.getRequests();
+        assert(requests.length === 1);
       });
 
-      it('returns a filteredCount value of 1', function() {
-        const requestData = proxy.getRequestData();
-        assert(requestData.totalCount === 1);
-      });
-
-      it('returns a totalCount value of 20 after intercepting 20 requests', function() {
+      it('returns a list of 20 after intercepting 20 requests', function() {
         // Only generates 19 requests and expects 20 because of the beforeEach()
         for (let i = 0; i < 19; i++) {
           generateRequest();
         }
 
-        const requestData = proxy.getRequestData();
-        assert(requestData.totalCount === 20);
-      });
-
-      it('filters by url and returns an array only with matching requests', function() {
-        generateRequest();
-        const filter = 'url1';
-        const requestData = proxy.getRequestData(filter);
-        assert(requestData.requests[0].request.fullUrl() === 'url1');
-      });
-
-      it('shows the correct totalCount even when requests are filtered', function() {
-        generateRequest();
-        const filter = 'url1';
-        const requestData = proxy.getRequestData(filter);
-        assert(requestData.totalCount === 2);
-      });
-
-      it('shows the correct filteredCount when requests are filtered', function() {
-        generateRequest();
-        const filter = 'url1';
-        const requestData = proxy.getRequestData(filter);
-        assert(requestData.filteredCount === 1);
+        const requests = proxy.getRequests();
+        assert(requests.length === 20);
       });
     });
   });
@@ -241,12 +210,7 @@ describe('Proxy', function() {
     it('removes all requests', function() {
       generateRequest();
       proxy.clear();
-      assert(proxy.getRequestData().requests.length === 0);
-    });
-    it('returns the correct totalCount after clearing', function() {
-      generateRequest();
-      proxy.clear();
-      assert(proxy.getRequestData().totalCount === 0);
+      assert(proxy.getRequests().length === 0);
     });
   });
 });

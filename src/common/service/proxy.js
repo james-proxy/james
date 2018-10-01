@@ -91,22 +91,8 @@ export default class Proxy {
     }
   }
 
-  getRequestById(id) {
-    if (!id) return null;
-    return this._requests.find((request) => request.request.id === id);
-  }
-
-  getRequestData(filter) {
-    const matchesFilter = (request) =>
-      request.fullUrl().includes(filter) || request.original.fullUrl.includes(filter);
-
-    const requests = !filter ? this._requests : this._requests.filter(({request}) => matchesFilter(request));
-
-    return {
-      requests,
-      totalCount: this._requests.length,
-      filteredCount: requests.length
-    };
+  getRequests() {
+    return this._requests;
   }
 
   clear() {

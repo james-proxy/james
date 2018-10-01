@@ -20,8 +20,8 @@ import {
 } from '../../../common/actions/proxy.js';
 
 import { getUpdateStatus } from '../../reducers/app.js';
-import { getRequestData } from '../../reducers/requests.js';
 import { getProxyState } from '../../reducers/proxy.js';
+import { getFilteredRequestCount, getTotalRequestCount } from '../../reducers/requests';
 
 const Footer = props =>
   <div className="footer">
@@ -36,7 +36,8 @@ const Footer = props =>
       throttleRate={props.throttleRate}
     />
     <RequestCount
-      requestData={props.requestData}
+      filteredRequestCount={props.filteredRequestCount}
+      totalRequestCount={props.totalRequestCount}
       clearRequests={props.clearRequests}
     />
     <UpdateStatus
@@ -55,7 +56,8 @@ Footer.propTypes = {
   proxyStatus: ProxyStatusTypes.isRequired,
   proxyReason: PropTypes.string,
   proxyMessage: PropTypes.string,
-  requestData: PropTypes.object.isRequired,
+  filteredRequestCount: PropTypes.number.isRequired,
+  totalRequestCount: PropTypes.number.isRequired,
   clearRequests: PropTypes.func.isRequired,
   toggleThrottle: PropTypes.func.isRequired,
   setThrottleRate: PropTypes.func.isRequired,
@@ -73,7 +75,8 @@ const mapStateToProps = (state) => {
     cachingEnabled: proxy.cachingEnabled,
     throttleEnabled: proxy.throttleEnabled,
     throttleRate: proxy.throttleRate,
-    requestData: getRequestData(state),
+    filteredRequestCount: getFilteredRequestCount(state),
+    totalRequestCount: getTotalRequestCount(state),
     proxyStatus: proxy.status,
     proxyReason: proxy.statusReason,
     updateStatus: update.status,
