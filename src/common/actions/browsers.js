@@ -1,4 +1,4 @@
-import openBrowser from 'common/service/open-browser.js';
+import openBrowser from '../service/open-browser.js';
 import { navigateToRequests } from './app.js';
 
 export const ADD_BROWSERS = 'ADD_BROWSERS';

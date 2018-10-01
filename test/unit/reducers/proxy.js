@@ -1,8 +1,8 @@
 import assert from 'assert';
 
-import proxy from 'renderer/reducers/proxy.js';
-import * as actions from 'common/actions/proxy.js';
-import constants from 'common/constants.js';
+import proxy from '../../../src/renderer/reducers/proxy.js';
+import * as actions from '../../../src/common/actions/proxy.js';
+import constants from '../../../src/common/constants.js';
 
 const initialState = {
   status: constants.PROXY_STATUS_STARTING,

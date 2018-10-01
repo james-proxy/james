@@ -3,7 +3,7 @@ import thunkMiddleware from 'redux-thunk';
 import { createLogger } from 'redux-logger';
 import { routerMiddleware } from 'react-router-redux';
 
-import constants from 'common/constants.js';
+import constants from '../../common/constants.js';
 
 import urlMapperMiddleware from './middleware/url-mapper.js';
 import proxyMiddleware from './middleware/proxy.js';

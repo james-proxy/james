@@ -8,16 +8,16 @@ import RequestCount from './request-count.js';
 import ProxyStatus from './proxy-status.js';
 import UpdateStatus from './update-status';
 
-import { 
+import {
   ProxyStatus as ProxyStatusTypes,
   UpdateStatus as UpdateStatusTypes
-} from 'common/prop-types';
+} from '../../../common/prop-types';
 import {
   toggleCaching,
   toggleThrottling as toggleThrottle,
   setThrottleRate,
   clearRequests
-} from 'common/actions/proxy.js';
+} from '../../../common/actions/proxy.js';
 
 import { getUpdateStatus } from '../../reducers/app.js';
 import { getRequestData } from '../../reducers/requests.js';

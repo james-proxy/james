@@ -30,7 +30,7 @@ Browsers.propTypes = {
 };
 
 
-import { launchBrowser } from 'common/actions/browsers.js';
+import { launchBrowser } from '../../../common/actions/browsers.js';
 import { getBrowsers } from '../../reducers/browsers.js';
 
 const mapStateToProps = (state) => ({

@@ -1,6 +1,6 @@
 import assert from 'assert';
 
-import * as actions from 'common/actions/requests.js';
+import * as actions from '../../../src/common/actions/requests.js';
 
 const request = {
   request: {},

@@ -1,7 +1,7 @@
 import assert from 'assert';
 import sinon from 'sinon';
 
-import Proxy from 'common/service/proxy.js';
+import Proxy from '../../../src/common/service/proxy.js';
 
 describe('Proxy', function() {
   const update = () => {

@@ -1,6 +1,6 @@
 import { ipcRenderer as ipc } from 'electron';
 
-import * as actions from 'common/actions/url-mappings.js';
+import * as actions from '../../../common/actions/url-mappings.js';
 
 const middleware = () => next => action => {
   const mapping = action.mapping;

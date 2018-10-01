@@ -1,5 +1,3 @@
-const path = require('path');
-
 module.exports = {
   module: {
     rules: [
@@ -29,13 +27,6 @@ module.exports = {
         }
       }
     ]
-  },
-  resolve: {
-    alias: {
-      common: path.join(__dirname, '/src/common'),
-      renderer: path.join(__dirname, '/src/renderer'),
-      main: path.join(__dirname, '/src/main'),
-    }
   },
   target: 'node',
   externals: [

@@ -4,7 +4,7 @@ import {remote} from 'electron';
 
 import Errors from '../errors/errors.js';
 
-import createChooseFile from 'common/service/choose-file.js';
+import createChooseFile from '../../../common/service/choose-file.js';
 
 const NewMappingDestination = (props) => {
   const {isLocal, destination, update, create, cancel, errors = []} = props;

@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 
-import * as actions from 'common/actions/browsers.js';
+import * as actions from '../../common/actions/browsers.js';
 
 const initialState = {
   browsers: []

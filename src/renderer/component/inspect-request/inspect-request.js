@@ -38,7 +38,7 @@ InspectRequest.propTypes = {
   clearActiveRequest: PropTypes.func.isRequired
 };
 
-import { setActiveRequest } from 'common/actions/requests.js';
+import { setActiveRequest } from '../../../common/actions/requests.js';
 import { getActiveRequest } from '../../reducers/requests.js';
 
 const mapStateToProps = (state) => ({
