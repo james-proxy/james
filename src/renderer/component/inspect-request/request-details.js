@@ -44,8 +44,8 @@ export default class RequestDetails extends React.Component {
       <RequestBody body={request.request.body} title="Request Body"/>
       {request.response.body ?
         [
-          <RequestMetadata metadata={request.response.headers} title="Response Headers"/>,
-          <RequestBody body={request.response.body} title="Response Body"/>
+          <RequestMetadata metadata={request.response.headers} title="Response Headers" key="response-header"/>,
+          <RequestBody body={request.response.body} title="Response Body" key="response-body"/>
         ]
         : null
       }
