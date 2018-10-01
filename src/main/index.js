@@ -68,9 +68,15 @@ app.on('ready', () => {
       });
     });
 
-    proxy.on('update', ({requestData}) => {
-      mainWindow.webContents.send('proxy-sync', {
-        requestData
+    proxy.on('new-request', ({requestContainer}) => {
+      mainWindow.webContents.send('proxy-new-request', {
+        requestContainer
+      });
+    });
+
+    proxy.on('request-completed', ({requestContainer}) => {
+      mainWindow.webContents.send('proxy-request-completed', {
+        requestContainer
       });
     });
 
@@ -84,10 +90,6 @@ app.on('ready', () => {
     autoUpdater(mainWindow, !constants.DEV);
   });
 
-  ipc.on('proxy-get-request', (evt, {id}) => {
-    evt.returnValue = proxy.getRequest(id); // note: not async
-  });
-
   ipc.on('proxy-cache-toggle', (evt, {enabled}) => {
     proxy.setCaching(enabled);
   });
@@ -98,10 +100,6 @@ app.on('ready', () => {
     } else {
       proxy.proxy.disableThrottling();
     }
-  });
-
-  ipc.on('proxy-clear', () => {
-    proxy.proxy.clear();
   });
 
   ipc.on('mappings-set', (evt, {url, newUrl, isLocal, isActive}) => {

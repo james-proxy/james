@@ -1,11 +1,12 @@
 import uniqid from 'uniqid';
 
 export default class Proxy {
-  constructor(update, config, urlMapper, createHoxy) {
+  constructor(newRequest, requestCompleted, config, urlMapper, createHoxy) {
     this._requests = [];
     this._urlMapper = urlMapper;
     this._config = config;
-    this._update = update;
+    this._newRequest = newRequest;
+    this._requestCompleted = requestCompleted;
     this._isCachingEnabled = false;
 
     this._proxy = createHoxy();
@@ -14,11 +15,14 @@ export default class Proxy {
     this._proxy.intercept({phase: 'response', as: 'string'}, this._onInterceptResponse.bind(this));
   }
 
-  _onResponseSent(req) {
-    req.completed = new Date().getTime();
-    req.took = req.completed - req.started;
-    req.done = true;
-    this._update();
+  _onResponseSent(request, response) {
+    request.completed = new Date().getTime();
+    request.took = request.completed - request.started;
+    request.done = true;
+    this._requestCompleted({
+      request,
+      response
+    });
   }
 
   _onInterceptResponse(request, response) {
@@ -61,11 +65,6 @@ export default class Proxy {
     };
 
     try {
-      this._requests.unshift(requestContainer);
-      if (this._requests.length > this._config.maxLogEntries) {
-        this._requests.pop();
-      }
-
       request.isMappingActive = this._urlMapper.isActiveMappedUrl(fullUrl);
       request.isMappedUrl = this._urlMapper.isMappedUrl(fullUrl);
 
@@ -78,26 +77,17 @@ export default class Proxy {
           return cycle.serve({
             path: request.newUrl
           }, () => {
-            this._update();
+            this._newRequest(requestContainer);
           });
         }
 
         request.fullUrl(request.newUrl);
       }
 
-      this._update();
+      this._newRequest(requestContainer);
     } catch (e) {
       console.error(e); // eslint-disable-line
     }
-  }
-
-  getRequests() {
-    return this._requests;
-  }
-
-  clear() {
-    this._requests = [];
-    this._update();
   }
 
   /**

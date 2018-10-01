@@ -16,7 +16,8 @@ class ProxyHandler extends EventEmitter {
 
     this.onStatusChange_({status: constants.PROXY_STATUS_STARTING});
     this.proxy = new Proxy(
-      this.onUpdate_.bind(this),
+      this.onNewRequest_.bind(this),
+      this.onRequestCompleted_.bind(this),
       config,
       urlMapper,
       this.createHoxy.bind(this),
@@ -86,7 +87,7 @@ class ProxyHandler extends EventEmitter {
     });
   }
 
-  sanitizeRequest_(includeResponse = false) {
+  sanitizeRequestContainer_(includeResponse = false) {
     // converts request into an IPC-friendly Object
     // (ES6 class getters used in Hoxy are not enumerable)
     return ({request, response}) => {
@@ -108,19 +109,15 @@ class ProxyHandler extends EventEmitter {
     };
   }
 
-  getRequestData() {
-    return this.proxy.getRequests().map(this.sanitizeRequest_());
+  onNewRequest_(requestContainer) {
+    this.emit('new-request', {
+      requestContainer: this.sanitizeRequestContainer_()(requestContainer)
+    });
   }
 
-  getRequest(id) {
-    const found = this.proxy._requests.find(({request}) => request.id === id);
-    if (!found) return;
-    return this.sanitizeRequest_(true)(found);
-  }
-
-  onUpdate_() {
-    this.emit('update', {
-      requestData: this.getRequestData()
+  onRequestCompleted_(requestContainer) {
+    this.emit('request-completed', {
+      requestContainer: this.sanitizeRequestContainer_(true)(requestContainer)
     });
   }
 

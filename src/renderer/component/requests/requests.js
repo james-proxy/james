@@ -49,12 +49,12 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  handleClick: ({request, response}) => {
-    dispatch(setActiveRequest({request, response, id: request.id}));
+  handleClick: ({request}) => {
+    dispatch(setActiveRequest(request.id));
     dispatch(setContextRequest(null));
   },
   handleContextMenu: ({request}) => {
-    dispatch(setContextRequest(request));
+    dispatch(setContextRequest(request.id));
   }
 });
 
