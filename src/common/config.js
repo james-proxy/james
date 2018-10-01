@@ -1,8 +1,9 @@
 import { remote, app as mainApp } from 'electron';
+import constants from './constants.js';
 const app = remote ? remote.app : mainApp;
 
 export default {
-  version: app.getVersion(),
+  version: constants.DEV ? 'DEV' : app.getVersion(),
   userData: app.getPath('userData'),
 
   maxLogEntries: 100000,

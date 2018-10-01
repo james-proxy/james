@@ -1,7 +1,8 @@
 import config from '../config.js';
+import constants from '../constants.js';
 
 export default function init(Sentry) {
-  if (config.DEV) {
+  if (constants.DEV) {
     return;
   }
 
