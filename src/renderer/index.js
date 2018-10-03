@@ -22,11 +22,11 @@ import { init, setUpdaterStatus } from '../common/actions/app.js';
 import { updateProxyStatus } from '../common/actions/proxy.js';
 import { syncUrlMappings } from '../common/actions/url-mappings.js';
 import { addBrowsers } from '../common/actions/browsers.js';
+import { addRequest, completeRequest } from '../common/actions/requests';
 
 import App from './containers/app';
 
 import './resources/style/main.scss';
-import { addRequest, completeRequest } from 'common/actions/requests';
 
 sentryInit(Sentry);
 

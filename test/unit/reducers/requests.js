@@ -1,7 +1,7 @@
 import assert from 'assert';
 
-import requests from 'renderer/reducers/requests.js';
-import { getFilteredRequestCount, getTotalRequestCount, getVisibleRequests } from 'renderer/reducers/requests';
+import requests from '../../../src/renderer/reducers/requests.js';
+import { getFilteredRequestCount, getTotalRequestCount, getVisibleRequests } from '../../../src/renderer/reducers/requests';
 
 const initialState = {
   filter: null,
