@@ -2,11 +2,7 @@ import assert from 'assert';
 
 import * as actions from '../../../src/common/actions/requests.js';
 
-const request = {
-  request: {},
-  response: {},
-  id: ''
-};
+const requestId = '';
 
 describe('request actions', () => {
   it('should create actions to set the request filter', () => {
@@ -22,7 +18,7 @@ describe('request actions', () => {
   it('should create an action to clear the active request', () => {
     const expectedAction = {
       type: actions.SET_ACTIVE_REQUEST,
-      request: null
+      requestId: null
     };
     assert.deepEqual(actions.setActiveRequest(), expectedAction);
   });
@@ -30,15 +26,15 @@ describe('request actions', () => {
   it('should create an action to set the active request', () => {
     const expectedAction = {
       type: actions.SET_ACTIVE_REQUEST,
-      request
+      requestId
     };
-    assert.deepEqual(actions.setActiveRequest(request), expectedAction);
+    assert.deepEqual(actions.setActiveRequest(requestId), expectedAction);
   });
 
   it('should create an action to clear the active context', () => {
     const expectedAction = {
       type: actions.SET_CONTEXT_REQUEST,
-      request: null
+      requestId: null
     };
     assert.deepEqual(actions.setContextRequest(), expectedAction);
   });
@@ -46,17 +42,8 @@ describe('request actions', () => {
   it('should create an action to set the active context', () => {
     const expectedAction = {
       type: actions.SET_CONTEXT_REQUEST,
-      request
+      requestId
     };
-    assert.deepEqual(actions.setContextRequest(request), expectedAction);
-  });
-
-  it('should create an action to sync url mappings', () => {
-    const requestData = {};
-    const expectedAction = {
-      type: actions.SYNC_REQUESTS,
-      requestData
-    };
-    assert.deepEqual(actions.syncRequests({requestData}), expectedAction);
+    assert.deepEqual(actions.setContextRequest(requestId), expectedAction);
   });
 });

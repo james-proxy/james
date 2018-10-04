@@ -1,4 +1,4 @@
-import { shell } from 'electron';
+import { remote, shell } from 'electron';
 
 import React from 'react';
 import PropTypes from 'prop-types';
@@ -16,8 +16,8 @@ const openChangelog = e => launchURL(e, 'https://github.com/james-proxy/james/bl
 const openIssues = e => launchURL(e, 'https://github.com/james-proxy/james/issues');
 
 const statusMap = {
-  [constants.UPDATE_OK]: () => ({
-    message: `v${config.version}`,
+  [constants.UPDATE_OK]: (info, app) => ({
+    message: `v${config.version(app)}`,
     icon: '',
     title: 'James is up to date',
     onClick: openChangelog
@@ -52,7 +52,7 @@ const statusMap = {
 };
 
 const UpdateStatus = ({status, info}) => {
-  const { message, icon, title, onClick } = statusMap[status](info);
+  const { message, icon, title, onClick } = statusMap[status](info, remote.app);
   const classes = `update-status ${status} ${onClick ? 'has-action' : ''}`;
 
   return <div className={classes} title={title} onClick={onClick}>

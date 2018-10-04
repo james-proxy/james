@@ -4,7 +4,7 @@ if (!constants.DEV) { // fix for loading async bundles (see electron-userland/el
   __webpack_public_path__ = `file:///${process.resourcesPath}/app.asar/`;  // eslint-disable-line camelcase
 }
 
-import { ipcRenderer as ipc } from 'electron';
+import { remote, ipcRenderer as ipc } from 'electron';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
@@ -28,7 +28,7 @@ import App from './containers/app';
 
 import './resources/style/main.scss';
 
-sentryInit(Sentry);
+sentryInit(remote.app, Sentry);
 
 const history = createHistory();
 const store = setupStore(history);

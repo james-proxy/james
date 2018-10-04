@@ -1,10 +1,8 @@
 import uniqid from 'uniqid';
 
 export default class Proxy {
-  constructor(newRequest, requestCompleted, config, urlMapper, createHoxy) {
-    this._requests = [];
+  constructor(newRequest, requestCompleted, urlMapper, createHoxy) {
     this._urlMapper = urlMapper;
-    this._config = config;
     this._newRequest = newRequest;
     this._requestCompleted = requestCompleted;
     this._isCachingEnabled = false;

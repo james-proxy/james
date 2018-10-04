@@ -4,25 +4,17 @@ import sinon from 'sinon';
 import Proxy from '../../../src/common/service/proxy.js';
 
 describe('Proxy', function() {
-  const update = () => {
-
-  };
-
-  const config = {
-    maxLogEntries: 1000
-  };
   const urlMapper = {
     get: sinon.stub(),
     isMappedUrl: sinon.stub(),
     isActiveMappedUrl: sinon.stub()
   };
 
-  const isCachingEnabled = sinon.stub().returns(false);
-
-  let proxy;
   let hoxyInstanceMock;
   let generateRequest;
   let cycle;
+  let onNewRequest;
+  let onRequestCompleted;
 
   beforeEach(function() {
     const callbacksRequest = [];
@@ -100,35 +92,15 @@ describe('Proxy', function() {
       return request;
     };
 
-    proxy = new Proxy(update, config, urlMapper, createHoxy, isCachingEnabled);
+    onNewRequest = sinon.spy();
+    onRequestCompleted = sinon.spy();
+    new Proxy(onNewRequest, onRequestCompleted, urlMapper, createHoxy);
   });
 
-  describe('getRequests', function() {
-    it('has no requests on startup', function() {
-      const requests = proxy.getRequests();
-      assert.equal(requests.length, 0);
-    });
-
-    describe('after intercepted requests', function() {
-      beforeEach(function() {
-        generateRequest();
-      });
-
-      it('returns a list of 1 request', function() {
-        const requests = proxy.getRequests();
-        assert(requests.length === 1);
-      });
-
-      it('returns a list of 20 after intercepting 20 requests', function() {
-        // Only generates 19 requests and expects 20 because of the beforeEach()
-        for (let i = 0; i < 19; i++) {
-          generateRequest();
-        }
-
-        const requests = proxy.getRequests();
-        assert(requests.length === 20);
-      });
-    });
+  it('triggers newRequest callback upon intercepting request and response', () => {
+    generateRequest();
+    assert(onNewRequest.calledOnce);
+    assert(onRequestCompleted.calledOnce);
   });
 
   describe('request mapping', function() {
@@ -203,14 +175,6 @@ describe('Proxy', function() {
     it('changes the header `expires` to `0`', function() {
       const response = generateRequest();
       assert(response.headers.expires === '0');
-    });
-  });
-
-  describe('clear', function() {
-    it('removes all requests', function() {
-      generateRequest();
-      proxy.clear();
-      assert(proxy.getRequests().length === 0);
     });
   });
 });

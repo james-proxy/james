@@ -12,14 +12,14 @@ import createUrlMapper from './url-mapper.js';
 import createProxy from './proxy.js';
 import autoUpdater from './auto-update.js';
 
-sentryInit(Sentry);
+sentryInit(app, Sentry);
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the javascript object is GCed.
 let mainWindow = null;
 
 console.log('Loading URL mappings...'); // eslint-disable-line no-console
 const urlMapper = createUrlMapper({
-  filename: `${config.userData}/data.nedb`,
+  filename: `${config.userData(app)}/data.nedb`,
   autoload: true
 });
 

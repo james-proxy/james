@@ -1,9 +1,9 @@
 import { combineReducers } from 'redux';
 import { createSelector } from 'reselect';
 
-import config from 'common/config.js';
+import config from '../../common/config.js';
 import * as actions from '../../common/actions/requests.js';
-import * as proxyActions from 'common/actions/proxy.js';
+import * as proxyActions from '../../common/actions/proxy.js';
 
 const initialState = {
   filter: null,
@@ -42,7 +42,7 @@ function data(state = initialState.data, action) {
       .slice(0, config.maxLogEntries);
   case actions.COMPLETE_REQUEST:
     return state.map(existingContainer => {
-      if (existingContainer.request.id !== action.requestContainer.id) {
+      if (existingContainer.id !== action.requestContainer.id) {
         return existingContainer;
       }
       return action.requestContainer;

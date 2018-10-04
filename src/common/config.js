@@ -1,10 +1,10 @@
-import { remote, app as mainApp } from 'electron';
+// import { remote, app as mainApp } from 'electron';
 import constants from './constants.js';
-const app = remote ? remote.app : mainApp;
+// const app = remote ? remote.app : mainApp;
 
 export default {
-  version: constants.DEV ? 'DEV' : app.getVersion(),
-  userData: app.getPath('userData'),
+  version: app => constants.DEV ? 'DEV' : app.getVersion(),
+  userData: app => app.getPath('userData'),
 
   maxLogEntries: 100000,
   proxyPort: 1338,

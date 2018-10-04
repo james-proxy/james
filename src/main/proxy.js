@@ -1,6 +1,7 @@
 import hoxy from 'hoxy';
 import fs from 'fs';
 import EventEmitter from 'events';
+import {remote} from 'electron';
 
 import constants from '../common/constants.js';
 import appConfig from '../common/config.js';
@@ -18,18 +19,16 @@ class ProxyHandler extends EventEmitter {
     this.proxy = new Proxy(
       this.onNewRequest_.bind(this),
       this.onRequestCompleted_.bind(this),
-      config,
       urlMapper,
-      this.createHoxy.bind(this),
-      this.isCaching.bind(this)
+      this.createHoxy.bind(this)
     );
   }
 
   createHoxy() {
     const opts = {};
     try {
-      const key = fs.readFileSync(`${appConfig.userData}/root-ca.key.pem`);
-      const cert = fs.readFileSync(`${appConfig.userData}/root-ca.crt.pem`);
+      const key = fs.readFileSync(`${appConfig.userData(remote.app)}/root-ca.key.pem`);
+      const cert = fs.readFileSync(`${appConfig.userData(remote.app)}/root-ca.crt.pem`);
       opts.certAuthority = {key, cert};
     } catch (e) {
       const [reason] = e.message.split('\n');
