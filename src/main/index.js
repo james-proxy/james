@@ -12,14 +12,14 @@ import createUrlMapper from './url-mapper.js';
 import createProxy from './proxy.js';
 import autoUpdater from './auto-update.js';
 
-sentryInit(Sentry);
+sentryInit(app, Sentry);
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the javascript object is GCed.
 let mainWindow = null;
 
 console.log('Loading URL mappings...'); // eslint-disable-line no-console
 const urlMapper = createUrlMapper({
-  filename: `${config.userData}/data.nedb`,
+  filename: `${config.userData(app)}/data.nedb`,
   autoload: true
 });
 
@@ -68,9 +68,15 @@ app.on('ready', () => {
       });
     });
 
-    proxy.on('update', ({requestData}) => {
-      mainWindow.webContents.send('proxy-sync', {
-        requestData
+    proxy.on('new-request', ({requestContainer}) => {
+      mainWindow.webContents.send('proxy-new-request', {
+        requestContainer
+      });
+    });
+
+    proxy.on('request-completed', ({requestContainer}) => {
+      mainWindow.webContents.send('proxy-request-completed', {
+        requestContainer
       });
     });
 
@@ -84,10 +90,6 @@ app.on('ready', () => {
     autoUpdater(mainWindow, !constants.DEV);
   });
 
-  ipc.on('proxy-get-request', (evt, {id}) => {
-    evt.returnValue = proxy.getRequest(id); // note: not async
-  });
-
   ipc.on('proxy-cache-toggle', (evt, {enabled}) => {
     proxy.setCaching(enabled);
   });
@@ -98,14 +100,6 @@ app.on('ready', () => {
     } else {
       proxy.proxy.disableThrottling();
     }
-  });
-
-  ipc.on('proxy-filter', (evt, {filter}) => {
-    proxy.setFilter(filter);
-  });
-
-  ipc.on('proxy-clear', () => {
-    proxy.proxy.clear();
   });
 
   ipc.on('mappings-set', (evt, {url, newUrl, isLocal, isActive}) => {

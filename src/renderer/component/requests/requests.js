@@ -4,8 +4,8 @@ import { connect } from 'react-redux';
 
 import Request from './request.js';
 
-const Requests = ({requestData, activeRequest, contextRequest, labels, handleClick, handleContextMenu}) => {
-  const requestNodes = requestData.requests.map(({request, response}) => {
+const Requests = ({requests, activeRequest, contextRequest, labels, handleClick, handleContextMenu}) => {
+  const requestNodes = requests.map(({request, response}) => {
     const isActive = activeRequest && activeRequest.id === request.id || false;
     const isContextMenu = contextRequest && contextRequest.id === request.id || false;
 
@@ -28,7 +28,7 @@ const Requests = ({requestData, activeRequest, contextRequest, labels, handleCli
 };
 
 Requests.propTypes = {
-  requestData: PropTypes.object.isRequired,
+  requests: PropTypes.array.isRequired,
   activeRequest: PropTypes.object,
   contextRequest: PropTypes.object,
   labels: PropTypes.array.isRequired,
@@ -37,23 +37,24 @@ Requests.propTypes = {
 };
 
 import { setActiveRequest, setContextRequest } from '../../../common/actions/requests.js';
-import { getRequestData, getActiveRequest, getContextRequest } from '../../reducers/requests.js';
+import { getActiveRequest, getContextRequest } from '../../reducers/requests.js';
 import { getLabels } from '../../reducers/app.js';
+import { getVisibleRequests } from '../../reducers/requests';
 
 const mapStateToProps = (state) => ({
-  requestData: getRequestData(state),
+  requests: getVisibleRequests(state),
   labels: getLabels(state),
   activeRequest: getActiveRequest(state),
   contextRequest: getContextRequest(state)
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  handleClick: ({request, response}) => {
-    dispatch(setActiveRequest({request, response, id: request.id}));
+  handleClick: ({request}) => {
+    dispatch(setActiveRequest(request.id));
     dispatch(setContextRequest(null));
   },
   handleContextMenu: ({request}) => {
-    dispatch(setContextRequest(request));
+    dispatch(setContextRequest(request.id));
   }
 });
 

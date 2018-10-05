@@ -1,16 +1,15 @@
 import { combineReducers } from 'redux';
+import { createSelector } from 'reselect';
 
+import config from '../../common/config.js';
 import * as actions from '../../common/actions/requests.js';
+import * as proxyActions from '../../common/actions/proxy.js';
 
 const initialState = {
   filter: null,
-  active: null,
-  context: null,
-  data: {
-    requests: [],
-    totalCount: 0,
-    filteredCount: 0
-  }
+  activeRequestId: null,
+  contextRequestId: null,
+  data: []
 };
 
 // reducers
@@ -22,44 +21,50 @@ function filter(state = initialState.filter, action) {
   return action.filter || initialState.filter;
 }
 
-function active(state = initialState.active, action) {
+function activeRequestId(state = initialState.activeRequestId, action) {
   if (action.type !== actions.SET_ACTIVE_REQUEST) {
     return state;
   }
-  if (state !== null && action.request !== null && state.id === action.request.id) {
-    return initialState.active;
-  }
-  return action.request;
+  return action.requestId;
 }
 
-function context(state = initialState.context, action) {
+function contextRequestId(state = initialState.contextRequestId, action) {
   if (action.type !== actions.SET_CONTEXT_REQUEST) {
     return state;
   }
-  if (state !== null && action.request !== null && state.id === action.request.id) {
-    return initialState.context;
-  }
-  return action.request;
+  return action.requestId;
 }
 
 function data(state = initialState.data, action) {
-  if (action.type !== actions.SYNC_REQUESTS) {
+  switch (action.type) {
+  case actions.ADD_REQUEST:
+    return [action.requestContainer].concat(state)
+      .slice(0, config.maxLogEntries);
+  case actions.COMPLETE_REQUEST:
+    return state.map(existingContainer => {
+      if (existingContainer.id !== action.requestContainer.id) {
+        return existingContainer;
+      }
+      return action.requestContainer;
+    });
+  case proxyActions.CLEAR_REQUESTS:
+    return [];
+  default:
     return state;
   }
-  return action.requestData;
 }
 
 export default combineReducers({
   filter,
-  active,
-  context,
+  activeRequestId,
+  contextRequestId,
   data
 });
 
 // selectors
 
 export function hasRequests(state) {
-  return state.requests.data.totalCount > 0;
+  return state.requests.data.length > 0;
 }
 
 export function getRequestFilter(state) {
@@ -67,23 +72,28 @@ export function getRequestFilter(state) {
 }
 
 export function getActiveRequest(state) {
-  return state.requests.active;
-}
-
-export function isActiveRequest(state, request) {
-  const activeRequest = getActiveRequest(state);
-  return activeRequest && request && activeRequest.id === request.id;
+  return state.requests.data.find(requestContainer => requestContainer.id === state.requests.activeRequestId);
 }
 
 export function getContextRequest(state) {
-  return state.requests.context;
+  return state.requests.data.find(requestContainer => requestContainer.id === state.requests.contextRequestId);
 }
 
-export function isContextRequest(state, request) {
-  const contextRequest = getContextRequest(state);
-  return contextRequest && request && contextRequest.id === request.id;
+export const getVisibleRequests = createSelector(
+  [getRequestFilter, state => state.requests.data],
+  (requestFilter, requests) => {
+    const matchesFilter = (request) =>
+      request.fullUrl.includes(requestFilter) || request.original.fullUrl.includes(requestFilter);
+
+    return !requestFilter
+      ? requests
+      : requests.filter(({request}) => matchesFilter(request));
+  });
+
+export function getTotalRequestCount(state) {
+  return state.requests.data.length;
 }
 
-export function getRequestData(state) {
-  return state.requests.data;
+export function getFilteredRequestCount(state) {
+  return getVisibleRequests(state).length;
 }

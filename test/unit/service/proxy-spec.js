@@ -4,25 +4,17 @@ import sinon from 'sinon';
 import Proxy from '../../../src/common/service/proxy.js';
 
 describe('Proxy', function() {
-  const update = () => {
-
-  };
-
-  const config = {
-    maxLogEntries: 1000
-  };
   const urlMapper = {
     get: sinon.stub(),
     isMappedUrl: sinon.stub(),
     isActiveMappedUrl: sinon.stub()
   };
 
-  const isCachingEnabled = sinon.stub().returns(false);
-
-  let proxy;
   let hoxyInstanceMock;
   let generateRequest;
   let cycle;
+  let onNewRequest;
+  let onRequestCompleted;
 
   beforeEach(function() {
     const callbacksRequest = [];
@@ -100,66 +92,15 @@ describe('Proxy', function() {
       return request;
     };
 
-    proxy = new Proxy(update, config, urlMapper, createHoxy, isCachingEnabled);
+    onNewRequest = sinon.spy();
+    onRequestCompleted = sinon.spy();
+    new Proxy(onNewRequest, onRequestCompleted, urlMapper, createHoxy);
   });
 
-  describe('getRequestData', function() {
-    it('has no requests on startup', function() {
-      const requestData = proxy.getRequestData();
-      const expectedRequestData = {
-        requests: [],
-        totalCount: 0,
-        filteredCount: 0
-      };
-      assert.deepEqual(requestData, expectedRequestData);
-    });
-
-    describe('after intercepted requests', function() {
-      beforeEach(function() {
-        generateRequest();
-      });
-
-      it('returns a totalCount value of 1', function() {
-        const requestData = proxy.getRequestData();
-        assert(requestData.totalCount === 1);
-      });
-
-      it('returns a filteredCount value of 1', function() {
-        const requestData = proxy.getRequestData();
-        assert(requestData.totalCount === 1);
-      });
-
-      it('returns a totalCount value of 20 after intercepting 20 requests', function() {
-        // Only generates 19 requests and expects 20 because of the beforeEach()
-        for (let i = 0; i < 19; i++) {
-          generateRequest();
-        }
-
-        const requestData = proxy.getRequestData();
-        assert(requestData.totalCount === 20);
-      });
-
-      it('filters by url and returns an array only with matching requests', function() {
-        generateRequest();
-        const filter = 'url1';
-        const requestData = proxy.getRequestData(filter);
-        assert(requestData.requests[0].request.fullUrl() === 'url1');
-      });
-
-      it('shows the correct totalCount even when requests are filtered', function() {
-        generateRequest();
-        const filter = 'url1';
-        const requestData = proxy.getRequestData(filter);
-        assert(requestData.totalCount === 2);
-      });
-
-      it('shows the correct filteredCount when requests are filtered', function() {
-        generateRequest();
-        const filter = 'url1';
-        const requestData = proxy.getRequestData(filter);
-        assert(requestData.filteredCount === 1);
-      });
-    });
+  it('triggers newRequest callback upon intercepting request and response', () => {
+    generateRequest();
+    assert(onNewRequest.calledOnce);
+    assert(onRequestCompleted.calledOnce);
   });
 
   describe('request mapping', function() {
@@ -234,19 +175,6 @@ describe('Proxy', function() {
     it('changes the header `expires` to `0`', function() {
       const response = generateRequest();
       assert(response.headers.expires === '0');
-    });
-  });
-
-  describe('clear', function() {
-    it('removes all requests', function() {
-      generateRequest();
-      proxy.clear();
-      assert(proxy.getRequestData().requests.length === 0);
-    });
-    it('returns the correct totalCount after clearing', function() {
-      generateRequest();
-      proxy.clear();
-      assert(proxy.getRequestData().totalCount === 0);
     });
   });
 });

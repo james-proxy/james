@@ -47,6 +47,7 @@
     "redux": "^3.5.2",
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.0.1",
+    "reselect": "^4.0.0",
     "source-map-support": "^0.5.3",
     "uniqid": "^4.0.0"
   },

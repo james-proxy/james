@@ -1,7 +1,7 @@
 import config from '../config.js';
 import constants from '../constants.js';
 
-export default function init(Sentry) {
+export default function init(app, Sentry) {
   if (constants.DEV) {
     return;
   }
@@ -9,6 +9,6 @@ export default function init(Sentry) {
   const { dsn, host } = config.sentry;
   Sentry.init({
     dsn: `https://${dsn}@${host}`,
-    release: config.version
+    release: config.version(app)
   });
 }

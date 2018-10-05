@@ -1,18 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const RequestCount = ({requestData, clearRequests}) => {
-  const {filteredCount, totalCount} = requestData;
+const RequestCount = ({filteredRequestCount, totalRequestCount, clearRequests}) => {
   return <div className="request-count">
     <button title="Clear all requests" onClick={clearRequests}>
       <i className="fa fa-ban" />
     </button>
-    {`Requests: ${filteredCount} / ${totalCount}`}
+    {`Requests: ${filteredRequestCount} / ${totalRequestCount}`}
   </div>;
 };
 
 RequestCount.propTypes = {
-  requestData: PropTypes.object.isRequired,
+  filteredRequestCount: PropTypes.number.isRequired,
+  totalRequestCount: PropTypes.number.isRequired,
   clearRequests: PropTypes.func.isRequired
 };
 

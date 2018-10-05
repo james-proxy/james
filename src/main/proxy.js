@@ -1,6 +1,7 @@
 import hoxy from 'hoxy';
 import fs from 'fs';
 import EventEmitter from 'events';
+import {remote} from 'electron';
 
 import constants from '../common/constants.js';
 import appConfig from '../common/config.js';
@@ -11,26 +12,23 @@ class ProxyHandler extends EventEmitter {
   constructor(config, urlMapper) {
     super();
     this.config = config;
-    this.hoxy = undefined;
-    this.filter = undefined;
     this.status = undefined;
     this.cachingEnabled = false;
 
     this.onStatusChange_({status: constants.PROXY_STATUS_STARTING});
     this.proxy = new Proxy(
-      this.onUpdate_.bind(this),
-      config,
+      this.onNewRequest_.bind(this),
+      this.onRequestCompleted_.bind(this),
       urlMapper,
-      this.createHoxy.bind(this),
-      this.isCaching.bind(this)
+      this.createHoxy.bind(this)
     );
   }
 
   createHoxy() {
     const opts = {};
     try {
-      const key = fs.readFileSync(`${appConfig.userData}/root-ca.key.pem`);
-      const cert = fs.readFileSync(`${appConfig.userData}/root-ca.crt.pem`);
+      const key = fs.readFileSync(`${appConfig.userData(remote.app)}/root-ca.key.pem`);
+      const cert = fs.readFileSync(`${appConfig.userData(remote.app)}/root-ca.crt.pem`);
       opts.certAuthority = {key, cert};
     } catch (e) {
       const [reason] = e.message.split('\n');
@@ -41,9 +39,9 @@ class ProxyHandler extends EventEmitter {
       });
     }
 
-    this.hoxy = hoxy.createServer(opts);
-    this.hoxy.log('error warn info debug');
-    this.hoxy.on('error', (event) => {
+    const hoxyServer = hoxy.createServer(opts);
+    hoxyServer.log('error warn info debug');
+    hoxyServer.on('error', (event) => {
       if (event.code === 'ENOTFOUND') return;
       console.warn('hoxy error: ', event.code, event); // eslint-disable-line
 
@@ -55,7 +53,7 @@ class ProxyHandler extends EventEmitter {
       }
     });
 
-    return this.hoxy.listen(this.config.proxyPort, () => {
+    return hoxyServer.listen(this.config.proxyPort, () => {
       if (this.status.error) return;
       this.onStatusChange_({status: constants.PROXY_STATUS_WORKING});
     });
@@ -88,7 +86,7 @@ class ProxyHandler extends EventEmitter {
     });
   }
 
-  sanitizeRequest_(includeResponse = false) {
+  sanitizeRequestContainer_(includeResponse = false) {
     // converts request into an IPC-friendly Object
     // (ES6 class getters used in Hoxy are not enumerable)
     return ({request, response}) => {
@@ -110,22 +108,15 @@ class ProxyHandler extends EventEmitter {
     };
   }
 
-  getRequestData() {
-    const requestData = this.proxy.getRequestData(this.filter);
-    requestData.requests = requestData.requests
-      .map(this.sanitizeRequest_());
-    return requestData;
+  onNewRequest_(requestContainer) {
+    this.emit('new-request', {
+      requestContainer: this.sanitizeRequestContainer_()(requestContainer)
+    });
   }
 
-  getRequest(id) {
-    const found = this.proxy._requests.find(({request}) => request.id === id);
-    if (!found) return;
-    return this.sanitizeRequest_(true)(found);
-  }
-
-  onUpdate_() {
-    this.emit('update', {
-      requestData: this.getRequestData()
+  onRequestCompleted_(requestContainer) {
+    this.emit('request-completed', {
+      requestContainer: this.sanitizeRequestContainer_(true)(requestContainer)
     });
   }
 
@@ -140,11 +131,6 @@ class ProxyHandler extends EventEmitter {
 
   isCaching() {
     return this.isCaching;
-  }
-
-  setFilter(filter) {
-    this.filter = filter;
-    this.onUpdate_();
   }
 }
 

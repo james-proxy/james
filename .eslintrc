@@ -87,7 +87,6 @@
     "no-loop-func": 2,               // http://eslint.org/docs/rules/no-loop-func
     "no-multi-str": 2,               // http://eslint.org/docs/rules/no-multi-str
     "no-native-reassign": 2,         // http://eslint.org/docs/rules/no-native-reassign
-    "no-new": 2,                     // http://eslint.org/docs/rules/no-new
     "no-new-func": 2,                // http://eslint.org/docs/rules/no-new-func
     "no-new-wrappers": 2,            // http://eslint.org/docs/rules/no-new-wrappers
     "no-octal": 2,                   // http://eslint.org/docs/rules/no-octal
