@@ -55,7 +55,7 @@ The electron instance will automatically reload whenever a change is made
 - `npm test`: Runs all tests
 - `npm run build`: Completely builds the app (no watch)
 - `npm run lint`: Checks all JS code against defined code styling rules
-- `npm run dist`: Creates a standalone app bundle for all operating systems
+- `npm run release`: Creates a standalone app bundle for all operating systems
 
 ### Guidelines
 - Make sure that no tests are failing

@@ -15,4 +15,4 @@ test_script:
   - npm run test-ci
 
 build_script:
-  - npm run dist:win64
+  - npm run release:win64
