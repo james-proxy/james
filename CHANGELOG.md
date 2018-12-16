@@ -1,4 +1,4 @@
-## Upcoming Release
+# 2.1.0
 
 #### User features
 - Display request/response body (#377) (i: @nerdbeere, r: @mitchhentges)
