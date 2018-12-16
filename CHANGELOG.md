@@ -1,3 +1,9 @@
+# 2.1.1
+
+#### Bugfixes
+
+- Resolves exception when setting up HTTPs
+
 # 2.1.0
 
 #### User features
