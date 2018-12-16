@@ -3,9 +3,6 @@
 #### User features
 - Display request/response body (#377) (i: @nerdbeere, r: @mitchhentges)
 
-#### Developer features
-- Nothing yet
-
 #### Bugfixes
 - Hides response details if request is not complete (#384) (i: @mitchhentges, r: @nerdbeere)
 - Use version 3.3.1 of hoxy to fix app crashes (#376) (i: @nerdbeere, r: @mitchhentges)
