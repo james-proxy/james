@@ -12,7 +12,7 @@ const RequestMetadata = (props) => {
   const metaNodes = keys.map((key) => {
     return <li key={key}>
       <strong>{key}:&nbsp;</strong>
-      {metadata[key]}
+      {String(metadata[key])}
     </li>;
   });
 
