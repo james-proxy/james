@@ -1,3 +1,4 @@
+import * as process from 'process';
 import {app, BrowserWindow, ipcMain as ipc} from 'electron';
 import localShortcut from 'electron-localshortcut';
 import browserLauncher from '@james-proxy/james-browser-launcher';
@@ -21,6 +22,11 @@ console.log('Loading URL mappings...'); // eslint-disable-line no-console
 const urlMapper = createUrlMapper({
   filename: `${config.userData(app)}/data.nedb`,
   autoload: true
+});
+
+process.on('uncaughtException', (error) => {
+  // TODO remove this global handler!
+  console.warn('Ignored fatal error!', error); // eslint-disable-line no-console
 });
 
 console.log('Starting proxy...'); // eslint-disable-line no-console
