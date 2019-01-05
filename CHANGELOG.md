@@ -1,3 +1,9 @@
+# 2.1.2
+
+#### Bugfixes
+
+- Ignores `hoxy` errors (mitigates a cause of crashes)
+
 # 2.1.1
 
 #### Bugfixes
