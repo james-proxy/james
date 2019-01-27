@@ -24,11 +24,6 @@ const urlMapper = createUrlMapper({
   autoload: true
 });
 
-process.on('uncaughtException', (error) => {
-  // TODO remove this global handler!
-  console.warn('Ignored fatal error!', error); // eslint-disable-line no-console
-});
-
 console.log('Starting proxy...'); // eslint-disable-line no-console
 const proxy = createProxy(config, urlMapper.urlMapper);
 
