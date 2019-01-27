@@ -33,7 +33,7 @@
     "electron-updater": "3.1.2",
     "font-awesome": "^4.5.0",
     "history": "^4.7.2",
-    "hoxy": "^3.3.1",
+    "hoxy": "file:./src/proxy",
     "lodash.throttle": "^4.1.0",
     "materialize-css": "^0.100.2",
     "nedb": "^1.7.1",
