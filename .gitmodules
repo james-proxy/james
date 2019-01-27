@@ -1,0 +1,3 @@
+[submodule "src/proxy"]
+	path = src/proxy
+	url = git@github.com:jamezrin/hoxy.git
