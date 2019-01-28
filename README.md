@@ -1,8 +1,6 @@
 ### This project is in maintenance mode
 
-The original James team aren't able to spend the same amount of time on James anymore. 
-
-Of course, bug reports and Pull Requests are very much appreciated, and we'll investigate them when we're able!
+Maintainers or forks welcome: the original James team aren't able to spend the same amount of time on James anymore.
 
 # James
 
