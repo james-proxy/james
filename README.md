@@ -1,6 +1,10 @@
+### This project is in maintenance mode
+
+Maintainers or forks welcome: the original James team aren't able to spend the same amount of time on James anymore.
+
 # James
 
-[![Build Status](https://travis-ci.org/james-proxy/james.svg?branch=master)](https://travis-ci.org/james-proxy/james)
+[![Build Status](https://travis-ci.org/james-proxy/james.svg?branch=master)](https://travis-ci.org/james-proxy/james) 
 
 James is an HTTP Proxy and Monitor that enables developers to view and intercept requests made from the browser.
 It is an open-source alternative to the popular developer tool [Charles](http://www.charlesproxy.com/)
