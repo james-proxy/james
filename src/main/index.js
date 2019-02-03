@@ -19,10 +19,11 @@ import * as sentryNode from '@sentry/node';
 // See bug: https://github.com/james-proxy/james/issues/405
 process.on('uncaughtException', (error) => {
   console.warn('Ignored fatal error!', error); // eslint-disable-line no-console
+  Sentry.captureException(error);
 });
 
 // Replace default onFatalError implementation (that kills the process) with a noop
-// Uncaught exceptions will NOT be reported to Sentry!
+// Uncaught exceptions will be reported to exceptions manually in our override handler above
 const defaultIntegrations = sentryNode.defaultIntegrations
   .filter(integration => !(integration instanceof sentryNode.Integrations.OnUncaughtException));
 
