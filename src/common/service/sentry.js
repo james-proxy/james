@@ -9,6 +9,7 @@ export default function init(app, Sentry) {
   const { dsn, host } = config.sentry;
   Sentry.init({
     dsn: `https://${dsn}@${host}`,
-    release: config.version(app)
+    release: config.version(app),
+    defaultIntegrations
   });
 }
