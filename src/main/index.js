@@ -13,7 +13,20 @@ import createUrlMapper from './url-mapper.js';
 import createProxy from './proxy.js';
 import autoUpdater from './auto-update.js';
 
-sentryInit(app, Sentry);
+import * as sentryNode from '@sentry/node';
+
+// TODO remove this global handler and Sentry integration override!
+// See bug: https://github.com/james-proxy/james/issues/405
+process.on('uncaughtException', (error) => {
+  console.warn('Ignored fatal error!', error); // eslint-disable-line no-console
+});
+
+// Replace default onFatalError implementation (that kills the process) with a noop
+// Uncaught exceptions will NOT be reported to Sentry!
+const defaultIntegrations = sentryNode.defaultIntegrations
+  .filter(integration => !(integration instanceof sentryNode.Integrations.OnUncaughtException));
+
+sentryInit(app, Sentry, defaultIntegrations);
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the javascript object is GCed.
 let mainWindow = null;
@@ -22,11 +35,6 @@ console.log('Loading URL mappings...'); // eslint-disable-line no-console
 const urlMapper = createUrlMapper({
   filename: `${config.userData(app)}/data.nedb`,
   autoload: true
-});
-
-process.on('uncaughtException', (error) => {
-  // TODO remove this global handler!
-  console.warn('Ignored fatal error!', error); // eslint-disable-line no-console
 });
 
 console.log('Starting proxy...'); // eslint-disable-line no-console
