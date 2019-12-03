@@ -117,12 +117,16 @@ app.on('ready', () => {
     }
   });
 
-  ipc.on('mappings-set', (evt, {url, newUrl, isLocal, isActive}) => {
-    urlMapper.urlMapper.set(url, newUrl, isLocal, isActive);
+  ipc.on('mappings-set', (evt, {url, newUrl, isLocal, isActive, isMerge}) => {
+    urlMapper.urlMapper.set(url, newUrl, isLocal, isActive, isMerge);
   });
 
   ipc.on('mappings-toggle', (evt, {url}) => {
     urlMapper.urlMapper.toggleActiveState(url);
+  });
+
+  ipc.on('mappings-set-response-to-merge', (evt, {url, newResponseToMerge}) => {
+    urlMapper.urlMapper.setResponseToMerge(url, newResponseToMerge);
   });
 
   ipc.on('mappings-remove', (evt, {url}) => {

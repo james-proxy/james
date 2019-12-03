@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import Errors from '../errors/errors.js';
 
 const NewMappingTarget = (props) => {
-  const {target, update, createUrl, createFile, errors = []} = props;
+  const {target, update, createUrl, createFile, createMerge, errors = []} = props;
 
   const onChange = (event) => { update(event.target.value); };
 
@@ -19,6 +19,7 @@ const NewMappingTarget = (props) => {
       onChange={onChange} />
     <button className="btn waves-effect waves-light" onClick={createUrl}>URL to URL</button>
     <button className="btn waves-effect waves-light" onClick={createFile}>URL to File</button>
+    <button className="btn waves-effect waves-light" onClick={createMerge}>URL to Merge</button>
   </div>;
 };
 
@@ -27,6 +28,7 @@ NewMappingTarget.propTypes = {
   update: PropTypes.func.isRequired,
   createUrl: PropTypes.func.isRequired,
   createFile: PropTypes.func.isRequired,
+  createMerge: PropTypes.func.isRequired,
   errors: PropTypes.array
 };
 

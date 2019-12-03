@@ -33,18 +33,21 @@ describe('url mapper', function() {
       const newUrl = 'foo.com/bar/mapped';
       const isLocal = false;
       const isActive = true;
+      const isMerge = false;
       urlMapper.set(
         url,
         newUrl,
         isLocal,
-        isActive
+        isActive,
+        isMerge
       );
 
       assert(dbMock.insert.calledWith({
         url,
         newUrl,
         isLocal,
-        isActive
+        isActive,
+        isMerge
       }));
     });
 
@@ -100,7 +103,8 @@ describe('url mapper', function() {
       url: 'foo.com/bar',
       newUrl: newUrl,
       isLocal: true,
-      isActive: true
+      isActive: true,
+      isMerge: false
     };
 
     it('should not remove the protocol from the destination url', function() {

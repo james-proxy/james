@@ -38,6 +38,7 @@ describe('url mapper actions', () => {
         url,
         newUrl,
         isLocal: false,
+        isMerge: false,
         isActive: true
       }
     };
@@ -51,6 +52,7 @@ describe('url mapper actions', () => {
         url,
         newUrl,
         isLocal: true,
+        isMerge: false,
         isActive: true
       }
     };
@@ -64,6 +66,7 @@ describe('url mapper actions', () => {
         url,
         newUrl,
         isLocal: false,
+        isMerge: false,
         isActive: false
       }
     };
@@ -96,7 +99,7 @@ describe('url mapper actions', () => {
       type: actions.SYNC_URL_MAPPINGS,
       mappings
     };
-    assert.deepEqual(actions.syncUrlMappings({mappings}), expectedAction);
+    assert.deepEqual(actions.syncUrlMappings({ mappings }), expectedAction);
   });
 
   it('should create an action to update new mapping state', () => {
@@ -142,5 +145,25 @@ describe('url mapper actions', () => {
       error: msg
     };
     assert.deepEqual(actions.setNewMappingError(msg), expectedAction);
+  });
+
+  it('should set response to merge', () => {
+    const newResponseToMerge = { test: 'test' };
+    const expectedAction = {
+      type: actions.SET_RESPONSE_TO_MERGE,
+      mapping: {
+        url,
+        newResponseToMerge
+      }
+    };
+    assert.deepEqual(actions.setResponseToMerge(url, newResponseToMerge), expectedAction);
+  });
+
+  it('should select mapping', () => {
+    const expectedAction = {
+      type: actions.SET_SELECTED_MAPPING,
+      url
+    };
+    assert.deepEqual(actions.setSelectedMapping(url), expectedAction);
   });
 });

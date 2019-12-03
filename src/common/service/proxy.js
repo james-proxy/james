@@ -1,4 +1,7 @@
 import uniqid from 'uniqid';
+import merge from 'deepmerge';
+
+const overwriteMerge = (destinationArray, sourceArray) => sourceArray;
 
 export default class Proxy {
   constructor(newRequest, requestCompleted, urlMapper, createHoxy) {
@@ -9,8 +12,8 @@ export default class Proxy {
 
     this._proxy = createHoxy();
     this._proxy.intercept('response-sent', this._onResponseSent.bind(this));
-    this._proxy.intercept({phase: 'request', as: 'string'}, this._onInterceptRequest.bind(this));
-    this._proxy.intercept({phase: 'response', as: 'string'}, this._onInterceptResponse.bind(this));
+    this._proxy.intercept({ phase: 'request', as: 'string' }, this._onInterceptRequest.bind(this));
+    this._proxy.intercept({ phase: 'response', as: 'string' }, this._onInterceptResponse.bind(this));
   }
 
   _onResponseSent(request, response) {
@@ -25,7 +28,7 @@ export default class Proxy {
 
   _onInterceptResponse(request, response) {
     if (!this._isCachingEnabled) {
-      delete response.headers['if-modified-since'];
+      delete response.headers['if-modified-since']; 
       delete response.headers['if-none-match'];
       delete response.headers['last-modified'];
       delete response.headers.etag;
@@ -33,6 +36,12 @@ export default class Proxy {
       response.headers.expires = '0';
       response.headers.pragma = 'no-cache';
       response.headers['cache-control'] = 'no-cache';
+    }
+    if (request.isMerge) {
+      const responseToMerge = request.responseToMerge;
+      const responseObject = JSON.parse(response.string);
+      const newResponseBody = merge(responseObject, responseToMerge, { arrayMerge: overwriteMerge });
+      response.string = JSON.stringify(newResponseBody);
     }
     response.body = {
       string: response.string
@@ -68,18 +77,21 @@ export default class Proxy {
 
       if (request.isMappingActive) {
         const mappedUrl = this._urlMapper.get(fullUrl);
+        request.isMerge = mappedUrl.isMerge;
+        request.responseToMerge = mappedUrl.responseToMerge;
         request.isLocal = mappedUrl.isLocal;
         request.newUrl = mappedUrl.newUrl;
 
-        if (request.isLocal) {
-          return cycle.serve({
-            path: request.newUrl
-          }, () => {
-            this._newRequest(requestContainer);
-          });
+        if (!request.isMerge) {
+          if (request.isLocal) {
+            return cycle.serve({
+              path: request.newUrl
+            }, () => {
+              this._newRequest(requestContainer);
+            });
+          }
+          request.fullUrl(request.newUrl);
         }
-
-        request.fullUrl(request.newUrl);
       }
 
       this._newRequest(requestContainer);
@@ -94,7 +106,7 @@ export default class Proxy {
    */
   slow(rate) {
     rate *= 1024;
-    this._proxy.slow({rate});
+    this._proxy.slow({ rate });
   }
 
   /**

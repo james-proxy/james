@@ -68,24 +68,27 @@ export default class UrlMapper {
     return matches[0];
   }
 
-  set(url, newUrl, isLocal = true, isActive = true) {
+  set(url, newUrl, isLocal = true, isActive = true, isMerge = false) {
     url = UrlMapper.prepare(url);
-    newUrl = newUrl.trim();
-
-    if (url === '' || newUrl === '') {
-      return;
-    }
 
     const mappedUrl = {
       url,
-      newUrl,
       isLocal,
-      isActive
+      isActive,
+      isMerge
     };
+
+    if (url === '') return;
+
+    if (!isMerge) {
+      newUrl = newUrl.trim();
+      if (newUrl === '') return;
+      mappedUrl.newUrl = newUrl;
+    }
 
     this._addMemoryCopy(mappedUrl);
 
-    this._db.remove({url}, {multi: true}, () => {
+    this._db.remove({ url }, { multi: true }, () => {
       this._db.insert(mappedUrl, () => {
         this._update();
       });
@@ -104,14 +107,22 @@ export default class UrlMapper {
     if (!this.isMappedUrl(url)) return;
     const mapping = this.get(url);
     mapping.isActive = !mapping.isActive;
-    this._db.update({url}, {$set: {isActive: mapping.isActive}}, {}, () => {
+    this._db.update({ url }, { $set: { isActive: mapping.isActive } }, {}, () => {
+      this._update();
+    });
+  }
+
+  setResponseToMerge(url, responseToMerge) {
+    const mapping = this.get(url);
+    mapping.responseToMerge = responseToMerge;
+    this._db.update({ url }, { $set: { responseToMerge } }, {}, () => {
       this._update();
     });
   }
 
   remove(url) {
     this._removeMemoryCopy(url);
-    this._db.remove({url}, {multi: true}, () => {
+    this._db.remove({ url }, { multi: true }, () => {
       this._update();
     });
   }

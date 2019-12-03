@@ -11,13 +11,14 @@ const NewMappingDestination = (props) => {
 
   const chooseFile = createChooseFile(remote.getCurrentWindow());
 
-  const selectFile = () => {
+  const selectFile = (event) => {
     chooseFile((paths) => {
       if (!paths) return;
       const path = paths[0];
 
       update(path);
     });
+    event.preventDefault();
   };
 
   const onChange = (event) => { update(event.target.value); };

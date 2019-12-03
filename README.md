@@ -78,6 +78,7 @@ We're using [Matrix](https://matrix.org/) for communication, and you can use the
 - @mitchhentges
 - @nerdbeere
 - @tomitm
+- @adsonpleal
 
 ## License
 The MIT License (MIT)

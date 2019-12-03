@@ -15,6 +15,7 @@ class NewMapping extends Component {
     this.updateTarget = this.updateTarget.bind(this);
     this.updateDestination = this.updateDestination.bind(this);
     this.createUrl = this.createUrl.bind(this);
+    this.createMerge = this.createMerge.bind(this);
     this.createFile = this.createFile.bind(this);
     this.finish = this.finish.bind(this);
     this.reset = this.reset.bind(this);
@@ -34,49 +35,62 @@ class NewMapping extends Component {
   }
 
   updateTarget(value) {
-    this.props.update({target: value});
+    this.props.update({ target: value });
   }
 
   updateDestination(value) {
-    this.props.update({destination: value});
+    this.props.update({ destination: value });
   }
 
   createUrl() {
     if (!this.validate()) {
-      this.props.setError( 'Please enter a valid source URL.' );
+      this.props.setError('Please enter a valid source URL.');
       return;
     }
     this.props.next(false);
   }
 
-  createFile() {
+  createFile(event) {
     if (!this.validate()) {
-      this.props.setError( 'Please enter a valid source URL.' );
+      this.props.setError('Please enter a valid source URL.');
       return;
     }
     this.props.next(true);
+    event.preventDefault();
   }
 
-  finish() {
-    if (!this.validate()) {
-      this.props.setError( 'Please enter a valid destination URL.' );
+  createMerge(event) {
+    const { saveMapping } = this.props;
+    const { target } = this.props.mapping;
+    if (!target) {
+      this.props.setError('Please enter a valid source URL.');
       return;
     }
-    const {saveMapping} = this.props;
-    const {target, destination, isLocal} = this.props.mapping;
-
-    saveMapping(target, destination, isLocal);
-    this.reset();
+    saveMapping(target, null, false, true, true);
+    this.reset(event);
   }
 
-  reset() {
+  finish(event) {
+    if (!this.validate()) {
+      this.props.setError('Please enter a valid destination URL.');
+      return;
+    }
+    const { saveMapping } = this.props;
+    const { target, destination, isLocal } = this.props.mapping;
+
+    saveMapping(target, destination, isLocal);
+    this.reset(event);
+  }
+
+  reset(event) {
     this.props.reset();
+    event.preventDefault();
   }
 
   render() {
     let form;
-    let submit = () => {};
-    const {errors = [], step, target, destination, isLocal} = this.props.mapping;
+    let submit = () => { };
+    const { errors = [], step, target, destination, isLocal } = this.props.mapping;
 
     if (step === constants.NEW_MAPPING_STEP_TARGET) {
       submit = this.createUrl;
@@ -85,6 +99,7 @@ class NewMapping extends Component {
         target={target}
         update={this.updateTarget}
         createUrl={this.createUrl}
+        createMerge={this.createMerge}
         createFile={this.createFile}
       />;
     } else if (step === constants.NEW_MAPPING_STEP_DESTINATION) {

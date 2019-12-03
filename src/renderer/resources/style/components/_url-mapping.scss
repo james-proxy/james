@@ -1,0 +1,15 @@
+.collection-item {
+    .secondary-content {
+        cursor: pointer;
+    }
+}
+
+.mapping-details {
+    .secondary-content {
+        margin-left: 8px;
+        cursor: pointer;
+    }
+    .switch {
+        display: flex;
+    }
+}

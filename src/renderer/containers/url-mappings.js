@@ -4,13 +4,15 @@ import { connect } from 'react-redux';
 
 import NewMapping from '../component/mapping/new-mapping.js';
 import UrlMapping from '../component/mapping/url-mapping.js';
+import InspectMapping from '../component/inspect-mapping/inspect-mapping.js';
 
 const UrlMappingsContainer = (props) => {
   const {
     urlMappings,
     setUrlMapping,
     toggleUrlMapping,
-    removeUrlMapping
+    removeUrlMapping,
+    setSelectedMapping
   } = props;
 
   const urlMappingNodes = urlMappings.map((mapping, index) => {
@@ -18,6 +20,7 @@ const UrlMappingsContainer = (props) => {
       mapping={mapping}
       toggleActive={toggleUrlMapping}
       remove={removeUrlMapping}
+      edit={setSelectedMapping}
     />;
   });
 
@@ -30,6 +33,7 @@ const UrlMappingsContainer = (props) => {
         {urlMappingNodes}
       </ul>
     </div>
+    <InspectMapping/>
   </div>;
 };
 
@@ -37,11 +41,12 @@ UrlMappingsContainer.propTypes = {
   urlMappings: PropTypes.array.isRequired,
   setUrlMapping: PropTypes.func.isRequired,
   toggleUrlMapping: PropTypes.func.isRequired,
-  removeUrlMapping: PropTypes.func.isRequired
+  removeUrlMapping: PropTypes.func.isRequired,
+  setSelectedMapping: PropTypes.func.isRequired
 };
 
 
-import { setUrlMapping, toggleUrlMapping, removeUrlMapping } from '../../common/actions/url-mappings.js';
+import { setUrlMapping, toggleUrlMapping, removeUrlMapping, setSelectedMapping } from '../../common/actions/url-mappings.js';
 import { getMappings } from '../reducers/url-mappings.js';
 
 const mapStateToProps = (state) => ({
@@ -51,7 +56,8 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = {
   setUrlMapping,
   toggleUrlMapping,
-  removeUrlMapping
+  removeUrlMapping,
+  setSelectedMapping
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(UrlMappingsContainer);

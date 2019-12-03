@@ -6,6 +6,7 @@ import * as actions from '../../common/actions/url-mappings.js';
 const initialState = {
   mappings: [],
   count: 0,
+  selectedMappingUrl: null,
   newMapping: {
     step: constants.NEW_MAPPING_STEP_TARGET,
     target: undefined,
@@ -17,6 +18,13 @@ const initialState = {
 };
 
 // reducers
+
+function selectedMappingUrl(state = initialState.selectedMappingUrl, action) {
+  if (action.type !== actions.SET_SELECTED_MAPPING) {
+    return state;
+  }
+  return action.url;
+}
 
 function mappings(state = initialState.mappings, action) {
   switch (action.type) {
@@ -64,7 +72,8 @@ function newMapping(state = initialState.newMapping, action) {
 export default combineReducers({
   mappings,
   count,
-  newMapping
+  newMapping,
+  selectedMappingUrl
 });
 
 // selectors
@@ -79,4 +88,8 @@ export function getMappingCount(state) {
 
 export function getNewMapping(state) {
   return state.urlMappings.newMapping;
+}
+
+export function getSelectedMapping(state) {
+  return state.urlMappings.mappings.find(({ url }) => url === state.urlMappings.selectedMappingUrl);
 }

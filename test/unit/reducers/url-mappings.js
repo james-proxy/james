@@ -7,6 +7,7 @@ import urlMappings from '../../../src/renderer/reducers/url-mappings.js';
 const initialState = {
   mappings: [],
   count: 0,
+  selectedMappingUrl: null,
   newMapping: {
     step: constants.NEW_MAPPING_STEP_TARGET,
     target: undefined,
