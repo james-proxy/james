@@ -2,6 +2,10 @@
 
 Maintainers or forks welcome: the original James team aren't able to spend the same amount of time on James anymore.
 
+We suggest looking at [HTTP Toolkit](https://httptoolkit.tech) as an actively maintained open-source alternative.
+
+---
+
 # James
 
 [![Build Status](https://travis-ci.org/james-proxy/james.svg?branch=master)](https://travis-ci.org/james-proxy/james) 
