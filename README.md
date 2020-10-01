@@ -17,7 +17,7 @@ James is built with [hoxy](https://github.com/greim/hoxy), [electron](https://gi
 
 ![](resources/screenshot-1.png)
 
-## Installing
+##Basic Installing
 Download the correct version for your OS and run
 
 [![All platforms download](https://img.shields.io/badge/download-any_platform-green.svg)](https://github.com/james-proxy/james/releases/latest)
